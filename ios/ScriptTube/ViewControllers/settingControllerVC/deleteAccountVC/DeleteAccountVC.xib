@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DeleteAccountVC" customModule="ScriptTube" customModuleProvider="target">
+            <connections>
+                <outlet property="deactiveLbl" destination="t3N-z1-Df4" id="VHu-Jv-u5J"/>
+                <outlet property="messageLbl" destination="rHj-6r-oHe" id="T8Q-oh-ZOs"/>
+                <outlet property="nameLbl" destination="XLF-in-Avf" id="pCk-sz-FnO"/>
+                <outlet property="questionLbl" destination="YhE-ZN-F4S" id="PDR-Rv-XpS"/>
+                <outlet property="submitBtn" destination="ZyA-lF-Fu3" id="d3l-zy-0yo"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oA2-ET-HNS">
+                    <rect key="frame" x="0.0" y="70" width="414" height="792"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="enZ-lL-168">
+                            <rect key="frame" x="20" y="0.0" width="374" height="662"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyX-AN-cKK">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="70" id="WZB-1l-ZGn"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you want to Delete this account?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YhE-ZN-F4S" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="85" width="374" height="70"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1BX-kO-sLI">
+                                    <rect key="frame" x="0.0" y="170" width="374" height="128"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_user" translatesAutoresizingMaskIntoConstraints="NO" id="EDE-DM-zRB">
+                                            <rect key="frame" x="137" y="14" width="100" height="100"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="100" id="5RX-uJ-G8u"/>
+                                                <constraint firstAttribute="width" constant="100" id="JrZ-lQ-gZz"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="EDE-DM-zRB" firstAttribute="centerX" secondItem="1BX-kO-sLI" secondAttribute="centerX" id="0Y7-8x-KW7"/>
+                                        <constraint firstItem="EDE-DM-zRB" firstAttribute="centerY" secondItem="1BX-kO-sLI" secondAttribute="centerY" id="SQN-bG-10q"/>
+                                        <constraint firstAttribute="height" constant="128" id="T0C-da-xTR"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Doe" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XLF-in-Avf" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="313" width="374" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deleting your account is permanent" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3N-z1-Df4" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="358" width="374" height="60"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rHj-6r-oHe" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="433" width="374" height="39"/>
+                                    <string key="text">Your porfile, photos, comments and likes
+will be hidden until you enable it by logging back in.</string>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCg-as-v4X">
+                                    <rect key="frame" x="0.0" y="487" width="374" height="100"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="100" id="vQl-YA-p7C"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C0L-0Z-tJb" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="602" width="374" height="44"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZyA-lF-Fu3">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fK-yT-wej">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" name="ButtonColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="ZyA-lF-Fu3" secondAttribute="bottom" id="H66-q7-aTD"/>
+                                        <constraint firstItem="3fK-yT-wej" firstAttribute="top" secondItem="C0L-0Z-tJb" secondAttribute="top" id="Lz6-8x-DUC"/>
+                                        <constraint firstItem="3fK-yT-wej" firstAttribute="leading" secondItem="C0L-0Z-tJb" secondAttribute="leading" id="NLs-2H-CAI"/>
+                                        <constraint firstAttribute="bottom" secondItem="3fK-yT-wej" secondAttribute="bottom" id="OaR-B2-NLL"/>
+                                        <constraint firstItem="ZyA-lF-Fu3" firstAttribute="leading" secondItem="C0L-0Z-tJb" secondAttribute="leading" id="QCO-2Y-wgt"/>
+                                        <constraint firstAttribute="height" constant="44" id="aoI-y8-ttw"/>
+                                        <constraint firstItem="ZyA-lF-Fu3" firstAttribute="top" secondItem="C0L-0Z-tJb" secondAttribute="top" id="oLG-fE-c0w"/>
+                                        <constraint firstAttribute="trailing" secondItem="ZyA-lF-Fu3" secondAttribute="trailing" id="s7C-qd-zVC"/>
+                                        <constraint firstAttribute="trailing" secondItem="3fK-yT-wej" secondAttribute="trailing" id="uaG-eN-3HO"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="10"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3dl-gK-LK5">
+                                    <rect key="frame" x="0.0" y="661" width="374" height="1"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="Z6S-lE-Iss"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="enZ-lL-168" firstAttribute="centerX" secondItem="oA2-ET-HNS" secondAttribute="centerX" id="0ZW-7c-gSI"/>
+                        <constraint firstAttribute="trailing" secondItem="enZ-lL-168" secondAttribute="trailing" constant="20" id="SzW-wr-VJb"/>
+                        <constraint firstItem="enZ-lL-168" firstAttribute="top" secondItem="oA2-ET-HNS" secondAttribute="top" id="bWm-5P-IMA"/>
+                        <constraint firstItem="enZ-lL-168" firstAttribute="leading" secondItem="oA2-ET-HNS" secondAttribute="leading" constant="20" id="pEr-U7-DIz"/>
+                        <constraint firstAttribute="bottom" secondItem="enZ-lL-168" secondAttribute="bottom" id="zST-GY-hG5"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="oA2-ET-HNS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Fkx-MM-N4F"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="oA2-ET-HNS" secondAttribute="trailing" id="Zpa-ZT-WL7"/>
+                <constraint firstItem="oA2-ET-HNS" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="gRl-3g-bnG"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="oA2-ET-HNS" secondAttribute="bottom" id="jmk-GH-tKZ"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="77"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="XLF-in-Avf">
+            <size key="intrinsicContentSize" width="104" height="30"/>
+        </designable>
+        <designable name="YhE-ZN-F4S">
+            <size key="intrinsicContentSize" width="446" height="35"/>
+        </designable>
+        <designable name="rHj-6r-oHe">
+            <size key="intrinsicContentSize" width="372" height="39"/>
+        </designable>
+        <designable name="t3N-z1-Df4">
+            <size key="intrinsicContentSize" width="381" height="30"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="ic_user" width="506" height="512"/>
+        <namedColor name="ButtonColor">
+            <color red="0.78823529411764703" green="0.0078431372549019607" blue="0.0078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
