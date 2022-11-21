@@ -1,0 +1,30 @@
+{
+  "name": "scrip-tube",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://nikhil_jain1021999@bitbucket.org/codeoptimalsolutions/scrip-tube-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://bitbucket.org/codeoptimalsolutions/scrip-tube-backend/issues"
+  },
+  "homepage": "https://bitbucket.org/codeoptimalsolutions/scrip-tube-backend#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.0",
+    "nodemon": "^2.0.20",
+    "save": "^2.9.0"
+  }
+}
