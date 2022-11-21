@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.camera:camera-core:1.2.0-beta02@aar">
+    <ANNOTATIONS>
+      <root url="jar://D:/AndroidProjects/fraudster-android/caches/transforms-3/ecd900031afd1af3ea424471c107bd63/transformed/camera-core-1.2.0-beta02/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://D:/AndroidProjects/fraudster-android/caches/transforms-3/ecd900031afd1af3ea424471c107bd63/transformed/camera-core-1.2.0-beta02/jars/classes.jar!/" />
+      <root url="file://D:/AndroidProjects/fraudster-android/caches/transforms-3/ecd900031afd1af3ea424471c107bd63/transformed/camera-core-1.2.0-beta02/res" />
+      <root url="file://D:/AndroidProjects/fraudster-android/caches/transforms-3/ecd900031afd1af3ea424471c107bd63/transformed/camera-core-1.2.0-beta02/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/AndroidProjects/fraudster-android/caches/modules-2/files-2.1/androidx.camera/camera-core/1.2.0-beta02/42217d9d0ca5c80b0e8c5239b302965a0fa52ca/camera-core-1.2.0-beta02-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

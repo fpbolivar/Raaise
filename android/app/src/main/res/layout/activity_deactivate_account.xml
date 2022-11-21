@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".Settings.Logins.DeactivateAccount">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--*************   Deactivate Account Layout    *************-->
+        <RelativeLayout
+            android:id="@+id/DeactivateAccountLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/WhiteColor"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/BackInSignUp"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="50dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/backarrow" />
+
+            <LinearLayout
+                android:id="@+id/TextInDeactivateAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/BackInSignUp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Deactivate "
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Account"
+                    android:textColor="@color/design_default_color_error"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TextInDeactivateAccount"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Do you want to Deactivate this account? "
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CircleCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                app:cardCornerRadius="100dp">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/circular_shape"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/delete_it" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/NameInDeactivate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/CircleCard"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Maninder"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Deactivatingyouraccountistemporary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/NameInDeactivate"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Deactivating your account is temporary"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Description1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Deactivatingyouraccountistemporary"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Your porfile, photos, comments and likes
+will be hidden until you enable it by logging back in."
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <LinearLayout
+                android:id="@+id/LoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/Description1"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_shape_login"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Deactivate Account"
+                    android:textColor="@color/WhiteColor"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+        <!--*************   Delete Account Layout    *************-->
+        <RelativeLayout
+            android:id="@+id/DeleteAccountLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/WhiteColor"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/BackInDelete"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="50dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/backarrow" />
+
+            <LinearLayout
+                android:id="@+id/TextInDeleteAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/BackInDelete"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Delete "
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Account"
+                    android:textColor="@color/design_default_color_error"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TextInDeleteAccount"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Do you want to Delete this account? "
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CircleCardDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textDelete"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                app:cardCornerRadius="100dp">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/circular_shape"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/delete_it" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/NameInDeactivateDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/CircleCardDelete"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Maninder"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/DeactivatingyouraccountistemporaryDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/NameInDeactivateDelete"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Deleting your account is permanent"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Description1Delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/DeactivatingyouraccountistemporaryDelete"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Your Profile, photo, videos comments likes and follower
+will be permanantly deleted."
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <LinearLayout
+                android:id="@+id/LoginButtonDelete"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/Description1Delete"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_shape_login"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Delete Account"
+                    android:textColor="@color/WhiteColor"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/SettingBGColor"
+    android:fillViewport="true"
+    tools:context=".Settings.SettingsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/SettingBGColor">
+
+        <RelativeLayout
+            android:id="@+id/UpperPart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+            <ImageView
+                android:id="@+id/BackInSignUp"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/backarrow" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/noto_sans"
+                android:text="Settings"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/UpperPart"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="My Account"
+                    android:textColor="@color/Darkgrey"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/settings_block_bg"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/PersonalInformationInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginVertical="10dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Personal Information"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/single_grey_line" />
+
+                    <RelativeLayout
+                        android:id="@+id/UserNameInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="15dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="UserName"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/single_grey_line" />
+
+                    <RelativeLayout
+                        android:id="@+id/ShortBioInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="15dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Short Bio"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/single_grey_line" />
+
+                    <RelativeLayout
+                        android:id="@+id/ChangePasswordInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="15dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Change Password"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="30dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Notifications"
+                    android:textColor="@color/Darkgrey"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/settings_block_bg"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginVertical="10dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Push Notifications"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow"
+                            android:thumb="@drawable/thumb"
+                            app:track="@drawable/track" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/single_grey_line" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="15dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Email Notifications"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow"
+                            android:thumb="@drawable/thumb"
+                            app:track="@drawable/track" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="30dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Payments"
+                    android:textColor="@color/Darkgrey"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/settings_block_bg"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/PaymentMethodsInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginVertical="10dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Payment Methods"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/single_grey_line" />
+
+                    <RelativeLayout
+                        android:id="@+id/DonationRaisedInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="15dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Donation Raised"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/single_grey_line" />
+
+                    <RelativeLayout
+                        android:id="@+id/WithDrawlsInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="15dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="With Drawls"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/single_grey_line" />
+
+                    <RelativeLayout
+                        android:id="@+id/BankDetailsInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="15dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Bank Details"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="30dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="About"
+                    android:textColor="@color/Darkgrey"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/settings_block_bg"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/TermsOfServiceInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginVertical="10dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Terms of Service"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/single_grey_line" />
+
+                    <RelativeLayout
+                        android:id="@+id/PrivacyPolicyInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="15dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Privacy Policy"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/single_grey_line" />
+
+                    <RelativeLayout
+                        android:id="@+id/CopyrightPolicyInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="15dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Copyright Policy"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="30dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Logins"
+                    android:textColor="@color/Darkgrey"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/settings_block_bg"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/DeactivateAccountInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginVertical="10dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Deactivate Account"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/single_grey_line" />
+
+                    <RelativeLayout
+                        android:id="@+id/DeleteAccountInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="15dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Delete Account"
+                            android:textColor="@color/design_default_color_error"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/single_grey_line" />
+
+                    <RelativeLayout
+                        android:id="@+id/LogoutInSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="15dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/noto_sans"
+
+                            android:gravity="center_vertical"
+                            android:text="Logout"
+                            android:textColor="@color/black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="30dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/setting_arrow" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</ScrollView>
