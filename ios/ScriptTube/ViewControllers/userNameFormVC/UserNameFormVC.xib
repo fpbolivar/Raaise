@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -26,40 +26,41 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qC2-ej-0T0">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="qbX-L3-lLS">
-                            <rect key="frame" x="20" y="0.0" width="374" height="285.5"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qbX-L3-lLS">
+                            <rect key="frame" x="20" y="0.0" width="374" height="250.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2j-vd-Ijc">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="70" id="JgH-tR-MIy"/>
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is your unique name to be used in the ScripTube and how your friends find and add you." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lSl-ig-neG" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="85" width="374" height="31.5"/>
+                                    <rect key="frame" x="0.0" y="80" width="374" height="31.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" name="lightGray"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pjP-hO-Fxi">
-                                    <rect key="frame" x="0.0" y="131.5" width="374" height="44"/>
-                                    <color key="backgroundColor" name="TextFieldColor"/>
+                                    <rect key="frame" x="0.0" y="121.5" width="374" height="44"/>
+                                    <color key="backgroundColor" name="TFcolor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="Jox-pV-h2I"/>
                                     </constraints>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5cl-Bc-1K5">
-                                    <rect key="frame" x="0.0" y="190.5" width="374" height="20"/>
+                                    <rect key="frame" x="0.0" y="175.5" width="374" height="10"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="JAN-bk-Yuz"/>
+                                        <constraint firstAttribute="height" constant="10" id="JAN-bk-Yuz"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jrJ-nm-dyo" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="225.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="195.5" width="374" height="44"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgH-vt-VKV">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
@@ -94,7 +95,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oru-rS-Smd">
-                                    <rect key="frame" x="0.0" y="284.5" width="374" height="1"/>
+                                    <rect key="frame" x="0.0" y="249.5" width="374" height="1"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="eat-0o-wc2"/>
@@ -113,7 +114,7 @@
                 </scrollView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="BackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qC2-ej-0T0" secondAttribute="trailing" id="7Bf-4z-Ywk"/>
                 <constraint firstItem="qC2-ej-0T0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="IpZ-ML-z7b"/>
@@ -125,15 +126,18 @@
     </objects>
     <designables>
         <designable name="lSl-ig-neG">
-            <size key="intrinsicContentSize" width="559" height="16"/>
+            <size key="intrinsicContentSize" width="558.5" height="16"/>
         </designable>
     </designables>
     <resources>
-        <namedColor name="ButtonColor">
-            <color red="0.78823529411764703" green="0.0078431372549019607" blue="0.0078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="BackgroundColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="TextFieldColor">
-            <color red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="ButtonColor">
+            <color red="0.29803921568627451" green="0.45882352941176469" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TFcolor">
+            <color red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="lightGray">
             <color red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

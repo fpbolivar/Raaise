@@ -31,7 +31,7 @@ class OnboardingView: UIView {
         let customType = ActiveType.custom(pattern: data.redTitle)
         headingLbl2.enabledTypes.append(customType)
 
-        headingLbl2.textColor = UIColor.black
+        headingLbl2.textColor = UIColor.white
 
         headingLbl2.text = data.title2
         headingLbl2.customColor[customType] = UIColor.theme

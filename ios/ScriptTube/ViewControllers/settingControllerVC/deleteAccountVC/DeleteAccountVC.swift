@@ -8,7 +8,8 @@
 import UIKit
 
 class DeleteAccountVC: BaseControllerVC {
-    @IBOutlet weak var  questionLbl:UILabel!
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var questionLbl:UILabel!
     @IBOutlet weak var nameLbl:UILabel!
     @IBOutlet weak var deactiveLbl:UILabel!
     @IBOutlet weak var messageLbl:UILabel!
@@ -24,19 +25,37 @@ class DeleteAccountVC: BaseControllerVC {
         questionLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX30)
         nameLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX18)
         deactiveLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX15)
-        messageLbl.font = AppFont.FontName.light.getFont(size: AppFont.pX14)
+        messageLbl.font = AppFont.FontName.light.getFont(size: AppFont.pX12)
         submitBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX17)
+        profileImage.layer.cornerRadius = profileImage.frame.height / 2
+        nameLbl.text = AuthManager.currentUser.name
+        profileImage.loadImgForProfile(url: AuthManager.currentUser.profileImage)
+        //loadImg(url: AuthManager.currentUser.profileImage)
     }
-
-
-    /*
-     // MARK: - Navigation
-
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-
+    func gotoLogin(){
+        let vc  = LoginVC()
+        let navVC = UINavigationController(rootViewController: vc)
+        UIApplication.keyWin!.rootViewController = navVC
+        UIApplication.keyWin!.makeKeyAndVisible()
+    }
+    func createDeleteAlert(){
+        let alert = UIAlertController(title: "ScripTube", message: "Are you sure you want to Delete Your Account", preferredStyle: .alert)
+        let logOutAction = UIAlertAction(title: "Delete Account", style: .destructive){action in
+            self.deleteAccountApi()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        alert.addAction(logOutAction)
+        self.present(alert,animated: true)
+    }
+    func deleteAccountApi(){
+        AuthManager.deleteAccount(delegate: self, param: ["userId":AuthManager.currentUser.id]) {
+            DispatchQueue.main.async {
+                self.gotoLogin()
+            }
+        }
+    }
+    @IBAction func deleteBtnClicked(_ sender: Any) {
+        createDeleteAlert()
+    }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,7 +19,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="280" height="89"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zaT-ag-4QI">
-                            <rect key="frame" x="0.0" y="0.0" width="280" height="89"/>
+                            <rect key="frame" x="0.0" y="10" width="280" height="79"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ICC-pg-Fqn">
                                     <rect key="frame" x="0.0" y="0.0" width="280" height="30"/>
@@ -29,9 +29,10 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_menu" translatesAutoresizingMaskIntoConstraints="NO" id="rYR-Nh-ovD">
                                                     <rect key="frame" x="0.0" y="0.0" width="44" height="30"/>
+                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <color key="backgroundColor" name="BackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="rYR-Nh-ovD" secondAttribute="trailing" id="T9J-K7-1WH"/>
                                                 <constraint firstAttribute="bottom" secondItem="rYR-Nh-ovD" secondAttribute="bottom" id="UW5-NW-OV2"/>
@@ -46,11 +47,11 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HEADING" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tVy-RP-oQD" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="192" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <color key="backgroundColor" name="BackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="tVy-RP-oQD" secondAttribute="trailing" id="PSh-WS-wPJ"/>
                                                 <constraint firstItem="tVy-RP-oQD" firstAttribute="top" secondItem="b5l-mQ-oET" secondAttribute="top" id="WoI-ZP-RKb"/>
@@ -65,7 +66,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="44" height="30"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <color key="backgroundColor" name="BackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="WLt-Tk-0Km" secondAttribute="bottom" id="9rq-hJ-UDs"/>
                                                 <constraint firstItem="WLt-Tk-0Km" firstAttribute="top" secondItem="b7W-Ae-7Zb" secondAttribute="top" id="Ue2-Yz-nnD"/>
@@ -80,30 +81,46 @@
                                     </constraints>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HEADING" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfQ-Zf-yNG" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="30" width="280" height="59"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <rect key="frame" x="0.0" y="30" width="280" height="49"/>
+                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4u-fh-BX1">
-                            <rect key="frame" x="240" y="0.0" width="30" height="30"/>
+                            <rect key="frame" x="240" y="5" width="30" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="SGr-ED-P0b"/>
                             </constraints>
+                            <inset key="titleEdgeInsets" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQk-YG-eVA">
+                            <rect key="frame" x="188" y="52" width="82" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="XAi-rC-NVb"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="tintColor" name="theme"/>
+                            <inset key="titleEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Add New Card">
+                                <color key="titleColor" name="theme"/>
+                            </state>
+                        </button>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" name="BackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="G4u-fh-BX1" firstAttribute="top" secondItem="hyy-ir-xSq" secondAttribute="top" id="4Kl-nq-iWm"/>
+                        <constraint firstItem="G4u-fh-BX1" firstAttribute="top" secondItem="hyy-ir-xSq" secondAttribute="top" constant="5" id="4Kl-nq-iWm"/>
                         <constraint firstAttribute="bottom" secondItem="zaT-ag-4QI" secondAttribute="bottom" id="Js9-8g-k6f"/>
+                        <constraint firstAttribute="trailing" secondItem="RQk-YG-eVA" secondAttribute="trailing" constant="10" id="ViH-eK-x0Q"/>
+                        <constraint firstAttribute="bottom" secondItem="RQk-YG-eVA" secondAttribute="bottom" constant="17" id="cFl-OG-loy"/>
                         <constraint firstAttribute="trailing" secondItem="zaT-ag-4QI" secondAttribute="trailing" id="elt-yg-Uqe"/>
                         <constraint firstAttribute="trailing" secondItem="G4u-fh-BX1" secondAttribute="trailing" constant="10" id="h3E-Sm-Kqw"/>
                         <constraint firstAttribute="bottom" secondItem="zaT-ag-4QI" secondAttribute="bottom" id="kMB-q5-lJJ"/>
-                        <constraint firstItem="zaT-ag-4QI" firstAttribute="top" secondItem="hyy-ir-xSq" secondAttribute="top" id="q6l-Gu-VzL"/>
+                        <constraint firstItem="zaT-ag-4QI" firstAttribute="top" secondItem="hyy-ir-xSq" secondAttribute="top" constant="10" id="q6l-Gu-VzL"/>
                         <constraint firstItem="zaT-ag-4QI" firstAttribute="leading" secondItem="hyy-ir-xSq" secondAttribute="leading" id="x4X-gU-P5E"/>
                     </constraints>
                 </view>
@@ -118,6 +135,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="addNewCardBtn" destination="RQk-YG-eVA" id="ngr-d5-Yxj"/>
                 <outlet property="headingLbl" destination="wfQ-Zf-yNG" id="TXG-yz-JCg"/>
                 <outlet property="leftIcon" destination="rYR-Nh-ovD" id="USV-hQ-94g"/>
                 <outlet property="rigthBtn" destination="G4u-fh-BX1" id="GiM-yx-tI6"/>
@@ -136,8 +154,11 @@
     </designables>
     <resources>
         <image name="ic_menu" width="512" height="512"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="BackgroundColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="theme">
+            <color red="0.29803921568627451" green="0.45882352941176469" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

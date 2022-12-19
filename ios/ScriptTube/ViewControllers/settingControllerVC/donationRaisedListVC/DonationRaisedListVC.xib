@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -36,7 +36,7 @@
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dTS-LR-yTv">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="70" id="ubd-LE-Tgu"/>
                                     </constraints>
@@ -44,7 +44,7 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ax-Wh-Ur6">
                                     <rect key="frame" x="0.0" y="85" width="374" height="36"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="textColor" name="loginTFColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LgD-3i-YYY" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
@@ -52,14 +52,14 @@
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DTC-6e-Euw">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="20"/>
-                                            <color key="backgroundColor" name="CardCellBg"/>
+                                            <color key="backgroundColor" name="DarkGrayApp"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="uch-a5-S2m"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c9y-wZ-VgV">
                                             <rect key="frame" x="0.0" y="60" width="374" height="20"/>
-                                            <color key="backgroundColor" name="CardCellBg"/>
+                                            <color key="backgroundColor" name="DarkGrayApp"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="P87-HV-wz2"/>
                                             </constraints>
@@ -76,10 +76,10 @@
                                                                 <constraint firstAttribute="height" constant="22" id="dRS-xv-Gtn"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                            <nil key="textColor"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Given" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Um-eL-UgA">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Raised" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Um-eL-UgA">
                                                             <rect key="frame" x="0.0" y="47" width="124.5" height="16"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="yDP-Sv-gpO"/>
@@ -89,7 +89,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" name="CardCellBg"/>
+                                                    <color key="backgroundColor" name="DarkGrayApp"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="1Um-eL-UgA" secondAttribute="trailing" id="4pL-gn-ToI"/>
                                                         <constraint firstItem="1Um-eL-UgA" firstAttribute="leading" secondItem="biL-7y-ItZ" secondAttribute="leading" id="Njv-44-c1g"/>
@@ -108,20 +108,20 @@
                                                                 <constraint firstAttribute="height" constant="22" id="slF-7s-U1c"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                            <nil key="textColor"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pending" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wji-ml-dEQ">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Donated" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wji-ml-dEQ">
                                                             <rect key="frame" x="0.0" y="47" width="124" height="16"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="EX0-vu-LAD"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <color key="textColor" name="theme"/>
+                                                            <color key="textColor" name="Red"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" name="CardCellBg"/>
+                                                    <color key="backgroundColor" name="DarkGrayApp"/>
                                                     <constraints>
                                                         <constraint firstItem="wji-ml-dEQ" firstAttribute="leading" secondItem="Ibh-jy-LiM" secondAttribute="leading" id="7Vc-3R-IvF"/>
                                                         <constraint firstAttribute="trailing" secondItem="wji-ml-dEQ" secondAttribute="trailing" id="MeD-EX-oP7"/>
@@ -140,10 +140,10 @@
                                                                 <constraint firstAttribute="height" constant="22" id="jfo-M8-le8"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                            <nil key="textColor"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recieved" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oZ5-K5-tuf">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Withdrawal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oZ5-K5-tuf">
                                                             <rect key="frame" x="0.0" y="47" width="124.5" height="16"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="16" id="23f-De-XqH"/>
@@ -153,7 +153,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" name="CardCellBg"/>
+                                                    <color key="backgroundColor" name="DarkGrayApp"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="oZ5-K5-tuf" secondAttribute="trailing" id="2F7-3y-Fte"/>
                                                         <constraint firstAttribute="trailing" secondItem="9CH-HO-bat" secondAttribute="trailing" id="6nD-Aa-z1F"/>
@@ -184,9 +184,6 @@
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                             <real key="value" value="5"/>
                                         </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                            <real key="value" value="1"/>
-                                        </userDefinedRuntimeAttribute>
                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                             <color key="value" name="CardCellBorder"/>
                                         </userDefinedRuntimeAttribute>
@@ -198,7 +195,7 @@
                                 </tableView>
                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tep-5O-wQF">
                                     <rect key="frame" x="0.0" y="374" width="374" height="100"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="qE7-rl-dFh"/>
                                     </constraints>
@@ -223,7 +220,7 @@
                 </scrollView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="BackgroundColor"/>
             <constraints>
                 <constraint firstItem="gTZ-1f-k05" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="4uu-Az-6M5"/>
                 <constraint firstItem="gTZ-1f-k05" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="H8k-Ir-fj9"/>
@@ -234,14 +231,20 @@
         </view>
     </objects>
     <resources>
-        <namedColor name="CardCellBg">
-            <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="BackgroundColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="CardCellBorder">
             <color red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="theme">
-            <color red="0.78799998760223389" green="0.0080000003799796104" blue="0.0080000003799796104" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="DarkGrayApp">
+            <color red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Red">
+            <color red="0.93300002813339233" green="0.11400000005960464" blue="0.32199999690055847" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="loginTFColor">
+            <color red="0.80392156862745101" green="0.80392156862745101" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

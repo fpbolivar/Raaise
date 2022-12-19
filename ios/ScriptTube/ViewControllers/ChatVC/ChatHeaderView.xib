@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ChatHeaderView" customModule="ScriptTube" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="299"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v7O-GJ-88G">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="299"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_user" translatesAutoresizingMaskIntoConstraints="NO" id="abG-l5-BFz">
+                            <rect key="frame" x="136.66666666666666" y="10" width="119.99999999999997" height="120"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="120" id="htT-R5-jAR"/>
+                                <constraint firstAttribute="height" constant="120" id="se7-4d-BSR"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@kate_rose" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6u-Lu-OSZ">
+                            <rect key="frame" x="151.66666666666666" y="135" width="90" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_check" translatesAutoresizingMaskIntoConstraints="NO" id="LMw-Ib-2Ed">
+                            <rect key="frame" x="244.66666666666666" y="138" width="14.999999999999972" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="15" id="NYY-8r-301"/>
+                                <constraint firstAttribute="height" constant="15" id="sVv-Lj-vhb"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Donation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnS-rr-dBn">
+                            <rect key="frame" x="141.66666666666666" y="158" width="110" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$115" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3LA-lf-Dht">
+                            <rect key="frame" x="179" y="181" width="35.333333333333343" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U98-5b-Avb">
+                            <rect key="frame" x="10" y="207" width="373" height="82"/>
+                            <string key="text">Lorem Ipsum is simply dummy text of the printing and
+typesetting industry. </string>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" name="lightGray"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Y6u-Lu-OSZ" firstAttribute="centerX" secondItem="v7O-GJ-88G" secondAttribute="centerX" id="4to-5G-vkT"/>
+                        <constraint firstItem="U98-5b-Avb" firstAttribute="leading" secondItem="v7O-GJ-88G" secondAttribute="leading" constant="10" id="5Yu-SF-d6s"/>
+                        <constraint firstAttribute="bottom" secondItem="U98-5b-Avb" secondAttribute="bottom" constant="10" id="AFD-2I-e3n"/>
+                        <constraint firstItem="Y6u-Lu-OSZ" firstAttribute="top" secondItem="abG-l5-BFz" secondAttribute="bottom" constant="5" id="CnM-mg-FfI"/>
+                        <constraint firstItem="LMw-Ib-2Ed" firstAttribute="leading" secondItem="Y6u-Lu-OSZ" secondAttribute="trailing" constant="3" id="DSn-MI-f2a"/>
+                        <constraint firstItem="abG-l5-BFz" firstAttribute="top" secondItem="v7O-GJ-88G" secondAttribute="top" constant="10" id="Jui-BX-gsp"/>
+                        <constraint firstItem="3LA-lf-Dht" firstAttribute="top" secondItem="vnS-rr-dBn" secondAttribute="bottom" constant="2" id="KDt-GR-jT5"/>
+                        <constraint firstItem="3LA-lf-Dht" firstAttribute="centerX" secondItem="v7O-GJ-88G" secondAttribute="centerX" id="KT9-74-VeV"/>
+                        <constraint firstItem="vnS-rr-dBn" firstAttribute="centerX" secondItem="v7O-GJ-88G" secondAttribute="centerX" id="XQr-ns-ZXV"/>
+                        <constraint firstItem="vnS-rr-dBn" firstAttribute="top" secondItem="LMw-Ib-2Ed" secondAttribute="bottom" constant="5" id="dXs-dR-no3"/>
+                        <constraint firstItem="U98-5b-Avb" firstAttribute="top" secondItem="3LA-lf-Dht" secondAttribute="bottom" constant="5" id="hRe-Si-F1G"/>
+                        <constraint firstItem="abG-l5-BFz" firstAttribute="centerX" secondItem="v7O-GJ-88G" secondAttribute="centerX" id="oZ1-KU-7I7"/>
+                        <constraint firstAttribute="trailing" secondItem="U98-5b-Avb" secondAttribute="trailing" constant="10" id="pVk-DS-6wO"/>
+                        <constraint firstItem="LMw-Ib-2Ed" firstAttribute="centerY" secondItem="Y6u-Lu-OSZ" secondAttribute="centerY" id="qc8-hV-JQc"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <constraints>
+                <constraint firstItem="v7O-GJ-88G" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="eHP-qu-hrh"/>
+                <constraint firstItem="v7O-GJ-88G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="jit-Y7-qZV"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="v7O-GJ-88G" secondAttribute="trailing" id="rGA-kH-3d1"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="v7O-GJ-88G" secondAttribute="bottom" id="wC5-vk-rj3"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="20.610687022900763" y="-170.07042253521126"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_check" width="100" height="101"/>
+        <image name="ic_user" width="506" height="512"/>
+        <namedColor name="lightGray">
+            <color red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

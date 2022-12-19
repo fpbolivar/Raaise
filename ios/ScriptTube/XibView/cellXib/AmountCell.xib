@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AmountCell" id="gTV-IL-0wX" customClass="AmountCell" customModule="ScriptTube" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N6R-LO-1yO">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIS-QU-2DJ">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" name="lightGray"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" name="TFcolor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="XIS-QU-2DJ" secondAttribute="trailing" id="0vE-vv-Hmh"/>
+                            <constraint firstAttribute="bottom" secondItem="XIS-QU-2DJ" secondAttribute="bottom" id="P5V-Y5-9WW"/>
+                            <constraint firstItem="XIS-QU-2DJ" firstAttribute="top" secondItem="N6R-LO-1yO" secondAttribute="top" id="cpR-LU-tpb"/>
+                            <constraint firstItem="XIS-QU-2DJ" firstAttribute="leading" secondItem="N6R-LO-1yO" secondAttribute="leading" id="i81-fd-sFo"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="N6R-LO-1yO" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="5mz-8q-4NX"/>
+                <constraint firstItem="N6R-LO-1yO" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="NWp-WO-uMI"/>
+                <constraint firstAttribute="bottom" secondItem="N6R-LO-1yO" secondAttribute="bottom" id="Q9o-yc-98D"/>
+                <constraint firstAttribute="trailing" secondItem="N6R-LO-1yO" secondAttribute="trailing" id="oqX-Qb-Tgv"/>
+            </constraints>
+            <connections>
+                <outlet property="amountLbl" destination="XIS-QU-2DJ" id="8hv-lt-8m8"/>
+                <outlet property="containerView" destination="N6R-LO-1yO" id="M23-0V-vpA"/>
+            </connections>
+            <point key="canvasLocation" x="95" y="20"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="TFcolor">
+            <color red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="lightGray">
+            <color red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class NavigationBar: UIView {
+    @IBOutlet weak var addNewCardBtn: UIButton!
     @IBOutlet weak var deleteIcon: UIImageView!
     @IBOutlet weak var leftIcon: UIImageView!
     @IBOutlet weak var msgIcon: UIImageView!

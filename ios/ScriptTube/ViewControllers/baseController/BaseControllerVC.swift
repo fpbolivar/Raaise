@@ -43,6 +43,7 @@ class BaseControllerVC:UIViewController{
         navView.leftIcon.isUserInteractionEnabled = true
        // navView.msgIcon.isUserInteractionEnabled = true
         titleSet()
+        navView.addNewCardBtn.addTarget(self, action: #selector(addNewCard), for: .touchUpInside)
         // navView.contactIcon.image = UIImage(named: "ic_profile")!.addPadding(5)
         // navView.msgIcon.image = UIImage(named: "ic_messages")!.addPadding(5)
         navView.translatesAutoresizingMaskIntoConstraints = false
@@ -58,15 +59,19 @@ class BaseControllerVC:UIViewController{
         navView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0).isActive = true
         navView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0).isActive = true
         if .largeNavBarOnlyBack == type{
-            navView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+            navView.heightAnchor.constraint(equalToConstant: 80).isActive = true
         }
         if .largeNavBarOnlyBackWithRightBtn == type{
-            navView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+            navView.heightAnchor.constraint(equalToConstant: 80).isActive = true
             navView.rigthBtn.isHidden = false
            // navView.rigthBtn.addTarget(self, action: #selector(rightAction), for: .touchUpInside)
         }
         if .smallNavBarOnlyBack == type{
-            navView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            navView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        }
+        if type == .addNewCard{
+            navView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+            navView.addNewCardBtn.isHidden = false
         }
 
     }
@@ -79,13 +84,13 @@ class BaseControllerVC:UIViewController{
     private  func headingtitleSet(){
         navView.title.text =  ""
         navView.headingLbl.text =  ""
-        if .largeNavBarOnlyBack == type || .largeNavBarOnlyBackWithRightBtn == type{
+        if .largeNavBarOnlyBack == type || .largeNavBarOnlyBackWithRightBtn == type || .addNewCard == type{
 
         navView.headingLbl.adjustsFontSizeToFitWidth = true
         navView.headingLbl.font =  AppFont.FontName.regular.getFont(size: AppFont.pX20)
         let customType = ActiveType.custom(pattern:   redText ?? "")
         navView.headingLbl.enabledTypes.append(customType)
-        navView.headingLbl.textColor = UIColor.black
+        navView.headingLbl.textColor = UIColor.white
         navView.headingLbl.underLineEnable = false
         navView.headingLbl.text =  "    " + (headingText ?? "")
 
@@ -105,6 +110,10 @@ class BaseControllerVC:UIViewController{
     }
     func unhideCustomNavBar(navigationBar: NavigationBar){
         navigationBar.isHidden = false
+    }
+    @objc func addNewCard(){
+        let vc = AddNewPaymentMethodVC()
+        self.present(vc, animated: true)
     }
     @objc func gotoProfile(){
 

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DonationPopUpViewController" customModule="ScriptTube" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="AAr-WY-FDm" id="mSq-Fc-e8k"/>
+                <outlet property="dismissBackBigButton" destination="Ggv-9C-8di" id="wuz-4p-e1k"/>
+                <outlet property="donateLbl" destination="MbB-xK-X0h" id="8zE-lX-ONO"/>
+                <outlet property="donationAmtLbl" destination="lcC-gb-utK" id="wcH-Ia-14w"/>
+                <outlet property="donationTf" destination="LgC-Tv-hu2" id="JTO-3v-bQD"/>
+                <outlet property="messageLbl" destination="5t9-Zv-sU0" id="E17-MY-WOK"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ggv-9C-8di">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BpN-V9-caJ" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                    <rect key="frame" x="20" y="240.33333333333334" width="353" height="371.33333333333326"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Donation Amount" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcC-gb-utK">
+                            <rect key="frame" x="0.0" y="16.999999999999972" width="353" height="20.333333333333329"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_donation" translatesAutoresizingMaskIntoConstraints="NO" id="LUr-l8-Dbs">
+                            <rect key="frame" x="151.66666666666666" y="47.333333333333343" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="ZrA-aO-BfG"/>
+                                <constraint firstAttribute="width" constant="50" id="uQe-aL-3wr"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5t9-Zv-sU0">
+                            <rect key="frame" x="0.0" y="112.33333333333334" width="353" height="61"/>
+                            <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Fusce ut varius justo. </string>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l5Q-gL-7gd" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                            <rect key="frame" x="132.66666666666666" y="313.33333333333326" width="88" height="33"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1k5-uD-dnS">
+                                    <rect key="frame" x="0.0" y="0.0" width="88" height="33"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <connections>
+                                        <action selector="donateBtnClicked:" destination="-1" eventType="touchUpInside" id="um5-eb-FOa"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Donate" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbB-xK-X0h">
+                                    <rect key="frame" x="0.0" y="0.0" width="88" height="33"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" name="theme"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="88" id="3AA-hm-2gh"/>
+                                <constraint firstAttribute="height" constant="33" id="wk2-KI-XCW"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="AAr-WY-FDm">
+                            <rect key="frame" x="20" y="183.33333333333334" width="313" height="50"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="n34-8c-gE2"/>
+                            </constraints>
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zvM-xz-9Di">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gsn-tO-PkL" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                            <rect key="frame" x="20" y="260.33333333333337" width="313" height="35"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="20A-Ca-WzS">
+                                    <rect key="frame" x="10" y="0.0" width="303" height="35"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9RU-SL-Vax">
+                                            <rect key="frame" x="0.0" y="0.0" width="10.333333333333334" height="35"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LgC-Tv-hu2">
+                                            <rect key="frame" x="13.333333333333343" y="0.0" width="289.66666666666663" height="35"/>
+                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" name="DonationFieldColor"/>
+                            <constraints>
+                                <constraint firstItem="20A-Ca-WzS" firstAttribute="top" secondItem="Gsn-tO-PkL" secondAttribute="top" id="GUE-h0-naK"/>
+                                <constraint firstItem="20A-Ca-WzS" firstAttribute="leading" secondItem="Gsn-tO-PkL" secondAttribute="leading" constant="10" id="J0e-mS-BdL"/>
+                                <constraint firstAttribute="height" constant="35" id="OLZ-iB-pz7"/>
+                                <constraint firstAttribute="trailing" secondItem="20A-Ca-WzS" secondAttribute="trailing" id="XMZ-it-ra8"/>
+                                <constraint firstAttribute="bottom" secondItem="20A-Ca-WzS" secondAttribute="bottom" id="Y74-cK-Lj7"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="10"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ylr-Ry-GxR">
+                            <rect key="frame" x="20" y="238.33333333333334" width="91" height="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="AAr-WY-FDm" firstAttribute="top" secondItem="5t9-Zv-sU0" secondAttribute="bottom" constant="10" id="29R-lC-OMO"/>
+                        <constraint firstItem="Gsn-tO-PkL" firstAttribute="top" secondItem="Ylr-Ry-GxR" secondAttribute="bottom" constant="5" id="2A5-zf-XX1"/>
+                        <constraint firstItem="l5Q-gL-7gd" firstAttribute="top" secondItem="Gsn-tO-PkL" secondAttribute="bottom" constant="18" id="38S-oI-U6m"/>
+                        <constraint firstItem="Gsn-tO-PkL" firstAttribute="leading" secondItem="BpN-V9-caJ" secondAttribute="leading" constant="20" id="BT0-2Q-DNf"/>
+                        <constraint firstItem="AAr-WY-FDm" firstAttribute="leading" secondItem="BpN-V9-caJ" secondAttribute="leading" constant="20" id="BZK-tZ-6U6"/>
+                        <constraint firstAttribute="trailing" secondItem="lcC-gb-utK" secondAttribute="trailing" id="CDQ-8W-Imb"/>
+                        <constraint firstItem="Ylr-Ry-GxR" firstAttribute="leading" secondItem="BpN-V9-caJ" secondAttribute="leading" constant="20" id="CjO-z7-HJX"/>
+                        <constraint firstAttribute="trailing" secondItem="Gsn-tO-PkL" secondAttribute="trailing" constant="20" id="F7n-9L-QB0"/>
+                        <constraint firstItem="5t9-Zv-sU0" firstAttribute="top" secondItem="LUr-l8-Dbs" secondAttribute="bottom" constant="15" id="PTO-gk-aFf"/>
+                        <constraint firstAttribute="trailing" secondItem="5t9-Zv-sU0" secondAttribute="trailing" id="TB3-13-DmY"/>
+                        <constraint firstItem="l5Q-gL-7gd" firstAttribute="centerX" secondItem="BpN-V9-caJ" secondAttribute="centerX" id="Tle-4f-nSf"/>
+                        <constraint firstItem="LUr-l8-Dbs" firstAttribute="top" secondItem="lcC-gb-utK" secondAttribute="bottom" constant="10" id="b0O-sX-Q7t"/>
+                        <constraint firstItem="lcC-gb-utK" firstAttribute="top" secondItem="BpN-V9-caJ" secondAttribute="top" constant="17" id="gTW-dC-SOo"/>
+                        <constraint firstItem="LUr-l8-Dbs" firstAttribute="centerX" secondItem="BpN-V9-caJ" secondAttribute="centerX" id="hW8-7S-Y2B"/>
+                        <constraint firstAttribute="trailing" secondItem="AAr-WY-FDm" secondAttribute="trailing" constant="20" id="iL8-4u-dxp"/>
+                        <constraint firstItem="5t9-Zv-sU0" firstAttribute="leading" secondItem="BpN-V9-caJ" secondAttribute="leading" id="mae-4d-t5V"/>
+                        <constraint firstItem="Ylr-Ry-GxR" firstAttribute="top" secondItem="AAr-WY-FDm" secondAttribute="bottom" constant="5" id="uYI-UV-xY4"/>
+                        <constraint firstAttribute="bottom" secondItem="l5Q-gL-7gd" secondAttribute="bottom" constant="25" id="vBq-nV-0Cy"/>
+                        <constraint firstItem="lcC-gb-utK" firstAttribute="leading" secondItem="BpN-V9-caJ" secondAttribute="leading" id="xfF-B1-u8i"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="secondaryLabelColor"/>
+            <constraints>
+                <constraint firstItem="Ggv-9C-8di" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="1lW-Rb-iqb"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BpN-V9-caJ" secondAttribute="trailing" constant="20" id="HdI-Xd-LeO"/>
+                <constraint firstItem="BpN-V9-caJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="LEn-A4-llk"/>
+                <constraint firstItem="Ggv-9C-8di" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="OiS-sj-jl7"/>
+                <constraint firstItem="BpN-V9-caJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="baX-45-axx"/>
+                <constraint firstItem="BpN-V9-caJ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="frl-qi-ZAs"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Ggv-9C-8di" secondAttribute="trailing" id="goR-VT-qRM"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Ggv-9C-8di" secondAttribute="bottom" id="h6h-qN-azI"/>
+            </constraints>
+            <point key="canvasLocation" x="20.610687022900763" y="19.718309859154932"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_donation" width="50" height="50"/>
+        <namedColor name="DonationFieldColor">
+            <color red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="theme">
+            <color red="0.29803921568627451" green="0.45882352941176469" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

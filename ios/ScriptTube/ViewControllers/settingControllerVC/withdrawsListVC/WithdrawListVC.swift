@@ -16,7 +16,8 @@ class WithdrawListVC: BaseControllerVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         addNavBar(headingText:"Withdrawals",redText:"",type: .largeNavBarOnlyBackWithRightBtn)
-        
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = .white
         navView.rigthBtn.setTitle("Bank Details", for: .normal)
         navView.rigthBtn.addTarget(self, action: #selector(rightAction), for: .touchUpInside)
         setfonts()

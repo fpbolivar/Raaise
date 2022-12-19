@@ -16,6 +16,7 @@ class ShortBioFormVC: BaseControllerVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         setfonts()
+        textCountLbl.text = "\(bioTF.text.count)/45"
         addNavBar(headingText:"Short Bio",redText:"Bio")
 
         // Do any additional setup after loading the view.
@@ -25,12 +26,35 @@ class ShortBioFormVC: BaseControllerVC {
         descriptionLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
         submitBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX17)
 
+        bioTF.delegate = self
         bioTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-
-
-
+        bioTF.text = AuthManager.currentUser.shortBio
+    }
+    func updateProfileApi(){
+        let param = ["shortBio":bioTF.text ?? ""]
+        AuthManager.updateUserProfileApi(delegate: self, param: param) {
+            DispatchQueue.main.async {
+                //self.gotoShortBioForm()
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     @IBAction func submitAction(_ sender: AnyObject) {
 
+        updateProfileApi()
+    }
+}
+extension ShortBioFormVC:UITextViewDelegate{
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        return textView.text.count + (text.count - range.length) <= 45
+    }
+    func textViewDidChange(_ textView: UITextView) {
+        textCountLbl.text = "\(textView.text.count)/45"
+        if textView.text.count == 45{
+            textCountLbl.textColor = .red
+        }else{
+            textCountLbl.textColor = .lightGray
+        }
     }
 }

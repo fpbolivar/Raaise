@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="69" id="KGk-i7-Jjw" customClass="SelectionCell" customModule="ScriptTube" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="384" height="69"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="384" height="69"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ij9-uq-bYV" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                        <rect key="frame" x="20" y="0.0" width="344" height="59"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_user" translatesAutoresizingMaskIntoConstraints="NO" id="w5o-RR-pkL">
+                                <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="BAI-II-hlM"/>
+                                    <constraint firstAttribute="height" constant="40" id="jaQ-Do-Lhs"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" text="Travis Barker" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W4D-Is-Vvt">
+                                <rect key="frame" x="57.000000000000007" y="9.9999999999999982" width="98.666666666666686" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kate Rose  |  Jazz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wsa-jK-bPf">
+                                <rect key="frame" x="57" y="32.333333333333336" width="133.33333333333334" height="20.333333333333336"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" name="lightGray"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cm7-Cl-DY7">
+                                <rect key="frame" x="314" y="10" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Kww-O1-RL1"/>
+                                    <constraint firstAttribute="width" constant="20" id="uY1-ME-0RA"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="play.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="playBtnClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wfl-C2-fJH"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tuesday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lD9-Ji-f8j">
+                                <rect key="frame" x="260" y="33" width="64" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" name="lightGray"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KKP-ck-0dY" customClass="CircleProgress" customModule="ScriptTube" customModuleProvider="target">
+                                <rect key="frame" x="296" y="12.666666666666664" width="15" height="15"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="15" id="Oid-zb-lOw"/>
+                                    <constraint firstAttribute="height" constant="15" id="W5P-E1-PX0"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" name="BackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="lD9-Ji-f8j" firstAttribute="top" secondItem="cm7-Cl-DY7" secondAttribute="bottom" constant="3" id="3Zt-xT-eAD"/>
+                            <constraint firstItem="w5o-RR-pkL" firstAttribute="top" secondItem="ij9-uq-bYV" secondAttribute="top" constant="10" id="49O-Ji-ZVW"/>
+                            <constraint firstItem="KKP-ck-0dY" firstAttribute="centerY" secondItem="cm7-Cl-DY7" secondAttribute="centerY" id="6UG-XX-Fyq"/>
+                            <constraint firstItem="Wsa-jK-bPf" firstAttribute="leading" secondItem="w5o-RR-pkL" secondAttribute="trailing" constant="7" id="AmD-nH-W2u"/>
+                            <constraint firstItem="W4D-Is-Vvt" firstAttribute="top" secondItem="ij9-uq-bYV" secondAttribute="top" constant="10" id="P22-50-PeZ"/>
+                            <constraint firstAttribute="trailing" secondItem="cm7-Cl-DY7" secondAttribute="trailing" constant="10" id="bEB-eV-hQz"/>
+                            <constraint firstItem="w5o-RR-pkL" firstAttribute="leading" secondItem="ij9-uq-bYV" secondAttribute="leading" constant="10" id="f2I-eX-mfD"/>
+                            <constraint firstItem="W4D-Is-Vvt" firstAttribute="leading" secondItem="w5o-RR-pkL" secondAttribute="trailing" constant="7" id="oHd-HU-0SV"/>
+                            <constraint firstAttribute="trailing" secondItem="lD9-Ji-f8j" secondAttribute="trailing" constant="20" id="q8r-Ly-Sln"/>
+                            <constraint firstItem="Wsa-jK-bPf" firstAttribute="top" secondItem="W4D-Is-Vvt" secondAttribute="bottom" constant="2" id="qWv-iB-KWl"/>
+                            <constraint firstItem="cm7-Cl-DY7" firstAttribute="top" secondItem="ij9-uq-bYV" secondAttribute="top" constant="10" id="r0b-d5-OzM"/>
+                            <constraint firstItem="cm7-Cl-DY7" firstAttribute="leading" secondItem="KKP-ck-0dY" secondAttribute="trailing" constant="3" id="zRv-Y5-LeR"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" name="CardCellBorder"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ij9-uq-bYV" secondAttribute="trailing" constant="20" id="Sz8-mC-i6z"/>
+                    <constraint firstItem="ij9-uq-bYV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="TTo-Wa-qqr"/>
+                    <constraint firstItem="ij9-uq-bYV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="r2P-ob-6yi"/>
+                    <constraint firstAttribute="bottom" secondItem="ij9-uq-bYV" secondAttribute="bottom" constant="10" id="uEx-KU-Vux"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="containerView" destination="ij9-uq-bYV" id="bzw-te-y1E"/>
+                <outlet property="detailLbl" destination="Wsa-jK-bPf" id="7Od-WM-WZk"/>
+                <outlet property="nameLbl" destination="W4D-Is-Vvt" id="ieJ-AT-dfV"/>
+                <outlet property="playBtn" destination="cm7-Cl-DY7" id="Pyb-gG-lv8"/>
+                <outlet property="profileImg" destination="w5o-RR-pkL" id="RTW-X5-pRR"/>
+                <outlet property="progressBar" destination="KKP-ck-0dY" id="dUa-5N-kVc"/>
+                <outlet property="timeLbl" destination="lD9-Ji-f8j" id="uVy-n2-V53"/>
+            </connections>
+            <point key="canvasLocation" x="68.702290076335871" y="28.52112676056338"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ic_user" width="506" height="512"/>
+        <image name="play.fill" catalog="system" width="117" height="128"/>
+        <namedColor name="BackgroundColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="CardCellBorder">
+            <color red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="lightGray">
+            <color red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

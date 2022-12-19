@@ -9,18 +9,51 @@ import UIKit
 
 class ProfileVC: UIViewController {
     @IBOutlet weak var  collectionView:UICollectionView!
+    var userVideoData: [String] = []
+    var userVideos = [Post]()
+    var needLoader = true
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
-        setupCollectioView()
-        delegateCollectioView()
+        
+        //getProfileApi(needLoader: true)
+        
         // Do any additional setup after loading the view.
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getProfileApi(needLoader: needLoader)
+        needLoader = false
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    func getProfileVideos(needloader:Bool,completion:@escaping()->Void){
+        needloader ? self.pleaseWait() : print("NOLOADER")
+        DataManager.getUserVideos(delegate: self) { jsonData in
+            self.userVideoData = []
+            self.userVideos = []
+            jsonData["data"].forEach { (message,data) in
+                self.userVideoData.append(data["videoImage"].stringValue)
+                self.userVideos.append(Post(data: data))
+            }
+            print("nUMBEROFVIDEOS",self.userVideos)
+            needloader ? self.clearAllNotice() : print("NOLOADER")
+            completion()
+        }
+    }
+    func getProfileApi(needLoader:Bool){
+        getProfileVideos(needloader:needLoader){
+            AuthManager.getProfileApi(delegate: self,needLoader: needLoader) {
+                DispatchQueue.main.async {
+                    self.setupCollectioView()
+                    self.delegateCollectioView()
+                }
+            }
+        }
+    }
     func setupCollectioView(){
+        collectionView.register(UINib(nibName:ProfileSliderView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProfileSliderView.identifier)
         collectionView.register(UINib(nibName:UserHeaderReusableView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserHeaderReusableView.identifier)
         collectionView.register(UINib(nibName: ProfileVideoItemCell.identifier, bundle: nil), forCellWithReuseIdentifier: ProfileVideoItemCell.identifier)
-
     }
     func delegateCollectioView(){
         collectionView.delegate = self
@@ -31,16 +64,6 @@ class ProfileVC: UIViewController {
         let vc = SettingVC()
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 extension ProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView,
@@ -50,47 +73,61 @@ extension ProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UIColle
         switch kind {
 
             case UICollectionView.elementKindSectionHeader:
-                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserHeaderReusableView.identifier, for: indexPath)
-
+            if indexPath.section == 0{
+                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserHeaderReusableView.identifier, for: indexPath) as! UserHeaderReusableView
+                headerView.setData(data: AuthManager.currentUser)
+                headerView.delegate = self
                 headerView.backgroundColor = UIColor.blue
                 return headerView
 
+            }
             default:
                 assert(false, "Unexpected element kind")
         }
+        return UICollectionReusableView.init()
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 260)
+        switch section {
+        case 0:
+            return CGSize.init(width: ScreenSize.Width, height: 285)
+        case 1:
+            return CGSize.init(width: ScreenSize.Width, height: 30)
+        default:
+            return .zero
+        }
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        if section == 1 {
-//            return 20 //TODO: Fetch Data then change this
-//        }
-        return 10
+        return userVideoData.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileVideoItemCell.identifier, for: indexPath) as!  ProfileVideoItemCell
-        cell.contentView.backgroundColor = .gray
+        cell.updateCell(withImg: userVideoData[indexPath.row])
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
         let wFrame = collectionView.frame.width
-        let itemWidth = (wFrame/3)-1//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
+        let itemWidth = (wFrame/3)//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
         let itemHeight =  itemWidth * 1.3
         return CGSize.init(width: itemWidth, height: itemHeight)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
+        return 0
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
+        return 0
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ViewVideoVC()
+        vc.data = self.userVideos
+        vc.visitingProfile = false
+        vc.selectedRow = indexPath.row
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }
@@ -103,5 +140,12 @@ class ProfileCollectionViewCell: UICollectionViewCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+extension ProfileVC:UserHeaderReusableViewProtocol{
+    func gotoFollowersListVC(isForFollowing: Bool) {
+        let vc = FollowListVC()
+        vc.isFollowingList = isForFollowing
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

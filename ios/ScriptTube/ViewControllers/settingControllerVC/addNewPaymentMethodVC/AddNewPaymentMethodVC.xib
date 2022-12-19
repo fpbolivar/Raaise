@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -27,34 +27,35 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hwa-U8-UTT">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Np-p1-MNq">
+                    <rect key="frame" x="0.0" y="555" width="414" height="307"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="jZA-0c-z6a">
-                            <rect key="frame" x="20" y="0.0" width="374" height="623"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="jZA-0c-z6a">
+                            <rect key="frame" x="20" y="10" width="374" height="297"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NqA-No-iyg">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NqA-No-iyg">
+                                    <rect key="frame" x="0.0" y="-85" width="374" height="85"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="70" id="4KX-cS-JO2"/>
+                                        <constraint firstAttribute="height" constant="85" id="4KX-cS-JO2"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MsP-py-bY6">
-                                    <rect key="frame" x="0.0" y="85" width="374" height="36"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add New Card " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MsP-py-bY6">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="thG-pI-J64" customClass="ContentSizedTableView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="136" width="374" height="128"/>
+                                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="thG-pI-J64" customClass="ContentSizedTableView" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="29" width="374" height="0.0"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcA-3u-cJ8" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="279" width="374" height="44"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcA-3u-cJ8" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="40" width="374" height="44"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Card number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jvC-sE-O4F">
                                             <rect key="frame" x="10" y="0.0" width="319" height="44"/>
+                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
@@ -82,14 +83,15 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="C2x-4l-mLP">
-                                    <rect key="frame" x="0.0" y="338" width="374" height="44"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="C2x-4l-mLP">
+                                    <rect key="frame" x="0.0" y="106" width="374" height="44"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ReT-Xs-QNr" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="179.5" height="44"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM / YY" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Amf-me-ahe">
                                                     <rect key="frame" x="10" y="0.0" width="134.5" height="44"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -122,6 +124,7 @@
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVV" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jjj-pY-3q3">
                                                     <rect key="frame" x="10" y="0.0" width="134.5" height="44"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -151,21 +154,21 @@
                                         </view>
                                     </subviews>
                                 </stackView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="When choosing payment methods, please check the accuracy of you information" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jkh-pW-MM4">
-                                    <rect key="frame" x="0.0" y="397" width="374" height="36"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When choosing payment methods, please check the accuracy of you information" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jkh-pW-MM4">
+                                    <rect key="frame" x="0.0" y="172" width="374" height="36"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JDx-OC-jc1">
-                                    <rect key="frame" x="0.0" y="448" width="374" height="100"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JDx-OC-jc1">
+                                    <rect key="frame" x="0.0" y="219" width="374" height="100"/>
+                                    <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="Kdb-cK-VuK"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7GQ-Yw-9Ao" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="563" width="374" height="44"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7GQ-Yw-9Ao" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="230" width="374" height="44"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8J-GZ-DEY">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
@@ -196,8 +199,8 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bdv-r9-JbE">
-                                    <rect key="frame" x="0.0" y="622" width="374" height="1"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bdv-r9-JbE">
+                                    <rect key="frame" x="0.0" y="296" width="374" height="1"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="6TD-D1-Yed"/>
@@ -206,22 +209,21 @@
                             </subviews>
                         </stackView>
                     </subviews>
+                    <color key="backgroundColor" name="AddCardColor"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="jZA-0c-z6a" secondAttribute="trailing" constant="20" id="GMT-1q-p39"/>
-                        <constraint firstItem="jZA-0c-z6a" firstAttribute="centerX" secondItem="Hwa-U8-UTT" secondAttribute="centerX" id="WCi-Rh-PHB"/>
-                        <constraint firstItem="jZA-0c-z6a" firstAttribute="top" secondItem="Hwa-U8-UTT" secondAttribute="top" id="a6j-g5-QQI"/>
-                        <constraint firstItem="jZA-0c-z6a" firstAttribute="leading" secondItem="Hwa-U8-UTT" secondAttribute="leading" constant="20" id="ef4-tL-ZNE"/>
-                        <constraint firstAttribute="bottom" secondItem="jZA-0c-z6a" secondAttribute="bottom" id="gF6-hI-hpH"/>
+                        <constraint firstItem="jZA-0c-z6a" firstAttribute="leading" secondItem="8Np-p1-MNq" secondAttribute="leading" constant="20" id="3Y4-wZ-NFl"/>
+                        <constraint firstAttribute="trailing" secondItem="jZA-0c-z6a" secondAttribute="trailing" constant="20" id="ngn-uY-dKM"/>
+                        <constraint firstItem="jZA-0c-z6a" firstAttribute="top" secondItem="8Np-p1-MNq" secondAttribute="top" constant="10" id="tSQ-Z2-rCV"/>
+                        <constraint firstAttribute="bottom" secondItem="jZA-0c-z6a" secondAttribute="bottom" id="wNj-Sf-WXf"/>
                     </constraints>
-                </scrollView>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Hwa-U8-UTT" secondAttribute="bottom" id="A4w-cx-o8l"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Hwa-U8-UTT" secondAttribute="trailing" id="H13-ko-gEx"/>
-                <constraint firstItem="Hwa-U8-UTT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="KOl-TV-jbF"/>
-                <constraint firstItem="Hwa-U8-UTT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="h1f-KH-n3U"/>
+                <constraint firstItem="8Np-p1-MNq" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="VTS-1L-YUt"/>
+                <constraint firstItem="8Np-p1-MNq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ZwY-mq-FNd"/>
+                <constraint firstItem="8Np-p1-MNq" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="vk2-BZ-7QU"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="76.339285714285708"/>
         </view>
@@ -230,8 +232,14 @@
         <image name="ic_card" width="96" height="96"/>
         <image name="ic_lock" width="62" height="76"/>
         <image name="ic_month" width="72" height="76"/>
+        <namedColor name="AddCardColor">
+            <color red="0.90980392156862744" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="BackgroundColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="ButtonColor">
-            <color red="0.78823529411764703" green="0.0078431372549019607" blue="0.0078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.29803921568627451" green="0.45882352941176469" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="CardTextBoxBgColor">
             <color red="0.93333333333333335" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

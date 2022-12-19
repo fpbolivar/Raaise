@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,8 +18,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="odp-RQ-Mt9">
+                        <rect key="frame" x="0.0" y="75" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.14717346849999999" green="0.14717346849999999" blue="0.14717346849999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="DT4-Dh-xWB"/>
+                        </constraints>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXY-2E-Z5f" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="5" width="320" height="66"/>
+                        <rect key="frame" x="0.0" y="5" width="320" height="70"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_user" translatesAutoresizingMaskIntoConstraints="NO" id="8zR-tw-QKG">
                                 <rect key="frame" x="10" y="15" width="40" height="40"/>
@@ -34,7 +41,7 @@
                                     <constraint firstAttribute="height" constant="20.5" id="lc3-Dw-oyE"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="$100" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2S-3Q-WjC">
@@ -43,7 +50,7 @@
                                     <constraint firstAttribute="height" constant="20.5" id="tXh-72-lkv"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mar 15, 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fV7-vO-NhE">
@@ -65,7 +72,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" name="CardCellBg"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="fV7-vO-NhE" firstAttribute="leading" secondItem="8zR-tw-QKG" secondAttribute="trailing" constant="10" id="2iN-9U-9v5"/>
                             <constraint firstItem="n79-Vt-gKg" firstAttribute="leading" secondItem="8zR-tw-QKG" secondAttribute="trailing" constant="10" id="4Kj-Zh-ieo"/>
@@ -86,17 +93,17 @@
                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                 <color key="value" name="CardCellBorder"/>
                             </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                <real key="value" value="1"/>
-                            </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="CXY-2E-Z5f" secondAttribute="trailing" id="4JV-8r-z7Z"/>
+                    <constraint firstItem="odp-RQ-Mt9" firstAttribute="top" secondItem="CXY-2E-Z5f" secondAttribute="bottom" id="CdN-uw-KRT"/>
                     <constraint firstItem="CXY-2E-Z5f" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Fhc-D1-qBN"/>
+                    <constraint firstAttribute="trailing" secondItem="odp-RQ-Mt9" secondAttribute="trailing" id="MdN-TL-a5i"/>
                     <constraint firstItem="CXY-2E-Z5f" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="NK2-HV-9Tm"/>
-                    <constraint firstAttribute="bottom" secondItem="CXY-2E-Z5f" secondAttribute="bottom" constant="5" id="tl6-Rz-lEH"/>
+                    <constraint firstAttribute="bottom" secondItem="odp-RQ-Mt9" secondAttribute="bottom" id="POe-vo-ElN"/>
+                    <constraint firstItem="odp-RQ-Mt9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Zej-tX-9d2"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -112,9 +119,6 @@
     </objects>
     <resources>
         <image name="ic_user" width="506" height="512"/>
-        <namedColor name="CardCellBg">
-            <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="CardCellBorder">
             <color red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

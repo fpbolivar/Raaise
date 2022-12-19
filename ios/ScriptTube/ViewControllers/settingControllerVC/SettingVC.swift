@@ -15,19 +15,36 @@ class SettingVC: BaseControllerVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         listData = manager.getList()
-        addNavBar(headingText:"Settings",redText:"",type: .smallNavBarOnlyBack)
+        addNavBar(headingText:"Settings",redText:"")
         tableView.register(UINib(nibName: SettingCell.identifier, bundle: nil), forCellReuseIdentifier: SettingCell.identifier)
         
         executeTblDelegate()
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
+        getProfileApi()
+        
+    }
+    func getProfileApi(){
+        AuthManager.getProfileApi(delegate: self,needLoader: false) {
+            
+        }
+    }
     func executeTblDelegate(){
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
     }
 }
 extension SettingVC:UITableViewDelegate,UITableViewDataSource{
+    func notificationApi(param:[String:Bool]){
+        AuthManager.notificationsApi(delegate: self, param: param) {
+            
+        }
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
         listData.count
     }
@@ -38,10 +55,10 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 20))
 
         let label = UILabel()
-        label.frame = CGRect.init(x: 10, y: 15, width: headerView.frame.width-10, height: headerView.frame.height-10)
+        label.frame = CGRect.init(x: 10, y: 15, width: headerView.frame.width-10, height: headerView.frame.height-5)
         label.text = listData[section].title.uppercased()
-        label.textColor = UIColor.lightGray//UIColor(named: "borderColor2")
-        label.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX14)
+        label.textColor = UIColor(named: "some")//UIColor.white//UIColor(named: "borderColor2")
+        label.font = AppFont.FontName.bold.getFont(size: AppFont.pX14)
         headerView.addSubview(label)
 
         return headerView
@@ -51,13 +68,36 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
-        return 50
+        return 55
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:  SettingCell.identifier, for: indexPath) as!  SettingCell
+        let item = listData[indexPath.section].items[indexPath.row]
         let type = listData[indexPath.section].type
         if type == .switchBtn{
-            cell.setupToggle(item:listData[indexPath.section].items[indexPath.row])
+            switch item.title.lowercased(){
+            case "Push Notifications".lowercased():
+                cell.setupToggle(item:listData[indexPath.section].items[indexPath.row],state: AuthManager.currentUser.pushNotification)
+                break
+            case "Email Notifications".lowercased():
+                cell.setupToggle(item:listData[indexPath.section].items[indexPath.row],state: AuthManager.currentUser.emailNotification)
+                break
+            default:
+                print("NONOTIFICATIONS")
+            }
+            
+            cell.notificationStateChanged = { state in
+                switch item.title.lowercased(){
+                case "Push Notifications".lowercased():
+                    self.notificationApi(param: ["pushNotification":state])
+                    break
+                case "Email Notifications".lowercased():
+                    self.notificationApi(param: ["emailNotification":state])
+                    break
+                default:
+                    print("NONOTIFICATIONS")
+                }
+            }
         }else{
         cell.setupText(item:listData[indexPath.section].items[indexPath.row])
         }
@@ -90,72 +130,95 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
 
-                
             case "Bank Details".lowercased():
                 let vc = BankAddDetailVC()
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
+            
             case "Terms of Service".lowercased():
                 let vc = HtmlTextRenderVC()
                 vc.fullNavTitle = "Terms of Service"
-                vc.redNavTitle = ""
+                vc.redNavTitle = "Service"
+                vc.viewType = .service
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
+            
             case "Privacy Policy".lowercased():
                 let vc = HtmlTextRenderVC()
-
+                vc.viewType = .privacy
                 vc.fullNavTitle = "Privacy Policy"
-                vc.redNavTitle = ""
+                vc.redNavTitle = "Policy"
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
+            
             case "Copyright Policy".lowercased():
                 let vc = HtmlTextRenderVC()
+                vc.viewType = .copyright
                 vc.fullNavTitle = "Copyright Policy"
-                vc.redNavTitle = ""
+                vc.redNavTitle = "Policy"
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
+            
             case "Deactivate Account".lowercased():
                 let vc = DeactivateAccountVC()
-
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
-
-
+            
             case "Donation Raised".lowercased():
                 let vc = DonationRaisedListVC()
-
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
 
             case "Delete Account".lowercased():
                 let vc = DeleteAccountVC()
-
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
 
             case "Withdrawals".lowercased():
                 let vc = WithdrawListVC()
-
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
 
             case "Payment Methods".lowercased():
                 let vc =  PaymemtSavedCardListVC()
-
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
           
-//            case "logout".lowercased():
-//                self.logoutAlert()
-
-             //   break
+            case "logout".lowercased():
+                //self.logoutAlert()
+            createLogoutAlert()
+                break
+            
             default:
                 print(item)
 
         }
     }
-
+    func createLogoutAlert(){
+        let alert = UIAlertController(title: "ScripTube", message: "Are you sure you want to logout", preferredStyle: .alert)
+        let logOutAction = UIAlertAction(title: "Logout", style: .destructive){action in
+            self.logoutApi()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(cancelAction)
+        alert.addAction(logOutAction)
+        self.present(alert,animated: true)
+    }
+    func logoutApi(){
+        AuthManager.logoutApi(delegate: self, param: ["userId":AuthManager.currentUser.id]) {
+            DispatchQueue.main.async {
+                self.gotoLogin()
+            }
+        }
+    }
+    func gotoLogin(){
+        let vc  = LoginVC()
+        let navVC = UINavigationController(rootViewController: vc)
+        UIApplication.keyWin!.rootViewController = navVC
+        UIApplication.keyWin!.makeKeyAndVisible()
+    }
     func logoutAlert(){
+       
 //        let alert = UIAlertController(title:AlertView.self.title, message: NSLocalizedString(Localize.alert_Logout, comment: ""), preferredStyle: UIAlertController.Style.alert)
 //
 //        let disconnectAction =   UIAlertAction(title:"Logout", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in

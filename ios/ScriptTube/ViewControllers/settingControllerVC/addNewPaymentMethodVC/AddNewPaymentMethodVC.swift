@@ -18,7 +18,7 @@ class AddNewPaymentMethodVC: BaseControllerVC {
     @IBOutlet weak var  cvvTF:UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        addNavBar(headingText:"Payment Methods",redText:"Methods")
+        //addNavBar(headingText:"Payment Methods",redText:"Methods")
         setfonts()
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: CardCell.identifier, bundle: nil), forCellReuseIdentifier: CardCell.identifier)
@@ -28,8 +28,8 @@ class AddNewPaymentMethodVC: BaseControllerVC {
     func setfonts(){
 
         bottomInfoLbl.font = AppFont.FontName.light.getFont(size: AppFont.pX14)
-        topInfoLbl.font = AppFont.FontName.light.getFont(size: AppFont.pX14)
-        cardTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        topInfoLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX14)
+        //cardTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
         cardTF.placeholderColor(color: UIColor.darkGray, placeholderText: "Card Number")
         monthTF.placeholderColor(color: UIColor.darkGray, placeholderText: "MM / YY")
         cvvTF.placeholderColor(color: UIColor.darkGray, placeholderText: "CVV")

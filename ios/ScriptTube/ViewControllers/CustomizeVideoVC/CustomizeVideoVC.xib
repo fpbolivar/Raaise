@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomizeVideoVC" customModule="ScriptTube" customModuleProvider="target">
+            <connections>
+                <outlet property="audioNameLbl" destination="SUA-ys-oZc" id="ASO-Kh-c8E"/>
+                <outlet property="musicImg" destination="xom-aY-qqz" id="lkU-H8-JN5"/>
+                <outlet property="videoContainer" destination="meA-7s-WMN" id="f5f-hn-KhE"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="meA-7s-WMN" customClass="AVPlayerView" customModule="ScriptTube" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="xom-aY-qqz">
+                    <rect key="frame" x="153.5" y="68.5" width="15" height="14"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="15" id="3zh-3J-Wrt"/>
+                        <constraint firstAttribute="height" constant="15" id="gMo-aP-YEf"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Audio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SUA-ys-oZc">
+                    <rect key="frame" x="173.5" y="68" width="67" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zeN-YB-j7m">
+                    <rect key="frame" x="30" y="807" width="50" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="MpR-C3-ct0"/>
+                        <constraint firstAttribute="height" constant="35" id="WZe-1L-b3l"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="ic_cancel_editing"/>
+                    <connections>
+                        <action selector="cancelBtnClicked:" destination="-1" eventType="touchUpInside" id="QsW-5q-1xh"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gND-vX-RFo">
+                    <rect key="frame" x="334" y="807" width="50" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="JEa-Bh-jtg"/>
+                        <constraint firstAttribute="height" constant="35" id="xRN-tP-PDO"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="ic_confirm_editing"/>
+                    <connections>
+                        <action selector="nextBtnClicked:" destination="-1" eventType="touchUpInside" id="nnp-Q7-qtP"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="gND-vX-RFo" secondAttribute="bottom" constant="20" id="1XQ-v4-Sfg"/>
+                <constraint firstItem="SUA-ys-oZc" firstAttribute="leading" secondItem="xom-aY-qqz" secondAttribute="trailing" constant="5" id="20Z-ft-QS2"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="meA-7s-WMN" secondAttribute="trailing" id="GSO-Kc-4Ve"/>
+                <constraint firstItem="SUA-ys-oZc" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="H3k-y5-x5l"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="meA-7s-WMN" secondAttribute="bottom" id="Irg-OI-yvI"/>
+                <constraint firstItem="xom-aY-qqz" firstAttribute="centerY" secondItem="SUA-ys-oZc" secondAttribute="centerY" id="KkM-Dw-2dE"/>
+                <constraint firstItem="meA-7s-WMN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="PqQ-1s-1u2"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="gND-vX-RFo" secondAttribute="trailing" constant="30" id="Wuq-ef-ufv"/>
+                <constraint firstItem="xom-aY-qqz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="bAi-ha-ndE"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="zeN-YB-j7m" secondAttribute="bottom" constant="20" id="riT-XH-0oW"/>
+                <constraint firstItem="zeN-YB-j7m" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="sPe-kM-8tF"/>
+                <constraint firstItem="SUA-ys-oZc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="u5H-Ms-5ls"/>
+                <constraint firstItem="meA-7s-WMN" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="wdt-wy-dVU"/>
+                <constraint firstItem="xom-aY-qqz" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="zUf-7u-gWz"/>
+            </constraints>
+            <point key="canvasLocation" x="21" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_cancel_editing" width="43" height="28"/>
+        <image name="ic_confirm_editing" width="35" height="34"/>
+        <image name="music.note" catalog="system" width="96" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TabBarController:  UITabBarController, UITabBarControllerDelegate {
+class TabBarController:  UITabBarController  {
     
     var homeNavigationController: UIViewController!
     var homeViewController: UIViewController!
@@ -23,18 +23,21 @@ class TabBarController:  UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad(){
         super.viewDidLoad()
         self.delegate = self
-        
-        tabBar.barTintColor = .white
-        tabBar.isTranslucent = false
+        UITabBarItem.appearance().titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5)
+        UITabBarItem.appearance().setTitleTextAttributes([.font:AppFont.FontName.bold.getFont(size: AppFont.pX10)], for: .normal)
+        tabBar.barTintColor = .black
+        tabBar.isTranslucent = true
         tabBar.unselectedItemTintColor = .gray
-        tabBar.tintColor = .black
-        
+//        self.extendedLayoutIncludesOpaqueBars = false
+//        self.edgesForExtendedLayout = .bottom
+        tabBar.tintColor = .white
+       
         homeViewController = HomeVC()
         homeNavigationController = UINavigationController(rootViewController: homeViewController)
-        discoverViewController = UINavigationController(rootViewController:SearchVC())
-        mediaViewController = UINavigationController(rootViewController:AddMediaVC())
-        inboxViewController = UINavigationController(rootViewController:InboxVC())
-        profileViewController = UINavigationController(rootViewController:ProfileVC())
+        discoverViewController = UINavigationController(rootViewController:SearchVC())//
+        mediaViewController = AddMediaVC()
+        inboxViewController = UINavigationController(rootViewController:InboxVC()) //
+        profileViewController = UINavigationController(rootViewController:ProfileVC())// 
      
         
         homeViewController.tabBarItem.image = UIImage(named: "ic_un_home")
@@ -62,21 +65,39 @@ class TabBarController:  UITabBarController, UITabBarControllerDelegate {
                 tabBarItem.title = ""
                 tabBarItem.imageInsets = UIEdgeInsets(top: -6, left: 0, bottom: -6, right: 0)
                 
+            }else{
+                tabBarItem.imageInsets = UIEdgeInsets(top: -3, left: 0, bottom: 3, right: 0)
             }
         }
+     
     }
-    
-//    //MARK: UITabbar Delegate
-//    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-//        if viewController.isKind(of: MediaViewController.self) {
-//            let vc =  UIStoryboard(name: "MediaViews", bundle: nil).instantiateViewController(identifier: "MediaVC") as! MediaViewController
-//            let navigationController = BaseNavigationController.init(rootViewController: vc)
-//            navigationController.modalPresentationStyle = .overFullScreen
-//            self.present(navigationController, animated: true, completion: nil)
-//            return false
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+//    override var selectedViewController: UIViewController? { // Mark 2
+//        didSet {
+//            guard let viewControllers = viewControllers else { return }
 //        }
-//      return true
+//
+//
 //    }
+//    override var selectedIndex: Int { // Mark 1
+//
+//        didSet {
+//            print("SSELECTED INDEX")
+//            guard let selectedViewController = viewControllers?[selectedIndex] else { return }
+//            self.selectedViewController = selectedViewController
+//        }
+//    }
+
     
-    
+}
+extension TabBarController : UITabBarControllerDelegate{
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+      print(#function)
+    }
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        print(#function)
+        return true
+    }
 }

@@ -6,10 +6,12 @@
 //
 
 import UIKit
-
+import FacebookLogin
+import GoogleSignIn
 class LoginVC: BaseControllerVC {
 
 
+    @IBOutlet weak var eyeImg: UIImageView!
     @IBOutlet weak var  orSignInWithLbl:UILabel!
     @IBOutlet weak var  donthaveLbl:UILabel!
 
@@ -21,40 +23,151 @@ class LoginVC: BaseControllerVC {
     @IBOutlet weak var  googleLbl:UILabel!
     @IBOutlet weak var  donthaveAccountLbl:ActiveLabel!
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         hideNavbar()
         setfonts()
         setPlaceholder()
         redColorUnderline()
-       
-       // titleText = "Login"
-       // headingText = "Personal Information"
-       // redText = "Information"
-       // addNavBar(leftAction: #selector(backAction))
-        // Do any additional setup after loading the view.
+        emailTF.text = "test101@gmail.com"
+        passTF.text = "Green@1212"
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    @IBAction func googleLogin(_ sender: Any) {
+        googleLogin()
+    }
+    @IBAction func facebookLogin(_ sender: Any) {
+        fbLogin()
+    }
+    func googleLoginApi(withToken token:String){
+        let param = ["token":token,"deviceType":"ios"]
+        AuthManager.googleLoginApi(delegate: self, param: param) {
+            DispatchQueue.main.async {
+                self.goToTabBar()
+            }
+        }
+    }
+    func googleLogin() {
+        GIDSignIn.sharedInstance.signOut()
+        GIDSignIn.sharedInstance.signIn(with: AppDelegate.signInConfig, presenting: self){user,error in
+            print("GOOGLETOKEN",user?.authentication.idToken,user?.authentication.accessToken)
+            guard let googleToken = user?.authentication.accessToken else{return}
+            self.googleLoginApi(withToken: googleToken)
+        }
+    }
+    func fbLogin(){
+        let fbLoginManager : LoginManager = LoginManager()
+        fbLoginManager.logOut()
+        fbLoginManager.logIn(permissions: ["email","public_profile"], from: self) { (result, error) -> Void in
+            if (error == nil){
+                let fbloginresult : LoginManagerLoginResult = result!
+                // if user cancel the login
+                if (result?.isCancelled)!{
+                    return
+                }
+                if(fbloginresult.grantedPermissions.contains("email"))
+                {
+                    self.getFBUserData()
+                }
+            }
+        }
+    }
+    func fbLoginApi(withToken token:String){
+        let param = ["token":token,"deviceType":"ios"]
+        AuthManager.facebookLoginApi(delegate: self, param: param) {
+            DispatchQueue.main.async {
+                self.goToTabBar()
+            }
+        }
+    }
+    func getFBUserData(){
+        if((AccessToken.current) != nil){
+            GraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, picture.type(large), email"]).start(completion: { (connection, result, error) -> Void in
+          if (error == nil){
+            //everything works print the user data
+              if let fbToken = AccessToken.current?.tokenString{
+                  print("FACEBOOKTOKEN",fbToken)
+                  self.fbLoginApi(withToken: fbToken)
+              }
+            //print(result)
+          }
+        })
+      }
+    }
+    func goToTabBar(){
+        let vc  = MainTabBarVC()
+        UIApplication.keyWin!.rootViewController = vc
+        UIApplication.keyWin!.makeKeyAndVisible()
+    }
+    func loginApi(){
+        let param = ["email":emailTF.text ?? "","password":passTF.text ?? ""]
+        AuthManager.loginApi(delegate: self, param: param) {
+            DispatchQueue.main.async {
+                self.goToTabBar()
+            }
+        }
+    }
+    func checkValidations(){
+        if (emailTF.text!.isEmpty){
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyEmail+" or Username")
+            return
+        }
+//        else if (!Validator.isValidEmail(email: emailTF.text ?? "")){
+//            ToastManager.errorToast(delegate: self, msg: LocalStrings.validEmail)
+//            return
+//        }
+        else if(passTF.text!.isEmpty){
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyPassword)
+            return
+        }
+//        else if (!Validator.isValidPassword(value: passTF.text ?? "")){
+//            ToastManager.errorToast(delegate: self, msg: LocalStrings.validPassword)
+//            return
+//        }
+        else{
+            loginApi()
+        }
+    }
     func setfonts(){
+        eyeImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showPassword)))
         orSignInWithLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-
+        orSignInWithLbl.textColor = .white
         googleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
         forgotBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX15)
         signInBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX17)
         passTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        emailTF.overrideUserInterfaceStyle = .light
+        passTF.overrideUserInterfaceStyle = .light
+        emailTF.layer.cornerRadius = 10
+        passTF.layer.cornerRadius = 10
         emailTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
         emailTF.paddingLeftRightTextField(left: 20, right: 20)
         passTF.paddingLeftRightTextField(left: 20, right: 20)
-
+        
+       
+    }
+    @objc func showPassword(){
+        passTF.isSecureTextEntry = !passTF.isSecureTextEntry
+        if passTF.isSecureTextEntry{
+            eyeImg.image = UIImage(systemName: "eye")
+        }else{
+            eyeImg.image = UIImage(systemName: "eye.slash")
+        }
     }
     func setPlaceholder(){
-        passTF.placeholder = "********"
-        emailTF.placeholder = "abc@ymail.uk"
+        emailTF.attributedPlaceholder = NSAttributedString(string: "Email Address or Username",attributes: [.foregroundColor: UIColor.lightGray])
+        passTF.attributedPlaceholder = NSAttributedString(string: "Password",attributes: [.foregroundColor: UIColor.lightGray])
+//        passTF.placeholder = "********"
+//        emailTF.placeholder = "abc@ymail.uk"
     }
     func redColorUnderline(){
 
         let customType = ActiveType.custom(pattern:  "SignUp")
         donthaveAccountLbl.enabledTypes.append(customType)
-        donthaveAccountLbl.textColor = UIColor.black
+        donthaveAccountLbl.textColor = UIColor.white
         donthaveAccountLbl.underLineEnable = false
         donthaveAccountLbl.text = "You don’t have an account ?SignUp"
         donthaveAccountLbl.customColor[customType] = UIColor.theme
@@ -72,8 +185,7 @@ class LoginVC: BaseControllerVC {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func loginAction(_ sender: AnyObject) {
-        let vc  = TabBarController()
-        UIApplication.keyWin!.rootViewController = vc
-        UIApplication.keyWin!.makeKeyAndVisible()
+        checkValidations()
+        
     }
 }
