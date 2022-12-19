@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fillViewport="true"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".Settings.MyAccount.UserName">
 
     <RelativeLayout
@@ -19,7 +19,8 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="50dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/backarrow" />
+            android:src="@drawable/backarrow"
+            app:tint="@color/white" />
 
         <LinearLayout
             android:id="@+id/TextInForgetPassword"
@@ -27,15 +28,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/BackInSignUp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="17dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Username"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textColor="@color/TextColor"
+                android:textSize="18sp" />
 
 
         </LinearLayout>
@@ -51,27 +52,43 @@
             android:text="This is your unique name to be used in the ScripTube and how your
 friends find and add you."
             android:textColor="@color/hintGreyColor"
-            android:textSize="15dp" />
-
-        <EditText
-            android:id="@+id/EmailEditTextInForgetPassword"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/Text1InForgetPassword"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_shape"
-            android:hint="Username"
-            android:inputType="textEmailAddress"
-            android:paddingStart="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hintGreyColor" />
+            android:textSize="10sp" />
 
         <LinearLayout
-            android:id="@+id/LoginButton"
+            android:layout_below="@+id/Text1InForgetPassword"
+            android:id="@+id/UsernameEditTextInChangeUserNameLayout"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:background="@drawable/curved_dark_grey_background"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:text="@"
+                android:layout_marginStart="20dp"
+                android:textSize="12sp"
+                android:textColor="@color/light_grey" />
+            <EditText
+                android:id="@+id/UsernameEditTextInChangeUserName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/curved_dark_grey_background"
+                android:hint="Username"
+                android:inputType="textEmailAddress"
+                android:paddingEnd="20dp"
+                android:textSize="12sp"
+                android:textColor="@color/light_grey"
+                android:textColorHint="@color/light_grey" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/UpdateUserNameButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/EmailEditTextInForgetPassword"
+            android:layout_below="@+id/UsernameEditTextInChangeUserNameLayout"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_shape_login"
@@ -83,15 +100,14 @@ friends find and add you."
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Update"
-                android:textColor="@color/WhiteColor"
-                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
 
     </RelativeLayout>
-
 
 
 </ScrollView>

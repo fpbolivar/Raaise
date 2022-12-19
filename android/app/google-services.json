@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "386568747603",
+    "project_id": "scrip-tube",
+    "storage_bucket": "scrip-tube.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386568747603:android:45b09a22c384f8b4abe4a6",
+        "android_client_info": {
+          "package_name": "com.scripttube.android.ScriptTube"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386568747603-s59pjn5racbuq2cg0a65jtakhkj0i10t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy5PVck0K_Hb1ActvxfbJuCqoSV6ewAu4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386568747603-s59pjn5racbuq2cg0a65jtakhkj0i10t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

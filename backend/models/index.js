@@ -1,4 +1,21 @@
 module.exports = {
     admin: require('./adminModel'),
-    user: require("./userModel")
+    user: require("./userModel"),
+    paymentSetting: require("./paymentSettingModel"),
+    userTokenModel: require("./userTokenModel"),
+    videoAudio: require("./videoAudioModel"),
+    genreModal: require("./genreModel"),
+    userVideo: require("./userVideoModel"),
+    generalSettings: require("./generalSettingsModel"),
+    videoLikesModel: require("./videoLikesModel"),
+    userFollowersModel: require("./userFollowersModel"),
+    commentModel: require("./commentModel"),
+    notification: require("./notificationsModel"),
+    commentReply: require("./commentReplyModel"),
+    reportedVideo: require("./reportedVideoModel"),
+    videosViewModel: require("./videosViewModel"),
+    wallet: require("./walletModel"),
+    transaction: require("./transactionModel"),
+    paymentRequest: require("./paymentRequestModel"),
+    category: require("./categoryModel")
 }

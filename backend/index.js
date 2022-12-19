@@ -5,10 +5,11 @@ var bodyParser = require('body-parser')
 var cors = require('cors')
 app.use(cors())
 app.use(bodyParser.json())
-const admin = require('./router/admimRouters')
+const admin = require('./router/adminRouters')
 const user = require("./router/userRouters")
 require('./config/dbConfig')
 const fileupload = require("express-fileupload");
+require("./scheduler/scheduler");
 
 app.use(fileupload());
 

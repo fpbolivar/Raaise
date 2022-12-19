@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/WhiteColor"
     tools:context=".Home.Fragments.HomeFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerViewInHome"
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/ViewPager1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:tabTextAppearance="@style/MineCustomTabText"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/Transparent"
+        app:tabIndicatorGravity="bottom"
+        app:tabTextColor="@color/white"
+        app:tabIndicator="@drawable/custom_tablayout_indicator1"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorColor="@color/white"/>
+    <ImageView
+        android:id="@+id/NotificationBellIcon"
+        android:layout_marginTop="45dp"
+        android:layout_width="19dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/bell_icon"
+        android:layout_height="16dp"/>
 
 </RelativeLayout>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
     tools:context=".Settings.Payments.BankDetails">
 
@@ -13,6 +15,7 @@
         android:orientation="vertical">
 
         <ImageView
+            app:tint="@color/white"
             android:id="@+id/BackInSignUp"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
@@ -27,91 +30,196 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/BackInSignUp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Bank "
-                android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Details"
-                android:textColor="@color/design_default_color_error"
-                android:textSize="20dp" />
+                android:textStyle="bold"
+                android:textColor="@color/new_textcolor"
+                android:textSize="18sp" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/Text1InForgetPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/TextInForgetPassword"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/noto_sans"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. "
-            android:textColor="@color/hintGreyColor"
-            android:textSize="15dp" />
-
-        <EditText
-            android:id="@+id/OldPasswordEditTextInChangePassword"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/Text1InForgetPassword"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_shape"
-            android:hint="Account holder name"
-            android:inputType="textPersonName"
-            android:paddingStart="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hintGreyColor" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/Text1InForgetPassword"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_shape"
-            android:hint="Routing Number"
-            android:inputType="phone"
-            android:paddingStart="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hintGreyColor" />
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-        <EditText
-            android:id="@+id/NewPasswordEditTextInChangePassword"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/OldPasswordEditTextInChangePassword"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_shape"
-            android:hint="Account Number"
-            android:inputType="phone"
-            android:paddingStart="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hintGreyColor" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/ConfirmPasswordEditTextInChangePassword"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/NewPasswordEditTextInChangePassword"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_shape"
-            android:hint="Confirm Account Number"
-            android:inputType="phone"
-            android:paddingStart="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hintGreyColor" />
+                <TextView
+                    android:id="@+id/Text1InForgetPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/TextInForgetPassword"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. "
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
 
+                <EditText
+                    android:id="@+id/OldPasswordEditTextInChangePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/curved_dark_grey_background"
+                    android:hint="Bank Name"
+                    android:inputType="textPersonName"
+                    android:paddingStart="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/light_grey"
+                    android:textColorHint="@color/light_grey" />
+
+                <EditText
+                    android:id="@+id/NewPasswordEditTextInChangePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/curved_dark_grey_background"
+                    android:hint="Account Number"
+                    android:inputType="phone"
+                    android:paddingStart="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textSize="12sp"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="@color/light_grey"
+                    android:textColorHint="@color/light_grey" />
+
+                <EditText
+                    android:id="@+id/ConfirmPasswordEditTextInChangePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/curved_dark_grey_background"
+                    android:hint="Confirm Account number"
+                    android:inputType="phone"
+                    android:paddingStart="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="@color/light_grey"
+                    android:textSize="12sp"
+                    android:textColorHint="@color/light_grey" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/curved_dark_grey_background"
+                    android:hint="Routing Number"
+                    android:inputType="phone"
+                    android:paddingStart="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="@color/light_grey"
+                    android:textSize="12sp"
+                    android:textColorHint="@color/light_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:weightSum="2">
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/curved_dark_grey_background"
+                        android:layout_marginRight="4dp"
+                        android:hint="City"
+                        android:inputType="phone"
+                        android:paddingStart="20dp"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="14dp"
+                        android:textColor="@color/light_grey"
+                        android:textSize="12sp"
+                        android:textColorHint="@color/light_grey" />
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/curved_dark_grey_background"
+                        android:layout_marginLeft="4dp"
+                        android:hint="State"
+                        android:inputType="phone"
+                        android:paddingStart="20dp"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="14dp"
+                        android:textColor="@color/light_grey"
+                        android:textSize="12sp"
+                        android:textColorHint="@color/light_grey" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/curved_dark_grey_background"
+                    android:hint="Address"
+                    android:inputType="phone"
+                    android:paddingStart="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="@color/light_grey"
+                    android:textSize="12sp"
+                    android:textColorHint="@color/light_grey" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/curved_dark_grey_background"
+                    android:hint="Postal Code"
+                    android:inputType="phone"
+                    android:paddingStart="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="@color/light_grey"
+                    android:textSize="12sp"
+                    android:textColorHint="@color/light_grey" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/curved_dark_grey_background"
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:paddingStart="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="@color/light_grey"
+                    android:textSize="12sp"
+                    android:textColorHint="@color/light_grey" />
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/LoginButton"
@@ -119,7 +227,7 @@
             android:layout_height="50dp"
             android:layout_below="@+id/ConfirmPasswordEditTextInChangePassword"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/button_shape_login"
             android:gravity="center"
             android:orientation="vertical">
@@ -129,12 +237,12 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Save"
-                android:textColor="@color/WhiteColor"
-                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

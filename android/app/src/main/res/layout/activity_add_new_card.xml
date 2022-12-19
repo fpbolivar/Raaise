@@ -3,15 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
     tools:context=".Settings.Payments.AddNewCard">
 
     <LinearLayout
+        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <ImageView
+            app:tint="@color/white"
             android:id="@+id/BackInSignUp"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
@@ -33,16 +36,16 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Payment "
-                android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textColor="@color/TextColor"
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Methods"
-                android:textColor="@color/design_default_color_error"
-                android:textSize="20dp" />
+                android:textColor="@color/LogoGreyColor"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <TextView
@@ -55,7 +58,7 @@
             android:fontFamily="@font/noto_sans"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. "
             android:textColor="@color/hintGreyColor"
-            android:textSize="15dp" />
+            android:textSize="11sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
@@ -71,9 +74,10 @@
             android:background="@drawable/paymentmethod_edittext"
             android:drawableEnd="@drawable/card_edittext"
             android:hint="Card Number"
+            android:textSize="14sp"
             android:paddingStart="10dp"
             android:paddingEnd="20dp"
-            android:textColorHint="@color/black" />
+            android:textColorHint="@color/TextColor1" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,9 +94,10 @@
                 android:background="@drawable/paymentmethod_edittext"
                 android:drawableEnd="@drawable/card_edittext"
                 android:hint="MM/YY"
+                android:textSize="14sp"
                 android:paddingStart="10dp"
                 android:paddingEnd="20dp"
-                android:textColorHint="@color/black" />
+                android:textColorHint="@color/TextColor1" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -101,9 +106,10 @@
                 android:background="@drawable/paymentmethod_edittext"
                 android:drawableEnd="@drawable/card_edittext"
                 android:hint="CVV"
+                android:textSize="14sp"
                 android:paddingStart="10dp"
                 android:paddingEnd="20dp"
-                android:textColorHint="@color/black" />
+                android:textColorHint="@color/TextColor1" />
 
         </LinearLayout>
 
@@ -116,7 +122,7 @@
             android:fontFamily="@font/noto_sans"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. "
             android:textColor="@color/DarkGrey"
-            android:textSize="15dp" />
+            android:textSize="12sp" />
 
         <LinearLayout
             android:id="@+id/LoginButton"
@@ -133,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Update"
-                android:textColor="@color/WhiteColor"
+                android:textColor="@color/white"
                 android:textSize="18dp"
                 android:textStyle="bold" />
 

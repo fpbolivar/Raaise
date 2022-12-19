@@ -19,6 +19,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                app:tint="@color/white"
                 android:id="@+id/BackInSignUp"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
                 android:src="@drawable/backarrow" />
 
             <TextView
+                android:id="@+id/tv_withdraw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -36,7 +38,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="Withdrawal Doantion"
                 android:textColor="@color/BlueLinkColor"
-                android:textSize="14dp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </RelativeLayout>
 
@@ -46,23 +48,23 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/BackInSignUp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Donation "
-                android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textColor="@color/TextColor"
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Raised"
-                android:textColor="@color/design_default_color_error"
-                android:textSize="20dp" />
+                android:textColor="@color/LogoGreyColor"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <TextView
@@ -75,14 +77,15 @@
             android:fontFamily="@font/noto_sans"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. "
             android:textColor="@color/hintGreyColor"
-            android:textSize="15dp" />
+            android:textSize="10sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/donation_raised_bg"
+            android:padding="8dp"
+            android:background="@drawable/donation_bg_bg"
             android:orientation="horizontal"
             android:weightSum="3">
             <!--*************   Post Layout    *************-->
@@ -99,8 +102,8 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
-                    android:text="$115"
-                    android:textColor="@color/black"
+                    android:text="$ 115"
+                    android:textColor="@color/white"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
@@ -110,13 +113,60 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
-                    android:text="Given"
+                    android:text="Raised"
+                    android:layout_marginTop="4dp"
                     android:textColor="@color/Green"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
             <!--*************   Followers Layout    *************-->
+
+            <View
+                android:layout_width="1.5dp"
+                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:background="@color/GreyColor"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/noto_sans"
+                    android:gravity="center"
+                    android:text="$ 115"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:gravity="center"
+                    android:text="Donation"
+                    android:textColor="@color/Red_donated_text_color"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+            <!--*************   Following Layout    *************-->
+
+            <View
+                android:layout_width="1.5dp"
+                android:layout_margin="4dp"
+                android:layout_height="match_parent"
+                android:background="@color/GreyColor"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,7 +181,7 @@
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="$115"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
@@ -139,40 +189,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
-                    android:text="Followers"
-                    android:textColor="@color/design_default_color_error"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-            <!--*************   Following Layout    *************-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="115"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="Following"
+                    android:text="Withdrawal"
                     android:textColor="@color/Green"
                     android:textSize="14dp"
                     android:textStyle="bold" />
@@ -186,7 +206,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/donation_raised_bg"
             android:orientation="horizontal">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -194,7 +213,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginVertical="10dp"
-                android:layout_marginStart="15dp">
+                >
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView2"
@@ -209,13 +228,6 @@
                         android:src="@drawable/delete_it" />
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:backgroundTint="@color/Green"
-                    app:cardCornerRadius="100dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cardView2"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -234,7 +246,7 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
                     android:text="Maninder"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="14dp" />
 
                 <TextView
@@ -243,7 +255,7 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
                     android:text="Mar 15,2022"
-                    android:textColor="@color/DarkGrey"
+                    android:textColor="@color/GreyColor"
                     android:textSize="10dp"
                     android:textStyle="bold" />
 
@@ -255,7 +267,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -264,8 +275,8 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
-                    android:text="$115"
-                    android:textColor="@color/black"
+                    android:text="$ 115"
+                    android:textColor="@color/white"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
@@ -284,20 +295,25 @@
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#2C2A2A"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="4dp"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/donation_raised_bg"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ConstraintLayout1"
+                android:id="@+id/ConstraintLayout2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginStart="15dp">
+                android:layout_marginVertical="10dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView3"
@@ -309,16 +325,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/delete_it" />
+                        android:src="@drawable/artist_img" />
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:backgroundTint="@color/Green"
-                    app:cardCornerRadius="100dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cardView3"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView3" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -328,7 +337,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
-                android:layout_toRightOf="@+id/ConstraintLayout1"
+                android:layout_toRightOf="@+id/ConstraintLayout2"
                 android:orientation="vertical">
 
                 <TextView
@@ -336,17 +345,17 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
-                    android:text="Maninder"
-                    android:textColor="@color/black"
+                    android:text="Travis Barker"
+                    android:textColor="@color/white"
                     android:textSize="14dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="start"
                     android:fontFamily="@font/noto_sans"
                     android:text="Mar 15,2022"
-                    android:textColor="@color/DarkGrey"
+                    android:textColor="@color/GreyColor"
                     android:textSize="10dp"
                     android:textStyle="bold" />
 
@@ -358,7 +367,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -367,8 +375,8 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
-                    android:text="$115"
-                    android:textColor="@color/black"
+                    android:text="$ 10"
+                    android:textColor="@color/white"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
@@ -378,8 +386,8 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
-                    android:text="Given"
-                    android:textColor="@color/Green"
+                    android:text="Pending"
+                    android:textColor="@color/Red_donated_text_color"
                     android:textSize="14dp"
                     android:textStyle="bold" />
 
@@ -387,624 +395,12 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/donation_raised_bg"
-            android:orientation="horizontal">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ConstraintLayout1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginStart="15dp">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="100dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/delete_it" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:backgroundTint="@color/Green"
-                    app:cardCornerRadius="100dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cardView3"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView3" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_toRightOf="@+id/ConstraintLayout1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Maninder"
-                    android:textColor="@color/black"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Mar 15,2022"
-                    android:textColor="@color/DarkGrey"
-                    android:textSize="10dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="$115"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="Given"
-                    android:textColor="@color/Green"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/donation_raised_bg"
-            android:orientation="horizontal">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ConstraintLayout1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginStart="15dp">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="100dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/delete_it" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:backgroundTint="@color/Green"
-                    app:cardCornerRadius="100dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cardView3"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView3" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_toRightOf="@+id/ConstraintLayout1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Maninder"
-                    android:textColor="@color/black"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Mar 15,2022"
-                    android:textColor="@color/DarkGrey"
-                    android:textSize="10dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="$115"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="Given"
-                    android:textColor="@color/Green"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/donation_raised_bg"
-            android:orientation="horizontal">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ConstraintLayout1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginStart="15dp">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="100dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/delete_it" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:backgroundTint="@color/Green"
-                    app:cardCornerRadius="100dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cardView3"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView3" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_toRightOf="@+id/ConstraintLayout1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Maninder"
-                    android:textColor="@color/black"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Mar 15,2022"
-                    android:textColor="@color/DarkGrey"
-                    android:textSize="10dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="$115"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="Given"
-                    android:textColor="@color/Green"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/donation_raised_bg"
-            android:orientation="horizontal">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ConstraintLayout1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginStart="15dp">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="100dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/delete_it" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:backgroundTint="@color/Green"
-                    app:cardCornerRadius="100dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cardView3"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView3" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_toRightOf="@+id/ConstraintLayout1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Maninder"
-                    android:textColor="@color/black"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Mar 15,2022"
-                    android:textColor="@color/DarkGrey"
-                    android:textSize="10dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="$115"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="Given"
-                    android:textColor="@color/Green"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/donation_raised_bg"
-            android:orientation="horizontal">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ConstraintLayout1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginStart="15dp">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="100dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/delete_it" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:backgroundTint="@color/Green"
-                    app:cardCornerRadius="100dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cardView3"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView3" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_toRightOf="@+id/ConstraintLayout1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Maninder"
-                    android:textColor="@color/black"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Mar 15,2022"
-                    android:textColor="@color/DarkGrey"
-                    android:textSize="10dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="$115"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="Given"
-                    android:textColor="@color/Green"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/donation_raised_bg"
-            android:orientation="horizontal">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ConstraintLayout1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginStart="15dp">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="100dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/delete_it" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:backgroundTint="@color/Green"
-                    app:cardCornerRadius="100dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/cardView3"
-                    app:layout_constraintEnd_toEndOf="@+id/cardView3" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_toRightOf="@+id/ConstraintLayout1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Maninder"
-                    android:textColor="@color/black"
-                    android:textSize="14dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Mar 15,2022"
-                    android:textColor="@color/DarkGrey"
-                    android:textSize="10dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="$115"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="Given"
-                    android:textColor="@color/Green"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
+            android:layout_height="0.5dp"
+            android:background="#2C2A2A"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="4dp"/>
 
     </LinearLayout>
 

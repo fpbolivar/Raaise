@@ -1,0 +1,201 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Mulish", sans-serif !important;
+}
+body {
+  margin: 0;
+  font-family: "Mulish", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* overflow: hidden;  */
+  /* height: 100vh; */
+}
+#custom-loader {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 9999;
+  /* background: url("https://net-vest.com/assets/images/loader.gif") no-repeat center center rgba(0, 0, 0, 1); */
+  background-size: auto auto !important;
+  background-size: 100px !important;
+  background-color: rgb(0, 0, 0) !important;
+  opacity: 0.5;
+  cursor: wait;
+  display: none;
+  top: 0;
+  left: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+.font-size-0-80rem {
+  font-size: 0.8rem !important;
+}
+.font-size-0-90rem {
+  font-size: 14px !important;
+}
+
+.font-size-0-80rem {
+  font-size: 0.8rem !important;
+}
+
+.font-size-1rem {
+  font-size: 16px !important;
+}
+.tx-trans-capitalize {
+  text-transform: capitalize !important;
+}
+.password-visible {
+  background: url("/assets/icons/eye-icon.svg") no-repeat;
+  height: 16px;
+  width: 16px;
+}
+outline-auto {
+  background-color: aliceblue;
+  outline: 50px auto black;
+}
+
+.card {
+  margin-bottom: 50px;
+}
+.outline-box {
+  margin: 40px auto;
+  width: 180px;
+  height: 180px;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: white;
+  color: black;
+  font-size: 12px;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 3px;
+  box-shadow: 0px 0px 5px 3px #80808021;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 90%;
+  left: 50%;
+  margin-left: -85px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+@media only screen and (max-width: 470px) and (min-width: 370px) {
+  .tooltip .tooltiptext {
+    width: 120px;
+    top: -25px;
+    right: 50%;
+  }
+}
+/* 
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .table-container h2 {
+    margin: 0;
+    text-decoration: underline;
+  }
+  
+  
+  table td,
+  table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  table tr:nth-child(even) {
+    background-color: #e9ebec;
+  }
+  
+  table tr:hover {
+    background-color: #ddd;
+  }
+  
+  table th,
+  tfoot td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #8e8e93;
+    color: white;
+  }
+  
+  .columns_toggle {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    background-color: rgb(175, 228, 122);
+    padding: 0.5rem;
+    border-radius: 8px;
+  }
+   */
+
+.arrow_box {
+  padding: 8px;
+}
+.dataTables_empty {
+  text-align: center !important;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+}
+
+.sidebar-content::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+  background-color: #e9ebec;
+}
+.hide {
+  display: none;
+}
+.float-right {
+  float: right !important;
+}
+.graph-section {
+  width: 100%;
+  padding:10px;
+  border-radius:10px;
+  background-color: #ffffff;
+}
+.form-group {
+  margin-bottom: 10px;
+  width: 100%;
+}
+.ql-editor{
+  min-height: 150px !important;
+}
+.has-cust-error{display:flex;flex-grow:1;width:100%;margin-top:5px;font-size:13px;color:#d32f2f;font-weight:500 !important;margin-top: 5px;}
+.label{margin-bottom:5px;color: #000;font-size: 16px;font-weight: 600;letter-spacing: 0.27px;line-height: 26px;display:flex;}
+.heading { font-size: 24px; font-weight: 600; margin-bottom: 20px;text-align: center;display: block;}
+.submit-btn{width: 150px;height: 45px;background-color:#4C75A3; color: #ffffff;
+  font-size: 15px;font-weight: 700;text-align: center;letter-spacing: 0.27px;border-radius: 5px;
+  border: none;cursor: pointer;
+  }
+textarea{width:100%;padding:12px 15px;font-size:14px;border:2px solid #4C75A3;color:#000;border-radius:6px;flex:1;box-sizing:border-box; resize:none}
+textarea:focus {
+  outline: #4C75A3;
+}
+.btn-section {width: 100%; text-align: center; margin-top: 25px;}
+

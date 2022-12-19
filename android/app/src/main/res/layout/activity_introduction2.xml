@@ -32,8 +32,8 @@
 
                 android:fontFamily="@font/noto_sans"
                 android:text="Get Inspiration \nFor Your Next"
-                android:textColor="@color/black"
-                android:textSize="25dp"
+                android:textColor="@color/TextColor"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -44,8 +44,8 @@
                 android:fontFamily="@font/noto_sans"
                 android:gravity="bottom"
                 android:text="Clip."
-                android:textColor="@color/design_default_color_error"
-                android:textSize="25dp"
+                android:textColor="@color/LogoGreyColor"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -60,7 +60,7 @@
             android:gravity="bottom"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. "
             android:textColor="#C3C3C3"
-            android:textSize="15dp"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -81,6 +81,7 @@
                     android:layout_alignParentStart="true"
                     android:adjustViewBounds="true"
                     android:layout_centerVertical="true"
+                    app:tint="@color/LogoGreyColor"
                     android:layout_marginStart="40dp"
                     android:src="@drawable/loadinintroduction" />
 
@@ -90,6 +91,7 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="40dp"
+                    app:tint="@color/LogoGreyColor"
                     android:adjustViewBounds="true"
                     android:src="@drawable/next_button_introduction" />
             </RelativeLayout>
@@ -104,7 +106,7 @@
         <!--            android:layout_marginTop="40dp"-->
         <!--            android:layout_marginStart="40dp"-->
         <!--            android:text="Get Inspiration \n For Your Next"-->
-        <!--            android:textColor="@color/black" />-->
+        <!--            android:textColor="@color/TextColor" />-->
 
     </LinearLayout>
 

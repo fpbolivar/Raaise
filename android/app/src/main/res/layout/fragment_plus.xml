@@ -8,26 +8,21 @@
     tools:context=".Home.Fragments.PlusFragment">
 
 
-    <androidx.camera.view.PreviewView
+    <VideoView
         android:id="@+id/pv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/BackInSignUp"
-            android:layout_width="35dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="50dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/backarrow"
-            app:tint="@color/WhiteColor" />
-
         <LinearLayout
+            android:id="@+id/select_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -37,48 +32,21 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"
                 android:src="@drawable/music_logo" />
 
             <TextView
+                android:id="@+id/select_audio_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/noto_sans"
-                android:text="Take Me Home"
+                android:text="Select Audio"
+                android:textSize="11sp"
                 android:textColor="@color/white" />
         </LinearLayout>
     </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="15dp"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/flip" />
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/filter" />
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/timer" />
-
-    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -86,26 +54,16 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginStart="30dp"
-            app:cardCornerRadius="100dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/delete_it" />
-        </androidx.cardview.widget.CardView>
-
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:id="@+id/backButton"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/capture_button" />
+            android:adjustViewBounds="true"
+            android:src="@drawable/cross_button_in_camera" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -116,22 +74,14 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/cross_button_in_camera" />
-
-            <ImageView
+                android:id="@+id/Iv_Click_btn_donation"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/approve_button_in_camera" />
+                android:src="@drawable/ic_right"/>
 
         </LinearLayout>
 

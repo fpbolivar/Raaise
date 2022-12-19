@@ -2,4 +2,47 @@
     <string name="app_name">Scrip Tube</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="select_all">Select All</string>
+    <string name="Username">\@John_Doe</string>
+    <string name="Username1">\@kate_rose</string>
+    <string name="select_audio">Select <font color="#4C75A3">Audio</font></string>
+    <string name="follwer_list">Followers <font color="#4C75A3">List</font></string>
+    <string name="following_list">Following <font color="#4C75A3">List</font></string>
+    <string name="chat_title">Lorem Ipsum is simply dummy text of the printing and type setting industry.</string>
+    <string name="donation_dialog_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo.</string>
+    <string name="chatScreenDummyText">"Lorem Ipsum is simply dummy text of the printing"</string>
+    <string name="Please_Wait">please Wait...</string>
+
+    <string name="facebook_app_id">571053325026277</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+    <string name="already_acc">You Don’t have an account ?<font color="#4C75A3">SignUp</font></string>
+    <string name="do_you_want_donation">Do you want Donation?</string>
+    <string name="other_amount">Other Amount</string>
+    <string name="new_post">New <font color="#4C75A3">Post</font></string>
+    <string name="edit_caption">Edit <font color="#4C75A3">Caption</font></string>
+    <string name="terms_of_service_heading">Terms of <font color="#4C75A3">Service</font></string>
+    <string name="privacy_policy_heading">Privacy <font color="#4C75A3">Policy</font></string>
+    <string name="copyright_policy_heading">Copyright <font color="#4C75A3">Policy</font></string>
+    <string name="report_video">Report Video</string>
+    <string name="why_are_you_reporting">Why are you reporting this post?</string>
+    <string name="tell_us_here">Tell us here...</string>
+    <string name="search_hint"><font size="10">Search music</font></string>
+    <string name="EnableInternetConnection">Please Enable Internet Connection</string>
+    <string name="search_user"><font color="#D3D3D3">Search User</font></string>
+    <string name="total_donation">Total Donated  ($%d)</string>
+    <!--    <string name="server_client_id">201557307033-9pc8sims3r1h0br6c8e212rms8ci7lk1.apps.googleusercontent.com</string>-->
+    <!--    <string name="server_client_id">WEB CLient ID</string>-->
+    <string name="server_client_id">201557307033-lphlqnkeubk9o821u64psbgtrmckbp91.apps.googleusercontent.com</string>
+    <string name="total_donated">Total Donated "<b>"($115)"</b>" </string>
+    <array name="Spinner">
+        <item>
+            <font color="#FFFFFF">Select Category</font>
+        </item>
+    </array>
+
+    <string name="tab_following"><b>FOLLOWING</b></string>
+    <string name="tab_foryou"><b>FOR YOU</b></string>
+
+
 </resources>

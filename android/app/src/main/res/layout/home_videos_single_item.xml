@@ -2,135 +2,299 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/MainLayoutInFollowingVideoSingleItem"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/delete_it"
-        android:scaleType="fitXY"
-        />
+    <!--    <SurfaceView-->
+    <!--        android:id="@+id/ExoPalyer"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"/>-->
 
-    <LinearLayout
-        android:id="@+id/SongLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <VideoView
+            android:id="@+id/VideoViewInHomeReels"
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/delete_it"
+            android:scaleType="fitXY"/>
+    <RelativeLayout
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="30dp"
-        android:gravity="center_vertical">
+        android:layout_marginTop="35dp"
+        android:layout_alignParentTop="true">
 
-       <androidx.cardview.widget.CardView
-           android:layout_width="wrap_content"
-           app:cardCornerRadius="100dp"
-           android:background="@drawable/stroke_background"
-           app:strokeWidth="2dp"
-           android:layout_height="wrap_content">
-           <ImageView
-               android:layout_width="40dp"
-               android:layout_height="40dp"
-               android:scaleType="centerCrop"
-               android:src="@drawable/delete_it" />
-       </androidx.cardview.widget.CardView>
+        <RelativeLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/following_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:text="Following"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="23dp"
+                android:layout_height="2dp"
+                android:layout_below="@id/following_tv"
+                android:layout_alignStart="@id/following_tv"
+                android:background="#D9D9D9" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@id/following_tv"
+                android:fontFamily="@font/noto_sans"
+                android:text="For You"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
+
+        </RelativeLayout>
 
         <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/music_logo" />
-
-        <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/noto_sans"
-            android:text="Take Me Home"
-            android:textColor="@color/white" />
+            android:layout_marginRight="25dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/notification_icon"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:background="@drawable/home_layout_shadow"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/SongLayout"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="30dp"
-        android:gravity="center_vertical">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true">
 
-       <androidx.cardview.widget.CardView
-           android:layout_width="wrap_content"
-           app:cardCornerRadius="100dp"
-           android:layout_height="wrap_content">
-           <ImageView
-               android:layout_width="70dp"
-               android:layout_height="70dp"
-               android:scaleType="centerCrop"
-               android:background="@drawable/circular_shape"
-               android:src="@drawable/delete_it" />
 
-       </androidx.cardview.widget.CardView>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/profileContainer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/hashTagsTV"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginStart="5dp"
+            android:gravity="center_vertical">
 
-            <TextView
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="Maninder"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
+                app:cardCornerRadius="100dp">
 
-            <TextView
+                <ImageView
+                    android:id="@+id/ImageProfileInAdapter"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/circular_shape"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/delete_it" />
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="maninder501"
-                android:textColor="@color/white"
+                android:orientation="vertical">
 
-                android:textSize="14dp" />
+                <TextView
+                    android:id="@+id/NameInHomeVideoSingleItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Maninder"
+                    android:textColor="@color/white"
+                    android:textFontWeight="400"
+                    android:textSize="14dp" />
 
-            <TextView
+                <TextView
+                    android:id="@+id/UserNameInHomeVideoSingleItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="maninder501"
+                    android:textColor="@color/white"
+                    android:textFontWeight="300"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/DonationRaisedInHomeVideoSingleItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Total raised: $"
+                    android:textColor="@color/white"
+                    android:textFontWeight="300"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/FollowButtonInHomeVideoSingleItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="Total raised: 115$"
-                android:textColor="@color/white"
-                android:textSize="14dp" />
+                android:layout_marginStart="15dp"
+                android:backgroundTint="@color/LogoGreyColor"
+                app:cardCornerRadius="12dp">
+
+                <TextView
+                    android:id="@+id/FollowTextInHomeVideoSingleItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="8dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Follow"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+            </androidx.cardview.widget.CardView>
+
+
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
+        <TextView
+            android:id="@+id/hashTagsTV"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/SongLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:maxWidth="250dp"
+            android:text="#insta ##reels...See more"
+            android:textSize="14sp"
+            android:layout_marginStart="5dp"
+            android:layout_above="@id/SongLayout"
+            android:layout_marginTop="4dp"
+            android:textColor="#BBBBBB"/>
 
-            android:backgroundTint="@color/design_default_color_error"
-            app:cardCornerRadius="12dp">
 
+        <LinearLayout
+            android:id="@+id/SongLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="7dp"
+            android:gravity="center_vertical">
+
+            <RelativeLayout
+                android:id="@+id/AudioItem"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/user_image_bg">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    app:cardCornerRadius="50dp">
+                    <ImageView
+                        android:id="@+id/SongImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/delete_it"/>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/lottie_main"
+                android:layout_width="20dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/svg_music_sign_whitecolor" />
             <TextView
+                android:id="@+id/SongNameInHomeVideoSingleItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginVertical="10dp"
+                android:layout_marginStart="5dp"
+                android:maxWidth="200dp"
                 android:fontFamily="@font/noto_sans"
-                android:text="Follow"
                 android:textColor="@color/white"
-                android:textSize="14dp" />
-        </androidx.cardview.widget.CardView>
+                android:textSize="12sp"/>
+
+        </LinearLayout>
 
 
-    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/more_options_btn_UP"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:visibility="gone"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        android:rotation="90"
+        android:src="@drawable/more_options_btns" />
+
 
     <LinearLayout
+        android:id="@+id/SidePanel"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="5dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -142,15 +306,18 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:id="@+id/DollarDonation"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/donation_in_single" />
 
             <TextView
+                android:id="@+id/DonationAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Doantion"
-                android:textColor="@color/WhiteColor" />
+                android:textColor="@color/white"
+                android:textFontWeight="300"
+                android:textSize="12dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -161,15 +328,18 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:id="@+id/LikeInHomeVideoSingleItem"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/heart_in_single" />
 
             <TextView
+                android:id="@+id/LikeCountInHomeVideoSingleItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="545.6k"
-                android:textColor="@color/WhiteColor" />
+                android:textColor="@color/white"
+                android:textFontWeight="300"
+                android:textSize="12dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -180,16 +350,19 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:id="@+id/CommentsInAdapter"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
 
                 android:src="@drawable/comment_in_single" />
 
             <TextView
+                android:id="@+id/CommentCountInHomeVideoSingleItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="143"
-                android:textColor="@color/WhiteColor" />
+                android:textColor="@color/white"
+                android:textFontWeight="300"
+                android:textSize="12dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -200,25 +373,60 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/send_in_single" />
 
             <TextView
+                android:id="@+id/VideoShareCountInHomeVideoSingleItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2132"
-                android:textColor="@color/WhiteColor" />
+                android:textColor="@color/white"
+                android:textFontWeight="300"
+                android:textSize="12dp" />
 
         </LinearLayout>
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="70dp"
+            android:id="@+id/try_audio_btn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
+            android:visibility="gone"
             android:src="@drawable/camera_in_singel" />
 
+        <ImageView
+            android:id="@+id/more_options_btn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/more_options_btns"/>
+
     </LinearLayout>
+
+
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:id="@+id/Lottie_Heart"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        app:lottie_rawRes="@raw/heart_json" />
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:id="@+id/Lottie_PausePlay"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        app:lottie_speed="3"
+        />
+    <!--    </RelativeLayout>-->
 </RelativeLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,7 +19,8 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="50dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/backarrow" />
+            android:src="@drawable/backarrow"
+            app:tint="@color/white" />
 
         <LinearLayout
             android:id="@+id/TextInForgetPassword"
@@ -26,23 +28,23 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/BackInSignUp"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="17dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Personal "
-                android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textColor="@color/TextColor"
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Information"
-                android:textColor="@color/design_default_color_error"
-                android:textSize="20dp" />
+                android:textColor="@color/LogoGreyColor"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <TextView
@@ -57,50 +59,101 @@
 profile. These details will be used to give enhanced engagement of  the
 application."
             android:textColor="@color/hintGreyColor"
-            android:textSize="15dp" />
+            android:textSize="10sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_below="@id/Text1InForgetPassword"
+            android:layout_marginTop="12dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:cardCornerRadius="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/userImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"/>
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/UploadImageInPersonalInformation"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="-10dp"
+                android:src="@drawable/camera_svg"
+                app:fabSize="mini"
+                app:layout_constraintEnd_toEndOf="@+id/cardView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@android:color/white" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText
             android:id="@+id/NameEditTextInPersonalInformation"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/Text1InForgetPassword"
+            android:layout_below="@+id/constraint"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_shape"
+            android:background="@drawable/curved_dark_grey_background"
             android:hint="Name"
             android:inputType="textPersonName"
-            android:paddingStart="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hintGreyColor" />
+            android:paddingHorizontal="20dp"
+            android:textSize="12sp"
+            android:textColor="@color/light_grey"
+            android:textColorHint="@color/light_grey"  />
         <EditText
-            android:id="@+id/EmailEditTextInPersonalInformation"
+            android:id="@+id/UserNameEditTextInPersonalInformation"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/NameEditTextInPersonalInformation"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_shape"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:paddingStart="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hintGreyColor" />
+            android:background="@drawable/curved_dark_grey_background"
+            android:hint="Email Address"
+            android:enabled="false"
+            android:clickable="false"
+            android:inputType="textNoSuggestions"
+            android:paddingHorizontal="20dp"
+            android:textSize="12sp"
+            android:textColor="@color/Darkgrey"
+            android:textColorHint="@color/Darkgrey" />
         <EditText
             android:id="@+id/PhoneNumberEditTextInPersonalInformation"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/EmailEditTextInPersonalInformation"
+            android:layout_below="@+id/UserNameEditTextInPersonalInformation"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/edit_text_shape"
+            android:background="@drawable/curved_dark_grey_background"
             android:hint="Phone Number"
             android:inputType="phone"
-            android:paddingStart="20dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/hintGreyColor" />
+            android:paddingHorizontal="20dp"
+            android:textSize="12sp"
+            android:textColor="@color/light_grey"
+            android:textColorHint="@color/light_grey"/>
 
         <LinearLayout
-            android:id="@+id/LoginButton"
+            android:id="@+id/UpdateButtonInPersonalInformation"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/PhoneNumberEditTextInPersonalInformation"
@@ -115,8 +168,8 @@ application."
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Update"
-                android:textColor="@color/WhiteColor"
-                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

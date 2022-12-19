@@ -78,6 +78,16 @@ var findOneWithPopulate = function (modelName, criteria, projection, options, po
     })
 }
 
+var updateMany = function (modelName, criteria, dataToSet, options) {
+    return new Promise((resolve, reject) => {
+        Models[modelName].updateMany(criteria, dataToSet, options).then(data => {
+            return resolve(JSON.parse(JSON.stringify(data)));
+        }).catch(err => {
+            return reject(err);
+        })
+    })
+};
+
 
 
 
@@ -90,5 +100,6 @@ module.exports = {
     findWithPopulate: findWithPopulate,
     getoneData: getoneData,
     dropIndex: dropIndex,
-    findOneWithPopulate: findOneWithPopulate
+    findOneWithPopulate: findOneWithPopulate,
+    updateMany:updateMany
 };

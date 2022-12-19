@@ -1,0 +1,34 @@
+package com.scripttube.android.ScriptTube.ApiManager.ApiModels;
+
+public class UpdateCaptionModel {
+    public String slug;
+    public String videoCaption;
+
+    public UpdateCaptionModel(String slug, String videoCaption) {
+        this.slug = slug;
+        this.videoCaption = videoCaption;
+    }
+    public int status;
+    public String message;
+    public Data data;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public class Data{
+        public String videoCaption;
+
+        public String getVideoCaption() {
+            return videoCaption;
+        }
+    }
+}

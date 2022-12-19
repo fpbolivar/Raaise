@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".Select_AudioActivity">
+
+    <ImageView
+        android:id="@+id/BackInSignUp"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="50dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/backarrow"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/select_audio_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BackInSignUp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/noto_sans"
+        android:text="@string/select_audio"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/Edt_SearchView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/select_audio_title"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/curved_dark_grey_background"
+        android:drawableLeft="@drawable/svg_search"
+        android:drawablePadding="15dp"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search music" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/music_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Edt_SearchView"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        tools:listitem="@layout/music_item_view" />
+
+
+</RelativeLayout>

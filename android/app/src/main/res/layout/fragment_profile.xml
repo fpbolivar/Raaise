@@ -27,15 +27,16 @@
                 android:adjustViewBounds="true"
                 android:src="@drawable/splash_logo" />
 
-            <ImageView
-                android:id="@+id/Add_Video_In_Profile"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="20dp"
-                android:layout_toStartOf="@+id/Settings_In_Profile"
-                android:adjustViewBounds="true"
-                android:src="@drawable/add_video_in_profile" />
+            <!--            <ImageView-->
+            <!--                android:id="@+id/Add_Video_In_Profile"-->
+            <!--                android:layout_width="30dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="30dp"-->
+            <!--                android:layout_marginRight="20dp"-->
+            <!--                app:tint="@color/white"-->
+            <!--                android:layout_toStartOf="@+id/Settings_In_Profile"-->
+            <!--                android:adjustViewBounds="true"-->
+            <!--                android:src="@drawable/add_video_in_profile" />-->
 
             <ImageView
                 android:id="@+id/Settings_In_Profile"
@@ -45,7 +46,8 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="30dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/setting_in_profile" />
+                android:src="@drawable/setting_in_profile"
+                app:tint="@color/white" />
 
         </RelativeLayout>
         <!--*************   Profile Image    *************-->
@@ -57,12 +59,14 @@
             app:cardCornerRadius="1000dp">
 
             <ImageView
+                android:background="@color/black"
+                android:id="@+id/ProfileImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/delete_it" />
+                />
         </androidx.cardview.widget.CardView>
         <!--*************   Name With Badge    *************-->
         <LinearLayout
@@ -73,38 +77,56 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/UserNameInProfile"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/noto_sans"
-                android:text=".@Maninder"
-                android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/Verification_Badge"
                 android:layout_width="18dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp"
                 android:adjustViewBounds="true"
+                android:visibility="gone"
                 android:src="@drawable/verification_badge" />
         </LinearLayout>
         <!--*************   Total Donation    *************-->
         <TextView
+            android:id="@+id/total_donation_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/noto_sans"
             android:gravity="center"
-            android:text="Total Donated \n $115"
-            android:textColor="@color/black"
-            android:textSize="14dp"
+            android:text="Total Donated"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textFontWeight="300"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="center"
+            android:text="$0"
+            android:layout_marginTop="6dp"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textFontWeight="700"
             android:textStyle="bold" />
         <!--*************   Description Text    *************-->
         <TextView
+            android:id="@+id/shortBioTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -112,152 +134,172 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/noto_sans"
             android:gravity="center"
-            android:text="Lorem Ipsum is simply dummy text of the printing and
-typesetting industry. "
+            android:text=""
+            android:maxLines="2"
             android:textColor="@color/DarkGrey"
-            android:textSize="12dp"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <!--*************   Follower Layout    *************-->
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/GreyColor"
-            android:orientation="horizontal"
-            android:weightSum="3">
-            <!--*************   Post Layout    *************-->
+            android:layout_marginTop="20dp"
+            android:background="@color/black">
+
             <LinearLayout
-                android:layout_marginVertical="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:background="@color/black"
+                android:orientation="horizontal"
+                android:weightSum="3">
+                <!--*************   Post Layout    *************-->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="115"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
+                    android:layout_marginVertical="10dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/PostsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textFontWeight="700"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="center"
+                            android:text="Posts"
+                            android:textColor="@color/grey"
+                            android:textFontWeight="300"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="-4dp"
+                        android:background="#1F1F1F"
+                        android:layout_gravity="center_vertical"/>
+
+
+
+                </LinearLayout>
+                <!--*************   Followers Layout    *************-->
+                <LinearLayout
+                    android:id="@+id/FollowersListButton"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="Posts"
-                    android:textColor="@color/DarkGrey"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
+                    android:layout_marginVertical="10dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/FollowersCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textFontWeight="700"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/FollowersTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="center"
+                            android:text="Followers"
+                            android:textColor="@color/grey"
+                            android:textFontWeight="300"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="-2dp"
+                        android:background="#1F1F1F"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <!--*************   Following Layout    *************-->
+                <LinearLayout
+                    android:id="@+id/followers_list_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/FollowingCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/noto_sans"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textFontWeight="700"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/noto_sans"
+                        android:gravity="center"
+                        android:text="Following"
+                        android:textColor="@color/grey"
+                        android:textFontWeight="300"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
             </LinearLayout>
-            <!--*************   Followers Layout    *************-->
-            <LinearLayout
-                android:layout_marginVertical="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="115"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="Followers"
-                    android:textColor="@color/DarkGrey"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-            <!--*************   Following Layout    *************-->
-            <LinearLayout
-                android:layout_marginVertical="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="115"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/noto_sans"
-                    android:gravity="center"
-                    android:text="Following"
-                    android:textColor="@color/DarkGrey"
-                    android:textSize="14dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
         </LinearLayout>
-<!--        <com.google.android.material.tabs.TabLayout-->
-<!--            android:id="@+id/TabLayout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/LeftArrowALayout"-->
-<!--            android:layout_marginTop="30dp"-->
 
-<!--            app:tabGravity="fill"-->
-<!--            app:tabIndicatorColor="#32546E"-->
-<!--            app:tabMaxWidth="0dp"-->
-<!--            app:tabMode="fixed"-->
-<!--            app:tabSelectedTextColor="#32546E"-->
-<!--            app:tabTextColor="#993C3C43">-->
-
-<!--            <com.google.android.material.tabs.TabItem-->
-<!--                android:id="@+id/ProfileDetailFragment"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Profile Detail">-->
-
-<!--            </com.google.android.material.tabs.TabItem>-->
-
-<!--            <com.google.android.material.tabs.TabItem-->
-<!--                android:id="@+id/BankDetailFragment"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                -->
-<!--                android:text="Bank Detail">-->
-
-<!--            </com.google.android.material.tabs.TabItem>-->
-
-<!--        </com.google.android.material.tabs.TabLayout>-->
-
-        <!--*************   Pager Layout    *************-->
-        <androidx.viewpager.widget.ViewPager
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecyclerViewInProfile"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="4dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </ScrollView>

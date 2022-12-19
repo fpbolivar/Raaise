@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".FollowersListFragment">
+
+    <ImageView
+        android:id="@+id/backBtn"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="50dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/backarrow"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/select_audio_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/backBtn"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/noto_sans"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+    <EditText
+        android:id="@+id/Edt_SearchView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/select_audio_title"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/svg_search"
+        android:drawablePadding="15dp"
+        android:background="@drawable/bg_search"
+        android:hint="Search users"
+        android:paddingStart="20dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/search_musicTextColor" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/followers_list_RV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Edt_SearchView"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp" />
+
+</RelativeLayout>

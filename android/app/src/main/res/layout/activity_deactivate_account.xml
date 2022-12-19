@@ -20,6 +20,7 @@
             android:visibility="gone">
 
             <ImageView
+                app:tint="@color/white"
                 android:id="@+id/BackInSignUp"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
@@ -34,23 +35,23 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/BackInSignUp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="17dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
                     android:text="Deactivate "
-                    android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textColor="@color/TextColor"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
                     android:text="Account"
-                    android:textColor="@color/design_default_color_error"
-                    android:textSize="20dp" />
+                    android:textColor="@color/LogoGreyColor"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <TextView
@@ -63,9 +64,9 @@
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
-                android:text="Do you want to Deactivate this account? "
-                android:textColor="@color/black"
-                android:textSize="20dp"
+                android:text="Do you want to Deactivate\n this account? "
+                android:textColor="@color/TextColor"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
@@ -78,11 +79,12 @@
                 app:cardCornerRadius="100dp">
 
                 <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:background="@drawable/circular_shape"
+                    android:id="@+id/ImageInDeactivateAccount"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:background="@color/black"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/delete_it" />
+                    />
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -95,9 +97,8 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
-                android:text="Maninder"
-                android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textColor="@color/TextColor"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -111,8 +112,8 @@
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="Deactivating your account is temporary"
-                android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textColor="@color/TextColor"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -125,18 +126,18 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
-                android:text="Your porfile, photos, comments and likes
-will be hidden until you enable it by logging back in."
-                android:textColor="@color/black"
-                android:textSize="12dp" />
+                android:textFontWeight="300"
+                android:text="Your porfile, photos, comments and likes\nwill be hidden until you enable it by logging back in."
+                android:textColor="@color/TextColor"
+                android:textSize="12sp" />
 
             <LinearLayout
-                android:id="@+id/LoginButton"
+                android:id="@+id/DeactivateAccountButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@+id/Description1"
+                android:layout_alignParentBottom="true"
                 android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/button_shape_login"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -146,8 +147,8 @@ will be hidden until you enable it by logging back in."
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
                     android:text="Deactivate Account"
-                    android:textColor="@color/WhiteColor"
-                    android:textSize="18dp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
@@ -166,7 +167,8 @@ will be hidden until you enable it by logging back in."
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="50dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/backarrow" />
+                android:src="@drawable/backarrow"
+                app:tint="@color/white" />
 
             <LinearLayout
                 android:id="@+id/TextInDeleteAccount"
@@ -174,23 +176,25 @@ will be hidden until you enable it by logging back in."
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/BackInDelete"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="17dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
                     android:text="Delete "
-                    android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
                     android:text="Account"
-                    android:textColor="@color/design_default_color_error"
-                    android:textSize="20dp" />
+                    android:textStyle="bold"
+                    android:textColor="@color/new_textcolor"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <TextView
@@ -203,9 +207,9 @@ will be hidden until you enable it by logging back in."
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
-                android:text="Do you want to Delete this account? "
-                android:textColor="@color/black"
-                android:textSize="20dp"
+                android:text="Do you want to Delete\n  this account? "
+                android:textColor="@color/TextColor"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
@@ -218,11 +222,12 @@ will be hidden until you enable it by logging back in."
                 app:cardCornerRadius="100dp">
 
                 <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:background="@drawable/circular_shape"
+                    android:id="@+id/ImageInDeleteAccount"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:background="@color/black"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/delete_it" />
+                     />
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -235,9 +240,8 @@ will be hidden until you enable it by logging back in."
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
-                android:text="Maninder"
-                android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textColor="@color/TextColor"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -251,8 +255,8 @@ will be hidden until you enable it by logging back in."
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
                 android:text="Deleting your account is permanent"
-                android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textColor="@color/TextColor"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -267,16 +271,16 @@ will be hidden until you enable it by logging back in."
                 android:gravity="center"
                 android:text="Your Profile, photo, videos comments likes and follower
 will be permanantly deleted."
-                android:textColor="@color/black"
-                android:textSize="12dp" />
+                android:textColor="@color/TextColor"
+                android:textSize="12sp" />
 
             <LinearLayout
-                android:id="@+id/LoginButtonDelete"
+                android:id="@+id/DeleteAccountButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@+id/Description1Delete"
+                android:layout_alignParentBottom="true"
                 android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/button_shape_login"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -286,8 +290,8 @@ will be permanantly deleted."
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/noto_sans"
                     android:text="Delete Account"
-                    android:textColor="@color/WhiteColor"
-                    android:textSize="18dp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>

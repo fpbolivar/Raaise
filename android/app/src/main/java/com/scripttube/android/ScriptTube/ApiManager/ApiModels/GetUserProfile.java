@@ -1,0 +1,145 @@
+package com.scripttube.android.ScriptTube.ApiManager.ApiModels;
+
+public class GetUserProfile {
+    public int status;
+    public String message;
+    public Data data;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public class Data {
+
+        public String userGoogleId;
+        public String userFaceBookId;
+        public boolean emailNotification;
+        public boolean pushNotification;
+        public int followersCount;
+        public String followingCount;
+        public String _id;
+        public String userName;
+        public String email;
+        public String phoneNumber;
+        public String deviceType;
+        public String loginType;
+        public String profileImage;
+        public boolean isBlock;
+        public boolean isActive;
+        public String createdAt;
+        public String updatedAt;
+        public int __v;
+        public String otp;
+        public String name;
+        public String shortBio;
+        public boolean isVerified;
+
+        public String getUserGoogleId() {
+            return userGoogleId;
+        }
+
+        public String getUserFaceBookId() {
+            return userFaceBookId;
+        }
+
+        public boolean isEmailNotification() {
+            return emailNotification;
+        }
+
+        public boolean isPushNotification() {
+            return pushNotification;
+        }
+
+        public int getFollowersCount() {
+            return followersCount;
+        }
+
+        public String getFollowingCount() {
+            return followingCount;
+        }
+
+        public String get_id() {
+            return _id;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getPhoneNumber() {
+            return phoneNumber;
+        }
+
+        public String getDeviceType() {
+            return deviceType;
+        }
+
+        public String getLoginType() {
+            return loginType;
+        }
+
+        public String getProfileImage() {
+            return profileImage;
+        }
+
+        public boolean isBlock() {
+            return isBlock;
+        }
+
+        public boolean isActive() {
+            return isActive;
+        }
+
+        public String getCreatedAt() {
+            return createdAt;
+        }
+
+        public String getUpdatedAt() {
+            return updatedAt;
+        }
+
+        public int get__v() {
+            return __v;
+        }
+
+        public String getOtp() {
+            return otp;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getShortBio() {
+            return shortBio;
+        }
+
+        public boolean isVerified() {
+            return isVerified;
+        }
+    }
+}

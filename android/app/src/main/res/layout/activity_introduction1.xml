@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/WhiteColor"
     android:fillViewport="true"
     tools:context=".Activity.Introduction.introduction1">
@@ -30,23 +31,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:fontFamily="@font/noto_sans"
                 android:text="Get Inspiration \nFor Your Next"
-                android:textColor="@color/black"
-                android:textSize="25dp"
+                android:textColor="@color/TextColor"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-
                 android:fontFamily="@font/noto_sans"
                 android:gravity="bottom"
                 android:text="Clip."
-                android:textColor="@color/design_default_color_error"
-                android:textSize="25dp"
+                android:textColor="@color/LogoGreyColor"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -61,7 +60,7 @@
             android:gravity="bottom"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. "
             android:textColor="#C3C3C3"
-            android:textSize="15dp"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -72,11 +71,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-
                 android:layout_marginBottom="90dp"
                 >
 
                 <ImageView
+                    app:tint="@color/LogoGreyColor"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -89,10 +88,12 @@
                     android:id="@+id/NextInIntroduction1"
                     android:layout_alignParentEnd="true"
                     android:layout_width="50dp"
+                    app:tint="@color/LogoGreyColor"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="40dp"
+                    android:background="@drawable/svg_next_arrow_bg_circle"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/next_button_introduction" />
+                    android:src="@drawable/svg_next_arrow" />
             </RelativeLayout>
         </RelativeLayout>
 
@@ -105,7 +106,7 @@
         <!--            android:layout_marginTop="40dp"-->
         <!--            android:layout_marginStart="40dp"-->
         <!--            android:text="Get Inspiration \n For Your Next"-->
-        <!--            android:textColor="@color/black" />-->
+        <!--            android:textColor="@color/TextColor" />-->
 
     </LinearLayout>
 

@@ -13,6 +13,7 @@
         android:background="@color/WhiteColor">
 
         <ImageView
+            app:tint="@color/white"
             android:id="@+id/BackInSingleAbout"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
@@ -27,16 +28,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/BackInSingleAbout"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="20dp">
 
             <TextView
                 android:id="@+id/HeadingInSingleAbout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:fontFamily="@font/noto_sans"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -50,8 +51,8 @@
             android:layout_marginTop="10dp"
             android:justificationMode="inter_word"
             android:fontFamily="@font/noto_sans"
-            android:textColor="@color/hintGreyColor"
-            android:textSize="15dp" />
+            android:textColor="@color/privacy_desc_color"
+            android:textSize="10sp" />
 
     </RelativeLayout>
 
