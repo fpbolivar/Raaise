@@ -36,7 +36,7 @@ class HtmlTextRenderVC: BaseControllerVC {
         DataManager.getsettingsData(delegate: self, param: param) { data in
             let text = data["description"].stringValue
             DispatchQueue.main.async {
-                self.convertHtml(htmlString: text,font: AppFont.FontName.regular.getFont(size: AppFont.pX16)) { attStr in
+                self.convertHtml(htmlString: text) { attStr in
                     print("jsdkjasdhj",attStr)
                     self.infoDescription.attributedText = attStr
                 }

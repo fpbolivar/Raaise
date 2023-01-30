@@ -9,6 +9,7 @@ import UIKit
 import Photos
 
 class AddMediaVC: UIViewController {
+    @IBOutlet weak var flashImg: UIImageView!
     @IBOutlet weak var demoImage: UIImageView!
     @IBOutlet weak var galleryView: CardView!
     @IBOutlet weak var timeLbl: UILabel!
@@ -19,7 +20,13 @@ class AddMediaVC: UIViewController {
     var videoURL: URL?
     var timer : Timer!
     var second : CGFloat! = 0
+    var selectedAudio:AudioDataModel?
+    var vidManager = AudioVideoMerger()
     let imagePickerController = UIImagePickerController()
+    var videoPicked = false
+    var isFrontCamera = false
+    var isRecording = false
+    var needTorch = false
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
@@ -51,6 +58,32 @@ class AddMediaVC: UIViewController {
         //self.tabBarController?.delegate = self
         // Do any additional setup after loading the view.
     }
+    
+    @IBAction func flashBtnClicked(_ sender: Any) {
+        needTorch = !needTorch
+        if needTorch{
+            flashImg.image = UIImage(named: "flash_on")
+        }else{
+            flashImg.image = UIImage(named: "flash_off")
+        }
+        isRecording ? toggleTorch() : print("hh")
+    }
+    func askForGalleryPermission(){
+        let photos = PHPhotoLibrary.authorizationStatus()
+        if photos == .denied || photos == .notDetermined || photos == .restricted{
+            PHPhotoLibrary.requestAuthorization({status in
+                if status == .authorized{
+                    print("sjjsncsjknck")
+                } else {
+                    print("sjjsncsjknck2")
+                    DispatchQueue.main.async {
+                        //self.demoImage.image = UIImage(named: "placeholder")
+                    }
+                }
+            })
+        }
+        
+    }
     func fetchVideos()
     {
         let fetchOptions = PHFetchOptions()
@@ -70,7 +103,7 @@ class AddMediaVC: UIViewController {
         imagePickerController.sourceType = .photoLibrary
         imagePickerController.delegate = self
         imagePickerController.mediaTypes = ["public.movie"]
-        
+        imagePickerController.allowsEditing = true
         present(imagePickerController, animated: true, completion: nil)
     }
     func setTimeLabelValue(withValue seconds:Int){
@@ -91,10 +124,37 @@ class AddMediaVC: UIViewController {
         progress.closeWhenFinished = false
         progress.setProgress(0)
         second = 0
+        isRecording = false
         setTimeLabelValue(withValue: Int(second))
+        self.videoPicked = false
+        cameraManager.urls = []
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(changeCamera))
+        doubleTap.numberOfTapsRequired = 2
+        previewView.addGestureRecognizer(doubleTap)
+        flashImg.isHidden = false
+        flashImg.image = UIImage(named: "flash_off")
+        //askForGalleryPermission()
         //progress.makeRounded(color: UIColor(named: "Red")!, borderWidth: 3)
         //self.tabBarController?.tabBar.isHidden = true
         //self.tabBarController?.tabBar.isTranslucent = false
+        
+    }
+    @objc func changeCamera(){
+        print("alalalalal",cameraManager.isRecording())
+        if isRecording{
+            if cameraManager.isRecording() ?? false{
+                cameraManager.switchCamera()
+            }
+        }else{
+            cameraManager.addPreviewLayerToView(view: self.previewView,position: isFrontCamera ? .back : .front)
+        }
+        isFrontCamera = !isFrontCamera
+        if isRecording {
+            flashImg.isHidden = true
+        }else{
+            flashImg.isHidden = isFrontCamera
+        }
+        
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -121,7 +181,10 @@ class AddMediaVC: UIViewController {
         let location = sender.location(in: self.view)
         switch sender.state {
         case .began:
+            self.isRecording = true
             cameraManager.startRecording()
+            toggleTorch()
+            flashImg.isHidden = true
             timer = Timer()
             self.timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(calculateSeconds), userInfo: nil, repeats: true)
 
@@ -130,8 +193,18 @@ class AddMediaVC: UIViewController {
 //            recordView.locationChanged(location: location)
             print("ZOOOM")
         case .cancelled, .ended:
-            timer.invalidate()
-            cameraManager.stopRecording()
+            if cameraManager.isRecording() ?? false{
+                print("ZOOOM2",self.cameraManager.isRecording())
+                timer.invalidate()
+                cameraManager.stopRecording()
+            }else{
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
+                    print("ZOOOM",self.cameraManager.isRecording())
+                    self.timer.invalidate()
+                    self.cameraManager.stopRecording()
+                }
+            }
+            
         default:
             break
         }
@@ -146,7 +219,7 @@ class AddMediaVC: UIViewController {
                     
                     if (self.cameraManager.cameraAndAudioAccessPermitted) { self.setUpSession() }
                 } else {
-                    //self.alertCameraAccessNeeded()
+                    self.alertCameraAccessNeeded()
                 }
             })
             cameraManager.askForMicrophoneAccess({ [weak self] access in
@@ -155,9 +228,51 @@ class AddMediaVC: UIViewController {
                     //self.permissionView.microphoneAccessPermitted()
                     if (self.cameraManager.cameraAndAudioAccessPermitted) { self.setUpSession() }
                 } else {
-                    //self.alertCameraAccessNeeded()
+                    self.alertCameraAccessNeeded()
                 }
             })
+        }
+    }
+    func alertCameraAccessNeeded() {
+        let settingsAppURL = URL(string: UIApplication.openSettingsURLString)!
+        let alert = UIAlertController(
+            title: "Camera & Microphone Access Need",
+            message: "Camera & Microphone access is required to record your videos.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(alert) -> Void in
+            self.dismiss(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { (alert) -> Void in
+            UIApplication.shared.open(settingsAppURL, options: [:], completionHandler: nil)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    func toggleTorch(turnOff:Bool = false) {
+        guard
+            let device = AVCaptureDevice.default(for: AVMediaType.video),
+            device.hasTorch
+        else { return }
+        if turnOff{
+            device.torchMode = .off
+        }else{
+            do {
+                try device.lockForConfiguration()
+                if !needTorch
+                //device.torchMode == AVCaptureDevice.TorchMode.on
+                {
+                    flashImg.image = UIImage(named: "flash_off")
+                    device.torchMode = .off
+                    
+                } else if needTorch && !isFrontCamera {
+                    flashImg.image = UIImage(named: "flash_on")
+                    device.torchMode = .on
+                    
+                }
+                device.unlockForConfiguration()
+            } catch {
+                print("Torch could not be used")
+            }
         }
     }
     func setUpSession(){
@@ -165,7 +280,7 @@ class AddMediaVC: UIViewController {
 //        permissionView.removeFromSuperview()
         cameraManager.delegate = self
         //previewView.layer.cornerRadius = cornerRadius
-        cameraManager.addPreviewLayerToView(view: self.previewView)
+        cameraManager.addPreviewLayerToView(view: self.previewView,position: .back)
         //view.sendSubviewToBack(previewView)
         
     }
@@ -178,16 +293,45 @@ class AddMediaVC: UIViewController {
         cameraVc.navigationBar.snapshotView(afterScreenUpdates: true)
         self.present(cameraVc, animated: true, completion: nil)
     }
-    
+    func goToCutomizeVideo(videoUrl:URL,audioDetails:AudioDataModel? = nil){
+        let vc = CustomizeVideoVC()
+        vc.url = videoUrl
+        vc.videoPicked = self.videoPicked
+        vc.delegate = self
+        if audioDetails != nil{
+            vc.audioTitle = "\(audioDetails!.artistName) - \(audioDetails!.songName)"
+        }
+        self.navigationController?.pushViewController(vc, animated: false)
+    }
 }
 extension AddMediaVC: UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedVideo:URL = (info[UIImagePickerController.InfoKey.mediaURL] as? URL) else{return}
         picker.dismiss(animated: true) {
-            let vc = CustomizeVideoVC()
-            vc.url = selectedVideo
-            
-            self.navigationController?.pushViewController(vc, animated: true)
+            let asset = AVURLAsset(url: selectedVideo)
+            if asset.duration.seconds > 30.0{
+                DispatchQueue.main.async {
+                    AlertView().showAlert(message: "Video must be under 30 seconds", delegate: self, pop: false)
+                }
+                return
+            }
+            self.videoPicked = true
+            encodeVideo(at: selectedVideo) { url, eren in
+                print("MOVTOMP4",url)
+                
+                guard let url = url else{return}
+
+                print("SELECTEDVDIEOTIME",asset.duration.seconds)
+                DispatchQueue.main.async {
+                    self.goToCutomizeVideo(videoUrl: url)
+                }
+                
+            }
+           
+//            let vc = CustomizeVideoVC()
+//            vc.url = selectedVideo
+//
+//            self.navigationController?.pushViewController(vc, animated: true)
         }
         print("sdkjfbkjsbdkj",selectedVideo)
     }
@@ -213,11 +357,93 @@ extension AddMediaVC:RecordingDelegate{
         } catch {
             print("Error: \(error)")
         }
-        let vc = CustomizeVideoVC()
-        vc.url = videoURL
-        self.navigationController?.pushViewController(vc, animated: false)
-        //pvc?.present(vc, animated: true)
-        
+        if let audio = selectedAudio{
+            self.pleaseWait()
+            vidManager.downloadAudio(audioUrl: audio.audioUrl) { downloadedAudio in
+                guard let vidUrl = videoURL else{
+                    AlertView().showAlert(message: "NIL Video Url", delegate: self, pop: false)
+                    return
+                }
+                self.vidManager.editVideo(videoURL: vidUrl, audioUrl: downloadedAudio) { outputUrl in
+                    self.clearAllNotice()
+                    self.goToCutomizeVideo(videoUrl: outputUrl,audioDetails: audio)
+//                    let vc = CustomizeVideoVC()
+//                    vc.url = outputUrl
+//                    vc.audioTitle = "\(audio.artistName) - \(audio.songName)"
+//
+//                    self.navigationController?.pushViewController(vc, animated: false)
+                }
+            }
+        }else{
+            guard let videoURL = videoURL else{
+                AlertView().showAlert(message: "Nil Video Url", delegate: self, pop: false)
+                return
+            }
+            goToCutomizeVideo(videoUrl: videoURL)
+//            let vc = CustomizeVideoVC()
+//            vc.url = videoURL
+//            self.navigationController?.pushViewController(vc, animated: false)
+            //pvc?.present(vc, animated: true)
+        }
     }
 }
 
+extension AddMediaVC:CustomVideoPostedDelegate{
+    func videoPosted() {
+        self.dismiss(animated: true)
+    }
+}
+func encodeVideo(at videoURL: URL, completionHandler: ((URL?, Error?) -> Void)?)  {
+    let avAsset = AVURLAsset(url: videoURL, options: nil)
+        
+    let startDate = Date()
+        
+    //Create Export session
+    guard let exportSession = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetPassthrough) else {
+        completionHandler?(nil, nil)
+        return
+    }
+        
+    //Creating temp path to save the converted video
+    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] as URL
+    let filePath = documentsDirectory.appendingPathComponent("rendered-Video.mp4")
+        
+    //Check if the file already exists then remove the previous file
+    if FileManager.default.fileExists(atPath: filePath.path) {
+        do {
+            try FileManager.default.removeItem(at: filePath)
+        } catch {
+            completionHandler?(nil, error)
+        }
+    }
+        
+    exportSession.outputURL = filePath
+    exportSession.outputFileType = AVFileType.mp4
+    exportSession.shouldOptimizeForNetworkUse = true
+    let start = CMTimeMakeWithSeconds(0.0, preferredTimescale: 0)
+    let range = CMTimeRangeMake(start: start, duration: avAsset.duration)
+    exportSession.timeRange = range
+        
+    exportSession.exportAsynchronously(completionHandler: {() -> Void in
+        switch exportSession.status {
+        case .failed:
+            print(exportSession.error ?? "NO ERROR")
+            completionHandler?(nil, exportSession.error)
+        case .cancelled:
+            print("Export canceled")
+            completionHandler?(nil, nil)
+        case .completed:
+            //Video conversion finished
+            let endDate = Date()
+                
+            let time = endDate.timeIntervalSince(startDate)
+            print(time)
+            print("Successful!")
+            print(exportSession.outputURL ?? "NO OUTPUT URL")
+            completionHandler?(exportSession.outputURL, nil)
+                
+            default: break
+        }
+            
+    })
+}

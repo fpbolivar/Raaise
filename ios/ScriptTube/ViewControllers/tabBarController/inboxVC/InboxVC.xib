@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InboxVC" customModule="ScriptTube" customModuleProvider="target">
             <connections>
+                <outlet property="noResultLbl" destination="9I1-bc-5cC" id="dPU-Wb-L7M"/>
                 <outlet property="notificationTable" destination="lM9-iv-Rhu" id="oQx-kH-YlX"/>
                 <outlet property="searchTf" destination="Pqs-5I-Yf3" id="4R9-hB-QBD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -25,6 +26,7 @@
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="lM9-iv-Rhu">
                     <rect key="frame" x="0.0" y="178" width="414" height="684"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="separatorColor" name="79"/>
                 </tableView>
                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search Users" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pqs-5I-Yf3">
                     <rect key="frame" x="25" y="133" width="364" height="35"/>
@@ -44,11 +46,18 @@
                         <constraint firstAttribute="height" constant="15" id="PQq-5c-YMz"/>
                     </constraints>
                 </imageView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Result Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9I1-bc-5cC">
+                    <rect key="frame" x="0.0" y="188" width="414" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" name="lightGray"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="BackgroundColor"/>
             <constraints>
                 <constraint firstItem="Pqs-5I-Yf3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="85" id="1iA-Nt-oK2"/>
+                <constraint firstItem="9I1-bc-5cC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="HeR-fv-9VQ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="lM9-iv-Rhu" secondAttribute="bottom" id="NW5-qM-DKF"/>
                 <constraint firstItem="Gu5-vw-bZO" firstAttribute="centerX" secondItem="Pqs-5I-Yf3" secondAttribute="centerX" multiplier="0.26" id="VNV-YI-dE7"/>
                 <constraint firstItem="Pqs-5I-Yf3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="ZYq-0z-TRw"/>
@@ -57,17 +66,25 @@
                 <constraint firstItem="lM9-iv-Rhu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="pPv-LK-zGb"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lM9-iv-Rhu" secondAttribute="trailing" id="qUd-FP-Cv2"/>
                 <constraint firstItem="Gu5-vw-bZO" firstAttribute="centerY" secondItem="Pqs-5I-Yf3" secondAttribute="centerY" id="sSY-Mk-vzC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="9I1-bc-5cC" secondAttribute="trailing" id="uIb-c2-rjv"/>
+                <constraint firstItem="9I1-bc-5cC" firstAttribute="top" secondItem="Pqs-5I-Yf3" secondAttribute="bottom" constant="20" id="wda-hS-z0m"/>
             </constraints>
             <point key="canvasLocation" x="20.289855072463769" y="19.419642857142858"/>
         </view>
     </objects>
     <resources>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <namedColor name="79">
+            <color red="0.47450980392156861" green="0.47450980392156861" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="BackgroundColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="TFcolor">
             <color red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="lightGray">
+            <color red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -18,7 +18,6 @@ class UserHeaderReusableView:
     @IBOutlet weak var postCount: UILabel!
     @IBOutlet weak var verifiedUserIcon: UIImageView!
     @IBOutlet weak var shortBioLbl: UILabel!
-    @IBOutlet weak var amountLbl: UILabel!
     @IBOutlet weak var userNameLbl: UILabel!
     @IBOutlet weak var profileImg: UIImageView!
     var delegate: UserHeaderReusableViewProtocol?
@@ -35,6 +34,15 @@ class UserHeaderReusableView:
     static var identifier = "UserHeaderReusableView"
     override func awakeFromNib() {
         super.awakeFromNib()
+        postLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
+        followerLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
+        followingLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
+        userNameLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        totalDonatedLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
+        shortBioLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
+        postCount.font = AppFont.FontName.bold.getFont(size: AppFont.pX16)
+        folllowerCount.font = AppFont.FontName.bold.getFont(size: AppFont.pX16)
+        followingCount.font = AppFont.FontName.bold.getFont(size: AppFont.pX16)
         // Initialization code
     }
     func setData(data:UserProfileData){
@@ -52,16 +60,15 @@ class UserHeaderReusableView:
         self.profileImg.loadImgForProfile(url: data.profileImage)
         //loadImg(url:data.profileImage)
         self.userNameLbl.text = "@\(data.userName)"
-        self.amountLbl.text = "$123"
         self.shortBioLbl.text = data.shortBio
         self.verifiedUserIcon.isHidden = !data.isVerified
         self.folllowerCount.text = data.followersCount
         self.followingCount.text = data.followingCount
         self.postCount.text = data.videoCount
-        setAmountLbl(withAmount: "113")
+        setAmountLbl(withAmount: data.donatedAmount)
     }
     func setAmountLbl(withAmount amt:String){
-        let text = "Total Donated($\(amt))"
+        let text = "Total Supported  ($\(amt))"
         let underlineAttriString = NSMutableAttributedString(string: text)
         let range1 = (text as NSString).range(of: "($\(amt))")
              

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home.Fragments.CameraFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/PreviewVIew"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+
+    <TextView
+        android:id="@+id/Timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@color/Red"
+        android:padding="10dp"
+        android:text="00:00"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:id="@+id/GallerySelected"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_toStartOf="@id/CameraClickButton"
+            android:padding="5dp"
+            android:src="@drawable/gallery"
+            app:tint="@color/white" />
+
+        <RelativeLayout
+            android:id="@+id/CameraClickButton"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:id="@+id/CameraButtonOuterShell"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/camera_button_outer_shell" />
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:padding="15dp"
+                android:src="@drawable/camera_button_inner_shell" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/flash_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@id/CameraClickButton"
+            android:src="@drawable/flash_off" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

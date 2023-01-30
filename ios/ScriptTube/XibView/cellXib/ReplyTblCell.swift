@@ -36,6 +36,17 @@ class ReplyTblCell: UITableViewCell {
         self.commentLbl.text = data.reply
         self.nameLbl.text = data.username
         self.profileImage.loadImgForProfile(url: data.profileImage)
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        let date = dateFormatter.date(from: data.replyTime)
+        print("date: \(date)")
+        let currentDate = Date()
+        if currentDate.offsetFrom(date: date!) == ""{
+            self.timeLbl.text = "Just Now"
+        }else{
+            self.timeLbl.text = currentDate.offsetFrom(date: date!)
+        }
         //loadImg(url: data.commentprofileImage)
     }
     @objc func gotoProfile(){

@@ -13,7 +13,7 @@ class AlertView: NSObject {
     
         return AlertView()
     }()
-    static let title = "SripTube"
+    static let title = "Raaise App"
     typealias alertHandler = (Any?) -> Void
     
     

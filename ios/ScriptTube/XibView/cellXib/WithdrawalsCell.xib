@@ -104,7 +104,7 @@
                 <outlet property="dateLbl" destination="J1Q-hg-wsu" id="PTE-bm-Iui"/>
                 <outlet property="priceLbl" destination="7to-W1-Lzq" id="hNx-Ao-KfM"/>
                 <outlet property="statusLbl" destination="w0l-IC-b4u" id="9sb-eW-ZCf"/>
-                <outlet property="titleLbl" destination="J1Q-hg-wsu" id="zTH-bs-J0u"/>
+                <outlet property="titleLbl" destination="1ic-4N-8Oi" id="ksQ-C5-iYV"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="86.71875"/>
         </tableViewCell>

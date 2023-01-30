@@ -6,6 +6,9 @@
 //
 
 import UIKit
+protocol ReportVideoDelegate{
+    func videoReported()
+}
 
 class ReportVideoVC: UIViewController {
 
@@ -14,6 +17,7 @@ class ReportVideoVC: UIViewController {
     @IBOutlet weak var messageLbl: UILabel!
     @IBOutlet weak var reportLbl: UILabel!
     var videoId = ""
+    var delegate :ReportVideoDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,6 +28,7 @@ class ReportVideoVC: UIViewController {
     @IBAction func dismissBtn(_ sender: Any) {
         self.dismiss(animated: true)
     }
+    
     func setup(){
         
         //self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closepopup)))
@@ -48,12 +53,14 @@ class ReportVideoVC: UIViewController {
     func reportVideoApi(param:[String:String]){
         guard let pvc = self.presentingViewController else{return}
         DataManager.reportVideo(delegate: self, param: param) {
-            ToastManager.successToast(delegate: self, msg: "Video Reported Successfully")
+            //ToastManager.successToast(delegate: self, msg: "Video Reported Successfully")
+            self.closepopup()
+            self.delegate?.videoReported()
         }
     }
     @IBAction func submitBtnClicked(_ sender: Any) {
         if reportTv.text == ""{
-            ToastManager.errorToast(delegate: self, msg: "Please Specify A reason")
+            ToastManager.errorToast(delegate: self, msg: "Please tell us reason")
         }else{
             let param = ["videoId":self.videoId,"reason":reportTv.text ?? ""]
             reportVideoApi(param: param)

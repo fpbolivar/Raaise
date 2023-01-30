@@ -5,40 +5,221 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/WhiteColor"
+    android:fillViewport="true"
     tools:context=".Home.Fragments.SearchFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/WhiteColor"
         android:orientation="vertical">
 
         <LinearLayout
-
+            android:id="@+id/SearchLayoutLinear"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="50dp"
+            android:background="@drawable/curved_dark_grey_background"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/search_us" />
+
             <androidx.appcompat.widget.SearchView
-                style="@style/SearchViewStyle"
-                android:id="@+id/search_view"
+                android:id="@+id/GlobalSearchView"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:searchIcon="@drawable/search_us"
-                android:background="@drawable/curved_dark_grey_background"
-                app:queryBackground="@android:color/transparent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="Take Me Home"
+                android:maxLines="1"
+                android:theme="@style/SearchViewStyle"
+                app:closeIcon="@drawable/icon_close"
                 app:iconifiedByDefault="false"
-                app:queryHint="@string/search_user"/>
+                app:queryBackground="@android:color/transparent"
+                app:searchIcon="@null" />
+
         </LinearLayout>
 
-        <ImageView
+
+        <LinearLayout
+            android:id="@+id/WithoutSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/delete" />
-    </LinearLayout>
+            android:layout_below="@+id/SearchLayoutLinear"
+
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ParentOfUserPart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Users"
+                        android:textColor="@color/blue_color_titleSearch_screen"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/UsersSeeAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="See all"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/user_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="13dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ParentOfAudioPart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Audio"
+                        android:textColor="@color/blue_color_titleSearch_screen"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/AudioSeeAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="See all"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/audio_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ParentOfVideoPart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Trending"
+                        android:textColor="@color/blue_color_titleSearch_screen"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/PostsSeeAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="See all"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/video_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/black" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/TypeSomethingForSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/SearchLayoutLinear">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/noto_sans"
+                android:text="Type something to search"
+                android:textColor="@color/DarkGrey"
+                android:textSize="16sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/NoResultFound"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/SearchLayoutLinear"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/noto_sans"
+                android:text="No Result Found"
+                android:textColor="@color/DarkGrey"
+                android:textSize="16sp" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 </ScrollView>

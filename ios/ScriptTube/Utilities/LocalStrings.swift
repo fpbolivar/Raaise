@@ -20,5 +20,5 @@ class LocalStrings{
     static var emptyOtp = "Please enter OTP"
     static var emptyNewPassword = "Please enter New Password"
     static var emptyOldPassword = "Please enter Old Password"
-    static var emptyConfirmPassword = "Please enter Confrim Password"
+    static var emptyConfirmPassword = "Please enter Confirm Password"
 }

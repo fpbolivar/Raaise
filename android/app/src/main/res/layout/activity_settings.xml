@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:backgroundTint="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/SettingBGColor"
+    android:backgroundTint="@color/black"
     android:fillViewport="true"
+    android:orientation="vertical"
     tools:context=".Settings.SettingsActivity">
 
     <RelativeLayout
@@ -24,7 +24,7 @@
             android:layout_marginStart="30dp"
             android:adjustViewBounds="true"
             android:src="@drawable/backarrow"
-            app:tint="@color/white" />
+            app:tint="@color/DullWhite" />
     </RelativeLayout>
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/noto_sans"
         android:text="Settings"
-        android:textColor="@color/white"
+        android:textColor="@color/DullWhite"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -65,9 +65,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
                         android:fontFamily="@font/noto_sans"
-                        android:text="My Account"
+                        android:text="MY ACCOUNT"
                         android:textColor="@color/BlueColorSettings"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -97,18 +97,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Personal Information"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -129,18 +129,18 @@
                                 android:fontFamily="@font/noto_sans"
                                 android:gravity="center_vertical"
                                 android:text="Username"
-                                android:textColor="@color/white"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -162,18 +162,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Short Bio"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -195,18 +195,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Change Password"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -226,9 +226,9 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="30dp"
                         android:fontFamily="@font/noto_sans"
-                        android:text="Notifications"
+                        android:text="NOTIFICATIONS"
                         android:textColor="@color/BlueColorSettings"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -256,7 +256,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Push Notifications"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <androidx.appcompat.widget.SwitchCompat
@@ -267,7 +267,7 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow"
+
                                 android:thumb="@drawable/thumb"
                                 app:track="@drawable/track" />
 
@@ -290,7 +290,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Email Notifications"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <androidx.appcompat.widget.SwitchCompat
@@ -324,9 +324,9 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="30dp"
                         android:fontFamily="@font/noto_sans"
-                        android:text="Payments"
+                        android:text="PAYMENTS"
                         android:textColor="@color/BlueColorSettings"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -355,18 +355,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Payment Methods"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -388,18 +388,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Donation Raised"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -421,18 +421,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Withdrawals"
-                                android:textColor="@color/white"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -454,18 +454,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Bank Details"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -486,9 +486,9 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="30dp"
                         android:fontFamily="@font/noto_sans"
-                        android:text="About"
+                        android:text="ABOUT"
                         android:textColor="@color/BlueColorSettings"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -517,18 +517,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Terms of Service"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -550,18 +550,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Privacy Policy"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -583,18 +583,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Copyright Policy"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -616,9 +616,9 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="30dp"
                         android:fontFamily="@font/noto_sans"
-                        android:text="Logins"
+                        android:text="LOGINS"
                         android:textColor="@color/BlueColorSettings"
-                        android:textSize="16sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -647,18 +647,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Deactivate Account"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -684,14 +684,14 @@
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 
@@ -713,18 +713,18 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Logout"
-                                android:textColor="@color/TextColor"
+                                android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 
                             <ImageView
-                                app:tint="@color/white"
                                 android:layout_width="10dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="30dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/setting_arrow" />
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/DullWhite" />
 
                         </RelativeLayout>
 

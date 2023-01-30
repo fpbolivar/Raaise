@@ -28,9 +28,14 @@ class TryAudioVC: BaseControllerVC {
     var audioPlayer : AVAudioPlayer?
     var asset : AVURLAsset!
     var isPlaying = false
+    var notificationObserver = NSObject()
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
+        if(!(Constant.check_Internet?.isReachable)!){
+            AlertView().showInternetErrorAlert(delegate: self)
+            return
+        }
         getAudioDetails(){
             self.setupCollectionView()
             
@@ -52,9 +57,26 @@ class TryAudioVC: BaseControllerVC {
             })
             //AVPlayer(playerItem: playerItem)
             self.player?.automaticallyWaitsToMinimizeStalling = false
+            
         }
         addNavBar(headingText:"",redText:"",type: .smallNavBarOnlyBack)
         // Do any additional setup after loading the view.
+    }
+    func loopVideo(videoPlayer:AVPlayer){
+        self.notificationObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil){
+            [weak videoPlayer] notification in
+            videoPlayer?.seek(to: CMTime.zero)
+            self.slider.value = 0
+            self.playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        } as! NSObject
+    }
+    deinit{
+        NotificationCenter.default.removeObserver(self.notificationObserver)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        player?.pause()
+        NotificationCenter.default.removeObserver(self.notificationObserver)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -71,28 +93,32 @@ class TryAudioVC: BaseControllerVC {
 //    }
     func setTime(){
         let duration = asset.duration.seconds
-        let time: String
+        var time: String
         if duration > 3600 {
             time = String(format:"%dh %dm %ds",
                 Int(duration/3600),
                 Int((duration/60).truncatingRemainder(dividingBy: 60)),
                 Int(duration.truncatingRemainder(dividingBy: 60)))
         } else {
-            time = String(format:"%dm %ds",
-                Int((duration/60).truncatingRemainder(dividingBy: 60)),
-                Int(duration.truncatingRemainder(dividingBy: 60)))
+            if Int(duration.truncatingRemainder(dividingBy: 60)) > 9{
+                time = String(format:"0%d:%d",
+                    Int((duration/60).truncatingRemainder(dividingBy: 60)),
+                    Int(duration.truncatingRemainder(dividingBy: 60)))
+            }else{
+                time = String(format:"0%d:0%d",
+                    Int((duration/60).truncatingRemainder(dividingBy: 60)),
+                    Int(duration.truncatingRemainder(dividingBy: 60)))
+            }
         }
         self.timeLbl.text = "\(time)"
         slider.value = 0
         slider.maximumValue = Float(duration)
     }
     func setup(){
-        
-        
         truAudioLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX12)
         slider.setThumbImage(UIImage(named: "slider_thumb"), for: .normal)
         slider.setThumbImage(UIImage(named: "slider_thumb"), for: .highlighted)
-        saveAudioLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX18)
+        saveAudioLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
         audioNameLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
         userNameLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         timeLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
@@ -114,8 +140,6 @@ class TryAudioVC: BaseControllerVC {
         print(sender.value)
         
         self.player?.seek(to: CMTimeMakeWithSeconds(Float64(sender.value),preferredTimescale: player?.currentItem!.duration.timescale ?? 1)) { [weak self](state) in
-            
-            
         }
     }
     @IBAction func tryAudioBtnClicked(_ sender: Any) {
@@ -128,8 +152,19 @@ class TryAudioVC: BaseControllerVC {
     }
     
     @IBAction func saveAudioBtnClicked(_ sender: Any) {
+        let vc =  AddMediaVC()
+        vc.selectedAudio = self.audioData
+        let navigationController = UINavigationController(rootViewController: vc)
+        //BaseNavigationController.init(rootViewController: vc)
+        navigationController.modalPresentationStyle = .overFullScreen
+        //thisDelegate?.cameraOpened()
+        self.present(navigationController, animated: true, completion: nil)
+        managePlayPauseAudio()
     }
     @IBAction func playBtnClicked(_ sender: Any) {
+        managePlayPauseAudio()
+    }
+    func managePlayPauseAudio(){
         if isPlaying{
             player?.pause()
             isPlaying = false
@@ -138,8 +173,8 @@ class TryAudioVC: BaseControllerVC {
             player?.play()
             playBtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
             isPlaying = true
+            loopVideo(videoPlayer: self.player ?? AVPlayer())
         }
-        
     }
     func getAudioDetails(completion:@escaping()->Void){
         let param = ["audioId":self.audioData.id]
@@ -163,21 +198,29 @@ extension TryAudioVC:UICollectionViewDelegateFlowLayout,UICollectionViewDelegate
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileVideoItemCell.identifier, for: indexPath) as! ProfileVideoItemCell
-        cell.updateCell(withImg: self.userVideoData[indexPath.row])
+        cell.updateCellData(data: self.userVideos[indexPath.row])
+        //cell.updateCell(withImg: self.userVideoData[indexPath.row])
         return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ViewVideoVC()
+        vc.data = self.userVideos
+        vc.visitingProfile = false
+        vc.selectedRow = indexPath.row
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         let wFrame = collectionView.frame.width
-        let itemWidth = (wFrame/3)//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
+        let itemWidth = (wFrame/3) - 2//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
         let itemHeight =  itemWidth * 1.3
         return CGSize.init(width: itemWidth, height: itemHeight)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 2
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 2
     }
     
 }

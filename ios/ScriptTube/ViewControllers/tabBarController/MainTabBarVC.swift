@@ -38,17 +38,19 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
 //    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        AuthManager.getProfileApi(delegate: self, needLoader: false) {
+            print("REPLYTOCOMMENT",AuthManager.currentUser.profileImage,AuthManager.currentUser.userName)
+        }
         tabBar.tintColor = UIColor.theme
         tabBar.unselectedItemTintColor = .white
         tabBar.barTintColor = .black
-        
 //        tabBar.tintColor = UIColor.theme
 //        tabBar.unselectedItemTintColor = .black
 //        tabBar.barTintColor = .white
         tabBar.backgroundColor = .black
         delegate = self
         // Do any additional setup after loading the view.
-        homeViewController = HomeVC()
+        homeViewController = HomeVC2()
         homeNavigationController = UINavigationController(rootViewController: homeViewController)
         discoverViewController = UINavigationController(rootViewController:SearchVC())//
         mediaViewController = AddMediaVC()
@@ -76,6 +78,16 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
         
         for (index, tabBarItem) in tabBar.items!.enumerated() {
             //tabBarItem.title = tabBarItemTitle[index]
+            if index == 3{
+                DataManager.getUnreadChatCount(delegate: self) { json in
+                    if json["unreadMessageCount"].intValue > 0{
+                        tabBarItem.badgeColor = .theme
+                        tabBarItem.badgeValue =  "\(json["unreadMessageCount"].intValue)"
+                    }else{
+                        tabBarItem.badgeValue =  nil
+                    }
+                }
+            }
             if index == 2 {
                 // Media Button
                 tabBarItem.title = ""
@@ -88,6 +100,13 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
     }
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         print(#function)
+        DataManager.getUnreadChatCount(delegate: self) { json in
+            if json["unreadMessageCount"].intValue > 0{
+                tabBar.items?[3].badgeValue =  "\(json["unreadMessageCount"].intValue)"
+            }else{
+                tabBar.items?[3].badgeValue =  nil
+            }
+        }
     }
    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         print(#function)
@@ -95,7 +114,7 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
            let vc =  AddMediaVC()
            let navigationController = UINavigationController(rootViewController: vc)
            //BaseNavigationController.init(rootViewController: vc)
-           navigationController.modalPresentationStyle = .overFullScreen
+           navigationController.modalPresentationStyle = .fullScreen
            thisDelegate?.cameraOpened()
            self.present(navigationController, animated: true, completion: nil)
            return false

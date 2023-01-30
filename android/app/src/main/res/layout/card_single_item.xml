@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/PaymentCardParentView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:id="@+id/PaymentCardParentView"
+    android:layout_marginBottom="10dp"
     android:backgroundTint="@color/white"
     android:elevation="10dp"
     app:cardCornerRadius="10dp">
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/Visa"
+            android:id="@+id/CardType"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
@@ -28,22 +28,32 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
-            android:layout_toRightOf="@+id/Visa"
+            android:layout_toRightOf="@+id/CardType"
             android:text="**** **** **** 3333"
-            android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textColor="#262628"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/SelectedCard"
-            android:layout_width="30dp"
-            android:visibility="gone"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginVertical="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toLeftOf="@+id/DeleteCard"
+            android:src="@drawable/check_payment" />
+
+        <ImageView
+            android:id="@+id/DeleteCard"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginVertical="10dp"
             android:layout_marginEnd="30dp"
-            android:src="@drawable/check_payment" />
+            android:src="@drawable/delete_img"
+            app:tint="@color/Red_more_option_user_video_icon_color" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

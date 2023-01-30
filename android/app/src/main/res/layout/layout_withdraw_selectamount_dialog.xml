@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contentPadding="5dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        app:contentPadding="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,97 +21,100 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="16sp"
                 android:fontFamily="@font/noto_sans"
-                android:text="Select Amount"/>
+                android:text="Select Amount"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
 
             <RadioButton
                 android:id="@+id/rd_btn_pending_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/dialog_heading"
                 android:layout_marginTop="30dp"
-                android:checked="true"
                 android:buttonTint="#1FB463"
-                android:layout_below="@id/dialog_heading"/>
+                android:checked="true" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/noto_sans"
-                android:textStyle="bold"
-                android:layout_toRightOf="@id/rd_btn_pending_amount"
                 android:layout_below="@id/dialog_heading"
+                android:layout_marginTop="45dp"
+                android:layout_toRightOf="@id/rd_btn_pending_amount"
+                android:fontFamily="@font/noto_sans"
                 android:text="All Pending Amount"
-                android:textSize="14sp"/>
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rd_btn_other_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
+                android:layout_below="@id/rd_btn_pending_amount"
                 android:buttonTint="#DEDEDE"
-                android:layout_below="@id/rd_btn_pending_amount"/>
+                android:checked="true" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/noto_sans"
-                android:textStyle="bold"
-                android:layout_toRightOf="@id/rd_btn_other_amount"
                 android:layout_below="@id/rd_btn_pending_amount"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@id/rd_btn_other_amount"
+                android:fontFamily="@font/noto_sans"
                 android:text="Other Amount"
-                android:textSize="14sp"/>
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/fill_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginHorizontal="10dp"
                 android:layout_below="@id/rd_btn_other_amount"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_save_audio"
-                    android:padding="10dp"
-                    android:maxLines="1"
-                    android:hint="Enter your amount"
                     android:drawableLeft="@drawable/svg_dollar"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/noto_sans"
+                    android:hint="Enter your amount"
+                    android:maxLines="1"
+                    android:padding="10dp"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textColorHint="@color/enter_donation_textcolor"/>
+                    android:textColorHint="@color/enter_donation_textcolor"
+                    android:textSize="14sp" />
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/dialog_btn_Submit"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/fill_amount"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="20dp"
-                android:layout_below="@id/fill_amount"
-                android:padding="10dp"
                 android:background="@drawable/bg_donation_nobtn"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Submit"
                     android:layout_gravity="center"
                     android:fontFamily="@font/noto_sans"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"/>
+                    android:text="Submit"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 

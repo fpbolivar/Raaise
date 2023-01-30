@@ -28,27 +28,68 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
-    <EditText
-        android:id="@+id/Edt_SearchView"
+
+    <LinearLayout
+        android:id="@+id/SearchLayoutLinear"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+
         android:layout_below="@+id/select_audio_title"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/svg_search"
-        android:drawablePadding="15dp"
-        android:background="@drawable/bg_search"
-        android:hint="Search users"
-        android:paddingStart="20dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/search_musicTextColor" />
+        android:layout_marginTop="11dp"
+        android:background="@drawable/curved_dark_grey_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/search_us" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/CommonFollowerFollowingListSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="Search users"
+            android:maxLines="1"
+            android:theme="@style/SearchViewStyle"
+            app:closeIcon="@drawable/icon_close"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@android:color/transparent"
+            app:searchIcon="@null" />
+
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/followers_list_RV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/Edt_SearchView"
+        android:layout_below="@id/SearchLayoutLinear"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        tools:listitem="@layout/follower_following_single_item" />
+
+    <RelativeLayout
+        android:id="@+id/NoResultFound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/followers_list_RV"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/noto_sans"
+            android:text="No Result Found"
+            android:textColor="@color/DarkGrey"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

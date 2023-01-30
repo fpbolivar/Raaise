@@ -164,7 +164,7 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
             
-            case "Donation Raised".lowercased():
+            case "Support Raised".lowercased():
                 let vc = DonationRaisedListVC()
                 self.navigationController?.pushViewController(vc, animated: true)
                 break
@@ -195,8 +195,12 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
         }
     }
     func createLogoutAlert(){
-        let alert = UIAlertController(title: "ScripTube", message: "Are you sure you want to logout", preferredStyle: .alert)
+        let alert = UIAlertController(title: "ScripTube", message: "Are you sure you want to logout?", preferredStyle: .alert)
         let logOutAction = UIAlertAction(title: "Logout", style: .destructive){action in
+            if(!(Constant.check_Internet?.isReachable)!){
+                AlertView().showInternetErrorAlert(delegate: self)
+                return
+            }
             self.logoutApi()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)

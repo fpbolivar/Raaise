@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "386568747603",
-    "project_id": "scrip-tube",
-    "storage_bucket": "scrip-tube.appspot.com"
+    "project_number": "301537983297",
+    "project_id": "raaise",
+    "storage_bucket": "raaise.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:386568747603:android:45b09a22c384f8b4abe4a6",
+        "mobilesdk_app_id": "1:301537983297:android:fd774a7589928a0a23bfc0",
         "android_client_info": {
-          "package_name": "com.scripttube.android.ScriptTube"
+          "package_name": "com.raaise.android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "386568747603-s59pjn5racbuq2cg0a65jtakhkj0i10t.apps.googleusercontent.com",
+          "client_id": "301537983297-k5b9r7hr4vu2l393slr03k9pkd5or85i.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCy5PVck0K_Hb1ActvxfbJuCqoSV6ewAu4"
+          "current_key": "AIzaSyAriFdK-bqrI-KTuEV_zKJkBvPzYjTw-rs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "386568747603-s59pjn5racbuq2cg0a65jtakhkj0i10t.apps.googleusercontent.com",
+              "client_id": "301537983297-k5b9r7hr4vu2l393slr03k9pkd5or85i.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "301537983297-hndherttr1gvgqs2dcfqoplr0eonrs1f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.raaise.ios"
+              }
             }
           ]
         }

@@ -8,6 +8,7 @@
 import UIKit
 import PhotosUI
 class PersonalInfoFormVC: BaseControllerVC {
+    @IBOutlet weak var updateLbl: UILabel!
     @IBOutlet weak var cameraImage: UIImageView!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var  descriptionLbl:UILabel!
@@ -21,6 +22,10 @@ class PersonalInfoFormVC: BaseControllerVC {
         setfonts()
         cameraImage.layer.cornerRadius = cameraImage.frame.height / 2
         addNavBar(headingText:"Personal Information",redText:"Information")
+        if AuthManager.currentUser.email == ""{
+            emailTF.isEnabled = true
+            emailTF.textColor = .white
+        }
         // Do any additional setup after loading the view.
     }
     func gotoUsernameForm(){
@@ -34,11 +39,12 @@ class PersonalInfoFormVC: BaseControllerVC {
         emailTF.overrideUserInterfaceStyle = .light
         mobileTF.overrideUserInterfaceStyle = .light
         nameTF.overrideUserInterfaceStyle = .light
-        descriptionLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
+        descriptionLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         submitBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX17)
-        emailTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        nameTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        mobileTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        updateLbl.font = AppFont.FontName.medium.getFont(size: AppFont.pX18)
+        emailTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        nameTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        mobileTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         paddingTF(tf:emailTF);
         paddingTF(tf:mobileTF);
         paddingTF(tf:nameTF);
@@ -98,8 +104,8 @@ class PersonalInfoFormVC: BaseControllerVC {
         AuthManager.updateUserProfileApi(delegate: self, param: param,imageChanged:self.imageChanged,image: ["image":self.profileImage.image ?? UIImage()]) {
             DispatchQueue.main.async {
                 //self.gotoUsernameForm()
-                //ToastManager.successToast(delegate: self, msg: "Profile Updated Successfully")
-                self.navigationController?.popViewController(animated: true)
+                ToastManager.successToast(delegate: self, msg: "Profile Updated Successfully")
+                //self.navigationController?.popViewController(animated: true)
             }
         }
     }
@@ -131,17 +137,22 @@ class PersonalInfoFormVC: BaseControllerVC {
 //        else if(emailTF.text!.isEmpty){
 //            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyEmail)
 //            return
-//        }else if (!Validator.isValidEmail(email: emailTF.text ?? "")){
-//            ToastManager.errorToast(delegate: self, msg: LocalStrings.validEmail)
-//            return
 //        }
+        else if (!Validator.isValidEmail(email: emailTF.text ?? "" ) && AuthManager.currentUser.email.isEmpty){
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.validEmail)
+            return
+        }
         else if (mobileTF.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyMobile)
             return
-        }else if (mobileTF.text!.count < 10 || mobileTF.text!.count > 10){
+        }else if (mobileTF.text!.count < 8 || mobileTF.text!.count > 10){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.validMobile)
             return
         }else{
+            if(!(Constant.check_Internet?.isReachable)!){
+                AlertView().showInternetErrorAlert(delegate: self)
+                return
+            }
             updateProfileApi()
         }
     }

@@ -43,34 +43,35 @@
 
         <TextView
             android:id="@+id/Text1InForgetPassword"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TextInForgetPassword"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/noto_sans"
-            android:text="This is your unique name to be used in the ScripTube and how your
-friends find and add you."
-            android:textColor="@color/hintGreyColor"
-            android:textSize="10sp" />
+            android:text="This is your unique name to be used in the ScripTube and how your \nfriends find and add you."
+            android:textColor="@color/light_grey"
+            android:textSize="9.2sp" />
 
         <LinearLayout
-            android:layout_below="@+id/Text1InForgetPassword"
             android:id="@+id/UsernameEditTextInChangeUserNameLayout"
             android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/Text1InForgetPassword"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal"
             android:background="@drawable/curved_dark_grey_background"
-            android:layout_height="50dp">
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="@"
-                android:layout_marginStart="20dp"
-                android:textSize="12sp"
-                android:textColor="@color/light_grey" />
+                android:textColor="#BFBFC1"
+                android:textSize="14sp" />
+
             <EditText
                 android:id="@+id/UsernameEditTextInChangeUserName"
                 android:layout_width="match_parent"
@@ -79,9 +80,9 @@ friends find and add you."
                 android:hint="Username"
                 android:inputType="textEmailAddress"
                 android:paddingEnd="20dp"
-                android:textSize="12sp"
                 android:textColor="@color/light_grey"
-                android:textColorHint="@color/light_grey" />
+                android:textColorHint="#BFBFC1"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -101,7 +102,7 @@ friends find and add you."
                 android:fontFamily="@font/noto_sans"
                 android:text="Update"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

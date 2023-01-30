@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="#ffffff"
+    app:cardCornerRadius="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="center"
+            android:text="Are you sure you want to\n discard changes?"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+
+        <!--        <com.google.android.material.card.MaterialCardView-->
+        <!--            android:id="@+id/YesInLogout"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_marginTop="30dp"-->
+        <!--            android:layout_marginHorizontal="30dp"-->
+
+        <!--            android:layout_weight="1"-->
+        <!--            android:layout_below="@+id/ConfirmYourRecording"-->
+        <!--            app:cardBackgroundColor="@color/white"-->
+        <!--            app:cardCornerRadius="30dp">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:text="Yes"-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textSize="15dp"-->
+        <!--                android:textStyle="bold" />-->
+
+        <!--        </com.google.android.material.card.MaterialCardView>-->
+        <!--        <com.google.android.material.card.MaterialCardView-->
+        <!--            android:id="@+id/NoInLogout"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_marginHorizontal="30dp"-->
+        <!--            android:layout_marginBottom="30dp"-->
+        <!--            android:layout_marginTop="15dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:layout_below="@+id/YesInLogout"-->
+        <!--            app:cardBackgroundColor="@color/black"-->
+        <!--            app:cardCornerRadius="30dp">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:text="No"-->
+        <!--                android:textColor="@color/white"-->
+        <!--                android:textSize="15dp"-->
+        <!--                android:textStyle="bold" />-->
+
+        <!--        </com.google.android.material.card.MaterialCardView>-->
+
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/BackToEditingButton"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/LogoGreyColor"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="8dp"
+                    android:layout_toLeftOf="@id/view"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/noto_sans"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Back To Editing"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/DiscardButton"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="#fc4439"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="8dp"
+                    android:layout_toLeftOf="@id/view"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/noto_sans"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Discard Changes"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

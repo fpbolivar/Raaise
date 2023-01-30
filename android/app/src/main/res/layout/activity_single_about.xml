@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fillViewport="true"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".Settings.About.SingleAbout">
 
     <RelativeLayout
@@ -13,14 +13,14 @@
         android:background="@color/WhiteColor">
 
         <ImageView
-            app:tint="@color/white"
             android:id="@+id/BackInSingleAbout"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="50dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/backarrow" />
+            android:src="@drawable/backarrow"
+            app:tint="@color/white" />
 
         <LinearLayout
             android:id="@+id/TextInForgetPassword"
@@ -36,8 +36,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -47,15 +47,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/TextInForgetPassword"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="30dp"
             android:layout_marginTop="10dp"
-            android:justificationMode="inter_word"
+            android:layout_marginBottom="30dp"
             android:fontFamily="@font/noto_sans"
+            android:justificationMode="inter_word"
             android:textColor="@color/privacy_desc_color"
             android:textSize="10sp" />
 
     </RelativeLayout>
-
 
 
 </ScrollView>

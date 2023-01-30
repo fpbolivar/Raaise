@@ -12,7 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ForgotVC" customModule="ScriptTube" customModuleProvider="target">
             <connections>
+                <outlet property="enterEmailLbl" destination="qp6-E5-gLj" id="e0s-2g-jDk"/>
                 <outlet property="nameTf" destination="Nst-eT-CLJ" id="mAe-Zh-jsl"/>
+                <outlet property="sendLbl" destination="4PQ-qD-bRB" id="cag-Mf-1bv"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -34,7 +36,7 @@
                                         <constraint firstAttribute="height" constant="85" id="GUS-mK-uOc"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your register email." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qp6-E5-gLj" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your registered email." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qp6-E5-gLj" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="95" width="374" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" name="lightGray"/>
@@ -124,7 +126,7 @@
     </objects>
     <designables>
         <designable name="qp6-E5-gLj">
-            <size key="intrinsicContentSize" width="190" height="20.5"/>
+            <size key="intrinsicContentSize" width="209" height="20.5"/>
         </designable>
     </designables>
     <resources>

@@ -363,7 +363,9 @@ private struct Queue<T> {
     fileprivate var array = [T]()
     
     mutating func enqueue(_ element: T) {
-        array.append(element)
+        if array.count == 0{
+            array.append(element)
+        }
     }
     
     mutating func dequeue() -> T? {

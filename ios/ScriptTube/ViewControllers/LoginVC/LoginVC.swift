@@ -8,9 +8,14 @@
 import UIKit
 import FacebookLogin
 import GoogleSignIn
+import AuthenticationServices
 class LoginVC: BaseControllerVC {
 
 
+    @IBOutlet weak var appleSignInLbl: UILabel!
+    @IBOutlet weak var aplleLoginBtn: UIButton!
+    @IBOutlet weak var appleLoginBtnView: CardView!
+    @IBOutlet weak var fbLbl: UILabel!
     @IBOutlet weak var eyeImg: UIImageView!
     @IBOutlet weak var  orSignInWithLbl:UILabel!
     @IBOutlet weak var  donthaveLbl:UILabel!
@@ -31,19 +36,40 @@ class LoginVC: BaseControllerVC {
         redColorUnderline()
         emailTF.text = "test101@gmail.com"
         passTF.text = "Green@1212"
+//        let authorizationButton = ASAuthorizationAppleIDButton()
+//        authorizationButton.frame.size = self.appleLoginBtnView.frame.size
+//        //authorizationButton.center = self.appleLoginBtnView.center
+        aplleLoginBtn.addTarget(self, action: #selector(handleAppleIdRequest), for: .touchUpInside)
+        //self.appleLoginBtnView.addSubview(authorizationButton)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
+    @objc func handleAppleIdRequest() {
+    let appleIDProvider = ASAuthorizationAppleIDProvider()
+    let request = appleIDProvider.createRequest()
+    request.requestedScopes = [.fullName, .email]
+    let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+    authorizationController.delegate = self
+    authorizationController.performRequests()
+    }
     @IBAction func googleLogin(_ sender: Any) {
+        if(!(Constant.check_Internet?.isReachable)!){
+            AlertView().showInternetErrorAlert(delegate: self)
+            return
+        }
         googleLogin()
     }
     @IBAction func facebookLogin(_ sender: Any) {
+        if(!(Constant.check_Internet?.isReachable)!){
+            AlertView().showInternetErrorAlert(delegate: self)
+            return
+        }
         fbLogin()
     }
     func googleLoginApi(withToken token:String){
-        let param = ["token":token,"deviceType":"ios"]
+        let param = ["token":token,"deviceType":"ios","deviceToken":UserDefaultHelper.getDevice_Token()]
         AuthManager.googleLoginApi(delegate: self, param: param) {
             DispatchQueue.main.async {
                 self.goToTabBar()
@@ -75,8 +101,17 @@ class LoginVC: BaseControllerVC {
             }
         }
     }
+    func appleLoginApi(param:[String:String]){
+        self.pleaseWait()
+        AuthManager.appleSignIn(delegate: self, param: param) {
+            DispatchQueue.main.async {
+                self.clearAllNotice()
+                self.goToTabBar()
+            }
+        }
+    }
     func fbLoginApi(withToken token:String){
-        let param = ["token":token,"deviceType":"ios"]
+        let param = ["token":token,"deviceType":"ios","deviceToken":UserDefaultHelper.getDevice_Token()]
         AuthManager.facebookLoginApi(delegate: self, param: param) {
             DispatchQueue.main.async {
                 self.goToTabBar()
@@ -103,7 +138,7 @@ class LoginVC: BaseControllerVC {
         UIApplication.keyWin!.makeKeyAndVisible()
     }
     func loginApi(){
-        let param = ["email":emailTF.text ?? "","password":passTF.text ?? ""]
+        let param = ["email":emailTF.text ?? "","password":passTF.text ?? "","deviceToken":UserDefaultHelper.getDevice_Token()]
         AuthManager.loginApi(delegate: self, param: param) {
             DispatchQueue.main.async {
                 self.goToTabBar()
@@ -128,25 +163,32 @@ class LoginVC: BaseControllerVC {
 //            return
 //        }
         else{
+            if(!(Constant.check_Internet?.isReachable)!){
+                AlertView().showInternetErrorAlert(delegate: self)
+                return
+            }
             loginApi()
         }
     }
     func setfonts(){
+        donthaveLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
         eyeImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showPassword)))
-        orSignInWithLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        orSignInWithLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         orSignInWithLbl.textColor = .white
-        googleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        forgotBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX15)
-        signInBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX17)
+        googleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        appleSignInLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        fbLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        forgotBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX12)
+        signInBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX14)
         passTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
         emailTF.overrideUserInterfaceStyle = .light
         passTF.overrideUserInterfaceStyle = .light
         emailTF.layer.cornerRadius = 10
         passTF.layer.cornerRadius = 10
-        emailTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        emailTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         emailTF.paddingLeftRightTextField(left: 20, right: 20)
         passTF.paddingLeftRightTextField(left: 20, right: 20)
-        
+        loginLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
        
     }
     @objc func showPassword(){
@@ -187,5 +229,39 @@ class LoginVC: BaseControllerVC {
     @IBAction func loginAction(_ sender: AnyObject) {
         checkValidations()
         
+    }
+}
+extension LoginVC:ASAuthorizationControllerDelegate{
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    // Handle error.
+    }
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as?  ASAuthorizationAppleIDCredential {
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            let param = ["AppleId":userIdentifier,"email":email ?? "","name":(fullName?.givenName ?? "") + "" + (fullName?.familyName ?? "")]
+            appleLoginApi(param: param)
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            appleIDProvider.getCredentialState(forUserID: userIdentifier) {  (credentialState, error) in
+                 switch credentialState {
+                    case .authorized:
+                     print("AUTH")
+                        // The Apple ID credential is valid.
+                        break
+                    case .revoked:
+                     print("REVOKE")
+                        // The Apple ID credential is revoked.
+                        break
+                    case .notFound:
+                     print("NONE")
+                        // No credential was found, so show the sign-in UI.
+                     break
+                    default:
+                        break
+                 }
+            }
+           print(userIdentifier,fullName,email)
+        }
     }
 }

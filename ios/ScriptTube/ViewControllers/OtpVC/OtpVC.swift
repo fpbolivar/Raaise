@@ -21,7 +21,10 @@ class OtpVC: BaseControllerVC {
         // Do any additional setup after loading the view.
     }
     func setup(){
-        verifyLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX15)
+        headingLbl.text = "Otp has been sent on your email \(email)"
+        verifyLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX18)
+        headingLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
+        otpTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         //otpTf.placeholder = "Enter Otp"
         otpTf.attributedPlaceholder = NSAttributedString(string: "Enter OTP",attributes: [.foregroundColor: UIColor.white])
         otpTf.paddingLeftRightTextField(left: 25, right: 0)
@@ -33,6 +36,10 @@ class OtpVC: BaseControllerVC {
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyOtp)
             return
         }else{
+            if(!(Constant.check_Internet?.isReachable)!){
+                AlertView().showInternetErrorAlert(delegate: self)
+                return
+            }
             verifyOtpApi()
         }
     }

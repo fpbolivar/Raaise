@@ -26,33 +26,68 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
 
-                android:src="@drawable/delete_it" />
+                 />
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/commentatorName"
+        <LinearLayout
+            android:id="@+id/commentatorNameLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="-4dp"
+            android:fontFamily="@font/noto_sans"
             android:text="Name"
             android:textColor="@color/white"
+            android:textFontWeight="400"
             android:textSize="13sp"
             app:layout_constraintLeft_toRightOf="@id/commentatorImageCardView"
             app:layout_constraintRight_toLeftOf="@id/ReplyComment"
-            app:layout_constraintTop_toTopOf="@id/commentatorImageCardView" />
+            app:layout_constraintTop_toTopOf="@id/commentatorImageCardView">
+
+            <TextView
+                android:id="@+id/commentatorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/noto_sans"
+                android:text="Name"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="13sp"
+                app:layout_constraintLeft_toRightOf="@id/commentatorImageCardView"
+                app:layout_constraintRight_toLeftOf="@id/ReplyComment"
+                app:layout_constraintTop_toTopOf="@id/commentatorImageCardView" />
+
+            <TextView
+                android:id="@+id/Time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:fontFamily="@font/noto_sans"
+                android:maxLines="2"
+                android:text="time"
+                android:textColor="@color/DullWhite"
+                android:textFontWeight="300"
+                android:textSize="10sp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/commentatorText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:fontFamily="@font/noto_sans"
             android:maxLines="2"
+            android:orientation="horizontal"
             android:text="Some random text"
-            android:textColor="@color/white"
+            android:textColor="@color/DullWhite"
+            android:textFontWeight="400"
             android:textSize="12sp"
-            app:layout_constraintLeft_toLeftOf="@id/commentatorName"
+            app:layout_constraintLeft_toLeftOf="@id/commentatorNameLayout"
             app:layout_constraintRight_toLeftOf="@id/ReplyComment"
-            app:layout_constraintTop_toBottomOf="@id/commentatorName" />
+            app:layout_constraintTop_toBottomOf="@id/commentatorNameLayout">
+
+
+        </TextView>
 
         <TextView
             android:id="@+id/ViewRepliesInComments"
@@ -62,12 +97,13 @@
             android:layout_marginBottom="4dp"
             android:drawableEnd="@drawable/view_reply_arrow"
             android:drawablePadding="2dp"
-            android:drawableTint="@color/DarkGrey"
+            android:drawableTint="@color/DullWhite"
+            android:fontFamily="@font/noto_sans"
             android:text="View replies"
-            android:textColor="#606060"
+            android:textColor="@color/dark_grey_comment_viewReplies_textColor"
+            android:textFontWeight="400"
             android:textSize="12sp"
-            android:textStyle="italic"
-            app:layout_constraintLeft_toLeftOf="@id/commentatorName"
+            app:layout_constraintLeft_toLeftOf="@id/commentatorNameLayout"
             app:layout_constraintTop_toBottomOf="@id/commentatorText" />
 
         <TextView
@@ -78,10 +114,12 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
-            android:gravity="center"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="top"
             android:text="Reply"
-            android:textColor="#BBBBBB"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/DullWhite"
+            android:textFontWeight="400"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,6 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
+        android:layout_marginEnd="20dp"
         android:orientation="vertical"
         android:visibility="gone" />
 
@@ -100,5 +139,6 @@
         android:layout_height="1.5dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         android:background="#1F1F1F" />
 </LinearLayout>

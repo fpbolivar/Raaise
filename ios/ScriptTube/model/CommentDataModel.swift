@@ -14,6 +14,7 @@ class CommentDataModel{
     var replies = [ReplyDataModel]()
     var userId = ""
     var commentTime = ""
+    var viewReply = false
     
     init(){
         
@@ -29,6 +30,15 @@ class CommentDataModel{
         self.userId = data["commentBy"]["_id"].stringValue
         self.commentTime = data["createdAt"].stringValue
     }
+    init(data2:JSON){
+        self.comment = data2["data"]["comment"].stringValue
+        self.id = data2["data"]["_id"].stringValue
+        self.username = data2["commentUserDetails"]["userName"].stringValue
+        self.commentprofileImage = data2["commentUserDetails"]["profileImage"].stringValue
+        self.commentTime = data2["data"]["createdAt"].stringValue
+        print("commnetTime",self.commentTime)
+        self.userId = AuthManager.currentUser.id
+    }
 }
 class ReplyDataModel{
     var reply = ""
@@ -36,6 +46,7 @@ class ReplyDataModel{
     var username = ""
     var profileImage = ""
     var userId = ""
+    var replyTime = ""
     
     init(){
         
@@ -46,6 +57,17 @@ class ReplyDataModel{
         self.profileImage = data["replyBy"]["profileImage"].stringValue
         self.username = data["replyBy"]["userName"].stringValue
         self.userId = data["replyBy"]["_id"].stringValue
+        //self.replyTime = data["replyBy"]["createdAt"].stringValue
+        self.replyTime = data["createdAt"].stringValue
+    }
+    init(data2:JSON){
+        self.reply = data2["reply"].stringValue
+        self.userId = data2["replyBy"].stringValue
+        self.id = data2["_id"].stringValue
+        self.profileImage = AuthManager.currentUser.profileImage
+        self.username = AuthManager.currentUser.userName
+        self.replyTime = data2["createdAt"].stringValue
+        print("REPLYTOCOMMENT",AuthManager.currentUser.profileImage,AuthManager.currentUser.userName)
     }
 }
 enum CommentKeys:String{

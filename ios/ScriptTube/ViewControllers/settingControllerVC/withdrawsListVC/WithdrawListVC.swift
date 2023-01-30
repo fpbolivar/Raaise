@@ -10,7 +10,7 @@ import UIKit
 class WithdrawListVC: BaseControllerVC {
 
     @IBOutlet weak var topInfoLbl:UILabel!
-   
+   var data = [WithdrawListData]()
 
     @IBOutlet weak var  tableView:ContentSizedTableView!
     override func viewDidLoad() {
@@ -23,11 +23,23 @@ class WithdrawListVC: BaseControllerVC {
         setfonts()
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: WithdrawalsCell.identifier, bundle: nil), forCellReuseIdentifier: WithdrawalsCell.identifier)
-        executeTblDelegate()
+        getWithdrawlList{
+            DispatchQueue.main.async {
+                self.executeTblDelegate()
+            }
+        }
+        
         // Do any additional setup after loading the view.
     }
     @objc private  func rightAction(){
 
+    }
+    func getWithdrawlList(ocmpletion:@escaping()->Void){
+        DataManager.withdrawList(delegate: self, param: ["userId":AuthManager.currentUser.id]) { data in
+            data["data"].forEach { (_,json) in
+                self.data.append(WithdrawListData(data: json))
+            }
+        }
     }
     func setfonts(){
         topInfoLbl.font = AppFont.FontName.light.getFont(size: AppFont.pX14)
@@ -39,23 +51,13 @@ class WithdrawListVC: BaseControllerVC {
         tableView.reloadData()
     }
 
-    /*
-     // MARK: - Navigation
-
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-
 }
 extension WithdrawListVC:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        return data.count
     }
 
 
@@ -65,7 +67,7 @@ extension WithdrawListVC:UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:  WithdrawalsCell.identifier, for: indexPath) as!  WithdrawalsCell
-        cell.config()
+        cell.updateCell(data: data[indexPath.row] )
         cell.selectionStyle = .none
         return cell
     }
@@ -73,4 +75,18 @@ extension WithdrawListVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
 
+}
+class WithdrawListData{
+    var date = ""
+    var amount = ""
+    var status = ""
+    
+    init(){
+        
+    }
+    init(data:JSON){
+        date = data["createdAt"].stringValue
+        amount = data["amount"].stringValue
+        status = data["withdrawalStatus"].stringValue
+    }
 }

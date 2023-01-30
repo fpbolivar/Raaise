@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Home.Fragments.Try_AudioFragment">
 
     <ImageView
@@ -22,21 +22,22 @@
         android:id="@+id/music_img"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_below="@id/BackInSignUp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="29dp"
-        app:cardCornerRadius="50dp"
-        android:layout_below="@id/BackInSignUp">
+        app:cardCornerRadius="50dp">
 
         <ImageView
+            android:id="@+id/AudioThumbnail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/delete_it"/>
+            android:src="@drawable/placeholder" />
 
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/music_name"
+        android:id="@+id/AudioNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/BackInSignUp"
@@ -47,105 +48,102 @@
         android:drawablePadding="5dp"
         android:drawableTint="@color/white"
         android:fontFamily="@font/noto_sans"
-        android:text="Take Me Home"
-        android:textSize="12sp"
         android:textColor="@color/white"
+        android:textSize="12sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/use_music_Username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/music_name"
+        android:layout_below="@id/AudioNameTextView"
         android:layout_marginStart="15dp"
         android:layout_marginBottom="6dp"
         android:layout_toRightOf="@+id/music_img"
-        android:textSize="10sp"
-        android:text="@string/Username"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="10sp" />
 
 
     <LinearLayout
         android:id="@+id/layout_music"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_below="@id/use_music_Username"
-        android:layout_toRightOf="@+id/music_img"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/music_img"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_play_btn"
             android:layout_width="19dp"
             android:layout_height="19dp"
+            android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            app:tint="@color/white"
-            android:src="@drawable/ic_play_arrow"/>
+            android:src="@drawable/playsvg"
+            app:tint="@color/white" />
 
         <SeekBar
-            android:id="@+id/music_process"
+            android:id="@+id/MusicSeekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:tickMarkTint="@color/white"
+            android:layout_weight="1"
             android:progressBackgroundTint="@color/white"
             android:thumbTint="@color/white"
-            android:layout_weight="1"/>
+            android:tickMarkTint="@color/white" />
 
         <TextView
             android:id="@+id/music_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="25dp"
-            android:textColor="@color/white"
-            android:text="00:30"/>
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/btn_Save_Audio"
+        android:id="@+id/btn_Try_Audio_New"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_below="@id/layout_music"
         android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/bg_save_audio"
-        android:text="Save Audio"
-        android:textStyle="bold"
         android:fontFamily="@font/noto_sans"
         android:gravity="center_vertical|center_horizontal"
+        android:text="Try Audio"
         android:textAllCaps="false"
-        android:textSize="18sp"
         android:textColor="@color/save_audio_textcolor"
-        android:layout_below="@id/layout_music"/>
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/using_music_video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btn_Try_Audio_New"
         android:layout_marginTop="30dp"
-        android:visibility="gone"
-        android:layout_below="@id/btn_Save_Audio"/>
+        android:visibility="gone" />
 
     <!--    Image View Set as a Design Purpose-->
-    <ImageView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerViewOfVideoBasedOnAudio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_Save_Audio"
-        android:scaleType="fitXY"
-        android:layout_marginTop="30dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/delete" />
+        android:layout_below="@id/btn_Try_Audio_New"
+        android:layout_marginTop="30dp" />
 
 
     <RelativeLayout
         android:id="@+id/layout_audio_btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/bg_try_audio_btn"
-        android:layout_marginHorizontal="130dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="130dp"
         android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
+        android:background="@drawable/bg_try_audio_btn"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_audio_btn"
@@ -157,7 +155,8 @@
             android:drawableTint="@color/LogoGreyColor"
             android:fontFamily="@font/noto_sans"
             android:text="Try Audio"
-            android:textColor="@color/LogoGreyColor" />
+            android:textColor="@color/LogoGreyColor"
+            android:textSize="10sp" />
 
     </RelativeLayout>
 

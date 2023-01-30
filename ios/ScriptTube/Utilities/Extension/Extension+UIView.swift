@@ -37,3 +37,26 @@ extension Int {
         }
     }
 }
+extension Double{
+     func shortAmt() -> String{
+        let number = self
+        print("NUMBERRR",number)
+        let thousand = number / 1000.00
+        let million = number / 1000000.00
+        if million >= 1.0 {
+          print(String(format: "%.2f", million))
+            return String(format: "%.2fM", million)
+            //"\(million * 100 / 100.00)M"
+        }
+        else if thousand >= 1.0 {
+            print(String(format: "%.2f", thousand))
+            return String(format: "%.2fK", thousand)
+            //"\(thousand * 100 / 100.00)K"
+        }
+        else {
+            print(String(format: "%.2f", self))
+            return String(format: "%.2f", self)
+            //"\(self)"
+        }
+    }
+}

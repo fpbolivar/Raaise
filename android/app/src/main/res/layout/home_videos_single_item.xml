@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/MainLayoutInFollowingVideoSingleItem"
-    android:layout_height="match_parent">
-
-    <!--    <SurfaceView-->
-    <!--        android:id="@+id/ExoPalyer"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"/>-->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cons"
@@ -18,89 +14,239 @@
         <VideoView
             android:id="@+id/VideoViewInHomeReels"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/delete_it"
-            android:scaleType="fitXY"/>
-    <RelativeLayout
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:layout_alignParentTop="true">
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="35dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/following_tv"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/following_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Following"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="23dp"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/following_tv"
+                    android:layout_alignStart="@id/following_tv"
+                    android:background="#D9D9D9" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@id/following_tv"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="For You"
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+
+            </RelativeLayout>
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/noto_sans"
-                android:text="Following"
-                android:textColor="@color/white"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="23dp"
-                android:layout_height="2dp"
-                android:layout_below="@id/following_tv"
-                android:layout_alignStart="@id/following_tv"
-                android:background="#D9D9D9" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@id/following_tv"
-                android:fontFamily="@font/noto_sans"
-                android:text="For You"
-                android:textColor="@color/white"
-                android:textSize="17dp" />
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:src="@drawable/notification_icon"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
-        <ImageView
-            android:visibility="gone"
+        <TextView
+            android:id="@+id/top_rewarded_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/notification_icon"/>
+            app:layout_constraintBottom_toTopOf="@id/top_rewarded_rv"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"
+            android:text="Top Rewarded"
+            android:textColor="@color/white"
+            android:textSize="11sp"/>
 
-    </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top_rewarded_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintLeft_toLeftOf="@id/top_rewarded_tv"
+            app:layout_constraintRight_toRightOf="@id/top_rewarded_tv"
+            app:layout_constraintBottom_toTopOf="@id/SidePanel"/>
+
+        <LinearLayout
+            android:id="@+id/SidePanel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/DonationLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/DollarDonation"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/donation_in_single" />
+
+                <TextView
+                    android:id="@+id/DonationAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Donate"
+                    android:textColor="@color/white"
+                    android:textFontWeight="300"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/LikeInHomeVideoSingleItem"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/heart_in_single" />
+
+                <TextView
+                    android:id="@+id/LikeCountInHomeVideoSingleItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textFontWeight="300"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/CommentsInAdapter"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+
+                    android:src="@drawable/comment_in_single" />
+
+                <TextView
+                    android:id="@+id/CommentCountInHomeVideoSingleItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textFontWeight="300"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ShareVideo"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/send_in_single" />
+
+                <TextView
+                    android:id="@+id/VideoShareCountInHomeVideoSingleItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textFontWeight="300"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/try_audio_btn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:src="@drawable/camera_in_singel"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/more_options_btn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:src="@drawable/more_options_btns" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:background="@drawable/home_layout_shadow"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/home_layout_shadow">
 
 
         <LinearLayout
             android:id="@+id/profileContainer"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/hashTagsTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:gravity="center_vertical">
+            android:layout_marginBottom="5dp"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toTopOf="@+id/hashTagsTV"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -109,11 +255,11 @@
 
                 <ImageView
                     android:id="@+id/ImageProfileInAdapter"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:background="@drawable/circular_shape"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/delete_it" />
+                     />
 
             </androidx.cardview.widget.CardView>
 
@@ -122,157 +268,152 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/NameInHomeVideoSingleItem"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Maninder"
-                    android:textColor="@color/white"
-                    android:textFontWeight="400"
-                    android:textSize="14dp" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/UserNameInHomeVideoSingleItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="maninder501"
-                    android:textColor="@color/white"
-                    android:textFontWeight="300"
-                    android:textSize="12dp" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/NameInHomeVideoSingleItem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:fontFamily="@font/noto_sans"
+                            android:maxWidth="180dp"
+                            android:textColor="@color/white"
+                            android:textFontWeight="400"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/UserNameInHomeVideoSingleItem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/noto_sans"
+                            android:maxWidth="180dp"
+                            android:textColor="@color/white"
+                            android:textFontWeight="300"
+                            android:textSize="10sp" />
+
+                    </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/FollowButtonInHomeVideoSingleItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:backgroundTint="@color/LogoGreyColor"
+                        app:cardCornerRadius="4dp">
+
+                        <TextView
+                            android:id="@+id/FollowTextInHomeVideoSingleItem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginHorizontal="10dp"
+                            android:fontFamily="@font/noto_sans"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textFontWeight="300"
+                            android:textSize="10sp" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/DonationRaisedInHomeVideoSingleItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/noto_sans"
+                    android:maxWidth="180dp"
                     android:text="Total raised: $"
                     android:textColor="@color/white"
                     android:textFontWeight="300"
-                    android:textSize="12dp" />
+                    android:textSize="10sp" />
+
             </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/FollowButtonInHomeVideoSingleItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:backgroundTint="@color/LogoGreyColor"
-                app:cardCornerRadius="12dp">
-
-                <TextView
-                    android:id="@+id/FollowTextInHomeVideoSingleItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginVertical="8dp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Follow"
-                    android:textColor="@color/white"
-                    android:textSize="14dp" />
-            </androidx.cardview.widget.CardView>
 
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/hashTagsTV"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/SongLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="250dp"
-            android:text="#insta ##reels...See more"
-            android:textSize="14sp"
-            android:layout_marginStart="5dp"
             android:layout_above="@id/SongLayout"
-            android:layout_marginTop="4dp"
-            android:textColor="#BBBBBB"/>
-
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="7dp"
+            android:maxWidth="180dp"
+            android:text="#insta ##reels...See more"
+            android:textColor="@color/DullWhite"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/SongLayout"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <LinearLayout
             android:id="@+id/SongLayout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="7dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
             <RelativeLayout
                 android:id="@+id/AudioItem"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/user_image_bg">
+
                 <androidx.cardview.widget.CardView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:layout_centerInParent="true"
                     app:cardCornerRadius="50dp">
+
                     <ImageView
                         android:id="@+id/SongImage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/delete_it"/>
+                         />
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
 
             <ImageView
                 android:id="@+id/lottie_main"
-                android:layout_width="20dp"
-                android:layout_height="15dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_marginStart="10dp"
                 android:src="@drawable/svg_music_sign_whitecolor" />
+
             <TextView
                 android:id="@+id/SongNameInHomeVideoSingleItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:maxWidth="200dp"
                 android:fontFamily="@font/noto_sans"
+                android:maxWidth="200dp"
+                android:text="Dummy"
                 android:textColor="@color/white"
-                android:textSize="12sp"/>
+                android:textSize="10sp" />
 
         </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -281,152 +422,28 @@
         android:id="@+id/more_options_btn_UP"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:visibility="gone"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
         android:rotation="90"
-        android:src="@drawable/more_options_btns" />
-
-
-    <LinearLayout
-        android:id="@+id/SidePanel"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="5dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/DollarDonation"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/donation_in_single" />
-
-            <TextView
-                android:id="@+id/DonationAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textFontWeight="300"
-                android:textSize="12dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/LikeInHomeVideoSingleItem"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/heart_in_single" />
-
-            <TextView
-                android:id="@+id/LikeCountInHomeVideoSingleItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textFontWeight="300"
-                android:textSize="12dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/CommentsInAdapter"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-
-                android:src="@drawable/comment_in_single" />
-
-            <TextView
-                android:id="@+id/CommentCountInHomeVideoSingleItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textFontWeight="300"
-                android:textSize="12dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/send_in_single" />
-
-            <TextView
-                android:id="@+id/VideoShareCountInHomeVideoSingleItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textFontWeight="300"
-                android:textSize="12dp" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/try_audio_btn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
-            android:visibility="gone"
-            android:src="@drawable/camera_in_singel" />
-
-        <ImageView
-            android:id="@+id/more_options_btn"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/more_options_btns"/>
-
-    </LinearLayout>
-
-
-
+        android:src="@drawable/more_options_btns"
+        android:visibility="gone" />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:visibility="gone"
         android:id="@+id/Lottie_Heart"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
-        app:lottie_rawRes="@raw/heart_json" />
-    <com.airbnb.lottie.LottieAnimationView
         android:visibility="gone"
+        app:lottie_rawRes="@raw/heart_json" />
+
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/Lottie_PausePlay"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
-        app:lottie_speed="3"
-        />
+        android:visibility="gone"
+        app:lottie_speed="3" />
     <!--    </RelativeLayout>-->
 </RelativeLayout>

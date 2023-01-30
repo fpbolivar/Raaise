@@ -9,6 +9,7 @@ import UIKit
 
 class ShortBioFormVC: BaseControllerVC {
 
+    @IBOutlet weak var updateLbl: UILabel!
     @IBOutlet weak var  descriptionLbl:UILabel!
     @IBOutlet weak var  textCountLbl:UILabel!
     @IBOutlet weak var  submitBtn:UIButton!
@@ -17,17 +18,21 @@ class ShortBioFormVC: BaseControllerVC {
         super.viewDidLoad()
         setfonts()
         textCountLbl.text = "\(bioTF.text.count)/45"
+        if bioTF.text.count == 45{
+            textCountLbl.textColor = .red
+        }
         addNavBar(headingText:"Short Bio",redText:"Bio")
 
         // Do any additional setup after loading the view.
     }
     func setfonts(){
-        textCountLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
-        descriptionLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
+        updateLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
+        textCountLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
+        descriptionLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         submitBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX17)
 
         bioTF.delegate = self
-        bioTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        bioTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         bioTF.text = AuthManager.currentUser.shortBio
     }
     func updateProfileApi(){
@@ -35,18 +40,25 @@ class ShortBioFormVC: BaseControllerVC {
         AuthManager.updateUserProfileApi(delegate: self, param: param) {
             DispatchQueue.main.async {
                 //self.gotoShortBioForm()
-                self.navigationController?.popViewController(animated: true)
+                ToastManager.successToast(delegate: self, msg: "Bio Updated Successfully")
+                //self.navigationController?.popViewController(animated: true)
             }
         }
     }
     @IBAction func submitAction(_ sender: AnyObject) {
 
+        if(!(Constant.check_Internet?.isReachable)!){
+            AlertView().showInternetErrorAlert(delegate: self)
+            return
+        }
         updateProfileApi()
     }
 }
 extension ShortBioFormVC:UITextViewDelegate{
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        
+        if text == "\n"{
+            return false
+        }
         return textView.text.count + (text.count - range.length) <= 45
     }
     func textViewDidChange(_ textView: UITextView) {

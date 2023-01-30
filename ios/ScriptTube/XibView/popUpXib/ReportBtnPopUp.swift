@@ -6,9 +6,14 @@
 //
 
 import UIKit
-
+protocol ReportBtnDelegate{
+    func alreadyReportedVideo()
+}
 class ReportBtnPopUp: UIViewController {
-var videoId = ""
+    var videoId = ""
+    var isvideoReported = false
+    var delegate : ReportVideoDelegate?
+    var btnDelegate : ReportBtnDelegate?
     @IBOutlet weak var reportLbl: UILabel!
     @IBOutlet weak var reportIcon: UIImageView!
     override func viewDidLoad() {
@@ -23,19 +28,28 @@ var videoId = ""
     }
     @objc func gotoReport(){
        // let pvc = self.presentingViewController
-        self.dismiss(animated: true){
+        if isvideoReported{
+            self.dismiss(animated: true){
+                self.btnDelegate?.alreadyReportedVideo()
+            }
+        }else{
+            weak var pvc = self.presentingViewController
+
+            self.dismiss(animated: true, completion: {
+                let popUp = ReportVideoVC()
+                popUp.delegate = self
+                popUp.videoId = self.videoId
+                popUp.modalTransitionStyle = .crossDissolve
+                popUp.modalPresentationStyle = .overCurrentContext
+               // pvc?.tabBarController?.present(popUp, animated: true)
+                pvc?.present(popUp, animated: true, completion: nil)
+            })
             
         }
-        weak var pvc = self.presentingViewController
-
-        self.dismiss(animated: true, completion: {
-            let popUp = ReportVideoVC()
-            popUp.videoId = self.videoId
-            popUp.modalTransitionStyle = .crossDissolve
-            popUp.modalPresentationStyle = .overCurrentContext
-           // pvc?.tabBarController?.present(popUp, animated: true)
-            pvc?.present(popUp, animated: true, completion: nil)
-        })
-        
+    }
+}
+extension ReportBtnPopUp:ReportVideoDelegate{
+    func videoReported() {
+        delegate?.videoReported()
     }
 }

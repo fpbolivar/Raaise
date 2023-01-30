@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
+    android:orientation="vertical"
     tools:context=".Settings.Payments.BankDetails">
 
     <LinearLayout
@@ -15,14 +15,14 @@
         android:orientation="vertical">
 
         <ImageView
-            app:tint="@color/white"
             android:id="@+id/BackInSignUp"
-            android:layout_width="35dp"
+            android:layout_width="36dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="50dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/backarrow" />
+            android:src="@drawable/backarrow"
+            app:tint="@color/white" />
 
         <LinearLayout
             android:id="@+id/TextInForgetPassword"
@@ -38,17 +38,17 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="Bank "
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
                 android:text="Details"
-                android:textStyle="bold"
                 android:textColor="@color/new_textcolor"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <ScrollView
@@ -74,23 +74,23 @@
                     android:textSize="10sp" />
 
                 <EditText
-                    android:id="@+id/OldPasswordEditTextInChangePassword"
+                    android:id="@+id/BankNameET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/curved_dark_grey_background"
-                    android:hint="Bank Name"
+                    android:hint="Account Holder Name"
                     android:inputType="textPersonName"
                     android:paddingStart="20dp"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
-                    android:textSize="12sp"
                     android:textColor="@color/light_grey"
-                    android:textColorHint="@color/light_grey" />
+                    android:textColorHint="@color/light_grey"
+                    android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/NewPasswordEditTextInChangePassword"
+                    android:id="@+id/AccountNumberET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginHorizontal="30dp"
@@ -98,16 +98,16 @@
                     android:background="@drawable/curved_dark_grey_background"
                     android:hint="Account Number"
                     android:inputType="phone"
+                    android:paddingHorizontal="20dp"
                     android:paddingStart="20dp"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
-                    android:textSize="12sp"
-                    android:paddingHorizontal="20dp"
                     android:textColor="@color/light_grey"
-                    android:textColorHint="@color/light_grey" />
+                    android:textColorHint="@color/light_grey"
+                    android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/ConfirmPasswordEditTextInChangePassword"
+                    android:id="@+id/ConfirmAccountNumberET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginHorizontal="30dp"
@@ -119,9 +119,11 @@
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     android:textColor="@color/light_grey"
-                    android:textSize="12sp"
-                    android:textColorHint="@color/light_grey" />
+                    android:textColorHint="@color/light_grey"
+                    android:textSize="14sp" />
+
                 <EditText
+                    android:id="@+id/RoutingNumberET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginHorizontal="30dp"
@@ -133,64 +135,69 @@
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     android:textColor="@color/light_grey"
-                    android:textSize="12sp"
-                    android:textColorHint="@color/light_grey" />
+                    android:textColorHint="@color/light_grey"
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
                     android:weightSum="2">
 
                     <EditText
+                        android:id="@+id/CityET"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/curved_dark_grey_background"
-                        android:layout_marginRight="4dp"
                         android:hint="City"
-                        android:inputType="phone"
+                        android:inputType="text"
                         android:paddingStart="20dp"
                         android:paddingTop="14dp"
                         android:paddingBottom="14dp"
                         android:textColor="@color/light_grey"
-                        android:textSize="12sp"
-                        android:textColorHint="@color/light_grey" />
+                        android:textColorHint="@color/light_grey"
+                        android:textSize="14sp" />
+
                     <EditText
+                        android:id="@+id/StateET"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/curved_dark_grey_background"
-                        android:layout_marginLeft="4dp"
                         android:hint="State"
-                        android:inputType="phone"
+                        android:inputType="text"
                         android:paddingStart="20dp"
                         android:paddingTop="14dp"
                         android:paddingBottom="14dp"
                         android:textColor="@color/light_grey"
-                        android:textSize="12sp"
-                        android:textColorHint="@color/light_grey" />
+                        android:textColorHint="@color/light_grey"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/AddressET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/curved_dark_grey_background"
                     android:hint="Address"
-                    android:inputType="phone"
+                    android:inputType="text"
                     android:paddingStart="20dp"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     android:textColor="@color/light_grey"
-                    android:textSize="12sp"
-                    android:textColorHint="@color/light_grey" />
+                    android:textColorHint="@color/light_grey"
+                    android:textSize="14sp" />
 
                 <EditText
+                    android:id="@+id/PostalCodeET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginHorizontal="30dp"
@@ -202,9 +209,11 @@
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     android:textColor="@color/light_grey"
-                    android:textSize="12sp"
-                    android:textColorHint="@color/light_grey" />
+                    android:textColorHint="@color/light_grey"
+                    android:textSize="14sp" />
+
                 <EditText
+                    android:id="@+id/PhoneNumberNumberET"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginHorizontal="30dp"
@@ -216,17 +225,18 @@
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"
                     android:textColor="@color/light_grey"
-                    android:textSize="12sp"
-                    android:textColorHint="@color/light_grey" />
+                    android:textColorHint="@color/light_grey"
+                    android:textSize="14sp" />
             </LinearLayout>
         </ScrollView>
 
         <LinearLayout
-            android:id="@+id/LoginButton"
+            android:id="@+id/SaveBankDetailsButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/ConfirmPasswordEditTextInChangePassword"
             android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="50dp"
             android:layout_marginTop="50dp"
             android:background="@drawable/button_shape_login"
             android:gravity="center"
@@ -238,7 +248,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="Save"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

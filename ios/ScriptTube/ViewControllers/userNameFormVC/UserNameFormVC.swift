@@ -8,6 +8,7 @@
 import UIKit
 
 class UserNameFormVC: BaseControllerVC {
+    @IBOutlet weak var updateLbl: UILabel!
     @IBOutlet weak var  descriptionLbl:UILabel!
     @IBOutlet weak var  submitBtn:UIButton!
     @IBOutlet weak var  nameTF:UITextField!
@@ -19,9 +20,10 @@ class UserNameFormVC: BaseControllerVC {
     }
     func setfonts(){
         nameTF.overrideUserInterfaceStyle = .light
-        descriptionLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
+        descriptionLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         submitBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX17)
-        nameTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        updateLbl.font = AppFont.FontName.medium.getFont(size: AppFont.pX18)
+        nameTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         paddingTF(tf:nameTF);
         setPlaceholder()
     }
@@ -30,7 +32,7 @@ class UserNameFormVC: BaseControllerVC {
     }
     func setPlaceholder(){
         //nameTF.placeholder = "Username"
-        nameTF.attributedPlaceholder = NSAttributedString(string: "UserName",attributes: [.foregroundColor: UIColor.lightGray])
+        nameTF.attributedPlaceholder = NSAttributedString(string: "Username",attributes: [.foregroundColor: UIColor.lightGray])
         nameTF.layer.cornerRadius = 10
         nameTF.text = AuthManager.currentUser.userName
     }
@@ -44,6 +46,10 @@ class UserNameFormVC: BaseControllerVC {
 //            return
 //        }
         else{
+            if(!(Constant.check_Internet?.isReachable)!){
+                AlertView().showInternetErrorAlert(delegate: self)
+                return
+            }
             updateProfileApi()
         }
     }
@@ -52,7 +58,8 @@ class UserNameFormVC: BaseControllerVC {
         AuthManager.updateUserProfileApi(delegate: self, param: param) {
             DispatchQueue.main.async {
                 //self.gotoShortBioForm()
-                self.navigationController?.popViewController(animated: true)
+                ToastManager.successToast(delegate: self, msg: "Username Updated Successfully")
+                //self.navigationController?.popViewController(animated: true)
             }
         }
     }

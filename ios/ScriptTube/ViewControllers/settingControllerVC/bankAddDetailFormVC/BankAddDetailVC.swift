@@ -8,6 +8,7 @@
 import UIKit
 
 class BankAddDetailVC: BaseControllerVC {
+    @IBOutlet weak var saveLbl: UILabel!
     @IBOutlet weak var phoneNumberTf: UITextField!
     @IBOutlet weak var postalCodeTf: UITextField!
     @IBOutlet weak var addressTf: UITextField!
@@ -27,7 +28,7 @@ class BankAddDetailVC: BaseControllerVC {
         // Do any additional setup after loading the view.
     }
     func setData(){
-        accountNameTF.text = ""
+        accountNameTF.text = AuthManager.currentUser.accountHolderName
         accountNoTF.text = AuthManager.currentUser.accountId
         cnfAccountNoTF.text = AuthManager.currentUser.accountId
         routingNoTF.text = AuthManager.currentUser.routingNumber
@@ -39,17 +40,18 @@ class BankAddDetailVC: BaseControllerVC {
     }
     
     func setfonts(){
-        descriptionLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
+        saveLbl.font = AppFont.FontName.medium.getFont(size: AppFont.pX18)
+        descriptionLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         submitBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX17)
-        accountNameTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        accountNoTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        routingNoTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        cnfAccountNoTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        phoneNumberTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        postalCodeTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        addressTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        stateTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        cityTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        accountNameTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        accountNoTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        routingNoTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        cnfAccountNoTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        phoneNumberTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        postalCodeTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        addressTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        stateTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        cityTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         paddingTF(tf:cnfAccountNoTF);
         paddingTF(tf:accountNameTF);
         paddingTF(tf:routingNoTF);
@@ -85,12 +87,14 @@ class BankAddDetailVC: BaseControllerVC {
     func checkValidations(){
         if accountNameTF.text!.isEmpty{
             ToastManager.errorToast(delegate: self, msg: "Please enter Account Holder Name")
-        }else if routingNoTF.text!.isEmpty{
-            ToastManager.errorToast(delegate: self, msg: "Please enter Routing Number")
         }else if accountNoTF.text!.isEmpty{
             ToastManager.errorToast(delegate: self, msg: "Please enter Account Number")
         }else if cnfAccountNoTF.text!.isEmpty{
             ToastManager.errorToast(delegate: self, msg: "Please Confirm Account Number")
+        }else if accountNoTF.text! != cnfAccountNoTF.text!{
+            ToastManager.errorToast(delegate: self, msg: "Account Number are not same")
+        }else if routingNoTF.text!.isEmpty{
+            ToastManager.errorToast(delegate: self, msg: "Please enter Routing Number")
         }else if cityTf.text!.isEmpty{
             ToastManager.errorToast(delegate: self, msg: "Please enter City")
         }else if stateTf.text!.isEmpty{
@@ -104,11 +108,15 @@ class BankAddDetailVC: BaseControllerVC {
         }else if phoneNumberTf.text!.count < 8{
             ToastManager.errorToast(delegate: self, msg: LocalStrings.validMobile)
         }else{
+            if(!(Constant.check_Internet?.isReachable)!){
+                AlertView().showInternetErrorAlert(delegate: self)
+                return
+            }
             addBankDetailsApi()
         }
     }
     func addBankDetailsApi(){
-        let param = ["name":accountNameTF.text,"accountId":cnfAccountNoTF.text,"routingNumber":routingNoTF.text,"bankPhone":phoneNumberTf.text,"city":cityTf.text,"state":stateTf.text,"postalCode":postalCodeTf.text,"address":addressTf.text] as! [String:String]
+        let param = ["accountHolderName":accountNameTF.text,"accountId":cnfAccountNoTF.text,"routingNumber":routingNoTF.text,"bankPhone":phoneNumberTf.text,"city":cityTf.text,"state":stateTf.text,"postalCode":postalCodeTf.text,"address":addressTf.text] as! [String:String]
         AuthManager.addBankDetails(delegate: self, param: param) {
             DispatchQueue.main.async {
                 ToastManager.successToast(delegate: self, msg: "Bank Details Added Successfully")

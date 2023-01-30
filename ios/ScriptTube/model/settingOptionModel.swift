@@ -47,7 +47,7 @@ class SettingOptionManager{
 
         let notificationSection = SettingOptionModal(title: "NOTIFICATIONS", items: [SettingOptionItems(title: "Push Notifications", subtitle: "",type: .switchBtn),SettingOptionItems(title: "Email Notifications", subtitle: "")], type: .switchBtn)
 
-        let paymentSection = SettingOptionModal(title: "PAYMENTS", items: [SettingOptionItems(title: "Payment Methods", subtitle: ""),SettingOptionItems(title: "Donation Raised", subtitle: ""),SettingOptionItems(title: "Withdrawals", subtitle: ""),SettingOptionItems(title: "Bank Details", subtitle: "")], type: .profile)
+        let paymentSection = SettingOptionModal(title: "PAYMENTS", items: [SettingOptionItems(title: "Payment Methods", subtitle: ""),SettingOptionItems(title: "Support Raised", subtitle: ""),SettingOptionItems(title: "Withdrawals", subtitle: ""),SettingOptionItems(title: "Bank Details", subtitle: "")], type: .profile)
 
         let aboutSection = SettingOptionModal(title: "ABOUT", items: [SettingOptionItems(title: "Terms of Service", subtitle: ""),SettingOptionItems(title: "Privacy Policy", subtitle: ""),SettingOptionItems(title: "Copyright Policy", subtitle: "")], type: .profile)
 

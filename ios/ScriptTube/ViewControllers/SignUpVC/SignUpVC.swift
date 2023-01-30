@@ -8,7 +8,10 @@
 import UIKit
 import FacebookLogin
 import GoogleSignIn
+import AuthenticationServices
 class SignUpVC: BaseControllerVC {
+    @IBOutlet weak var appleSignInLbl: UILabel!
+    @IBOutlet weak var signUpLbl: UILabel!
     @IBOutlet weak var cnfPassTfEyeImg: UIImageView!
     @IBOutlet weak var passTfEyeImg: UIImageView!
     @IBOutlet weak var  orSignInWithLbl:UILabel!
@@ -33,25 +36,44 @@ class SignUpVC: BaseControllerVC {
         addNavBar(headingText:"Sign Up for Scriptube",redText:"Scriptube")
         // Do any additional setup after loading the view.
     }
+    @IBAction func appleSignInBtnClicked(_ sender: Any) {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.performRequests()
+    }
     @IBAction func fbLoginBtnClicked(_ sender: Any) {
+        if(!(Constant.check_Internet?.isReachable)!){
+            AlertView().showInternetErrorAlert(delegate: self)
+            return
+        }
         fbLogin()
     }
     @IBAction func googleLoginBtnClicked(_ sender: Any) {
+        if(!(Constant.check_Internet?.isReachable)!){
+            AlertView().showInternetErrorAlert(delegate: self)
+            return
+        }
         googleLogin()
     }
+    func googleLoginApi(withToken token:String){
+        let param = ["token":token,"deviceType":"ios","deviceToken":UserDefaultHelper.getDevice_Token()]
+        AuthManager.googleLoginApi(delegate: self, param: param) {
+            DispatchQueue.main.async {
+                self.goToTabBar()
+            }
+        }
+    }
+
     func googleLogin() {
         GIDSignIn.sharedInstance.signOut()
-        GIDSignIn.sharedInstance.signIn(with: AppDelegate.signInConfig, presenting: self)
-//      GIDSignIn.sharedInstance.signIn(
-//        with: signInConfig,
-//        presenting: presentingViewController) { user, error in
-//          guard let signInUser = user else {
-//            // Inspect error
-//            return
-//          }
-//          // If sign in succeeded, display the app's main content View.
-//        }
-      
+        GIDSignIn.sharedInstance.signIn(with: AppDelegate.signInConfig, presenting: self){user,error in
+            print("GOOGLETOKEN",user?.authentication.idToken,user?.authentication.accessToken)
+            guard let googleToken = user?.authentication.accessToken else{return}
+            self.googleLoginApi(withToken: googleToken)
+        }
     }
     func fbLogin(){
         let fbLoginManager : LoginManager = LoginManager()
@@ -71,12 +93,12 @@ class SignUpVC: BaseControllerVC {
         }
     }
     func goToTabBar(){
-        let vc  = TabBarController()
+        let vc  = MainTabBarVC()
         UIApplication.keyWin!.rootViewController = vc
         UIApplication.keyWin!.makeKeyAndVisible()
     }
     func fbLoginApi(withToken token:String){
-        let param = ["token":token,"deviceType":"ios"]
+        let param = ["token":token,"deviceType":"ios","deviceToken":UserDefaultHelper.getDevice_Token()]
         AuthManager.facebookLoginApi(delegate: self, param: param) {
             DispatchQueue.main.async {
                 self.goToTabBar()
@@ -98,7 +120,7 @@ class SignUpVC: BaseControllerVC {
       }
     }
     func signUpApi(){
-        let param = ["name":nameTF.text ?? "","userName":usernameTF.text ?? "","email":emailTF.text ?? "","password":passTF.text ?? "","phoneNumber":mobileTF.text ?? "","deviceType":"ios"]
+        let param = ["name":nameTF.text ?? "","userName":usernameTF.text ?? "","email":emailTF.text ?? "","password":passTF.text ?? "","phoneNumber":mobileTF.text ?? "","deviceType":"ios","deviceToken":UserDefaultHelper.getDevice_Token()]
         AuthManager.signInApi(delegate: self, param: param) {
             DispatchQueue.main.async {
                 //self.gotoPersonalInfoVC()
@@ -124,19 +146,28 @@ class SignUpVC: BaseControllerVC {
         }
     }
     func setfonts(){
+        alreadyhaveLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
         passTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
         cnfPassTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
         passTfEyeImg.addGestureRecognizer(passTap)
         cnfPassTfEyeImg.addGestureRecognizer(cnfPassTap)
-        orSignInWithLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        orSignInWithLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
 
-        googleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        googleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        appleSignInLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        fbLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
 
-        fbLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-
-        signUpBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX17)
+        signUpBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX18)
+        signUpLbl.font = AppFont.FontName.medium.getFont(size: AppFont.pX18)
         //passTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
         //emailTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        emailTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        passTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        nameTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        usernameTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        mobileTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        passTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        cnfPassTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         emailTF.paddingLeftRightTextField(left: 20, right: 20)
         passTF.paddingLeftRightTextField(left: 20, right: 20)
         nameTF.paddingLeftRightTextField(left: 20, right: 20)
@@ -164,6 +195,15 @@ class SignUpVC: BaseControllerVC {
         let vc = PersonalInfoFormVC()
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    func appleLoginApi(param:[String:String]){
+        self.pleaseWait()
+        AuthManager.appleSignIn(delegate: self, param: param) {
+            DispatchQueue.main.async {
+                self.clearAllNotice()
+                self.goToTabBar()
+            }
+        }
+    }
     func checkValidations(){
         if (nameTF.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyName)
@@ -185,7 +225,7 @@ class SignUpVC: BaseControllerVC {
         }else if (mobileTF.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyMobile)
             return
-        }else if (mobileTF.text!.count < 8){
+        }else if (mobileTF.text!.count < 8 || mobileTF.text!.count > 10){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.validMobile)
             return
         }else if (passTF.text!.isEmpty){
@@ -198,6 +238,10 @@ class SignUpVC: BaseControllerVC {
             ToastManager.errorToast(delegate: self, msg: LocalStrings.passwordNotSame)
             return
         }else{
+            if(!(Constant.check_Internet?.isReachable)!){
+                AlertView().showInternetErrorAlert(delegate: self)
+                return
+            }
             signUpApi()
         }
     }
@@ -227,5 +271,39 @@ class SignUpVC: BaseControllerVC {
     }
     @IBAction func signUpAction(_ sender: AnyObject) {
         checkValidations()
+    }
+}
+extension SignUpVC:ASAuthorizationControllerDelegate{
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    // Handle error.
+    }
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as?  ASAuthorizationAppleIDCredential {
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            let param = ["AppleId":userIdentifier,"email":email ?? "","name":(fullName?.givenName ?? "") + "" + (fullName?.familyName ?? "")]
+            appleLoginApi(param: param)
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            appleIDProvider.getCredentialState(forUserID: userIdentifier) {  (credentialState, error) in
+                 switch credentialState {
+                    case .authorized:
+                     print("AUTH")
+                        // The Apple ID credential is valid.
+                        break
+                    case .revoked:
+                     print("REVOKE")
+                        // The Apple ID credential is revoked.
+                        break
+                    case .notFound:
+                     print("NONE")
+                        // No credential was found, so show the sign-in UI.
+                     break
+                    default:
+                        break
+                 }
+            }
+           print(userIdentifier,fullName,email)
+        }
     }
 }

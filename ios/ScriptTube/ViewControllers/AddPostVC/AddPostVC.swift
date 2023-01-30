@@ -32,8 +32,16 @@ class AddPostVC: BaseControllerVC {
     var imageData = Data()
     var editPost = false
     var slug:String?
+    var category:[VideoCategoryModel] = []
+    var selectedCategory:String = ""
+    var delegate:AddPostFinishDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
+        otherAmtLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
+        donationLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
+        submitLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
+        donationTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        captionTv.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         hideNavbar()
         if editPost{
             setupForEditPost()
@@ -55,7 +63,11 @@ class AddPostVC: BaseControllerVC {
         categoryTableView.delegate = self
         submitLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX15)
         categoryTableView.dataSource = self
-        setupChooseArticleDropDown()
+        getVideoCategoryApi {
+            DispatchQueue.main.async {
+                self.setupChooseArticleDropDown()
+            }
+        }
         // Do any additional setup after loading the view.
     }
     func setupChooseArticleDropDown() {
@@ -64,12 +76,13 @@ class AddPostVC: BaseControllerVC {
         chooseArticleDropDown.backgroundColor = UIColor(named: "TFcolor")
         chooseArticleDropDown.textColor = .white
         chooseArticleDropDown.selectionBackgroundColor = .darkGray
-        chooseArticleDropDown.dataSource = ["test1","test2","test3","test4"]
+        chooseArticleDropDown.dataSource = category.map{$0.name}
 
         // Action triggered on selection
         chooseArticleDropDown.selectionAction = { [weak self] (index, item) in
             print("SELECTEDVAL",item)
             self?.categoryTf.text = item
+            self?.selectedCategory = self?.category[index].id ?? ""
         }
 
 //        chooseArticleDropDown.multiSelectionAction = { [weak self] (indices, items) in
@@ -90,7 +103,7 @@ class AddPostVC: BaseControllerVC {
         thumbnailImgView.loadImg(url: thumbnailImageString ?? "")
     }
     func editPostApi(){
-        let param = ["slug":slug,"videoCaption":captionTv.text] as! [String:String]
+        let param = ["slug":slug,"videoCaption":captionTv.text.trimmingCharacters(in: .whitespaces)] as! [String:String]
         DataManager.editPostApi(delegate: self, param: param) {
             DispatchQueue.main.async {
                 self.navigationController?.popToRootViewController(animated: true)
@@ -98,14 +111,36 @@ class AddPostVC: BaseControllerVC {
             }
         }
     }
+    func getVideoCategoryApi(completion:@escaping()->Void){
+        DataManager.getVideoCategory(delegate: self) { json in
+            json["data"].forEach { (message,data) in
+                self.category.append(VideoCategoryModel(data: data))
+            }
+            completion()
+        }
+    }
     @IBAction func categoryBtn(_ sender: Any) {
         //categoryTableView.isHidden = !categoryTableView.isHidden
         chooseArticleDropDown.show()
     }
     @IBAction func submitBtnClicked(_ sender: Any) {
+        if(!(Constant.check_Internet?.isReachable)!){
+            AlertView().showInternetErrorAlert(delegate: self)
+            return
+        }
         if editPost{
             editPostApi()
         }else{
+            if captionTv.text!.isEmpty{
+                ToastManager.errorToast(delegate: self, msg: "Provide a caption for your Video")
+                return
+            }else if selectedCategory == ""{
+                ToastManager.errorToast(delegate: self, msg: "Select an appropriate Category for your Video")
+                return
+            }else if optionsSwitch.isOn && donationTf.text!.trimmingCharacters(in: .whitespaces).isEmpty{
+                ToastManager.errorToast(delegate: self, msg: "Please Enter Amount")
+                return
+            }
             addpostApi()
         }
         
@@ -123,12 +158,13 @@ class AddPostVC: BaseControllerVC {
             AlertView().showAlert(message: error.localizedDescription, delegate: self, pop: false)
         }
         
-        let param = ["videoCaption":captionTv.text!,"isDonation":optionsSwitch.isOn,"donationAmount":donationTf.text ?? "0","audioId":selectedAudioId,"categoryId":"639ac2e41b797deae7ef7efc"] as [String : Any]
+        let param = ["videoCaption":captionTv.text!.trimmingCharacters(in: .whitespaces),"isDonation":optionsSwitch.isOn,"donationAmount":donationTf.text ?? "0","audioId":selectedAudioId,"categoryId":selectedCategory] as [String : Any]
         AuthManager.uploadVideoData(delegate: self, param: param, resourcesVideo: ["video" : videoUrl], resourcesImage: ["image":self.thumbnailimage]) {
             self.clearAllNotice()
             DispatchQueue.main.async {
                 self.navigationController?.popToRootViewController(animated: true)
-                self.tabBarController?.dismiss(animated: true)
+                self.delegate?.postAdded()
+                //self.tabBarController?.dismiss(animated: true)
             }
         }
     }
@@ -165,4 +201,9 @@ extension AddPostVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
     }
+}
+
+
+protocol AddPostFinishDelegate{
+    func postAdded()
 }

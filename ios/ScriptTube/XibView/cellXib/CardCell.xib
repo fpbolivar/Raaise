@@ -28,31 +28,40 @@
                                     <constraint firstAttribute="width" constant="30" id="Cwx-iR-hpG"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="**** **** **** 5967" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGd-rd-jvQ">
-                                <rect key="frame" x="50" y="15" width="270" height="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="**** **** **** 5967" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGd-rd-jvQ">
+                                <rect key="frame" x="50" y="15" width="205" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_check" translatesAutoresizingMaskIntoConstraints="NO" id="YdI-yT-RTR">
-                                <rect key="frame" x="280" y="15" width="30" height="29"/>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_check" translatesAutoresizingMaskIntoConstraints="NO" id="YdI-yT-RTR">
+                                <rect key="frame" x="255" y="22" width="15" height="15"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="RXS-se-HxI"/>
+                                    <constraint firstAttribute="width" constant="15" id="RXS-se-HxI"/>
+                                    <constraint firstAttribute="height" constant="15" id="qH3-3r-HGU"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_delete" translatesAutoresizingMaskIntoConstraints="NO" id="57D-ie-ZrL">
+                                <rect key="frame" x="285" y="22" width="15" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="dvx-2r-kSc"/>
+                                    <constraint firstAttribute="width" constant="15" id="uyJ-6b-p7C"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="AEm-MV-gXK" secondAttribute="bottom" constant="15" id="6Ds-85-wvJ"/>
-                            <constraint firstAttribute="trailing" secondItem="cGd-rd-jvQ" secondAttribute="trailing" id="AmC-kF-Hfg"/>
+                            <constraint firstItem="YdI-yT-RTR" firstAttribute="leading" secondItem="cGd-rd-jvQ" secondAttribute="trailing" id="AmC-kF-Hfg"/>
                             <constraint firstItem="AEm-MV-gXK" firstAttribute="top" secondItem="ey5-4a-83a" secondAttribute="top" constant="15" id="FAe-p6-D1o"/>
+                            <constraint firstItem="YdI-yT-RTR" firstAttribute="centerY" secondItem="ey5-4a-83a" secondAttribute="centerY" id="Lbn-nI-Jfm"/>
                             <constraint firstItem="cGd-rd-jvQ" firstAttribute="top" secondItem="ey5-4a-83a" secondAttribute="top" constant="15" id="OdC-U5-ve3"/>
-                            <constraint firstItem="YdI-yT-RTR" firstAttribute="top" secondItem="ey5-4a-83a" secondAttribute="top" constant="15" id="cLZ-Aq-pZd"/>
-                            <constraint firstAttribute="bottom" secondItem="YdI-yT-RTR" secondAttribute="bottom" constant="15" id="d2m-qC-jDf"/>
                             <constraint firstItem="cGd-rd-jvQ" firstAttribute="leading" secondItem="AEm-MV-gXK" secondAttribute="trailing" constant="10" id="eSA-ee-s9m"/>
-                            <constraint firstAttribute="trailing" secondItem="YdI-yT-RTR" secondAttribute="trailing" constant="10" id="evZ-az-rbo"/>
+                            <constraint firstAttribute="trailing" secondItem="57D-ie-ZrL" secondAttribute="trailing" constant="20" id="hYr-Bw-hbu"/>
                             <constraint firstAttribute="bottom" secondItem="cGd-rd-jvQ" secondAttribute="bottom" constant="15" id="lYJ-wT-Ddt"/>
+                            <constraint firstItem="57D-ie-ZrL" firstAttribute="centerY" secondItem="ey5-4a-83a" secondAttribute="centerY" id="qto-0g-3yl"/>
                             <constraint firstItem="AEm-MV-gXK" firstAttribute="leading" secondItem="ey5-4a-83a" secondAttribute="leading" constant="10" id="sJ4-ih-IXs"/>
+                            <constraint firstItem="57D-ie-ZrL" firstAttribute="leading" secondItem="YdI-yT-RTR" secondAttribute="trailing" constant="15" id="ypb-Jm-WPr"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -77,11 +86,18 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="cardImage" destination="AEm-MV-gXK" id="5na-t9-TAn"/>
+                <outlet property="cardNumber" destination="cGd-rd-jvQ" id="zPb-DR-sAc"/>
+                <outlet property="checkImage" destination="YdI-yT-RTR" id="Ges-1H-OvI"/>
+                <outlet property="deleteImage" destination="57D-ie-ZrL" id="MvP-rg-32A"/>
+            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="88.058035714285708"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="ic_check" width="100" height="101"/>
+        <image name="ic_delete" width="13" height="15"/>
         <image name="ic_visa" width="125" height="98"/>
         <namedColor name="CardCellBorder">
             <color red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

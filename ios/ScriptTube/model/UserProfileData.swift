@@ -15,9 +15,9 @@ class UserProfileData{
     var shortBio = ""
     var profileImage = ""
     var isVerified = false
-    var followersCount = ""
-    var followingCount = ""
-    var videoCount = ""
+    var followersCount = "0"
+    var followingCount = "0"
+    var videoCount = "0"
     var emailNotification = false
     var pushNotification = false
     var accountId = ""
@@ -27,6 +27,11 @@ class UserProfileData{
     var state = ""
     var postalCode = ""
     var address = ""
+    var donatedAmount = ""
+    var accountHolderName = ""
+    var unReadNotificationCount = 0
+    var follow = false
+    var isDeleted = true
     var userPosts = [Post]()
     var userPostsImages = [String]()
     
@@ -34,6 +39,7 @@ class UserProfileData{
         
     }
     init(data:JSON){
+        self.follow = data[ApiKeys.follow.rawValue].boolValue
         self.id = data[ApiKeys.id.rawValue].stringValue
         self.userName = data[ApiKeys.userName.rawValue].stringValue
         self.name = data[ApiKeys.name.rawValue].stringValue
@@ -54,6 +60,10 @@ class UserProfileData{
         self.state = data[ApiKeys.state.rawValue].stringValue
         self.postalCode = data[ApiKeys.postalCode.rawValue].stringValue
         self.address = data[ApiKeys.address.rawValue].stringValue
+        self.donatedAmount = data[ApiKeys.donatedAmount.rawValue].stringValue
+        self.accountHolderName = data[ApiKeys.accountHolderName.rawValue].stringValue
+        self.isDeleted = data[ApiKeys.isDeleted.rawValue].boolValue
+        
     }
 }
 enum ApiKeys:String{
@@ -74,7 +84,12 @@ enum ApiKeys:String{
     case routingNumber = "routingNumber"
     case bankPhone = "bankPhone"
     case city = "city"
+    case isDeleted = "isDeleted"
     case state = "state"
     case postalCode = "postalCode"
     case address = "address"
+    case donatedAmount = "donatedAmount"
+    case accountHolderName = "accountHolderName"
+    case follow = "follow"
+    case unReadNotificationCount = "unReadNotificationCount"
 }

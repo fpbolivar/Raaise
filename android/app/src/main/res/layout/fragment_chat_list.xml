@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/black">
 
 
     <ImageView
@@ -13,9 +14,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:src="@drawable/back_arrow_white"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
@@ -24,41 +24,67 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backBtn"
+        android:fontFamily="@font/noto_sans"
         android:text="Chat"
-        android:textSize="20sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backBtn" />
 
     <LinearLayout
         android:id="@+id/search_view"
         android:layout_width="0dp"
-        android:orientation="horizontal"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@id/chatHeading"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chatHeading"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/curved_dark_grey_background">
+        android:background="@drawable/curved_dark_grey_background"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="@id/chatHeading"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chatHeading">
 
         <ImageView
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@drawable/search_us"
-            android:layout_margin="12dp"/>
+            android:layout_margin="12dp"
+            android:src="@drawable/search_us" />
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/SearchViewInChatListMain"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Search users"
-            android:maxLines="1"
             android:background="@null"
-            android:textColorHint="@color/DarkGrey"
-            android:textColor="@color/white"/>
+            android:hint="Take Me Home"
+            android:maxLines="1"
+            android:theme="@style/SearchViewStyle"
+            app:closeIcon="@drawable/icon_close"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@android:color/transparent"
+            app:searchIcon="@null" />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/NoChatFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/search_view"
+        app:layout_constraintRight_toRightOf="@id/search_view"
+        app:layout_constraintTop_toBottomOf="@id/search_view">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/noto_sans"
+            android:text="No Chat Found"
+            android:textColor="@color/DarkGrey"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatListRV"
@@ -69,6 +95,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/search_view"
         app:layout_constraintRight_toRightOf="@id/search_view"
-        app:layout_constraintTop_toBottomOf="@id/search_view" />
+        app:layout_constraintTop_toBottomOf="@id/search_view"
+        tools:listitem="@layout/chat_list_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

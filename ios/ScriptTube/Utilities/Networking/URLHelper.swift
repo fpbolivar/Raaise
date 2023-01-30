@@ -1,14 +1,12 @@
 //
 //  URLHelper.swift
-//  FraudsterFresh
-//
-//  Created by Dilpreet Singh on 8/3/22.
-//
 
 import Foundation
 
 class URLHelper{
-    static let BASE_URL: String               =       "http://13.233.101.218:3000/"
+    static let BASE_URL: String               = "http://82.180.161.7/backend/"
+    //"http://13.233.101.218:3000/"
+      //"https://raaise.app/"
     static let SEGMENTCLIENT: String          =       ""
     static let SEGMENTAPIVERSION: String      =       ""
 
@@ -46,5 +44,28 @@ class URLHelper{
     static let GET_CARDS_LIST_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-cards"
     static let DELETE_POST_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/delete-video"
     static let EDIT_POST_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/edit-video-caption"
+    static let GET_VIDEO_CATEGORY_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-categories"
+    static let VIDEO_COUNT_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/video-view-by-user"
+    static let GET_OTHER_USER_FOLLOWING_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-user-follwing-list"
+    static let GET_OTHER_USER_FOLLOWER_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-user-follwers-list"
+    static let GLOBAL_SEARCH_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/global-search"
+    static let ADD_CARD_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/add-card"
+    static let PAYMENT_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/make-payment-by-card-id"
+    static let DELETE_CARD_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/delete-cards"
+    static let GET_NOTIFICATIONS_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-user-notifications"
+    static let SET_DEFAULT_CARD_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/select-default-card"
+    static let GET_CHAT_LIST_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-user-chat-list"
+    static let GET_CHAT_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-single-chat"
+    static let GET_SINGLE_VIDEO_DETAIL_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-video"
+    static let READ_NOTIFICATIONS_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/read-single-notification"
+    static let GET_UNREAD_CHAT_COUNT_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-message-count"
+    static let SHARE_VIDEO_TO_CHAT_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/share-video"
+    static let GET_UNREAD_NOTIFICATION_COUNT_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-notification-unreadcount"
+    static let CREATE_CHAT_SLUG_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/profile-chat"
+    static let APPLE_LOGIN_URLx = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/apple-login"
+    static let DONATION_RAISEDx = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/donation-history"
+    static let VIDEO_ANALYTICSx = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-video-donation-history"
+    static let CLAIM_DONATIONx = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/send-request-to-payment"
+    static let WITHDRAW_LIST = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-user-withdrawal-request"
 }
 

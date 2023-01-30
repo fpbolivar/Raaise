@@ -14,6 +14,7 @@ class CardListModel{
     var country = ""
     var funding = ""
     var last4 = ""
+    var defaultCard = false
     
     init(){
         
@@ -25,5 +26,6 @@ class CardListModel{
         self.funding = data["funding"].stringValue
         self.last4 = data["last4"].stringValue
         self.country = data["country"].stringValue
+        self.defaultCard = data["defaultCard"].boolValue
     }
 }

@@ -11,23 +11,44 @@ class ViewVideoVC: BaseControllerVC {
     @IBOutlet weak var menuImage: UIImageView!
     @IBOutlet weak var backImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    var shareVideoLink:String = ""
+    var visibleCell: HomeTableViewCell?
     var data = [Post]()
     var items: [URL] = []
     var selectedRow = 0
     var selectedIndexPath: IndexPath!
     var visitingProfile = true
     var visiblePost: Post?
+    var fromProfileId = ""
+    var slug: String? = nil
+    var delegate:ViewVideoFromProfile?
     override func viewDidLoad() {
         super.viewDidLoad()
         backImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(popBack)))
         menuImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openMenu)))
         hideNavbar()
+        menuImage.isHidden = visitingProfile
+        if let slug = slug{
+            self.pleaseWait()
+            getVideoData(slug: slug){
+                DispatchQueue.main.async {
+//                    self.tableView.isHidden = true
+                    self.setupTableView()
+                    //self.tableView.reloadData()
+                    
+                    self.clearAllNotice()
+                }
+            }
+        }else{
+            self.tableView.isHidden = true
+            setupTableView()
+        }
         //addNavBar(headingText: "User Videos", redText: "Videos")
-        setupTableView()
+        
         // Do any additional setup after loading the view.
     }
     @objc func popBack(){
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: false)
     }
     @objc func openMenu(){
         let vc = EditProfileVideoVC()
@@ -40,11 +61,6 @@ class ViewVideoVC: BaseControllerVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
-        selectedIndexPath = IndexPath(row: selectedRow, section: 0)
-        DispatchQueue.main.async {
-            self.tableView.scrollToRow(at: self.selectedIndexPath, at: .top, animated: false)
-        }
-        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -54,6 +70,17 @@ class ViewVideoVC: BaseControllerVC {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         checkPause()
+    }
+    func getVideoData(slug:String,completion:@escaping()->Void){
+        let param = ["slug":slug]
+        DataManager.getSingleVideoDetail(delegate: self, param: param) { json in
+            let obj = Post(data2: json["data"])
+            self.data.append(obj)
+            self.data.append(obj)
+            guard let url = URL(string: obj.videoLink) else{return}
+            self.items.append(url)
+            completion()
+        }
     }
     func setupTableView(){
         DispatchQueue.main.async {
@@ -67,12 +94,24 @@ class ViewVideoVC: BaseControllerVC {
             self.tableView.dataSource = self
             self.tableView.prefetchDataSource = self
             self.tableView.reloadData()
+            if self.slug == nil{
+                self.selectedIndexPath = IndexPath(row: self.selectedRow, section: 0)
+                    self.tableView.scrollToRow(at: self.selectedIndexPath, at: .none, animated: true)
+                if self.selectedRow == 0{
+                    self.tableView.isHidden = false
+                }
+            }
+            self.check()
         }
         
         
     }
 }
 extension ViewVideoVC:UITableViewDelegate,UITableViewDataSource,UITableViewDataSourcePrefetching{
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        print("lalaoals")
+        self.tableView.isHidden = false
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.data.count
     }
@@ -82,7 +121,7 @@ extension ViewVideoVC:UITableViewDelegate,UITableViewDataSource,UITableViewDataS
         cell.delegate = self
         cell.configure(post: data[indexPath.row])
         
-        visitingProfile ? print("SHOWDONATION") : cell.viewProfileVideo()
+        //visitingProfile ? print("SHOWDONATION") : cell.viewProfileVideo()
         return cell
     }
 
@@ -122,6 +161,10 @@ extension ViewVideoVC:UIScrollViewDelegate{
         check()
     }
     func check() {
+        if(!(Constant.check_Internet?.isReachable)!){
+            AlertView().showInternetErrorAlert(delegate: self)
+            return
+        }
         checkPreload()
         checkPlay()
     }
@@ -147,6 +190,7 @@ extension ViewVideoVC:UIScrollViewDelegate{
             .first
         
         visibleCell?.play()
+        self.visibleCell = visibleCell
         visiblePost = visibleCell?.post
     }
     func checkPause(){
@@ -157,13 +201,33 @@ extension ViewVideoVC:UIScrollViewDelegate{
             .filter { visibleFrame.intersection($0.frame).height >= $0.frame.height / 2 }
             .first
         visibleCell?.pause()
+        self.visibleCell = visibleCell
     }
 }
 extension ViewVideoVC:HomeCellNavigationDelegate{
     
     
+    func clickedFollowBtn(forUser id: String, isFollowing: Bool) {
+        let sameUser = self.data.filter { post in
+            return post.userDetails?.id == id
+        }
+        print("SAMEUSERVUEI",sameUser.count)
+        sameUser.forEach { post in
+            post.isFollow = isFollowing
+        }
+        visitingProfile ? delegate?.followedFromProfileVideo(isFollowing: isFollowing) : print("HAHAH")
+    }
+    
+    func viewCountError(error: String) {
+        AlertView().showAlert(message: error, delegate: self, pop: false)
+    }
+    
+    
+    
     func goTiTryAudio(withId audio :AudioDataModel) {
-        //
+        let vc = TryAudioVC()
+        vc.audioData = audio
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func showComments(id: String, numberOfComments num: String) {
@@ -171,38 +235,51 @@ extension ViewVideoVC:HomeCellNavigationDelegate{
         popup.delegate = self
         popup.videoId = id
         popup.numberOfComments = num
-        popup.modalPresentationStyle = .pageSheet
+        popup.modalPresentationStyle = .popover
         self.tabBarController?.present(popup, animated: true)
     }
     
-    func donationPopUp() {
-        //
+    func donationPopUp(post:Post) {
+        let popUp = DonationPopUpViewController()
+        popUp.delegate = self
+        popUp.post = post
+        popUp.modalTransitionStyle = .crossDissolve
+        popUp.modalPresentationStyle = .overCurrentContext
+        self.tabBarController?.present(popUp, animated: true)
     }
     
     func navigateToTryAudio() {
         //
     }
     
-    func reportVideo(withId id: String) {
+    func reportVideo(withId id: String,isReported:Bool) {
         let popUp = ReportBtnPopUp()
         popUp.videoId = id
+        popUp.btnDelegate = self
+        popUp.isvideoReported = isReported
+        popUp.delegate = self
         popUp.modalTransitionStyle = .crossDissolve
         popUp.modalPresentationStyle = .overCurrentContext
         self.tabBarController?.present(popUp, animated: true)
     }
     
-    func shareVideo(withUrl  url:String) {
-        if let name = URL(string: "https://itunes.apple.com/us/app/myapp/idxxxxxxxx?ls=1&mt=8"), !name.absoluteString.isEmpty {
-          let objectsToShare = [name]
-          let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-          self.present(activityVC, animated: true, completion: nil)
-        } else {
-            AlertView().showAlert(message: "ERROR in sharing", delegate: self, pop: false)
-        }
+    func shareVideo(withUrl  url:String,id:String) {
+        let vc = SharePopUp()
+        vc.videoId = id
+        vc.delegate = self
+        vc.modalPresentationStyle = .popover
+        self.shareVideoLink = url
+        self.tabBarController?.present(vc, animated: true)
     }
     
     func gotoUserProfile(withUser user:UserProfileData,isFollowing:Bool) {
-        //
+        if fromProfileId == user.id{
+            self.navigationController?.popViewController(animated: true)
+        }else{
+            let vc = VisitProfileVC()
+            vc.id = user.id
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     
@@ -212,8 +289,17 @@ extension ViewVideoVC:HomeCellNavigationDelegate{
     }
 }
 extension ViewVideoVC:CommentPopUpDelegate{
+    func dismissAfterComment(numberOfComments num: String) {
+        guard let cell = visibleCell else{
+            return
+        }
+        cell.post?.videoCommentCount = num
+        cell.commentCountLbl.text = Int(num)?.shorten()
+    }
+    
     func dismissToVisitProfile(withId id: String) {
         let vc = VisitProfileVC()
+        vc.id = id
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -232,6 +318,107 @@ extension ViewVideoVC:EditVideoProtocol{
         vc.thumbnailImageString = self.visiblePost?.videoImage
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
-    
+}
+extension ViewVideoVC:DonationPopupDelegate{
+    func donateBtnClicked(post: Post, amt: String) {
+        let vc = PaymemtSavedCardListVC()
+        vc.videoId = post.id
+        vc.donateTo = post.userDetails!.id
+        vc.amount = amt
+        vc.forPayment = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    func donationSuccess() {
+        let vc = PaymentSuccessVC()
+        vc.modalTransitionStyle = .coverVertical
+        vc.modalPresentationStyle = .overCurrentContext
+        self.tabBarController?.present(vc, animated: true)
+    }
+}
+extension ViewVideoVC:SharePopUpDelegate{
+    func newShareCount(count: String,otherUser:UserProfileData,slug:String) {
+        guard let cell = visibleCell else{
+            return
+        }
+        cell.post?.videoShareCount = count
+        cell.shareCountLbl.text = Int(count)?.shorten()
+        let vc = ChatVC()
+        vc.chatSlug = slug
+        vc.otherUser = otherUser
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    func shareToOtherApp() {
+        self.dismiss(animated: true)
+        DispatchQueue.main.async {
+            self.pleaseWait()
+        }
+        
+        let vid  = AudioVideoMerger()
+        vid.downloadVideoToCameraRoll(videoUrl: self.shareVideoLink) { url in
+            print("URLLLLL",url)
+            if let name = URL(string: "https://itunes.apple.com/us/app/myapp/idxxxxxxxx?ls=1&mt=8"), !name.absoluteString.isEmpty {
+                let objectsToShare = [url]
+                let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+                DispatchQueue.main.async {
+                    self.clearAllNotice()
+                    self.present(activityVC, animated: true, completion: nil)
+                }
+                
+            } else {
+                // show alert for not available
+                AlertView().showAlert(message: "ERROR in sharing", delegate: self, pop: false)
+            }
+            //            DispatchQueue.main.async {
+            //                PHPhotoLibrary.shared().performChanges({
+            //                   PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
+            //                }) { saved, error in
+            //                if saved {
+            //                    print("Saved")
+            //                }
+            //                }
+            //            }
+            //        }
+            //        var videoPath:URL? = nil
+            //        let videoImageUrl = url
+            //
+            //        DispatchQueue.global(qos: .background).async {
+            //            if let url = URL(string: videoImageUrl),
+            //                let urlData = NSData(contentsOf: url) {
+            //                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
+            //                let date =  Date().millisecondsSince1970
+            //                let filePath="\(documentsPath)/\(date).mp4"
+            //                videoPath = URL(fileURLWithPath: filePath)
+            //                DispatchQueue.main.async {
+            //                    urlData.write(toFile: filePath, atomically: true)
+            //                    PHPhotoLibrary.shared().performChanges({
+            //                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
+            //                    }) { completed, error in
+            //                        if completed {
+            //                            print("Video is saved!")
+            
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        }
+        }
+    }
+}
+extension ViewVideoVC:ReportVideoDelegate{
+    func videoReported() {
+        ToastManager.successToast(delegate: self, msg: "Video Reported Successfully")
+        guard let cell = visibleCell else{
+            return
+        }
+        cell.post?.isReported = true
+        //cell.reportBtn.isHidden = true
+    }
+}
+extension ViewVideoVC:ReportBtnDelegate{
+    func alreadyReportedVideo() {
+        ToastManager.errorToast(delegate: self, msg: "Video Already Reported")
+    }
+}
+protocol ViewVideoFromProfile{
+    func followedFromProfileVideo(isFollowing:Bool)
 }

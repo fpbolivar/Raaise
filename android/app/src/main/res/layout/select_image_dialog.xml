@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="10dp"
-    android:backgroundTint="@color/LogoGreyColor"
     android:background="@drawable/bottomdialog_bg"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:backgroundTint="@color/LogoGreyColor"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,16 +18,17 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="25dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/noto_sans"
         android:layout_marginBottom="10dp"
+        android:fontFamily="@font/noto_sans"
         android:text="Share With"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:visibility="gone"
-        android:textSize="12dp" />
+        android:textSize="12dp"
+        android:visibility="gone" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/SelectCamera"
@@ -42,13 +44,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Camera"
             android:fontFamily="@font/noto_sans"
+            android:text="Camera"
             android:textColor="@color/black"
             android:textSize="15dp"
             android:textStyle="bold" />
 
     </com.google.android.material.card.MaterialCardView>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/SelectGallery"
         android:layout_width="match_parent"
@@ -63,8 +66,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Gallery"
             android:fontFamily="@font/noto_sans"
+            android:text="Gallery"
             android:textColor="@color/black"
             android:textSize="15dp"
             android:textStyle="bold" />
@@ -85,8 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Cancel"
             android:fontFamily="@font/noto_sans"
+            android:text="Cancel"
             android:textColor="@color/white"
             android:textSize="15dp"
             android:textStyle="bold" />

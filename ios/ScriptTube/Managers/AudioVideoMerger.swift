@@ -84,7 +84,6 @@ class AudioVideoMerger{
                 let manager = Session.default
                 let destination = DownloadRequest.suggestedDownloadDestination()
                 manager.session.configuration.timeoutIntervalForRequest = 30
-                
                 manager.download(audioUrl, to:destination).downloadProgress { progress in
                     print("Progress",progress.fractionCompleted)
                     self.onprogress(progress.fractionCompleted)
@@ -128,7 +127,7 @@ class AudioVideoMerger{
             }
         }
     }
-    func editVideo(videoURL: URL,audioUrl:URL,completion:@escaping(URL)->Void) -> Void {
+    func editVideo(videoURL: URL,audioUrl:URL,pickedVideo:Bool = false,completion:@escaping(URL)->Void) -> Void {
         let date = Date().millisecondsSince1970
         let filePath:String = NSHomeDirectory() + "/Documents/output.mp4"
         let exportUrl = URL(fileURLWithPath: filePath)
@@ -145,15 +144,18 @@ class AudioVideoMerger{
             let audioTime = audioAsset.duration
             let vdtime = CGFloat(CMTimeGetSeconds(VideoTime))
             let adtime = CGFloat(CMTimeGetSeconds(audioTime))
-            let layer = self.createVideoLayer()
+            let layer = self.createVideoLayer(forWatermark: false)
             let videoEditor = YiVideoEditor(videoURL: url!)
             videoEditor.rotate(rotateDegree: .rotateDegree90)
+            //pickedVideo ? videoEditor.rotate(rotateDegree: .rotateDegree360) : videoEditor.rotate(rotateDegree: .rotateDegree90)
+            
             print("VIDEOURLAFTERAUDIOREMOVE",url)
             
                  
                 //   videoEditor.crop(cropFrame: CGRect(x: 10, y: 10, width: 300, height: 200))
-            //videoEditor.addLayer(layer: layer)
+            videoEditor.addLayer(layer: layer)
             videoEditor.addAudio(asset: audioAsset, startingAt: 0, trackDuration: vdtime)
+            print("VIDEOSIZE2",videoEditor.videoData.videoComposition?.renderSize.height,videoEditor.videoData.videoComposition?.renderSize.width)
             videoEditor.export(exportURL: exportUrl) { [weak self] (session) in
 //                guard let `self` = self else {
 //                    return
@@ -179,12 +181,14 @@ class AudioVideoMerger{
             }
         }
     }
-    func createVideoLayer() -> CALayer {
+    func createVideoLayer(forWatermark:Bool = true) -> CALayer {
         let layer = CALayer()
-        let myImage = UIImage(named: "watermark")?.cgImage
+        if forWatermark{
+            let myImage = UIImage(named: "watermark")?.cgImage
+            layer.contents = myImage
+        }
         layer.backgroundColor = UIColor.clear.cgColor
         layer.frame = CGRect(x: 10, y: 10, width: 100, height: 50)
-        layer.contents = myImage
         return layer
     }
     func removeAudioFromVideo(_ videoPath: String,completion: @escaping (URL?)->Void){

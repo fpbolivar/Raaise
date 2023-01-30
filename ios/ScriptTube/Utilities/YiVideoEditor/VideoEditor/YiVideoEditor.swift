@@ -12,6 +12,7 @@ public enum YiVideoEditorRotateDegree: Int {
     case rotateDegree90 = 0
     case rotateDegree180 = 1
     case rotateDegree270 = 2
+    case rotateDegree360 = 3
 }
 
 protocol YiVideoEditorCommandProtocol: NSObjectProtocol {
@@ -38,6 +39,8 @@ open class YiVideoEditor: NSObject {
             commandCount = 2
         case .rotateDegree270:
             commandCount = 3
+        case .rotateDegree360:
+            commandCount = 4
         }
         for _ in 0..<commandCount {
             let command = YiRotateCommand(videoData: videoData)

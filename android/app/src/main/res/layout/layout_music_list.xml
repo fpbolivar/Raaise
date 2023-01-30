@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_margin="10dp">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/black"
-        app:contentPadding="15dp"
         app:cardCornerRadius="10dp"
+        app:contentPadding="15dp"
         app:strokeColor="#EFEFF4"
         app:strokeWidth="2dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/Img_cardView"
                 android:layout_width="70dp"
@@ -26,15 +28,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/artist_img"/>
+                    android:src="@drawable/artist_img" />
 
             </androidx.cardview.widget.CardView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/Img_cardView">
 
                 <TextView
@@ -42,37 +44,40 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Take Me Home"
-                    android:textSize="17dp"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+
                 <TextView
                     android:id="@+id/tv_artist_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_music_name"
                     android:text="John Doe  |  Bass"
-                    android:textSize="15dp"
-                    android:textColor="#B7B5B5"/>
+                    android:textColor="#B7B5B5"
+                    android:textSize="15dp" />
+
                 <ImageView
                     android:id="@+id/iv_play_button"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
                     android:layout_margin="5dp"
                     android:src="@drawable/svg_playbutton"
-                    android:layout_alignParentRight="true"
                     app:tint="@color/white" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/iv_play_button"
                     android:layout_alignParentRight="true"
-                    android:textColor="@color/black"
-                    android:text="3:00"/>
+                    android:text="3:00"
+                    android:textColor="@color/black" />
 
             </RelativeLayout>
 
 
         </RelativeLayout>
-        
+
 
     </com.google.android.material.card.MaterialCardView>
 

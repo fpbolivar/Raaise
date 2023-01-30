@@ -801,7 +801,7 @@ extension JSON { // : Swift.Bool
             case .string:
                 return ["true", "y", "t", "yes", "1"].contains { self.rawString.caseInsensitiveCompare($0) == .orderedSame }
             default:
-                return false
+                return true
             }
         }
         set {

@@ -9,6 +9,17 @@
 /* Begin PBXBuildFile section */
 		010281A0294AF54C00649096 /* SharePopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0102819E294AF54C00649096 /* SharePopUpVC.swift */; };
 		010281A1294AF54C00649096 /* SharePopUpVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0102819F294AF54C00649096 /* SharePopUpVC.xib */; };
+		0123AF48295D71260016A1D9 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 0123AF47295D71260016A1D9 /* SocketIO */; };
+		0123AF4A295D74FE0016A1D9 /* SocketChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123AF49295D74FE0016A1D9 /* SocketChatManager.swift */; };
+		0123AF4C295DD0ED0016A1D9 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123AF4B295DD0ED0016A1D9 /* ChatModel.swift */; };
+		0123AF4F2962B85C0016A1D9 /* SharePopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123AF4D2962B85C0016A1D9 /* SharePopUp.swift */; };
+		0123AF502962B85C0016A1D9 /* SharePopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0123AF4E2962B85C0016A1D9 /* SharePopUp.xib */; };
+		0123AF532962FF680016A1D9 /* ChatVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123AF512962FF670016A1D9 /* ChatVideoCell.swift */; };
+		0123AF542962FF680016A1D9 /* ChatVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0123AF522962FF670016A1D9 /* ChatVideoCell.xib */; };
+		0123AF57296300470016A1D9 /* SendVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123AF55296300470016A1D9 /* SendVideoCell.swift */; };
+		0123AF58296300470016A1D9 /* SendVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0123AF56296300470016A1D9 /* SendVideoCell.xib */; };
+		0123AF5D2966A3C70016A1D9 /* RefreshContents.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0123AF5B2966A3C70016A1D9 /* RefreshContents.xib */; };
+		0123AF5E2966A3C70016A1D9 /* CustomRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123AF5C2966A3C70016A1D9 /* CustomRefreshControl.swift */; };
 		0123C90A294995EE0067F314 /* CalculateDateDifference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123C909294995EE0067F314 /* CalculateDateDifference.swift */; };
 		0123C90C2949AD960067F314 /* UserListDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123C90B2949AD960067F314 /* UserListDataModel.swift */; };
 		0123C9102949C44A0067F314 /* FollowListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123C90E2949C44A0067F314 /* FollowListVC.swift */; };
@@ -75,6 +86,18 @@
 		0163B7A22947368300F203AA /* ReplyTblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0163B7A02947368300F203AA /* ReplyTblCell.xib */; };
 		0163B7AB294876A200F203AA /* ReportBtnPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0163B7A9294876A200F203AA /* ReportBtnPopUp.swift */; };
 		0163B7AC294876A200F203AA /* ReportBtnPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0163B7AA294876A200F203AA /* ReportBtnPopUp.xib */; };
+		01719E4E297A67A700929EDD /* DonationRaisedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01719E4C297A67A700929EDD /* DonationRaisedCell.swift */; };
+		01719E4F297A67A700929EDD /* DonationRaisedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01719E4D297A67A700929EDD /* DonationRaisedCell.xib */; };
+		01719E53297A77CB00929EDD /* VideoAnalyticsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01719E51297A77CB00929EDD /* VideoAnalyticsVC.swift */; };
+		01719E54297A77CB00929EDD /* VideoAnalyticsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01719E52297A77CB00929EDD /* VideoAnalyticsVC.xib */; };
+		01719E57297A798900929EDD /* VideoAnalyticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01719E55297A798900929EDD /* VideoAnalyticsCell.swift */; };
+		01719E58297A798900929EDD /* VideoAnalyticsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01719E56297A798900929EDD /* VideoAnalyticsCell.xib */; };
+		01719E5B297A97EE00929EDD /* FilterPopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01719E59297A97EE00929EDD /* FilterPopUpVC.swift */; };
+		01719E5C297A97EE00929EDD /* FilterPopUpVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01719E5A297A97EE00929EDD /* FilterPopUpVC.xib */; };
+		01719E5E297E553600929EDD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01719E5D297E553600929EDD /* GoogleService-Info.plist */; };
+		01719E982983ADC200929EDD /* AVMutableComposition+MultipleVideoMerge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01719E972983ADC200929EDD /* AVMutableComposition+MultipleVideoMerge.swift */; };
+		0172FDBA296C1547004141D6 /* PaymentSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0172FDB8296C1547004141D6 /* PaymentSuccessVC.swift */; };
+		0172FDBB296C1547004141D6 /* PaymentSuccessVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0172FDB9296C1547004141D6 /* PaymentSuccessVC.xib */; };
 		018367F8291B79320017193A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018367F7291B79320017193A /* AppDelegate.swift */; };
 		018367FA291B79320017193A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018367F9291B79320017193A /* SceneDelegate.swift */; };
 		018367FC291B79320017193A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018367FB291B79320017193A /* ViewController.swift */; };
@@ -248,6 +271,21 @@
 		01CF20FC292F458000AB4DD6 /* ChatHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01CF20FA292F458000AB4DD6 /* ChatHeaderCell.xib */; };
 		01CF20FE292F504C00AB4DD6 /* CommentPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CF20FD292F504C00AB4DD6 /* CommentPopUpView.swift */; };
 		01CF2100292F506100AB4DD6 /* CommentPopUpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01CF20FF292F506100AB4DD6 /* CommentPopUpView.xib */; };
+		01D4E23C2951825700C74DE7 /* VideoCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4E23B2951825700C74DE7 /* VideoCategoryModel.swift */; };
+		01D4E2402954692A00C74DE7 /* HomeVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4E23E2954692A00C74DE7 /* HomeVC2.swift */; };
+		01D4E2412954692A00C74DE7 /* HomeVC2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D4E23F2954692A00C74DE7 /* HomeVC2.xib */; };
+		01D4E2452955870200C74DE7 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4E2432955870200C74DE7 /* SearchCell.swift */; };
+		01D4E2462955870200C74DE7 /* SearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D4E2442955870200C74DE7 /* SearchCell.xib */; };
+		01D4E2482955953E00C74DE7 /* SearchResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4E2472955953D00C74DE7 /* SearchResultModel.swift */; };
+		01D4E24B2955A78000C74DE7 /* UserResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4E2492955A78000C74DE7 /* UserResultCell.swift */; };
+		01D4E24C2955A78000C74DE7 /* UserResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D4E24A2955A78000C74DE7 /* UserResultCell.xib */; };
+		01D4E24F2955A9A500C74DE7 /* AudioResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4E24D2955A9A500C74DE7 /* AudioResult.swift */; };
+		01D4E2502955A9A500C74DE7 /* AudioResult.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D4E24E2955A9A500C74DE7 /* AudioResult.xib */; };
+		01D4E2542955D0C100C74DE7 /* SearchResultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4E2522955D0C100C74DE7 /* SearchResultVC.swift */; };
+		01D4E2552955D0C100C74DE7 /* SearchResultVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D4E2532955D0C100C74DE7 /* SearchResultVC.xib */; };
+		01D4E2572959A4EF00C74DE7 /* AppDelegate+FCM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4E2562959A4EF00C74DE7 /* AppDelegate+FCM.swift */; };
+		01D4E25B2959C09400C74DE7 /* NotificationDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4E25A2959C09400C74DE7 /* NotificationDataModel.swift */; };
+		01D4E262295D5F9700C74DE7 /* ChatChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D4E261295D5F9700C74DE7 /* ChatChannelModel.swift */; };
 		01DBBB57293F255E00049D24 /* CommentPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DBBB55293F255E00049D24 /* CommentPopUp.swift */; };
 		01DBBB58293F255E00049D24 /* CommentPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DBBB56293F255E00049D24 /* CommentPopUp.xib */; };
 		01E9E9C829346D7C00A2E87A /* AudioDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9E9C729346D7C00A2E87A /* AudioDataModel.swift */; };
@@ -400,6 +438,17 @@
 /* Begin PBXFileReference section */
 		0102819E294AF54C00649096 /* SharePopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePopUpVC.swift; sourceTree = "<group>"; };
 		0102819F294AF54C00649096 /* SharePopUpVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SharePopUpVC.xib; sourceTree = "<group>"; };
+		0123AF49295D74FE0016A1D9 /* SocketChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketChatManager.swift; sourceTree = "<group>"; };
+		0123AF4B295DD0ED0016A1D9 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
+		0123AF4D2962B85C0016A1D9 /* SharePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePopUp.swift; sourceTree = "<group>"; };
+		0123AF4E2962B85C0016A1D9 /* SharePopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SharePopUp.xib; sourceTree = "<group>"; };
+		0123AF512962FF670016A1D9 /* ChatVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVideoCell.swift; sourceTree = "<group>"; };
+		0123AF522962FF670016A1D9 /* ChatVideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatVideoCell.xib; sourceTree = "<group>"; };
+		0123AF55296300470016A1D9 /* SendVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendVideoCell.swift; sourceTree = "<group>"; };
+		0123AF56296300470016A1D9 /* SendVideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendVideoCell.xib; sourceTree = "<group>"; };
+		0123AF592963F8140016A1D9 /* ScriptTube.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScriptTube.entitlements; sourceTree = "<group>"; };
+		0123AF5B2966A3C70016A1D9 /* RefreshContents.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefreshContents.xib; sourceTree = "<group>"; };
+		0123AF5C2966A3C70016A1D9 /* CustomRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRefreshControl.swift; sourceTree = "<group>"; };
 		0123C909294995EE0067F314 /* CalculateDateDifference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateDateDifference.swift; sourceTree = "<group>"; };
 		0123C90B2949AD960067F314 /* UserListDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListDataModel.swift; sourceTree = "<group>"; };
 		0123C90E2949C44A0067F314 /* FollowListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowListVC.swift; sourceTree = "<group>"; };
@@ -467,6 +516,18 @@
 		0163B7A02947368300F203AA /* ReplyTblCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyTblCell.xib; sourceTree = "<group>"; };
 		0163B7A9294876A200F203AA /* ReportBtnPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBtnPopUp.swift; sourceTree = "<group>"; };
 		0163B7AA294876A200F203AA /* ReportBtnPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportBtnPopUp.xib; sourceTree = "<group>"; };
+		01719E4C297A67A700929EDD /* DonationRaisedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationRaisedCell.swift; sourceTree = "<group>"; };
+		01719E4D297A67A700929EDD /* DonationRaisedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DonationRaisedCell.xib; sourceTree = "<group>"; };
+		01719E51297A77CB00929EDD /* VideoAnalyticsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnalyticsVC.swift; sourceTree = "<group>"; };
+		01719E52297A77CB00929EDD /* VideoAnalyticsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoAnalyticsVC.xib; sourceTree = "<group>"; };
+		01719E55297A798900929EDD /* VideoAnalyticsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnalyticsCell.swift; sourceTree = "<group>"; };
+		01719E56297A798900929EDD /* VideoAnalyticsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoAnalyticsCell.xib; sourceTree = "<group>"; };
+		01719E59297A97EE00929EDD /* FilterPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPopUpVC.swift; sourceTree = "<group>"; };
+		01719E5A297A97EE00929EDD /* FilterPopUpVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterPopUpVC.xib; sourceTree = "<group>"; };
+		01719E5D297E553600929EDD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		01719E972983ADC200929EDD /* AVMutableComposition+MultipleVideoMerge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVMutableComposition+MultipleVideoMerge.swift"; sourceTree = "<group>"; };
+		0172FDB8296C1547004141D6 /* PaymentSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSuccessVC.swift; sourceTree = "<group>"; };
+		0172FDB9296C1547004141D6 /* PaymentSuccessVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentSuccessVC.xib; sourceTree = "<group>"; };
 		018367F4291B79320017193A /* ScriptTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScriptTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		018367F7291B79320017193A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		018367F9291B79320017193A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -774,6 +835,21 @@
 		01CF20FA292F458000AB4DD6 /* ChatHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatHeaderCell.xib; sourceTree = "<group>"; };
 		01CF20FD292F504C00AB4DD6 /* CommentPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPopUpView.swift; sourceTree = "<group>"; };
 		01CF20FF292F506100AB4DD6 /* CommentPopUpView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentPopUpView.xib; sourceTree = "<group>"; };
+		01D4E23B2951825700C74DE7 /* VideoCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCategoryModel.swift; sourceTree = "<group>"; };
+		01D4E23E2954692A00C74DE7 /* HomeVC2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC2.swift; sourceTree = "<group>"; };
+		01D4E23F2954692A00C74DE7 /* HomeVC2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeVC2.xib; sourceTree = "<group>"; };
+		01D4E2432955870200C74DE7 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		01D4E2442955870200C74DE7 /* SearchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCell.xib; sourceTree = "<group>"; };
+		01D4E2472955953D00C74DE7 /* SearchResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultModel.swift; sourceTree = "<group>"; };
+		01D4E2492955A78000C74DE7 /* UserResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResultCell.swift; sourceTree = "<group>"; };
+		01D4E24A2955A78000C74DE7 /* UserResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserResultCell.xib; sourceTree = "<group>"; };
+		01D4E24D2955A9A500C74DE7 /* AudioResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioResult.swift; sourceTree = "<group>"; };
+		01D4E24E2955A9A500C74DE7 /* AudioResult.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioResult.xib; sourceTree = "<group>"; };
+		01D4E2522955D0C100C74DE7 /* SearchResultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultVC.swift; sourceTree = "<group>"; };
+		01D4E2532955D0C100C74DE7 /* SearchResultVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultVC.xib; sourceTree = "<group>"; };
+		01D4E2562959A4EF00C74DE7 /* AppDelegate+FCM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+FCM.swift"; sourceTree = "<group>"; };
+		01D4E25A2959C09400C74DE7 /* NotificationDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDataModel.swift; sourceTree = "<group>"; };
+		01D4E261295D5F9700C74DE7 /* ChatChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatChannelModel.swift; sourceTree = "<group>"; };
 		01DBBB55293F255E00049D24 /* CommentPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPopUp.swift; sourceTree = "<group>"; };
 		01DBBB56293F255E00049D24 /* CommentPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentPopUp.xib; sourceTree = "<group>"; };
 		01E9E9C729346D7C00A2E87A /* AudioDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDataModel.swift; sourceTree = "<group>"; };
@@ -935,6 +1011,7 @@
 				7D5D106F29508ABA00C10333 /* FacebookCore in Frameworks */,
 				7D5D107129508ABA00C10333 /* FacebookLogin in Frameworks */,
 				7D5D106D29508ABA00C10333 /* FacebookBasics in Frameworks */,
+				0123AF48295D71260016A1D9 /* SocketIO in Frameworks */,
 				78C2CB2D321C61664424489F /* Pods_ScriptTube.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -942,6 +1019,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0123AF5A2966A3C70016A1D9 /* refreshControl */ = {
+			isa = PBXGroup;
+			children = (
+				0123AF5B2966A3C70016A1D9 /* RefreshContents.xib */,
+				0123AF5C2966A3C70016A1D9 /* CustomRefreshControl.swift */,
+			);
+			path = refreshControl;
+			sourceTree = "<group>";
+		};
 		0123C90D2949C4310067F314 /* FollowListVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1007,6 +1093,12 @@
 				0163B7AA294876A200F203AA /* ReportBtnPopUp.xib */,
 				0102819E294AF54C00649096 /* SharePopUpVC.swift */,
 				0102819F294AF54C00649096 /* SharePopUpVC.xib */,
+				0123AF4D2962B85C0016A1D9 /* SharePopUp.swift */,
+				0123AF4E2962B85C0016A1D9 /* SharePopUp.xib */,
+				0172FDB8296C1547004141D6 /* PaymentSuccessVC.swift */,
+				0172FDB9296C1547004141D6 /* PaymentSuccessVC.xib */,
+				01719E59297A97EE00929EDD /* FilterPopUpVC.swift */,
+				01719E5A297A97EE00929EDD /* FilterPopUpVC.xib */,
 			);
 			path = popUpXib;
 			sourceTree = "<group>";
@@ -1119,6 +1211,15 @@
 			path = VisitProfileVC;
 			sourceTree = "<group>";
 		};
+		01719E50297A77A600929EDD /* VideoAnalyticsVC */ = {
+			isa = PBXGroup;
+			children = (
+				01719E51297A77CB00929EDD /* VideoAnalyticsVC.swift */,
+				01719E52297A77CB00929EDD /* VideoAnalyticsVC.xib */,
+			);
+			path = VideoAnalyticsVC;
+			sourceTree = "<group>";
+		};
 		018367EB291B79320017193A = {
 			isa = PBXGroup;
 			children = (
@@ -1142,6 +1243,7 @@
 		018367F6291B79320017193A /* ScriptTube */ = {
 			isa = PBXGroup;
 			children = (
+				0123AF592963F8140016A1D9 /* ScriptTube.entitlements */,
 				0129D5A82939B31F00768B24 /* applause-01.mp3 */,
 				01C240F72931CDDC0072861D /* AppDelegate+Extensions */,
 				01C23FD92930842E0072861D /* Managers */,
@@ -1154,6 +1256,7 @@
 				018367FD291B79320017193A /* Main.storyboard */,
 				01836800291B79330017193A /* Assets.xcassets */,
 				01836802291B79330017193A /* LaunchScreen.storyboard */,
+				01719E5D297E553600929EDD /* GoogleService-Info.plist */,
 				01836805291B79330017193A /* Info.plist */,
 			);
 			path = ScriptTube;
@@ -1190,6 +1293,7 @@
 				01C3EE102937659000AD77F6 /* HTMLParse.swift */,
 				013AFC8C2941C398004469E1 /* CacheAudio.swift */,
 				0123C909294995EE0067F314 /* CalculateDateDifference.swift */,
+				01719E972983ADC200929EDD /* AVMutableComposition+MultipleVideoMerge.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1197,6 +1301,8 @@
 		0183680E291B7D230017193A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				01D4E2512955D08500C74DE7 /* SearchResultVC */,
+				01D4E23D2954691400C74DE7 /* HomeVC2 */,
 				0123C90D2949C4310067F314 /* FollowListVC */,
 				0163B7922946E54400F203AA /* VisitProfileVC */,
 				01A1ED072941E7210095A125 /* ViewVideoVC */,
@@ -1379,6 +1485,7 @@
 				01C23FDA2930846C0072861D /* AuthManager.swift */,
 				01C24106293232AB0072861D /* DataManager.swift */,
 				019822822938B68300E4788A /* AudioVideoMerger.swift */,
+				0123AF49295D74FE0016A1D9 /* SocketChatManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1628,6 +1735,7 @@
 				018367F7291B79320017193A /* AppDelegate.swift */,
 				018367F9291B79320017193A /* SceneDelegate.swift */,
 				01C240F82931CE2E0072861D /* AppDelegate+FbLogin.swift */,
+				01D4E2562959A4EF00C74DE7 /* AppDelegate+FCM.swift */,
 			);
 			path = "AppDelegate+Extensions";
 			sourceTree = "<group>";
@@ -1670,8 +1778,43 @@
 				01CF20F6292F3DA100AB4DD6 /* SendChatCell.xib */,
 				01CF20F9292F458000AB4DD6 /* ChatHeaderCell.swift */,
 				01CF20FA292F458000AB4DD6 /* ChatHeaderCell.xib */,
+				0123AF512962FF670016A1D9 /* ChatVideoCell.swift */,
+				0123AF522962FF670016A1D9 /* ChatVideoCell.xib */,
+				0123AF55296300470016A1D9 /* SendVideoCell.swift */,
+				0123AF56296300470016A1D9 /* SendVideoCell.xib */,
 			);
 			path = chatCell;
+			sourceTree = "<group>";
+		};
+		01D4E23D2954691400C74DE7 /* HomeVC2 */ = {
+			isa = PBXGroup;
+			children = (
+				01D4E23E2954692A00C74DE7 /* HomeVC2.swift */,
+				01D4E23F2954692A00C74DE7 /* HomeVC2.xib */,
+			);
+			path = HomeVC2;
+			sourceTree = "<group>";
+		};
+		01D4E242295586DD00C74DE7 /* SearchCell */ = {
+			isa = PBXGroup;
+			children = (
+				01D4E2432955870200C74DE7 /* SearchCell.swift */,
+				01D4E2442955870200C74DE7 /* SearchCell.xib */,
+				01D4E2492955A78000C74DE7 /* UserResultCell.swift */,
+				01D4E24A2955A78000C74DE7 /* UserResultCell.xib */,
+				01D4E24D2955A9A500C74DE7 /* AudioResult.swift */,
+				01D4E24E2955A9A500C74DE7 /* AudioResult.xib */,
+			);
+			path = SearchCell;
+			sourceTree = "<group>";
+		};
+		01D4E2512955D08500C74DE7 /* SearchResultVC */ = {
+			isa = PBXGroup;
+			children = (
+				01D4E2522955D0C100C74DE7 /* SearchResultVC.swift */,
+				01D4E2532955D0C100C74DE7 /* SearchResultVC.xib */,
+			);
+			path = SearchResultVC;
 			sourceTree = "<group>";
 		};
 		01F884A32934C581002AEE67 /* CustomizeVideoVC */ = {
@@ -1717,6 +1860,7 @@
 		7D64FA1F29275252009F2754 /* XibView */ = {
 			isa = PBXGroup;
 			children = (
+				0123AF5A2966A3C70016A1D9 /* refreshControl */,
 				01367C2F292E04C200DE1EB2 /* popUpXib */,
 				7D64FA2F2927B937009F2754 /* cellXib */,
 				7D64FA1A29275248009F2754 /* navbar */,
@@ -1735,6 +1879,7 @@
 		7D64FA272927B688009F2754 /* settingControllerVC */ = {
 			isa = PBXGroup;
 			children = (
+				01719E50297A77A600929EDD /* VideoAnalyticsVC */,
 				7D64FA59292B6C1D009F2754 /* withdrawsListVC */,
 				7D64FA58292B6C01009F2754 /* donationRaisedListVC */,
 				7D64FA53292B657F009F2754 /* addNewPaymentMethodVC */,
@@ -1759,6 +1904,11 @@
 				01A1ED3129435EE30095A125 /* CommentDataModel.swift */,
 				0123C90B2949AD960067F314 /* UserListDataModel.swift */,
 				012A6AB629504B9700157372 /* CardListModel.swift */,
+				01D4E23B2951825700C74DE7 /* VideoCategoryModel.swift */,
+				01D4E2472955953D00C74DE7 /* SearchResultModel.swift */,
+				01D4E25A2959C09400C74DE7 /* NotificationDataModel.swift */,
+				01D4E261295D5F9700C74DE7 /* ChatChannelModel.swift */,
+				0123AF4B295DD0ED0016A1D9 /* ChatModel.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1766,6 +1916,7 @@
 		7D64FA2F2927B937009F2754 /* cellXib */ = {
 			isa = PBXGroup;
 			children = (
+				01D4E242295586DD00C74DE7 /* SearchCell */,
 				01CF20F0292F340A00AB4DD6 /* chatCell */,
 				7D64FAA4292BBDFC009F2754 /* profileVideoItemCell */,
 				7D64FA66292B8670009F2754 /* homeCellXib */,
@@ -1789,6 +1940,10 @@
 				0163B7A02947368300F203AA /* ReplyTblCell.xib */,
 				01606E03294B253400B618C6 /* CategoryCell.swift */,
 				01606E04294B253400B618C6 /* CategoryCell.xib */,
+				01719E4C297A67A700929EDD /* DonationRaisedCell.swift */,
+				01719E4D297A67A700929EDD /* DonationRaisedCell.xib */,
+				01719E55297A798900929EDD /* VideoAnalyticsCell.swift */,
+				01719E56297A798900929EDD /* VideoAnalyticsCell.xib */,
 			);
 			path = cellXib;
 			sourceTree = "<group>";
@@ -2209,6 +2364,7 @@
 				7D5D106C29508ABA00C10333 /* FacebookBasics */,
 				7D5D106E29508ABA00C10333 /* FacebookCore */,
 				7D5D107029508ABA00C10333 /* FacebookLogin */,
+				0123AF47295D71260016A1D9 /* SocketIO */,
 			);
 			productName = ScriptTube;
 			productReference = 018367F4291B79320017193A /* ScriptTube.app */;
@@ -2240,6 +2396,7 @@
 			mainGroup = 018367EB291B79320017193A;
 			packageReferences = (
 				7D5D106B29508ABA00C10333 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+				0123AF46295D71260016A1D9 /* XCRemoteSwiftPackageReference "socket" */,
 			);
 			productRefGroup = 018367F5291B79320017193A /* Products */;
 			projectDirPath = "";
@@ -2255,13 +2412,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01D4E2462955870200C74DE7 /* SearchCell.xib in Resources */,
 				7D64FA7A292BA252009F2754 /* ProfileVC.xib in Resources */,
+				0123AF502962B85C0016A1D9 /* SharePopUp.xib in Resources */,
 				7D64FA5D292B6C46009F2754 /* WithdrawListVC.xib in Resources */,
 				01836804291B79330017193A /* LaunchScreen.storyboard in Resources */,
 				0129D5A92939B31F00768B24 /* applause-01.mp3 in Resources */,
 				0123C9112949C44A0067F314 /* FollowListVC.xib in Resources */,
 				01836801291B79330017193A /* Assets.xcassets in Resources */,
 				01367C44292E411800DE1EB2 /* SelectionCell.xib in Resources */,
+				0172FDBB296C1547004141D6 /* PaymentSuccessVC.xib in Resources */,
 				7D64FA7F292BA27E009F2754 /* SearchVC.xib in Resources */,
 				7D64FA4C292B52D3009F2754 /* PaymemtSavedCardListVC.xib in Resources */,
 				01C3EE192938796300AD77F6 /* TabController.xib in Resources */,
@@ -2272,13 +2432,16 @@
 				7DEB61F12926503B00DA43EC /* SignUpVC.xib in Resources */,
 				01CF20EF292F305600AB4DD6 /* ChatHeaderView.xib in Resources */,
 				7D64FA50292B5F09009F2754 /* CardCell.xib in Resources */,
+				0123AF5D2966A3C70016A1D9 /* RefreshContents.xib in Resources */,
 				019D4B982950789C0012D666 /* README.md in Resources */,
 				01CF20F8292F3DA100AB4DD6 /* SendChatCell.xib in Resources */,
 				01C23F85292F974C0072861D /* NotificationVC.xib in Resources */,
 				7DEB61DF2926409A00DA43EC /* NotoSans-SemiBoldItalic.ttf in Resources */,
 				7D64FA94292BA730009F2754 /* README.mdown in Resources */,
+				01719E58297A798900929EDD /* VideoAnalyticsCell.xib in Resources */,
 				7DEB620329265B9D00DA43EC /* ForgotVC.xib in Resources */,
 				7DEB62082926618100DA43EC /* PersonalInfoFormVC.xib in Resources */,
+				0123AF542962FF680016A1D9 /* ChatVideoCell.xib in Resources */,
 				01F884A72934C5A7002AEE67 /* CustomizeVideoVC.xib in Resources */,
 				7DEB61DD2926409A00DA43EC /* NotoSans-Thin.ttf in Resources */,
 				7DEB62172926663100DA43EC /* ShortBioFormVC.xib in Resources */,
@@ -2289,6 +2452,7 @@
 				7DEB61DA2926409A00DA43EC /* NotoSans-MediumItalic.ttf in Resources */,
 				7D64FA8D292BA6CB009F2754 /* HomeTableViewCell.xib in Resources */,
 				7DEB61E82926409B00DA43EC /* NotoSans-ExtraLightItalic.ttf in Resources */,
+				01D4E24C2955A78000C74DE7 /* UserResultCell.xib in Resources */,
 				7D64FA332927B968009F2754 /* SettingCell.xib in Resources */,
 				01C24105293218B90072861D /* CreatePasswordVC.xib in Resources */,
 				7D64FAA3292BB913009F2754 /* UserHeaderReusableView.xib in Resources */,
@@ -2302,18 +2466,22 @@
 				7DEB61E12926409A00DA43EC /* NotoSans-LightItalic.ttf in Resources */,
 				7DEB61D82926409A00DA43EC /* NotoSans-Regular.ttf in Resources */,
 				0163B7AC294876A200F203AA /* ReportBtnPopUp.xib in Resources */,
+				01D4E2552955D0C100C74DE7 /* SearchResultVC.xib in Resources */,
 				01F884AC2934CF6B002AEE67 /* AddPostVC.xib in Resources */,
 				7D64FA75292BA239009F2754 /* HomeVC.xib in Resources */,
 				01A1ED30294342550095A125 /* .gitkeep in Resources */,
 				7DEB61DB2926409A00DA43EC /* NotoSans-Black.ttf in Resources */,
 				7DEB61EA2926409B00DA43EC /* NotoSans-Italic.ttf in Resources */,
 				01F884B02934D62D002AEE67 /* AmountCell.xib in Resources */,
+				01D4E2502955A9A500C74DE7 /* AudioResult.xib in Resources */,
 				0129D5AF293DE99800768B24 /* ReportVideoVC.xib in Resources */,
 				01367C33292E04EF00DE1EB2 /* DonationPopUpViewController.xib in Resources */,
 				01CF2100292F506100AB4DD6 /* CommentPopUpView.xib in Resources */,
 				0163B7A22947368300F203AA /* ReplyTblCell.xib in Resources */,
 				7D64FA382927C0B4009F2754 /* BankAddDetailVC.xib in Resources */,
+				01719E5C297A97EE00929EDD /* FilterPopUpVC.xib in Resources */,
 				01CF20EB292F2E3E00AB4DD6 /* ChatVC.xib in Resources */,
+				01719E4F297A67A700929EDD /* DonationRaisedCell.xib in Resources */,
 				7DEB61DC2926409A00DA43EC /* NotoSans-Bold.ttf in Resources */,
 				01367C2E292DE8B100DE1EB2 /* NotificationCell.xib in Resources */,
 				7DEB61E22926409A00DA43EC /* NotoSans-Light.ttf in Resources */,
@@ -2323,6 +2491,7 @@
 				7D64FA89292BA518009F2754 /* AddMediaVC.xib in Resources */,
 				01A1ED0B2941E7400095A125 /* ViewVideoVC.xib in Resources */,
 				7D64FAA8292BBE23009F2754 /* ProfileVideoItemCell.xib in Resources */,
+				01719E54297A77CB00929EDD /* VideoAnalyticsVC.xib in Resources */,
 				7D64FA3D2927C0F6009F2754 /* HtmlTextRenderVC.xib in Resources */,
 				01367C39292E24DC00DE1EB2 /* TryAudioVC.xib in Resources */,
 				7DEB61E42926409B00DA43EC /* NotoSans-BlackItalic.ttf in Resources */,
@@ -2335,13 +2504,16 @@
 				7D64FA93292BA730009F2754 /* LICENSE in Resources */,
 				7DEB625229266A8800DA43EC /* OnboardingBaseController.xib in Resources */,
 				012A6AAF294B32E700157372 /* DropDownCell.xib in Resources */,
+				01D4E2412954692A00C74DE7 /* HomeVC2.xib in Resources */,
 				7D64FA472927C929009F2754 /* DeleteAccountVC.xib in Resources */,
 				7DEB620E292663DD00DA43EC /* ChangePasswordVC.xib in Resources */,
 				018367FF291B79320017193A /* Main.storyboard in Resources */,
 				7D64FA422927C68E009F2754 /* DeactivateAccountVC.xib in Resources */,
+				01719E5E297E553600929EDD /* GoogleService-Info.plist in Resources */,
 				7DEB6212292663F200DA43EC /* UserNameFormVC.xib in Resources */,
 				01CF20F4292F342800AB4DD6 /* ChatCell.xib in Resources */,
 				0163B79A2946E81300F203AA /* VisitVCHeader.xib in Resources */,
+				0123AF58296300470016A1D9 /* SendVideoCell.xib in Resources */,
 				7D64FA1E29275248009F2754 /* NavigationBar.xib in Resources */,
 				7DEB61DE2926409A00DA43EC /* NotoSans-SemiBold.ttf in Resources */,
 				0163B79E2946FCF300F203AA /* EditProfileVideoVC.xib in Resources */,
@@ -2415,11 +2587,13 @@
 				01C240C32930CFDD0072861D /* UIImage+GIF.m in Sources */,
 				01C240D92930CFDD0072861D /* SDWebImageTransition.m in Sources */,
 				013AFC742941BBFE004469E1 /* Int+Extensions.swift in Sources */,
+				01719E53297A77CB00929EDD /* VideoAnalyticsVC.swift in Sources */,
 				013AFC862941BBFE004469E1 /* VideoLoadManager.swift in Sources */,
 				0163B7952946E56100F203AA /* VisitProfileVC.swift in Sources */,
 				012A6AB0294B32E700157372 /* DPDKeyboardListener.swift in Sources */,
 				012A6AB3294B32E700157372 /* DropDown.swift in Sources */,
 				01C240C62930CFDD0072861D /* SDMemoryCache.m in Sources */,
+				01719E5B297A97EE00929EDD /* FilterPopUpVC.swift in Sources */,
 				7DEB62562926746F00DA43EC /* UIApplication+NavBar.swift in Sources */,
 				013AFC732941BBFE004469E1 /* GSAVPlayerViewController.swift in Sources */,
 				01C240B32930CFDD0072861D /* SDWebImageOperation.m in Sources */,
@@ -2427,6 +2601,7 @@
 				01C23FB9293083E80072861D /* ParameterEncoder.swift in Sources */,
 				7DEB62072926618100DA43EC /* PersonalInfoFormVC.swift in Sources */,
 				0123C90C2949AD960067F314 /* UserListDataModel.swift in Sources */,
+				01D4E2572959A4EF00C74DE7 /* AppDelegate+FCM.swift in Sources */,
 				013AFC772941BBFE004469E1 /* AVAssetResourceLoadingRequest+Extensions.swift in Sources */,
 				7D64FA79292BA252009F2754 /* ProfileVC.swift in Sources */,
 				7D64FA9D292BB128009F2754 /* VideoCacheManager2.swift in Sources */,
@@ -2435,6 +2610,7 @@
 				7D64FA462927C929009F2754 /* DeleteAccountVC.swift in Sources */,
 				01C3EE182938796300AD77F6 /* TabController.swift in Sources */,
 				0163B7992946E81300F203AA /* VisitVCHeader.swift in Sources */,
+				0123AF4A295D74FE0016A1D9 /* SocketChatManager.swift in Sources */,
 				013AFC892941BBFE004469E1 /* VideoPlayerView.swift in Sources */,
 				01C23FD0293083E80072861D /* Response.swift in Sources */,
 				01C240C12930CFDD0072861D /* SDWebImageIndicator.m in Sources */,
@@ -2480,6 +2656,7 @@
 				012A6AB2294B32E700157372 /* DPDUIView+Extension.swift in Sources */,
 				01C240EB2930CFDD0072861D /* SDImageAssetManager.m in Sources */,
 				01C240BE2930CFDD0072861D /* SDWebImageDownloader.m in Sources */,
+				01719E4E297A67A700929EDD /* DonationRaisedCell.swift in Sources */,
 				01C23F84292F974C0072861D /* NotificationVC.swift in Sources */,
 				7DEB6211292663F200DA43EC /* UserNameFormVC.swift in Sources */,
 				01C240C02930CFDD0072861D /* SDWebImageCacheSerializer.m in Sources */,
@@ -2499,11 +2676,13 @@
 				01A1ED2A294342550095A125 /* YiVideoEditor.swift in Sources */,
 				7DEB61F9292658A100DA43EC /* ActiveLabel.swift in Sources */,
 				01C240F52930D0920072861D /* UIImageView+.swift in Sources */,
+				01D4E2482955953E00C74DE7 /* SearchResultModel.swift in Sources */,
 				01A1ED2B294342550095A125 /* YiVideoEditorData.swift in Sources */,
 				01C23FC0293083E80072861D /* RetryPolicy.swift in Sources */,
 				7DEB61C129263E7B00DA43EC /* Extension+Date.swift in Sources */,
 				013AFC812941BBFE004469E1 /* VideoDownloadInfo.swift in Sources */,
 				01C240BC2930CFDD0072861D /* SDAnimatedImagePlayer.m in Sources */,
+				0172FDBA296C1547004141D6 /* PaymentSuccessVC.swift in Sources */,
 				7DEB625129266A8800DA43EC /* OnboardingBaseController.swift in Sources */,
 				013AFC842941BBFE004469E1 /* VideoInfo.swift in Sources */,
 				7D64FA4F292B5F09009F2754 /* CardCell.swift in Sources */,
@@ -2530,6 +2709,7 @@
 				01C23F78292F8D410072861D /* Controller.swift in Sources */,
 				01C23F7A292F8D410072861D /* Extensions.swift in Sources */,
 				7DEB61B629263E7B00DA43EC /* Extension+UIImageView.swift in Sources */,
+				01D4E262295D5F9700C74DE7 /* ChatChannelModel.swift in Sources */,
 				7DEB62392926688500DA43EC /* IQKeyboardManager.swift in Sources */,
 				01C240C82930CFDD0072861D /* SDImageAPNGCoder.m in Sources */,
 				7D64FA7E292BA27E009F2754 /* SearchVC.swift in Sources */,
@@ -2550,6 +2730,7 @@
 				01C23FC7293083E80072861D /* AlamofireExtended.swift in Sources */,
 				01C240DF2930CFDD0072861D /* UIImage+MemoryCacheCost.m in Sources */,
 				01C240D32930CFDD0072861D /* SDImageCache.m in Sources */,
+				0123AF4F2962B85C0016A1D9 /* SharePopUp.swift in Sources */,
 				01C23FB7293083E80072861D /* RequestInterceptor.swift in Sources */,
 				01C23FDB2930846C0072861D /* AuthManager.swift in Sources */,
 				01C23FCB293083E80072861D /* URLConvertible+URLRequestConvertible.swift in Sources */,
@@ -2585,14 +2766,17 @@
 				01C23FC9293083E80072861D /* MultipartUpload.swift in Sources */,
 				01C240B12930CFDD0072861D /* SDAnimatedImageView+WebCache.m in Sources */,
 				01C240C92930CFDD0072861D /* SDWebImageDownloaderResponseModifier.m in Sources */,
+				01D4E24F2955A9A500C74DE7 /* AudioResult.swift in Sources */,
 				7DEB624929266A4E00DA43EC /* SCP_SCJAFlatBar.swift in Sources */,
 				7DEB624629266A4E00DA43EC /* SCP_SCNormal.swift in Sources */,
 				7DEB62322926688500DA43EC /* IQBarButtonItem.swift in Sources */,
 				01C23F6E292F8BBD0072861D /* Validators.swift in Sources */,
 				7DEB62382926688500DA43EC /* IQKeyboardReturnKeyHandler.swift in Sources */,
 				7D64FA2E2927B7F3009F2754 /* settingOptionModel.swift in Sources */,
+				01D4E2452955870200C74DE7 /* SearchCell.swift in Sources */,
 				013AFC7E2941BBFE004469E1 /* VideoCacheHandler.swift in Sources */,
 				01C23FC8293083E80072861D /* HTTPMethod.swift in Sources */,
+				0123AF5E2966A3C70016A1D9 /* CustomRefreshControl.swift in Sources */,
 				01C23FB3293083E80072861D /* URLHelper.swift in Sources */,
 				01C23FD5293083E80072861D /* EventMonitor.swift in Sources */,
 				01C23FD4293083E80072861D /* HTTPHeaders.swift in Sources */,
@@ -2625,6 +2809,7 @@
 				01C240D02930CFDD0072861D /* SDAnimatedImageRep.m in Sources */,
 				01A1ED3229435EE30095A125 /* CommentDataModel.swift in Sources */,
 				01C23F80292F8E4F0072861D /* AlertView.swift in Sources */,
+				01D4E23C2951825700C74DE7 /* VideoCategoryModel.swift in Sources */,
 				013AFC8D2941C398004469E1 /* CacheAudio.swift in Sources */,
 				7DEB61FD292658A100DA43EC /* ActiveType.swift in Sources */,
 				01C23FCD293083E80072861D /* Validation.swift in Sources */,
@@ -2636,12 +2821,14 @@
 				01A1ED2E294342550095A125 /* YiAddLayerCommand.swift in Sources */,
 				01C240E22930CFDD0072861D /* SDWebImageDefine.m in Sources */,
 				01C240DB2930CFDD0072861D /* NSData+ImageContentType.m in Sources */,
+				01D4E24B2955A78000C74DE7 /* UserResultCell.swift in Sources */,
 				013AFC762941BBFE004469E1 /* AVPlayer+Extensions.swift in Sources */,
 				01C240F02930CFDD0072861D /* NSBezierPath+SDRoundedCorners.m in Sources */,
 				01C240DD2930CFDD0072861D /* SDImageGraphics.m in Sources */,
 				01C240BA2930CFDD0072861D /* UIImage+ForceDecode.m in Sources */,
 				01A1ED2C294342550095A125 /* YiRotateCommand.swift in Sources */,
 				01367C38292E24DC00DE1EB2 /* TryAudioVC.swift in Sources */,
+				01D4E2542955D0C100C74DE7 /* SearchResultVC.swift in Sources */,
 				7DEB623C2926688500DA43EC /* IQUITextFieldView+Additions.swift in Sources */,
 				013AFC832941BBFE004469E1 /* VideoDownloaderSessionDelegateHandler.swift in Sources */,
 				01C240E32930CFDD0072861D /* SDWebImageOptionsProcessor.m in Sources */,
@@ -2651,7 +2838,9 @@
 				7D64FA372927C0B4009F2754 /* BankAddDetailVC.swift in Sources */,
 				7DEB62372926688500DA43EC /* IQKeyboardManagerConstants.swift in Sources */,
 				7DEB623A2926688500DA43EC /* IQUIScrollView+Additions.swift in Sources */,
+				0123AF57296300470016A1D9 /* SendVideoCell.swift in Sources */,
 				01C240EE2930CFDD0072861D /* SDInternalMacros.m in Sources */,
+				01719E57297A798900929EDD /* VideoAnalyticsCell.swift in Sources */,
 				01C23FB6293083E80072861D /* MultipartFormData.swift in Sources */,
 				01C240B22930CFDD0072861D /* SDImageCoder.m in Sources */,
 				01C240B72930CFDD0072861D /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -2659,11 +2848,15 @@
 				013AFC822941BBFE004469E1 /* VideoDownloader.swift in Sources */,
 				01C23FBB293083E80072861D /* Session.swift in Sources */,
 				01C23F7C292F8D410072861D /* FraudsterToast.swift in Sources */,
+				0123AF4C295DD0ED0016A1D9 /* ChatModel.swift in Sources */,
 				01C240AF2930CFDD0072861D /* SDImageHEICCoder.m in Sources */,
 				012A6AB1294B32E700157372 /* DPDConstants.swift in Sources */,
 				01C240CE2930CFDD0072861D /* SDImageIOCoder.m in Sources */,
 				01CF20F7292F3DA100AB4DD6 /* SendChatCell.swift in Sources */,
+				0123AF532962FF680016A1D9 /* ChatVideoCell.swift in Sources */,
 				7DEB61BB29263E7B00DA43EC /* UILabel+FormattedText.swift in Sources */,
+				01D4E2402954692A00C74DE7 /* HomeVC2.swift in Sources */,
+				01D4E25B2959C09400C74DE7 /* NotificationDataModel.swift in Sources */,
 				01C240E72930CFDD0072861D /* UIButton+WebCache.m in Sources */,
 				01C23FC3293083E80072861D /* ServerTrustEvaluation.swift in Sources */,
 				013AFC8A2941BBFE004469E1 /* VideoFullscreenTransitioner.swift in Sources */,
@@ -2683,6 +2876,7 @@
 				01F884AF2934D62D002AEE67 /* AmountCell.swift in Sources */,
 				01C240C22930CFDD0072861D /* SDGraphicsImageRenderer.m in Sources */,
 				01C23FD8293083E80072861D /* SessionDelegate.swift in Sources */,
+				01719E982983ADC200929EDD /* AVMutableComposition+MultipleVideoMerge.swift in Sources */,
 				01C23FBA293083E80072861D /* URLSessionConfiguration+Alamofire.swift in Sources */,
 				7DEB61B729263E7B00DA43EC /* UIWindow+Key.swift in Sources */,
 				013AFC852941BBFE004469E1 /* VideoRequestLoader.swift in Sources */,
@@ -2836,12 +3030,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ScriptTube/ScriptTube.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A8V7S52373;
+				DEVELOPMENT_TEAM = 7UC293X6F5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScriptTube/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Raaise App";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow to access camera to record videos";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow to access microphone to record audio";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "please allow";
@@ -2858,7 +3054,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.scripttube.ios.ScriptTube;
+				PRODUCT_BUNDLE_IDENTIFIER = com.raaise.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2874,12 +3070,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ScriptTube/ScriptTube.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A8V7S52373;
+				DEVELOPMENT_TEAM = 7UC293X6F5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScriptTube/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Raaise App";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow to access camera to record videos";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow to access microphone to record audio";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "please allow";
@@ -2896,7 +3094,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.scripttube.ios.ScriptTube;
+				PRODUCT_BUNDLE_IDENTIFIER = com.raaise.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2930,6 +3128,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0123AF46295D71260016A1D9 /* XCRemoteSwiftPackageReference "socket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		7D5D106B29508ABA00C10333 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
@@ -2941,6 +3147,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0123AF47295D71260016A1D9 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0123AF46295D71260016A1D9 /* XCRemoteSwiftPackageReference "socket" */;
+			productName = SocketIO;
+		};
 		7D5D106C29508ABA00C10333 /* FacebookBasics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7D5D106B29508ABA00C10333 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;

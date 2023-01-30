@@ -17,10 +17,15 @@ class CustomizeVideoVC: UIViewController {
     var playerLayer: AVPlayerLayer!
     var selectedAudioId: String = ""
     var finalVideo:URL!
+    var audioTitle:String?
+    var delegate:CustomVideoPostedDelegate?
+    var videoPicked = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.finalVideo = url
+        audioNameLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX11)
+        setSelectedAudioTitle()
         // Do any additional setup after loading the view.
     }
     deinit{
@@ -29,18 +34,24 @@ class CustomizeVideoVC: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }
+    func setSelectedAudioTitle(){
+        guard let name = audioTitle else{return}
+        self.audioNameLbl.text = name
+    }
     @objc func gotoAudioSelection(){
+        print("CANCELLLL3")
         let vc = SearchWithListVC()
         vc.videoUrl = url
+        vc.videoPicked = self.videoPicked
         vc.selectedAudioUrl = { outputUrl,title,id in
             print("outputUrl",outputUrl)
             self.selectedAudioId = id
             self.audioNameLbl.text = title
-            DispatchQueue.main.async {
+            //DispatchQueue.main.async {
                 //self.removeallLayers()
                 self.finalVideo = outputUrl
                // self.playVideo(withUrl: self.finalVideo)
-            }
+           // }
 //            AudioVideoMerger().downloadAudio(audioUrl: audioUrl){ downloadedAudio in
 //
 //            }
@@ -93,8 +104,14 @@ class CustomizeVideoVC: UIViewController {
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         if videoPlayer != nil{
             videoPlayer.pause()
+            NotificationCenter.default.removeObserver(self, name:  .AVPlayerItemDidPlayToEndTime, object: self.videoPlayer.currentItem)
+            
         }
     }
     func gotoAddPost(withImage image:UIImage){
@@ -102,22 +119,39 @@ class CustomizeVideoVC: UIViewController {
         vc.videoUrl = self.finalVideo
         vc.thumbnailimage = image
         vc.selectedAudioId = self.selectedAudioId
+        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @IBAction func cancelBtnClicked(_ sender: Any) {
-        let vc = CancelEditingPopUp()
-        vc.delegate = self
-        vc.modalTransitionStyle = .crossDissolve
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
+        print("CANCELLLL")
+        DispatchQueue.main.async {
+            let vc = CancelEditingPopUp()
+            vc.delegate = self
+            vc.modalTransitionStyle = .crossDissolve
+            vc.modalPresentationStyle = .overCurrentContext
+            self.present(vc, animated: true)
+        }
     }
     @IBAction func nextBtnClicked(_ sender: Any) {
-        let vc = SharePopUpVC()
-        vc.delegate = self
-        vc.modalTransitionStyle = .crossDissolve
-        vc.modalPresentationStyle = .overCurrentContext
-        self.present(vc, animated: true)
-
+        print("CANCELLLL22")
+        DispatchQueue.main.async {
+            let asset = AVURLAsset(url: self.finalVideo, options: nil)
+            let imgGenerator = AVAssetImageGenerator(asset: asset)
+            imgGenerator.appliesPreferredTrackTransform = true
+            do{
+                let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+                let uiImage = UIImage(cgImage: cgImage)
+                self.gotoAddPost(withImage: uiImage)
+                //let imageView = UIImageView(image: uiImage)
+            }catch{
+                print(error)
+            }
+//            let vc = SharePopUpVC()
+//            vc.delegate = self
+//            vc.modalTransitionStyle = .crossDissolve
+//            vc.modalPresentationStyle = .overCurrentContext
+//            self.present(vc, animated: true)
+        }
     }
     @objc func playerItemDidReachEnd(notification: Notification) {
         if let playerItem = notification.object as? AVPlayerItem {
@@ -135,6 +169,7 @@ extension CustomizeVideoVC:ShareActionDelegate{
     func postVideo() {
         let asset = AVURLAsset(url: url, options: nil)
         let imgGenerator = AVAssetImageGenerator(asset: asset)
+        imgGenerator.appliesPreferredTrackTransform = true
         do{
             let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
             let uiImage = UIImage(cgImage: cgImage)
@@ -153,4 +188,14 @@ class AVPlayerView: UIView {
     override class var layerClass: AnyClass {
         return AVPlayerLayer.self
     }
+}
+
+
+extension CustomizeVideoVC:AddPostFinishDelegate{
+    func postAdded() {
+        delegate?.videoPosted()
+    }
+}
+protocol CustomVideoPostedDelegate{
+    func videoPosted()
 }

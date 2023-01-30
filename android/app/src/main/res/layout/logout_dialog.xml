@@ -1,68 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="15dp"
-    app:cardBackgroundColor="@color/LogoGreyColor"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="#E64E4E4E"
+    app:cardCornerRadius="15dp">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
-            android:id="@+id/ConfirmYourRecording"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:textStyle="bold"
+            android:fontFamily="@font/noto_sans"
+            android:text="ScripTube"
             android:textColor="@color/white"
-            android:text="Are you sure want to logout..??"/>
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/YesInLogout"
+        <TextView
+            android:id="@+id/ConfirmYourRecording"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="30dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="Are you sure you want to logout?"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="normal" />
 
-            android:layout_weight="1"
+
+        <!--        <com.google.android.material.card.MaterialCardView-->
+        <!--            android:id="@+id/YesInLogout"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_marginTop="30dp"-->
+        <!--            android:layout_marginHorizontal="30dp"-->
+
+        <!--            android:layout_weight="1"-->
+        <!--            android:layout_below="@+id/ConfirmYourRecording"-->
+        <!--            app:cardBackgroundColor="@color/white"-->
+        <!--            app:cardCornerRadius="30dp">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:text="Yes"-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textSize="15dp"-->
+        <!--                android:textStyle="bold" />-->
+
+        <!--        </com.google.android.material.card.MaterialCardView>-->
+        <!--        <com.google.android.material.card.MaterialCardView-->
+        <!--            android:id="@+id/NoInLogout"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_marginHorizontal="30dp"-->
+        <!--            android:layout_marginBottom="30dp"-->
+        <!--            android:layout_marginTop="15dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:layout_below="@+id/YesInLogout"-->
+        <!--            app:cardBackgroundColor="@color/black"-->
+        <!--            app:cardCornerRadius="30dp">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:text="No"-->
+        <!--                android:textColor="@color/white"-->
+        <!--                android:textSize="15dp"-->
+        <!--                android:textStyle="bold" />-->
+
+        <!--        </com.google.android.material.card.MaterialCardView>-->
+
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/ConfirmYourRecording"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="30dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Yes"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:textStyle="bold" />
-
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/NoInLogout"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="30dp"
             android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:layout_below="@+id/YesInLogout"
-            app:cardBackgroundColor="@color/black"
-            app:cardCornerRadius="30dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="No"
-                android:textColor="@color/white"
-                android:textSize="15dp"
-                android:textStyle="bold" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/DarkGrey" />
 
-        </com.google.android.material.card.MaterialCardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/NoInLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/view"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/noto_sans"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="Cancel"
+                    android:textColor="@color/blue_color_titleSearch_screen"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/DarkGrey" />
+
+
+                <TextView
+                    android:id="@+id/YesInLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/view"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/noto_sans"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="Logout"
+                    android:textColor="@color/Red_donated_text_color"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
 
     </RelativeLayout>
 

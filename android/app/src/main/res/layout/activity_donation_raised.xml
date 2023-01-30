@@ -8,9 +8,9 @@
     tools:context=".Settings.Payments.DonationRaised">
 
     <LinearLayout
-        android:background="@color/WhiteColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/WhiteColor"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -19,14 +19,14 @@
             android:orientation="horizontal">
 
             <ImageView
-                app:tint="@color/white"
                 android:id="@+id/BackInSignUp"
                 android:layout_width="35dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="50dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/backarrow" />
+                android:src="@drawable/backarrow"
+                app:tint="@color/white" />
 
             <TextView
                 android:id="@+id/tv_withdraw"
@@ -36,7 +36,7 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="30dp"
                 android:fontFamily="@font/noto_sans"
-                android:text="Withdrawal Doantion"
+                android:text="Withdrawal Donation"
                 android:textColor="@color/BlueLinkColor"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -69,24 +69,24 @@
 
         <TextView
             android:id="@+id/Text1InForgetPassword"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/TextInForgetPassword"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/noto_sans"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. "
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut \nvarius justo. "
             android:textColor="@color/hintGreyColor"
-            android:textSize="10sp" />
+            android:textSize="9.5sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="20dp"
-            android:padding="8dp"
             android:background="@drawable/donation_bg_bg"
             android:orientation="horizontal"
+            android:padding="8dp"
             android:weightSum="3">
             <!--*************   Post Layout    *************-->
             <LinearLayout
@@ -104,19 +104,19 @@
                     android:gravity="center"
                     android:text="$ 115"
                     android:textColor="@color/white"
-                    android:textSize="14dp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:text="Raised"
-                    android:layout_marginTop="4dp"
                     android:textColor="@color/Green"
-                    android:textSize="14sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -124,9 +124,9 @@
 
             <View
                 android:layout_width="1.5dp"
-                android:layout_margin="4dp"
                 android:layout_height="match_parent"
-                android:background="@color/GreyColor"/>
+                android:layout_margin="4dp"
+                android:background="@color/grey" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,7 +143,7 @@
                     android:gravity="center"
                     android:text="$ 115"
                     android:textColor="@color/white"
-                    android:textSize="14dp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -155,7 +155,7 @@
                     android:gravity="center"
                     android:text="Donation"
                     android:textColor="@color/Red_donated_text_color"
-                    android:textSize="14sp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -163,9 +163,9 @@
 
             <View
                 android:layout_width="1.5dp"
-                android:layout_margin="4dp"
                 android:layout_height="match_parent"
-                android:background="@color/GreyColor"/>
+                android:layout_margin="4dp"
+                android:background="@color/grey" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -182,7 +182,7 @@
                     android:gravity="center"
                     android:text="$115"
                     android:textColor="@color/white"
-                    android:textSize="14dp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -194,7 +194,7 @@
                     android:gravity="center"
                     android:text="Withdrawal"
                     android:textColor="@color/Green"
-                    android:textSize="14dp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -212,8 +212,7 @@
                 android:id="@+id/ConstraintLayout"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginVertical="10dp"
-                >
+                android:layout_marginVertical="10dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView2"
@@ -225,7 +224,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/delete_it" />
+                        android:src="@drawable/placeholder"
+                         />
                 </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -243,21 +243,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
                     android:text="Maninder"
                     android:textColor="@color/white"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
                     android:text="Mar 15,2022"
-                    android:textColor="@color/GreyColor"
-                    android:textSize="10dp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/low_light_grey"
+                    android:textSize="8sp" />
 
             </LinearLayout>
 
@@ -277,7 +274,7 @@
                     android:gravity="center"
                     android:text="$ 115"
                     android:textColor="@color/white"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -286,9 +283,9 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
-                    android:text="Given"
+                    android:text="Raised"
                     android:textColor="@color/Green"
-                    android:textSize="14dp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -298,9 +295,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#2C2A2A"
             android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:background="#2C2A2A" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -343,11 +340,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="start"
                     android:fontFamily="@font/noto_sans"
                     android:text="Travis Barker"
                     android:textColor="@color/white"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -356,7 +353,7 @@
                     android:fontFamily="@font/noto_sans"
                     android:text="Mar 15,2022"
                     android:textColor="@color/GreyColor"
-                    android:textSize="10dp"
+                    android:textSize="8sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -377,7 +374,7 @@
                     android:gravity="center"
                     android:text="$ 10"
                     android:textColor="@color/white"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -386,9 +383,9 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
-                    android:text="Pending"
+                    android:text="Donated"
                     android:textColor="@color/Red_donated_text_color"
-                    android:textSize="14dp"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -398,9 +395,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#2C2A2A"
             android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:background="#2C2A2A" />
 
     </LinearLayout>
 

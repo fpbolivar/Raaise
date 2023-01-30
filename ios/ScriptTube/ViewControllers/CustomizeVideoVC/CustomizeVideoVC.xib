@@ -26,7 +26,10 @@
                     <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
-                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="xom-aY-qqz">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shadowlayer3" translatesAutoresizingMaskIntoConstraints="NO" id="eTc-tB-OhL">
+                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
+                </imageView>
+                <imageView opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="xom-aY-qqz">
                     <rect key="frame" x="153.5" y="68.5" width="15" height="14"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -70,6 +73,7 @@
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="gND-vX-RFo" secondAttribute="bottom" constant="20" id="1XQ-v4-Sfg"/>
                 <constraint firstItem="SUA-ys-oZc" firstAttribute="leading" secondItem="xom-aY-qqz" secondAttribute="trailing" constant="5" id="20Z-ft-QS2"/>
+                <constraint firstItem="eTc-tB-OhL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="DAb-m6-HO3"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="meA-7s-WMN" secondAttribute="trailing" id="GSO-Kc-4Ve"/>
                 <constraint firstItem="SUA-ys-oZc" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="H3k-y5-x5l"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="meA-7s-WMN" secondAttribute="bottom" id="Irg-OI-yvI"/>
@@ -77,8 +81,11 @@
                 <constraint firstItem="meA-7s-WMN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="PqQ-1s-1u2"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="gND-vX-RFo" secondAttribute="trailing" constant="30" id="Wuq-ef-ufv"/>
                 <constraint firstItem="xom-aY-qqz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="bAi-ha-ndE"/>
+                <constraint firstItem="SUA-ys-oZc" firstAttribute="bottom" secondItem="eTc-tB-OhL" secondAttribute="bottom" constant="-779" id="jZA-KS-o0o"/>
+                <constraint firstAttribute="trailing" secondItem="eTc-tB-OhL" secondAttribute="trailing" id="qA4-vI-74w"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="zeN-YB-j7m" secondAttribute="bottom" constant="20" id="riT-XH-0oW"/>
                 <constraint firstItem="zeN-YB-j7m" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="sPe-kM-8tF"/>
+                <constraint firstItem="eTc-tB-OhL" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="t5W-Sj-nvH"/>
                 <constraint firstItem="SUA-ys-oZc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="u5H-Ms-5ls"/>
                 <constraint firstItem="meA-7s-WMN" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="wdt-wy-dVU"/>
                 <constraint firstItem="xom-aY-qqz" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="zUf-7u-gWz"/>
@@ -90,6 +97,7 @@
         <image name="ic_cancel_editing" width="43" height="28"/>
         <image name="ic_confirm_editing" width="35" height="34"/>
         <image name="music.note" catalog="system" width="96" height="128"/>
+        <image name="shadowlayer3" width="379" height="301"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

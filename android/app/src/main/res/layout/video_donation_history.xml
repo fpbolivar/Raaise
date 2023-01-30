@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/DateTvVideoHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:text="Nov 24, 2022, 10:00 AM"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/UsernameTvVideoHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/noto_sans"
+                android:text="maninder"
+                android:textColor="#D9B7B5B5"
+                android:textFontWeight="400"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/RaisedTvVideoHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_weight="1"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="end"
+            android:text="$00.00"
+            android:textColor="@color/white"
+            android:textFontWeight="700"
+            android:textSize="12dp"  />
+
+        <TextView
+            android:id="@+id/PendingTvVideoHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_weight="1"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="end"
+            android:text="$00.00"
+            android:textColor="@color/white"
+            android:textFontWeight="700"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="14dp"
+        android:background="#1AFFFFFF" />
+
+
+</LinearLayout>

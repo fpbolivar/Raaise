@@ -16,6 +16,7 @@
                 <outlet property="descriptionLbl" destination="TiK-EB-bAt" id="seg-sY-vgs"/>
                 <outlet property="submitBtn" destination="GGF-4t-o8b" id="a8J-ut-2DR"/>
                 <outlet property="textCountLbl" destination="ne3-0k-spp" id="yWY-It-qd1"/>
+                <outlet property="updateLbl" destination="TQN-5o-cSq" id="8ke-KU-UfV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,7 +29,7 @@
                     <rect key="frame" x="0.0" y="48" width="414" height="848"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="rrL-Pn-y3f">
-                            <rect key="frame" x="20" y="0.0" width="374" height="356.5"/>
+                            <rect key="frame" x="20" y="0.0" width="374" height="281.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYV-AM-gOS">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
@@ -44,13 +45,13 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBS-Vf-Viv">
-                                    <rect key="frame" x="0.0" y="121.5" width="374" height="150"/>
+                                    <rect key="frame" x="0.0" y="121.5" width="374" height="75"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OHy-Ot-JUt" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="123"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="48"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcS-cU-s5d" customClass="CustomTextView" customModule="ScriptTube" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="123"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="48"/>
                                                     <color key="backgroundColor" name="TFcolor"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -64,10 +65,10 @@
                                                             <real key="value" value="5"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="right">
-                                                            <real key="value" value="0.0"/>
+                                                            <real key="value" value="10"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="left">
-                                                            <real key="value" value="5"/>
+                                                            <real key="value" value="10"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </textView>
@@ -86,7 +87,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 0 / 45" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ne3-0k-spp">
-                                            <rect key="frame" x="0.0" y="123" width="49" height="27"/>
+                                            <rect key="frame" x="0.0" y="48" width="49" height="27"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -100,19 +101,19 @@
                                         <constraint firstAttribute="bottom" secondItem="OHy-Ot-JUt" secondAttribute="bottom" constant="27" id="JLQ-Ig-4ZJ"/>
                                         <constraint firstItem="ne3-0k-spp" firstAttribute="top" secondItem="OHy-Ot-JUt" secondAttribute="bottom" id="SFV-kL-wOB"/>
                                         <constraint firstAttribute="trailing" secondItem="OHy-Ot-JUt" secondAttribute="trailing" id="qJq-1s-tcC"/>
-                                        <constraint firstAttribute="height" constant="150" id="thF-RJ-Q7M"/>
+                                        <constraint firstAttribute="height" constant="75" id="thF-RJ-Q7M"/>
                                         <constraint firstItem="OHy-Ot-JUt" firstAttribute="leading" secondItem="QBS-Vf-Viv" secondAttribute="leading" id="ua0-OO-zMb"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g1c-pB-P2Y">
-                                    <rect key="frame" x="0.0" y="281.5" width="374" height="10"/>
+                                    <rect key="frame" x="0.0" y="206.5" width="374" height="10"/>
                                     <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="10" id="OeT-ly-MtG"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jI5-Pp-qJA" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="301.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="226.5" width="374" height="44"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGF-4t-o8b">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
@@ -147,7 +148,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpd-2w-Jem">
-                                    <rect key="frame" x="0.0" y="355.5" width="374" height="1"/>
+                                    <rect key="frame" x="0.0" y="280.5" width="374" height="1"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="mgH-o4-Q41"/>

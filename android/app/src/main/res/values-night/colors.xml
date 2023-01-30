@@ -18,4 +18,5 @@
     <color name="followesGreycolor">#AfA9AB</color>
     <color name="BlueColorSettings">#006EE9</color>
     <color name="Red">#FF0000</color>
+    <color name="DullWhite">#BBBBBB</color>
 </resources>

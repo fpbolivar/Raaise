@@ -21,8 +21,8 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="5xo-pH-xjf">
-                    <rect key="frame" x="0.0" y="106" width="393" height="712"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="5xo-pH-xjf">
+                    <rect key="frame" x="20" y="106" width="353" height="712"/>
                     <color key="backgroundColor" name="BackgroundColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4qO-3u-liE">
                         <size key="itemSize" width="128" height="128"/>
@@ -66,8 +66,8 @@
                 <constraint firstItem="8vc-mK-ShB" firstAttribute="leading" secondItem="ooD-4W-uM7" secondAttribute="trailing" constant="10" id="3G5-EJ-wSr"/>
                 <constraint firstItem="8vc-mK-ShB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="Mzg-pB-tHL"/>
                 <constraint firstItem="eyH-T8-yDI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="NVR-dU-bod"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5xo-pH-xjf" secondAttribute="trailing" id="OgB-fs-Q0D"/>
-                <constraint firstItem="5xo-pH-xjf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="VqX-I0-NYS"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5xo-pH-xjf" secondAttribute="trailing" constant="20" id="OgB-fs-Q0D"/>
+                <constraint firstItem="5xo-pH-xjf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="VqX-I0-NYS"/>
                 <constraint firstItem="5xo-pH-xjf" firstAttribute="top" secondItem="8vc-mK-ShB" secondAttribute="bottom" id="VxD-zt-Sp4"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="5xo-pH-xjf" secondAttribute="bottom" id="eka-pj-vjM"/>
                 <constraint firstItem="ooD-4W-uM7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="khW-eN-TqC"/>

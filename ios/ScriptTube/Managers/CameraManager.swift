@@ -22,7 +22,9 @@ protocol RecordingDelegate: class {
 
 
 class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
-    
+    var frontCamera : AVCaptureDeviceInput!
+    var rearCamera : AVCaptureDeviceInput!
+    var audioDeviceInput: AVCaptureDeviceInput!
     /// Capture session with customized settings
     var captureSession: AVCaptureSession?
     /// Capture Device with customized settings
@@ -31,6 +33,7 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
     var cameraAndAudioAccessPermitted: Bool!
     /// Parent View that contains preview layer
     var embeddingView: UIView?
+    var urls = [URL]()
     /// Recording Delegate
     weak var delegate: RecordingDelegate!
     let VIDEO_FILE_EXTENSION = "mp4"
@@ -57,12 +60,12 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
     /**
      Set up the camera and add view to previerw layer
      */
-    func addPreviewLayerToView(view: UIView){
+    func addPreviewLayerToView(view: UIView,position:AVCaptureDevice.Position = .back){
         if cameraAndAudioAccessPermitted {
             if let previewLayer = previewLayer {
                 previewLayer.removeFromSuperlayer()
             }
-            setupCamera {
+            setupCamera(position: position) {
                 self.embeddingView = view
                 DispatchQueue.main.async {
                     guard let previewLayer = self.previewLayer else { return }
@@ -79,8 +82,11 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
     func startRecording(){
         movieOutput?.startRecording(to: tempFilePath, recordingDelegate: self)
     }
-    
+    func isRecording()->Bool?{
+        return self.movieOutput?.isRecording
+    }
     func stopRecording(){
+        captureSession?.stopRunning()
         captureSession?.stopRunning()
         if let output = self.movieOutput, output.isRecording {
             output.stopRecording()
@@ -93,40 +99,45 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
     }
     
 
-    fileprivate func setupCamera(completion: @escaping RegularCompletionBlock){
+    fileprivate func setupCamera(position:AVCaptureDevice.Position,completion: @escaping RegularCompletionBlock){
         captureSession = AVCaptureSession()
-        
-        guard let device = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: .video, position: .back) else { return }
+        guard let device = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: .video, position: position) else { return }
         captureDevice = device
-        
         guard let audioDevice = AVCaptureDevice.default(for: .audio) else { return }
         
-        var deviceInput: AVCaptureDeviceInput!
-        var audioDeviceInput: AVCaptureDeviceInput!
+        //var deviceInput: AVCaptureDeviceInput!
+        //var audioDeviceInput: AVCaptureDeviceInput!
         do {
-            deviceInput = try AVCaptureDeviceInput(device: captureDevice)
-            guard deviceInput != nil else {
-                print("error: cant get deviceInput")
-                return
+            if let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
+                self.frontCamera = try AVCaptureDeviceInput(device: frontCamera)
             }
+            if let rearCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+                self.rearCamera = try AVCaptureDeviceInput(device: rearCamera)
+            }
+            
+//            deviceInput = try AVCaptureDeviceInput(device: captureDevice)
+//            guard deviceInput != nil else {
+//                print("error: cant get deviceInput")
+//                return
+//            }
             audioDeviceInput = try AVCaptureDeviceInput(device: audioDevice)
             guard audioDeviceInput != nil else {
                 print("error: cant get audioDeviceInput")
                 return
             }
-            
             sessionQueue.async {
                 if let session = self.captureSession {
                     session.beginConfiguration()
                     session.sessionPreset = .high
                     
                     // Add video
-                    if session.canAddInput(deviceInput){
-                        session.addInput(deviceInput)
+                    
+                    if session.canAddInput(position == .front ? self.frontCamera : self.rearCamera){
+                        session.addInput(position == .front ? self.frontCamera : self.rearCamera)
                     }
                     // Add audio
-                    if session.canAddInput(audioDeviceInput){
-                        session.addInput(audioDeviceInput)
+                    if session.canAddInput(self.audioDeviceInput){
+                        session.addInput(self.audioDeviceInput)
                     }
                     
                     
@@ -136,6 +147,7 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
                     }
                     
                     if let connection = self.movieOutput!.connection(with: .video) {
+                        connection.isVideoMirrored = self.captureDevice.position == .front
                         if connection.isVideoStabilizationSupported {
                             connection.preferredVideoStabilizationMode = .auto
                         }
@@ -149,16 +161,40 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
             }
             
         } catch let error as NSError {
-            deviceInput = nil
+            //deviceInput = nil
             print("Device Input Error: \(error.localizedDescription)")
         }
         
     }
-    
+    func switchCamera(){
+         print("HADBHAJBDAJX JAS ",captureDevice.position == .front)
+        print("alalalalal2")
+        guard let session = captureSession, let frontCamera = frontCamera, let rearCamera = rearCamera, let audio = audioDeviceInput else { return }
+        session.removeInput(audio)
+        let currentInput = session.inputs[0] as? AVCaptureDeviceInput
+        if currentInput == rearCamera {
+            session.removeInput(rearCamera)
+            session.addInput(frontCamera)
+            if let connection = self.movieOutput!.connection(with: .video) {
+                print("CASE",self.captureDevice.position == .front)
+                connection.isVideoMirrored = true
+                if connection.isVideoStabilizationSupported {
+                    connection.preferredVideoStabilizationMode = .auto
+                }
+            }
+            
+        } else if currentInput == frontCamera {
+            session.removeInput(frontCamera)
+            session.addInput(rearCamera)
+        }
+        session.addInput(audio)
+        movieOutput?.startRecording(to: tempFilePath, recordingDelegate: self)
+    }
     
     fileprivate func setupPreviewLayer(){
         // Preview Layer
-        if let session = captureSession {
+        
+        if let session = captureSession{
             previewLayer = AVCaptureVideoPreviewLayer(session: session)
             previewLayer?.videoGravity = .resizeAspectFill
         }
@@ -167,10 +203,19 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
     
     // Finish Recording
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        urls.append(outputFileURL)
         if let error = error {
-            print("Saving video failed: \(error.localizedDescription)")
+            print("Saving video failed: \(error.localizedDescription)",outputFileURL)
+//            delegate.finishRecording(outputFileURL, error)
         } else {
-            delegate.finishRecording(outputFileURL, error)
+            print("Saving video failed22: \(error?.localizedDescription)",outputFileURL)
+            AVMutableComposition().mergeVideo(urls) { url, error in
+                guard let url = url else{
+                    self.delegate.finishRecording(nil, error)
+                    return
+                }
+                self.delegate.finishRecording(url, error)
+            }
         }
     }
     

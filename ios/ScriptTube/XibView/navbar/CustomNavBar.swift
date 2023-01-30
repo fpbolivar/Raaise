@@ -14,6 +14,8 @@ enum NavBarType{
     case largeNavBarOnlyBack
     case largeNavBarOnlyBackWithRightBtn
     case addNewCard
+    case onlyTopTitle
+    case filter
     case none
 
 }

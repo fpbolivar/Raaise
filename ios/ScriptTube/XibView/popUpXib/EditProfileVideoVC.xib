@@ -88,7 +88,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_delete" translatesAutoresizingMaskIntoConstraints="NO" id="J90-AO-j14">
-                                            <rect key="frame" x="151.66666666666666" y="22" width="20" height="20"/>
+                                            <rect key="frame" x="146.66666666666666" y="22" width="20" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="Hhg-2w-oek"/>
                                                 <constraint firstAttribute="height" constant="20" id="Y4g-Il-gQQ"/>
@@ -99,7 +99,7 @@
                                     <constraints>
                                         <constraint firstItem="J90-AO-j14" firstAttribute="centerY" secondItem="OUR-n7-6PU" secondAttribute="centerY" id="37i-IC-aka"/>
                                         <constraint firstItem="puG-qN-hEG" firstAttribute="leading" secondItem="OUR-n7-6PU" secondAttribute="leading" id="DID-hu-tGS"/>
-                                        <constraint firstItem="J90-AO-j14" firstAttribute="centerX" secondItem="OUR-n7-6PU" secondAttribute="centerX" constant="-35" id="GRe-h4-q7z"/>
+                                        <constraint firstItem="J90-AO-j14" firstAttribute="centerX" secondItem="OUR-n7-6PU" secondAttribute="centerX" constant="-40" id="GRe-h4-q7z"/>
                                         <constraint firstItem="puG-qN-hEG" firstAttribute="top" secondItem="OUR-n7-6PU" secondAttribute="top" id="HaF-Hi-7uG"/>
                                         <constraint firstAttribute="bottom" secondItem="v52-9J-x8H" secondAttribute="bottom" id="Wz8-RW-Amg"/>
                                         <constraint firstAttribute="trailing" secondItem="puG-qN-hEG" secondAttribute="trailing" id="icA-tc-Byp"/>

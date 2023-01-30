@@ -18,57 +18,113 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@drawable/settings_block_bg"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/settings_block_bg">
 
-            <ImageView
-                android:id="@+id/user_image"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/user_image_Card"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@color/Green"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/user_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/placeholder"
+
+                    />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/headingTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/user_image"
-                app:layout_constraintLeft_toRightOf="@id/user_image"
-                android:maxLines="1"
-                android:ellipsize="end"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="3dp"
-                android:text="Take Me Home"
+                android:ellipsize="end"
+                android:fontFamily="@font/noto_sans"
+                android:maxLines="1"
+                android:textColor="@color/white"
                 android:textSize="14sp"
-                android:textColor="@color/light_grey"/>
+                app:layout_constraintLeft_toRightOf="@id/user_image_Card"
+                app:layout_constraintTop_toTopOf="@id/user_image_Card" />
 
             <TextView
                 android:id="@+id/lastChatText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/user_image"
-                app:layout_constraintLeft_toRightOf="@id/user_image"
                 android:layout_marginStart="12dp"
-                android:text="Good Night"
+                android:fontFamily="@font/noto_sans"
+                android:textColor="@color/low_light_grey"
                 android:textSize="10sp"
-                android:textColor="@color/DarkGrey"/>
-            
-            <TextView
-                android:id="@+id/lastChatTime"
+                app:layout_constraintBottom_toBottomOf="@id/user_image_Card"
+                app:layout_constraintLeft_toRightOf="@id/user_image_Card" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/user_image"
-                app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginEnd="20dp"
-                android:textSize="8sp"
-                android:textColor="@color/DarkGrey"
-                android:text="Yesterday"/>
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/user_image_Card">
+
+                <TextView
+                    android:id="@+id/lastChatTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans"
+                    android:textColor="@color/low_light_grey"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/UnreadCount"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/notification_text_bg"
+                    android:fontFamily="@font/noto_sans"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/lastChatTime"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                app:layout_constraintTop_toTopOf="@id/user_image_Card"-->
+            <!--                app:layout_constraintRight_toRightOf="parent"-->
+            <!--                android:layout_marginEnd="20dp"-->
+            <!--                android:textSize="8sp"-->
+            <!--                android:fontFamily="@font/noto_sans"-->
+            <!--                android:textColor="@color/low_light_grey"-->
+            <!--                />-->
+            <!--            <TextView-->
+            <!--                android:id="@+id/UnreadCount"-->
+            <!--                android:layout_width="25dp"-->
+            <!--                android:layout_height="25dp"-->
+            <!--                android:gravity="center"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/lastChatTime"-->
+            <!--                app:layout_constraintRight_toRightOf="parent"-->
+            <!--                android:layout_marginEnd="25dp"-->
+            <!--                android:textSize="12sp"-->
+            <!--                android:padding="5dp"-->
+            <!--                android:fontFamily="@font/noto_sans"-->
+            <!--                android:background="@drawable/notification_text_bg"-->
+            <!--                android:textColor="@color/white"-->
+            <!--                android:text="58"/>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

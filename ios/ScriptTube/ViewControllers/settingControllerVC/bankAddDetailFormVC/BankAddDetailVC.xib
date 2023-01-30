@@ -21,6 +21,7 @@
                 <outlet property="phoneNumberTf" destination="8CC-q4-VWa" id="qv5-aO-LWC"/>
                 <outlet property="postalCodeTf" destination="IOL-Ot-KKz" id="kbM-Wy-0Wp"/>
                 <outlet property="routingNoTF" destination="vIq-B8-bIt" id="Cb5-Vo-Bt8"/>
+                <outlet property="saveLbl" destination="h5h-Br-cL8" id="IMT-6E-kQl"/>
                 <outlet property="stateTf" destination="0ty-eV-4yU" id="P5t-Mt-vNb"/>
                 <outlet property="submitBtn" destination="Zuu-Pn-Bgx" id="WQG-1c-RDH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -47,7 +48,7 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sL0-Iy-CHp" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="85" width="374" height="31.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" name="loginTFColor"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account holder name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R3E-Sk-n2l">
@@ -60,18 +61,8 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Routing Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vIq-B8-bIt">
-                                    <rect key="frame" x="0.0" y="190.5" width="374" height="44"/>
-                                    <color key="backgroundColor" name="TFcolor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="k2j-UG-1ZB"/>
-                                    </constraints>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                </textField>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sqd-gY-bwH">
-                                    <rect key="frame" x="0.0" y="249.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="190.5" width="374" height="44"/>
                                     <color key="backgroundColor" name="TFcolor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="Wmn-QS-TQO"/>
@@ -81,10 +72,20 @@
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Account number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BdN-Jm-DE3">
-                                    <rect key="frame" x="0.0" y="308.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="249.5" width="374" height="44"/>
                                     <color key="backgroundColor" name="TFcolor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="FuK-cW-jZ8"/>
+                                    </constraints>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                </textField>
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Routing Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vIq-B8-bIt">
+                                    <rect key="frame" x="0.0" y="308.5" width="374" height="44"/>
+                                    <color key="backgroundColor" name="TFcolor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="k2j-UG-1ZB"/>
                                     </constraints>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -231,9 +232,6 @@
         </namedColor>
         <namedColor name="TFcolor">
             <color red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="loginTFColor">
-            <color red="0.80392156862745101" green="0.80392156862745101" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

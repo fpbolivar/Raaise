@@ -22,6 +22,11 @@ class ProfileVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("VIEWAPPERAD")
+        if(!(Constant.check_Internet?.isReachable)!){
+            AlertView().showInternetErrorAlert(delegate: self)
+            return
+        }
         getProfileApi(needLoader: needLoader)
         needLoader = false
         self.tabBarController?.tabBar.isHidden = false
@@ -89,7 +94,7 @@ extension ProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         switch section {
         case 0:
-            return CGSize.init(width: ScreenSize.Width, height: 285)
+            return CGSize.init(width: ScreenSize.Width, height: 260)
         case 1:
             return CGSize.init(width: ScreenSize.Width, height: 30)
         default:
@@ -101,32 +106,35 @@ extension ProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UIColle
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return userVideoData.count
+        return userVideos.count
+        //userVideoData.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileVideoItemCell.identifier, for: indexPath) as!  ProfileVideoItemCell
-        cell.updateCell(withImg: userVideoData[indexPath.row])
+        //cell.updateCell(withImg: userVideos[indexPath.row].videoImage)
+        cell.updateCellData(data: userVideos[indexPath.row])
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let wFrame = collectionView.frame.width
-        let itemWidth = (wFrame/3)//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
+        let itemWidth = (wFrame/3) - 2//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
         let itemHeight =  itemWidth * 1.3
         return CGSize.init(width: itemWidth, height: itemHeight)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 2
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 2
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = ViewVideoVC()
         vc.data = self.userVideos
         vc.visitingProfile = false
         vc.selectedRow = indexPath.row
+        vc.fromProfileId = AuthManager.currentUser.id
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

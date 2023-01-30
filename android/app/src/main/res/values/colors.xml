@@ -42,8 +42,17 @@
     <color name="bg_message_color">#ECECEC</color>
     <color name="new_textcolor">#4C75A3</color>
     <color name="Red">#FF0000</color>
+    <color name="Red_ReportDialog_Text_Color">#C90202</color>
+    <color name="Red_more_option_user_video_text_color">#FB2424</color>
+    <color name="Red_more_option_user_video_icon_color">#FB2323</color>
+    <color name="Grey_ReportDialog_Text_Color">#7E7E7E</color>
     <color name="light_grey">#D3D3D3</color>
+    <color name="white_withdraw_text_color">#D9FCFCFC</color>
     <color name="grey">#8F8F8F</color>
+    <color name="dark_grey_comment_viewReplies_textColor">#86878B</color>
     <color name="low_light_grey">#D9B7B5B5</color>
     <color name="Red_donated_text_color">#C91818</color>
+    <color name="DullWhite">#BBBBBB</color>
+    <color name="dark_grey_search_bg">#363636</color>
+    <color name="blue_color_titleSearch_screen">#1877F2</color>
 </resources>

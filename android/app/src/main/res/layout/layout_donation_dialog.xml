@@ -8,7 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="10dp">
 
         <RelativeLayout
@@ -24,7 +24,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="Donation Amount"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -38,27 +38,27 @@
 
             <TextView
                 android:id="@+id/tv_donation_subtitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/noto_sans"
                 android:layout_below="@id/iv_donation_icon"
                 android:layout_centerHorizontal="true"
-                android:textSize="12sp"
-                android:textColor="@color/DarkGrey"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
                 android:text="@string/donation_dialog_text"
-                android:textAlignment="center" />
+                android:textColor="#404040"
+                android:textSize="11sp" />
 
             <RelativeLayout
                 android:id="@+id/layout_donation_amount"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-
                 android:layout_below="@+id/tv_donation_subtitle"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/dialog_bg_unselect_amount">
+                android:background="@drawable/dialog_bg_unselect_amount"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/select_firstAmount_text"
@@ -89,39 +89,39 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/layout_donation_amount"
                 android:layout_gravity="center"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="Other Amount"
-                android:layout_marginTop="6dp"
-                android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textColor="#343434"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/donation_amount_tv"
+                android:id="@+id/donation_amount_ET"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_below="@id/other_amount_head"
-                android:layout_marginStart="20dp"
+                android:layout_marginHorizontal="35dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
                 android:background="@drawable/dialog_bg_unselect_amount"
                 android:drawableStart="@drawable/dollar"
                 android:drawablePadding="6dp"
                 android:drawableTint="@color/black"
+                android:fontFamily="@font/noto_sans"
                 android:gravity="center_vertical"
                 android:hint="Enter your donation amount"
                 android:inputType="number"
                 android:paddingStart="16dp"
-                android:textColor="@color/light_grey"
-                android:textColorHint="@color/Darkgrey"
-                android:textSize="12sp" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/bank_text_color"
+                android:textSize="10sp" />
 
             <LinearLayout
                 android:id="@+id/dialog_btn_Donation"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/donation_amount_tv"
+                android:layout_below="@id/donation_amount_ET"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="20dp"
@@ -137,7 +137,7 @@
                     android:fontFamily="@font/noto_sans"
                     android:text="Donate"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 

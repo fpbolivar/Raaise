@@ -8,33 +8,83 @@
 import UIKit
 
 class FollowListVC: BaseControllerVC {
+    @IBOutlet weak var noResultLbl:UILabel!
     @IBOutlet weak var searchTf: UITextField!
     @IBOutlet weak var tableView: UITableView!
     var isFollowingList = false
     var userList : [UserListDataModel] = []
+    var userName:String?
+    var page = 1
+    var tableSetup = false
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         hideNavbar()
-        let param = ["limit":"30","page":"1"]
         if isFollowingList{
             addNavBar(headingText: "Following List", redText: "List")
-            getUsersFollowerList(withParam: param, isForFollowing: true){
-                DispatchQueue.main.async {
-                    self.setTableView()
+        }else{
+            addNavBar(headingText: "Followers List", redText: "List")
+            
+        }
+        getData(needLoader: true){
+            DispatchQueue.main.async {
+                self.noResultLbl.isHidden = !self.userList.isEmpty
+            }
+        }// Do any additional setup after loading the view.
+    }
+    func getData(searchText:String = "",needLoader:Bool = false,completion:@escaping()->Void){
+        let param = ["limit":"30","page":"\(page)","search":"\(searchText)"]
+        if isFollowingList{
+            if userName != nil{
+                let param2 = ["userName":userName!,"limit":"30","page":"\(page)","search":"\(searchText)"]
+                if(!(Constant.check_Internet?.isReachable)!){
+                    AlertView().showInternetErrorAlert(delegate: self)
+                    return
+                }
+                getOtherUsersFollowerList(withParam: param2, isForFollowing: true, needLoader: needLoader) {
+                    DispatchQueue.main.async {
+                        self.tableSetup ? self.tableView.reloadData() : self.setTableView()
+                        completion()
+                    }
+                }
+            }else{
+                if(!(Constant.check_Internet?.isReachable)!){
+                    AlertView().showInternetErrorAlert(delegate: self)
+                    return
+                }
+                getUsersFollowerList(withParam: param, isForFollowing: true, needLoader: needLoader){
+                    DispatchQueue.main.async {
+                        self.tableSetup ? self.tableView.reloadData() : self.setTableView()
+                        completion()
+                    }
                 }
             }
-
         }else{
-           
-            addNavBar(headingText: "Followers List", redText: "List")
-            getUsersFollowerList(withParam: param, isForFollowing: false){
-                DispatchQueue.main.async {
-                    self.setTableView()
+            if userName != nil{
+                let param2 = ["userName":userName!,"limit":"30","page":"\(page)","search":"\(searchText)"]
+                if(!(Constant.check_Internet?.isReachable)!){
+                    AlertView().showInternetErrorAlert(delegate: self)
+                    return
+                }
+                getOtherUsersFollowerList(withParam: param2, isForFollowing: false, needLoader: needLoader) {
+                    DispatchQueue.main.async {
+                        self.tableSetup ? self.tableView.reloadData() : self.setTableView()
+                        completion()
+                    }
+                }
+            }else{
+                if(!(Constant.check_Internet?.isReachable)!){
+                    AlertView().showInternetErrorAlert(delegate: self)
+                    return
+                }
+                getUsersFollowerList(withParam: param, isForFollowing: false, needLoader: needLoader){
+                    DispatchQueue.main.async {
+                        self.tableSetup ? self.tableView.reloadData() : self.setTableView()
+                        completion()
+                    }
                 }
             }
         }
-        // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -44,15 +94,29 @@ class FollowListVC: BaseControllerVC {
         searchTf.paddingLeftRightTextField(left: 35, right: 0)
         searchTf.attributedPlaceholder = NSAttributedString(string: "Search Users",attributes: [.foregroundColor: UIColor.lightGray])
         searchTf.layer.cornerRadius = 10
+        searchTf.delegate = self
     }
     func setTableView(){
+        tableSetup = true
         tableView.register(UINib(nibName: SelectionCell.identifier, bundle: nil), forCellReuseIdentifier: SelectionCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
     }
-    func getUsersFollowerList(withParam param:[String:String],isForFollowing:Bool,completion:@escaping()->Void){
-        DataManager.getUserFollowes(delegate: self, isForFollowing: isForFollowing, param: param) { errorMessage in
+    func getOtherUsersFollowerList(withParam param:[String:String],isForFollowing:Bool,needLoader:Bool,completion:@escaping()->Void){
+        DataManager.getOtherUserFollowes(delegate: self, isForFollowing: isForFollowing, needLoader: needLoader, param: param) { errorMessage in
+            print(errorMessage)
+        } completion: { json in
+            json["data"].forEach { (message,data) in
+                print("EACHUSER",data)
+                self.userList.append(UserListDataModel(data: data, isForFollowing: isForFollowing))
+            }
+            print("LISTCOUBY",self.userList.count)
+            completion()
+        }
+    }
+    func getUsersFollowerList(withParam param:[String:String],isForFollowing:Bool,needLoader:Bool,completion:@escaping()->Void){
+        DataManager.getUserFollowes(delegate: self, isForFollowing: isForFollowing, param: param, needLoader: needLoader) { errorMessage in
             print(errorMessage)
         } completion: { json in
             json["data"].forEach { (message,data) in
@@ -82,5 +146,49 @@ extension FollowListVC:UITableViewDelegate,UITableViewDataSource{
         let vc = VisitProfileVC()
         vc.id = self.userList[indexPath.row].userId
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let scroll = scrollView as? UITableView else{return}
+        let height = scroll.frame.size.height
+        let contentYOffset = scroll.contentOffset.y
+        let distanceFromBottom = scroll.contentSize.height - contentYOffset
+        if distanceFromBottom == height{
+            print("helloajsk")
+            print("You reached end of the table")
+            page = page + 1
+            getData(searchText: searchTf.text!){
+                
+            }
+        }
+    }
+}
+extension FollowListVC:UITextFieldDelegate{
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            NSObject.cancelPreviousPerformRequests(
+            withTarget: self,
+            selector: #selector(getHintsFromTextField),
+            object: textField)
+        self.perform(
+            #selector(getHintsFromTextField),
+            with: textField,
+            afterDelay: 0.5)
+        return true
+    }
+    @objc func getHintsFromTextField(textField: UITextField) {
+        print("Hints for textField: \(textField.text)")
+        userList = []
+        if !textField.text!.isEmpty{
+            getData(searchText: textField.text!){
+                DispatchQueue.main.async {
+                    self.noResultLbl.isHidden = !self.userList.isEmpty
+                }
+            }
+        }else{
+            getData(){
+                DispatchQueue.main.async {
+                    self.noResultLbl.isHidden = !self.userList.isEmpty
+                }
+            }
+        }
     }
 }

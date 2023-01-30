@@ -106,6 +106,10 @@ class ChangePasswordVC: BaseControllerVC {
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyConfirmPassword)
             return
         }else{
+            if(!(Constant.check_Internet?.isReachable)!){
+                AlertView().showInternetErrorAlert(delegate: self)
+                return
+            }
             changePasswordApi()
         }
     }

@@ -1,11 +1,15 @@
 #  ScripTube App
 Xcode version: 14.1
 Swift version: Swift 5
-Run first == > pod install
-
 ScripTube App is a social media app, where users can create and share fun videos with there friends and family.
 ScripTube provides the users with the ability to add audios from a variety of selection.
-User can create a maximum of 30 sec lenght of video and share it within app and also to other apps.
+User can create a maximum of 30 sec length of video and share it within app and also to other apps.
+
+#Steps For Installation
+1. Clone the repo on your local system.
+2. Drag the project folder to terminal and run 'pod install' command.
+3. Select ScriptTube as the running schema, select a device to run the app.
+4. To change the base Url of the Api, go the URLHELPER file and change the BASE_URL variable.
 
 # Milestones
 This project is divided into 7 milestones as of now named as M1, M2, M3, M4, M5, M6 and M7.

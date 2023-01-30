@@ -12,7 +12,7 @@ class SharePopUpVC: UIViewController {
     var delegate:ShareActionDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("POSTPOPUPview")
         // Do any additional setup after loading the view.
     }
     

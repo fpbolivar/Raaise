@@ -16,6 +16,7 @@ class WithdrawalsCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        config()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -28,5 +29,26 @@ class WithdrawalsCell: UITableViewCell {
         dateLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX13)
         priceLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX16)
         statusLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
+    }
+    func updateCell(data:WithdrawListData){
+        
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        guard let date = dateFormatter.date(from: data.date) else{
+            dateLbl.text = ""
+            return
+        }
+        dateLbl.text = date.MMMddyyyy.capitalized
+        titleLbl.text = date.hh_mm_AM_PM
+        priceLbl.text = "$\(data.amount)"
+        if data.status == "pending"{
+            statusLbl.text = data.status.localizedCapitalized
+            statusLbl.textColor = UIColor.red
+        }else{
+            statusLbl.text = data.status.localizedCapitalized
+            statusLbl.textColor = UIColor.green
+        }
     }
 }

@@ -1,10 +1,5 @@
 //
-//  Post.swift
-//  KD Tiktok-Clone
-//
-//  Created by Sam Ding on 9/8/20.
-//  Copyright © 2020 Kaishan. All rights reserved.
-//
+//  Post.swift 
 
 import Foundation
 import UIKit
@@ -98,11 +93,15 @@ class Post{
     var videoShareCount = ""
     var isFollow = false
     var isLiked = false
-    
+    var isViewed :Bool? = true
+    var isDonation = false
+    var videoViewCount = ""
+    var isReported = false
     init(){
         
     }
     init(data:JSON){
+        
         self.id = data[PostKeys.id.rawValue].stringValue
         self.userDetails = UserProfileData(data: data[PostKeys.userDetails.rawValue])
         self.videoCaption = data[PostKeys.videoCaption.rawValue].stringValue
@@ -116,6 +115,42 @@ class Post{
         self.isFollow = data[PostKeys.isFollow.rawValue].boolValue
         self.isLiked = data[PostKeys.isLiked.rawValue].boolValue
         self.audioDetails = AudioDataModel(data: data[PostKeys.audioDetails.rawValue])
+        if audioDetails == nil{
+            print("sahcbsjhcbsjhcbh")
+        }else{
+            print("sahcbsjhcbsjhcbh22")
+        }
+        self.isViewed = data[PostKeys.isViewed.rawValue].boolValue
+        self.isDonation = data[PostKeys.isDonation.rawValue].boolValue
+        self.isReported = data[PostKeys.isReported.rawValue].boolValue
+        self.videoViewCount = data[PostKeys.videoViewCount.rawValue].stringValue
+    }
+    init(data2:JSON){
+        self.id = data2["getVideo"][PostKeys.id.rawValue].stringValue
+        self.userDetails = UserProfileData(data: data2["getVideo"][PostKeys.userDetails.rawValue])
+        self.videoCaption = data2["getVideo"][PostKeys.videoCaption.rawValue].stringValue
+        self.videoLink = data2["getVideo"][PostKeys.videoLink.rawValue].stringValue
+        self.donationAmount = data2["getVideo"][PostKeys.donationAmount.rawValue].stringValue
+        self.videoImage = data2["getVideo"][PostKeys.videoImage.rawValue].stringValue
+        self.slug = data2["getVideo"][PostKeys.slug.rawValue].stringValue
+        self.videoLikeCount = data2["getVideo"][PostKeys.videoLikeCount.rawValue].stringValue
+        self.videoCommentCount = data2["getVideo"][PostKeys.videoCommentCount.rawValue].stringValue
+        self.videoShareCount = data2["getVideo"][PostKeys.videoShareCount.rawValue].stringValue
+        self.isFollow = data2[PostKeys.isFollow.rawValue].boolValue
+        self.isLiked = data2[PostKeys.isLiked.rawValue].boolValue
+        self.audioDetails = AudioDataModel(data: data2["getVideo"][PostKeys.audioDetails.rawValue])
+        if audioDetails == nil{
+            print("sahcbsjhcbsjhcbh")
+        }else{
+            print("sahcbsjhcbsjhcbh22")
+        }
+        self.isViewed = data2["getVideo"][PostKeys.isViewed.rawValue].boolValue
+        self.isDonation = data2["getVideo"][PostKeys.isDonation.rawValue].boolValue
+        self.isReported = data2["getVideo"][PostKeys.isReported.rawValue].boolValue
+        self.videoViewCount = data2["getVideo"][PostKeys.videoViewCount.rawValue].stringValue
+    }
+    func getDictOfObject(){
+        
     }
 }
 enum PostKeys:String{
@@ -123,7 +158,7 @@ enum PostKeys:String{
     case userDetails = "userId"
     case videoCaption = "videoCaption"
     case videoLink = "videoLink"
-    case donationAmount = "donationAmount"
+    case donationAmount = "totalDanotionAmount"
     case videoImage = "videoImage"
     case slug = "slug"
     case videoLikeCount = "videolikeCount"
@@ -132,4 +167,8 @@ enum PostKeys:String{
     case isFollow = "isFollow"
     case isLiked = "isLiked"
     case audioDetails = "audioId"
+    case isViewed = "isViewed"
+    case videoViewCount = "videoViewCount"
+    case isDonation = "isDonation"
+    case isReported = "isReported"
 }

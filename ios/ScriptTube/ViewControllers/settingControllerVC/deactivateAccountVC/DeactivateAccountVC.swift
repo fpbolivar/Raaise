@@ -8,6 +8,7 @@
 import UIKit
 
 class DeactivateAccountVC: BaseControllerVC {
+    @IBOutlet weak var submitLbl: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var  questionLbl:UILabel!
     @IBOutlet weak var nameLbl:UILabel!
@@ -22,10 +23,11 @@ class DeactivateAccountVC: BaseControllerVC {
         // Do any additional setup after loading the view.
     }
     func setfonts(){
-        questionLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX30)
-        nameLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX18)
-        deactiveLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX15)
-        messageLbl.font = AppFont.FontName.light.getFont(size: AppFont.pX14)
+        submitLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
+        questionLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX22)
+        nameLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX22)
+        deactiveLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX14)
+        messageLbl.font = AppFont.FontName.light.getFont(size: AppFont.pX12)
         submitBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX17)
         nameLbl.text = AuthManager.currentUser.name
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
@@ -44,8 +46,12 @@ class DeactivateAccountVC: BaseControllerVC {
         }
     }
     func createDeactivateAlert(){
-        let alert = UIAlertController(title: "ScripTube", message: "Are you sure you want to Deactivate Your Account", preferredStyle: .alert)
+        let alert = UIAlertController(title: "ScripTube", message: "Are you sure you want to Deactivate Your Account?", preferredStyle: .alert)
         let logOutAction = UIAlertAction(title: "Deactivate Account", style: .destructive){action in
+            if(!(Constant.check_Internet?.isReachable)!){
+                AlertView().showInternetErrorAlert(delegate: self)
+                return
+            }
             self.deactivateApi {
                 self.gotoLogin()
             }

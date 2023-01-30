@@ -6,9 +6,9 @@
     android:backgroundTint="@color/CardPaymentGreyColor">
 
     <LinearLayout
-        android:background="#E8E8E8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#E8E8E8"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -29,15 +29,14 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/curved_white_background"
             android:hint="Name on Card"
-            android:imeOptions="actionDone"
-            android:maxLength="16"
-            android:inputType="number"
+            android:imeOptions="actionNext"
+            android:inputType="textPersonName"
             android:padding="15dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textColorHint="#17212B"
-            android:textSize="14sp"
-            />
+
+            android:textSize="14sp" />
 
 
         <EditText
@@ -45,19 +44,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/curved_white_background"
             android:drawableEnd="@drawable/card_no"
             android:hint="Card Number"
-            android:imeOptions="actionDone"
-            android:maxLength="16"
+            android:imeOptions="actionNext"
             android:inputType="number"
+            android:maxLength="19"
             android:padding="15dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textColorHint="#17212B"
-            android:textSize="14sp"
-            />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,39 +65,37 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <EditText
+            <com.raaise.android.Utilities.HelperClasses.MMYY
                 android:id="@+id/CardExpiryEditTextDialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/curved_white_background"
                 android:drawableEnd="@drawable/mm_dd_yy"
-                android:hint="MM/YY"
-                android:imeOptions="actionDone"
+                android:hint="Valid thru"
+                android:imeOptions="actionNext"
                 android:inputType="number"
-                android:padding="15dp"
                 android:maxLength="5"
+                android:padding="15dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textColorHint="#17212B"
                 android:textSize="14sp"
-                app:hintTextColor="@color/hintGreyColor"
-
-                />
+                app:hintTextColor="@color/hintGreyColor" />
 
             <EditText
                 android:id="@+id/CardCvvEditTextDialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:maxLength="3"
                 android:background="@drawable/curved_white_background"
                 android:drawableEnd="@drawable/lock"
                 android:hint="CVV"
                 android:imeOptions="actionDone"
                 android:inputType="number"
+                android:maxLength="3"
                 android:padding="15dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
@@ -137,7 +133,7 @@
                 android:fontFamily="@font/noto_sans"
                 android:text="Save"
                 android:textColor="@color/white"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
         </LinearLayout>

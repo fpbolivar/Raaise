@@ -15,6 +15,7 @@
                 <outlet property="descriptionLbl" destination="lSl-ig-neG" id="gjr-tu-WpE"/>
                 <outlet property="nameTF" destination="pjP-hO-Fxi" id="fVI-AY-aw7"/>
                 <outlet property="submitBtn" destination="pgH-vt-VKV" id="c6P-fe-yi1"/>
+                <outlet property="updateLbl" destination="Lfm-Ya-eAb" id="bFf-f6-GUW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -54,7 +55,7 @@
                                 </textField>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5cl-Bc-1K5">
                                     <rect key="frame" x="0.0" y="175.5" width="374" height="10"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="10" id="JAN-bk-Yuz"/>
                                     </constraints>

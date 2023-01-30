@@ -16,6 +16,8 @@ class HomeVC: UIViewController {
     @IBOutlet weak var followingLbl: UILabel!
     @IBOutlet weak var  tableView:UITableView!
     var data = [Post]()
+    var visibleCell: HomeTableViewCell?
+    var swipeLeft = UISwipeGestureRecognizer()
     var forYouTap: UITapGestureRecognizer!
     var followingTap: UITapGestureRecognizer!
     var oldAndNewIndices = (0,0)
@@ -26,8 +28,10 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
-        
-        let param = ["limit":"4","page":"\(page)"]
+        swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipe))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+        let param = ["limit":"10","page":"\(page)"]
         getHomePageVideosApi(withParams: param){
             self.setUpTable()
         }
@@ -51,11 +55,25 @@ class HomeVC: UIViewController {
         super.viewDidAppear(animated)
 //        check()
     }
+    @objc func swipe(sender:UISwipeGestureRecognizer){
+        if sender.direction == .left{
+            print("LEFT")
+        }else{
+            print("RIGHT")
+        }
+        
+    }
     func getHomePageVideosApi(withParams param:[String:String],completion:@escaping()->Void){
         print("MYPARAMS",param)
+        if(!(Constant.check_Internet?.isReachable)!){
+            AlertView().showInternetErrorAlert(delegate: self)
+            return
+        }
+        //self.tableView.isUserInteractionEnabled = false
         DataManager.getHomePageVideos(delegate: self, param: param) { json in
             json["data"].forEach { (message,data) in
                 print("HOMEDATA",data)
+                //self.tableView.isUserInteractionEnabled = true
                 guard let url = URL(string:data["videoLink"].stringValue) else{return}
                 self.data.append(Post(data: data))
                 self.items.append(url)
@@ -79,9 +97,9 @@ class HomeVC: UIViewController {
         page = 1
         var param = [String:String]()
         if sender == followingTap{
-            param = ["type":"following","limit":"4","page":"\(followingPage)"]
+            param = ["type":"following","limit":"10","page":"\(followingPage)"]
         }else{
-            param = ["limit":"4","page":"\(page)"]
+            param = ["limit":"10","page":"\(page)"]
         }
         getHomePageVideosApi(withParams: param){
         self.tableView.reloadData()
@@ -132,6 +150,10 @@ class HomeVC: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        //checkPause()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         checkPause()
     }
     
@@ -164,32 +186,38 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource, UITableViewDataSou
 //            if indexPath.row == data.count - 1{
 //                print("IJSJKAKOSM")
 //            }
+            
             print("INDEXPATY1",indexPath.row)
             //cell.play()
+            //cell.checkFollow()
             cell.pauseImgView.alpha = 0
         }
     }
-
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // Pause the video if the cell is ended displaying
         if let cell = cell as? HomeTableViewCell {
             cell.pause()
+            
             print("INDEXPATY2",indexPath.row)
         }
         if indexPath.row == data.count - 4{
             print("siudbcguhdsvbcjh",indexPath.row,data.count - 4)
-            page = page + 1
-            var param = [String:String]()
-            if forYouunderline.isHidden{
-                followingPage = followingPage + 1
-                param = ["type":"following","limit":"4","page":"\(followingPage)"]
-            }else{
-                param = ["limit":"4","page":"\(page)"]
-            }
-            getHomePageVideosApi(withParams: param){
-                self.tableView.reloadData()
-                self.check()
-            }
+//            page = page + 1
+//            var param = [String:String]()
+//            if forYouunderline.isHidden{
+//                followingPage = followingPage + 1
+//                param = ["type":"following","limit":"10","page":"\(followingPage)"]
+//            }else{
+//                param = ["limit":"10","page":"\(page)"]
+//            }
+//            getHomePageVideosApi(withParams: param){
+//                DispatchQueue.main.async {
+//                    //self.tableView.isUserInteractionEnabled = false
+//                    self.tableView.reloadData()
+//                   // self.tableView.isUserInteractionEnabled = true
+//                    self.check()
+//                }
+//            }
         }
     }
 
@@ -207,6 +235,30 @@ extension HomeVC: UIScrollViewDelegate {
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         check()
+        let height = scrollView.frame.size.height
+        let contentYOffset = scrollView.contentOffset.y
+        let distanceFromBottom = scrollView.contentSize.height - contentYOffset
+        if distanceFromBottom == height{
+            print("helloajsk")
+            print("You reached end of the table")
+            page = page + 1
+            var param = [String:String]()
+            if forYouunderline.isHidden{
+                followingPage = followingPage + 1
+                param = ["type":"following","limit":"10","page":"\(followingPage)"]
+            }else{
+                param = ["limit":"10","page":"\(page)"]
+            }
+            getHomePageVideosApi(withParams: param){
+                DispatchQueue.main.async {
+                    //self.tableView.isUserInteractionEnabled = false
+                    self.tableView.reloadData()
+                   // self.tableView.isUserInteractionEnabled = true
+                    self.check()
+                }
+            }
+        }
+        
     }
     func check() {
         checkPreload()
@@ -232,8 +284,9 @@ extension HomeVC: UIScrollViewDelegate {
         let visibleCell = visibleCells
             .filter { visibleFrame.intersection($0.frame).height >= $0.frame.height / 2 }
             .first
-        
         visibleCell?.play()
+        visibleCell?.checkFollow()
+        self.visibleCell = visibleCell
     }
     func checkPause(){
         let visibleCells = tableView.visibleCells.compactMap { $0 as? HomeTableViewCell }
@@ -242,12 +295,29 @@ extension HomeVC: UIScrollViewDelegate {
         let visibleCell = visibleCells
             .filter { visibleFrame.intersection($0.frame).height >= $0.frame.height / 2 }
             .first
+        self.visibleCell = visibleCell
         visibleCell?.pause()
     }
 }
 
 // MARK: - Navigation Delegate
 extension HomeVC: HomeCellNavigationDelegate {
+    
+    
+    func clickedFollowBtn(forUser id: String, isFollowing: Bool) {
+        let sameUser = self.data.filter { post in
+            return post.userDetails?.id == id
+        }
+        print("SAMEUSERVUEI",sameUser.count)
+        sameUser.forEach { post in
+            post.isFollow = isFollowing
+        }
+    }
+    
+    func viewCountError(error: String) {
+        AlertView().showAlert(message: error, delegate: self, pop: false)
+    }
+    
    
     
 //    func downloadVideo(url:Str){
@@ -269,7 +339,7 @@ extension HomeVC: HomeCellNavigationDelegate {
         popup.delegate = self
         popup.videoId = id
         popup.numberOfComments = num
-        popup.modalPresentationStyle = .pageSheet
+        popup.modalPresentationStyle = .popover
         self.tabBarController?.present(popup, animated: true)
     }
     func gotoUserProfile(withUser user:UserProfileData,isFollowing:Bool) {
@@ -279,7 +349,7 @@ extension HomeVC: HomeCellNavigationDelegate {
         vc.id = user.id
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    func shareVideo(withUrl  url:String) {
+    func shareVideo(withUrl  url:String,id:String) {
         DispatchQueue.main.async {
             self.pleaseWait()
         }
@@ -335,7 +405,7 @@ extension HomeVC: HomeCellNavigationDelegate {
         }
         
     }
-    func reportVideo(withId id:String) {
+    func reportVideo(withId id:String,isReported:Bool) {
         //AlertView().showAlert(message: "Report is not implemented yet", delegate: self, pop: false)
         let popUp = ReportBtnPopUp()
         //ReportVideoVC()
@@ -345,9 +415,10 @@ extension HomeVC: HomeCellNavigationDelegate {
         self.tabBarController?.present(popUp, animated: true)
     }
     
-    func donationPopUp() {
+    func donationPopUp(post:Post) {
         let popUp = DonationPopUpViewController()
         popUp.delegate = self
+        popUp.post = post
         popUp.modalTransitionStyle = .crossDissolve
         popUp.modalPresentationStyle = .overCurrentContext
         self.tabBarController?.present(popUp, animated: true)
@@ -358,12 +429,30 @@ extension HomeVC: HomeCellNavigationDelegate {
     }
 }
 extension HomeVC: DonationPopupDelegate{
-    func donateBtnClicked() {
+    func donateBtnClicked(post:Post,amt:String) {
         let vc = PaymemtSavedCardListVC()
+        vc.videoId = post.id
+        vc.donateTo = post.userDetails!.id
+        vc.amount = amt
+        vc.forPayment = true
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    func donationSuccess() {
+        let vc = PaymentSuccessVC()
+        vc.modalTransitionStyle = .coverVertical
+        vc.modalPresentationStyle = .overCurrentContext
+        self.tabBarController?.present(vc, animated: true)
     }
 }
 extension HomeVC:CommentPopUpDelegate{
+    func dismissAfterComment(numberOfComments num: String) {
+        guard let cell = visibleCell else{
+            return
+        }
+        cell.post?.videoCommentCount = num
+        cell.commentCountLbl.text = Int(num)?.shorten()
+    }
+    
     func dismissToVisitProfile(withId id: String) {
         let vc = VisitProfileVC()
         //vc.isFollowing = isFollowing

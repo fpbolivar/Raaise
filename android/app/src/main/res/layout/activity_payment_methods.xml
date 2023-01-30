@@ -63,8 +63,8 @@
                     android:id="@+id/AddNewCardInPaymentMethods"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginTop="4dp"
                     android:fontFamily="@font/noto_sans"
                     android:text="Add New Card"
                     android:textColor="@color/LogoGreyColor"
@@ -77,16 +77,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30sp"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/noto_sans"
                 android:text="When choosing payment methods, please check the accuracy of you information"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/NoCardText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Looks like you have no saved cards. click on Add New Card at top to add a new card"
+                android:textColor="@color/light_grey"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/PaymentCardsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                tools:listitem="@layout/card_single_item" />
 
 
         </LinearLayout>

@@ -18,27 +18,27 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IMF-hl-fxK">
-                        <rect key="frame" x="58" y="10" width="61.666666666666657" height="14.666666666666664"/>
+                        <rect key="frame" x="93" y="10" width="61.666666666666657" height="14.666666666666664"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="7cf-S0-oVm">
-                        <rect key="frame" x="15" y="5.9999999999999982" width="30" height="28.666666666666664"/>
+                        <rect key="frame" x="50" y="5.9999999999999982" width="30" height="28.666666666666664"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="Dg6-Ss-4XQ"/>
                             <constraint firstAttribute="width" constant="30" id="aDQ-Ix-dHI"/>
                         </constraints>
                     </imageView>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pee-nY-IVV">
-                        <rect key="frame" x="124.66666666666669" y="10" width="22" height="14.666666666666664"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pee-nY-IVV">
+                        <rect key="frame" x="159.66666666666666" y="10" width="22" height="14.666666666666664"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Comments here" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Awt-D2-FKQ">
-                        <rect key="frame" x="58" y="34.666666666666657" width="242" height="38.333333333333343"/>
+                        <rect key="frame" x="93" y="34.666666666666657" width="207" height="38.333333333333343"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
@@ -48,7 +48,7 @@
                 <constraints>
                     <constraint firstItem="7cf-S0-oVm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="11b-0e-Fza"/>
                     <constraint firstItem="Awt-D2-FKQ" firstAttribute="leading" secondItem="7cf-S0-oVm" secondAttribute="trailing" constant="13" id="DJV-p6-SsB"/>
-                    <constraint firstItem="7cf-S0-oVm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="TyO-Eu-wgD"/>
+                    <constraint firstItem="7cf-S0-oVm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="50" id="TyO-Eu-wgD"/>
                     <constraint firstAttribute="trailing" secondItem="Awt-D2-FKQ" secondAttribute="trailing" constant="20" id="U5a-2C-57c"/>
                     <constraint firstItem="Awt-D2-FKQ" firstAttribute="top" secondItem="IMF-hl-fxK" secondAttribute="bottom" constant="10" id="YtH-yB-W3D"/>
                     <constraint firstItem="IMF-hl-fxK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="m88-PU-q9G"/>

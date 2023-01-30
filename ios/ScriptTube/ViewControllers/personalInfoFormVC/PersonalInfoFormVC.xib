@@ -19,6 +19,7 @@
                 <outlet property="nameTF" destination="5Bg-Ih-eRI" id="zo2-IS-nFE"/>
                 <outlet property="profileImage" destination="IAx-7w-zhb" id="I8x-6H-6p8"/>
                 <outlet property="submitBtn" destination="cBo-W9-6ne" id="zTn-t4-WQX"/>
+                <outlet property="updateLbl" destination="h4m-Fs-qjg" id="keF-BG-znZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

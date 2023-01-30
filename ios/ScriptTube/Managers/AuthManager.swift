@@ -11,7 +11,7 @@ class AuthManager{
     static var currentUser = UserProfileData()
     class func invalidToken(){
         UserDefaultHelper.removeAllData()
-        let vc  = MainTabBarVC()
+        let vc  = LoginVC()
         UIApplication.keyWin!.rootViewController = vc
         UIApplication.keyWin!.makeKeyAndVisible()
     }
@@ -78,6 +78,7 @@ class AuthManager{
                         
                         let user = UserProfileData(data: jsonData["data"])
                         AuthManager.currentUser = user
+                        //AuthManager.currentUser.unReadNotificationCount = jsonData[ApiKeys.unReadNotificationCount.rawValue].intValue
                         print("PROFILE",AuthManager.currentUser.id)
                         completion()
                     }else{
@@ -162,6 +163,28 @@ class AuthManager{
                             }
                             AlertView().showAlert(message: jsonData["message"].stringValue, delegate:delegate, pop: false)
                         }
+                    }
+                }
+            }
+        }
+    }
+    class func appleSignIn(delegate:UIViewController, param:[String:String], completion: @escaping()->Void){
+        delegate.pleaseWait()
+        APIManager.postService(url: URLHelper.APPLE_LOGIN_URLx, parameters: param) { json, error, status in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("apllelogoin",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate:delegate, pop: false)
+                return
+            }else{
+                if let jsonData = json{
+                    print("apllelogoin",jsonData,status)
+                    if jsonData["status"].intValue == 200{
+                        UserDefaultHelper.setAccessToken(value: jsonData["token"].stringValue)
+                        print("TOKENNNN",UserDefaultHelper.getAccessToken())
+                        completion()
+                    }else{
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate:delegate, pop: false)
                     }
                 }
             }
@@ -392,6 +415,7 @@ class AuthManager{
     class func googleLoginApi(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
         delegate.pleaseWait()
         APIManager.postService(url: URLHelper.GOOGLE_LOGIN_URLx, parameters: param) { json, error, statusCode in
+            delegate.clearAllNotice()
             if let error = error{
                 print("GOOGLESIGNIN",error)
                 AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
@@ -410,7 +434,7 @@ class AuthManager{
             }
         }
     }
-    class func postCommentApi(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+    class func postCommentApi(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
         APIManager.postService(url: URLHelper.POST_COMMENTS_URL, parameters: param) { json, error, statusCode in
             if let error = error{
                 print("POSTCOMMENTS",error)
@@ -420,7 +444,7 @@ class AuthManager{
                 print("POSTCOMMENTS",json,statusCode)
                 if let jsonData = json{
                     if jsonData["status"].intValue == 200{
-                        completion()
+                        completion(jsonData)
                     }else{
                         if jsonData["status"].intValue == 401{
                             AuthManager.invalidToken()
@@ -431,7 +455,7 @@ class AuthManager{
             }
         }
     }
-    class func postReply(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+    class func postReply(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
         APIManager.postService(url: URLHelper.POST_REPLY_URL, parameters: param) { json, error, statusCode in
             if let error = error{
                 print("POSTREPLY",error)
@@ -441,7 +465,7 @@ class AuthManager{
                 print("POSTREPLY",json,statusCode)
                 if let jsonData = json{
                     if jsonData["status"].intValue == 200{
-                        completion()
+                        completion(jsonData)
                     }else{
                         if jsonData["status"].intValue == 401{
                             AuthManager.invalidToken()
@@ -462,6 +486,159 @@ class AuthManager{
                 return
             }else{
                 print("ADDBANKDETAILS",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func videoViewApi(param:[String:String],onError:@escaping(String)->Void,completion:@escaping()->Void){
+        APIManager.postService(url: URLHelper.VIDEO_COUNT_URL, parameters: param) { json, error, statusCode in
+            if let error = error{
+                print("VIDEOVIEW",error)
+                onError(error.localizedDescription)
+            }else{
+                print("VIDEOVIEW",json,json)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        onError(jsonData["message"].stringValue)
+                    }
+                }
+            }
+        }
+    }
+    class func addCardApi(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        APIManager.postService(url: URLHelper.ADD_CARD_URL, parameters: param) { json, error, statusCode in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("ADDCARD",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                return
+            }else{
+                print("ADDCARD",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func makePaymentWithCardId(delegate:UIViewController,param:[String:String],completion:@escaping()->Void,onError:@escaping()->Void){
+
+        APIManager.postService(url: URLHelper.PAYMENT_URL, parameters: param) { json, error, statusCode in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("PAYMENT",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+            }else{
+                print("PAYMENT",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else if jsonData["status"].intValue == 422 {
+                        onError()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func deleteCardApi(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        APIManager.postService(url: URLHelper.DELETE_CARD_URL, parameters: param) { json, error, statusCode in
+//            delegate.clearAllNotice()
+            if let error = error{
+                print("DELETECARD",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                return
+            }else{
+                print("DELETECARD",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func setDefaultCard(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        APIManager.postService(url: URLHelper.SET_DEFAULT_CARD_URL, parameters: param) { json, error, statusCode in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("SETDEFAULTCARD",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                return
+            }else{
+                print("SETDEFAULTCARD",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func shareVideoToChatApi(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
+        APIManager.postService(url: URLHelper.SHARE_VIDEO_TO_CHAT_URL, parameters: param) { json, error, statusCode in
+            if let error = error{
+                print("SHAREVIDEO",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                return
+            }else{
+                print("SHAREVIDEO",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func claimDonationApi(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        delegate.pleaseWait()
+        APIManager.postService(url: URLHelper.CLAIM_DONATIONx, parameters: param) {
+            json, error, statusCode in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("CLAIM",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+            }else{
                 if let jsonData = json{
                     if jsonData["status"].intValue == 200{
                         completion()

@@ -16,7 +16,9 @@
                 <outlet property="cardTF" destination="jvC-sE-O4F" id="m85-Dt-pzo"/>
                 <outlet property="cvvTF" destination="Jjj-pY-3q3" id="hoi-9v-Xwt"/>
                 <outlet property="monthTF" destination="Amf-me-ahe" id="sLw-o6-o9i"/>
+                <outlet property="nameTf" destination="dob-0d-A6y" id="a14-EF-XHu"/>
                 <outlet property="payBtn" destination="N8J-GZ-DEY" id="aNd-wy-LdV"/>
+                <outlet property="saveLbl" destination="gfL-rs-9VS" id="mco-cX-Cgj"/>
                 <outlet property="tableView" destination="thG-pI-J64" id="Hx2-zB-h4s"/>
                 <outlet property="topInfoLbl" destination="MsP-py-bY6" id="1c8-l6-iCx"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -28,10 +30,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Np-p1-MNq">
-                    <rect key="frame" x="0.0" y="555" width="414" height="307"/>
+                    <rect key="frame" x="0.0" y="489" width="414" height="373"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="jZA-0c-z6a">
-                            <rect key="frame" x="20" y="10" width="374" height="297"/>
+                            <rect key="frame" x="20" y="10" width="374" height="363"/>
                             <subviews>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NqA-No-iyg">
                                     <rect key="frame" x="0.0" y="-85" width="374" height="85"/>
@@ -50,14 +52,38 @@
                                     <rect key="frame" x="0.0" y="29" width="374" height="0.0"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcA-3u-cJ8" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lEp-7R-IdS" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="40" width="374" height="44"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name on Card" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dob-0d-A6y">
+                                            <rect key="frame" x="10" y="0.0" width="354" height="44"/>
+                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" name="CardTextBoxBgColor"/>
+                                    <constraints>
+                                        <constraint firstItem="dob-0d-A6y" firstAttribute="leading" secondItem="lEp-7R-IdS" secondAttribute="leading" constant="10" id="FnT-Aq-cyT"/>
+                                        <constraint firstAttribute="bottom" secondItem="dob-0d-A6y" secondAttribute="bottom" id="JAh-nu-Wkx"/>
+                                        <constraint firstAttribute="height" constant="44" id="R2o-cy-re4"/>
+                                        <constraint firstAttribute="trailing" secondItem="dob-0d-A6y" secondAttribute="trailing" constant="10" id="oay-bB-zxZ"/>
+                                        <constraint firstItem="dob-0d-A6y" firstAttribute="top" secondItem="lEp-7R-IdS" secondAttribute="top" id="sP7-aM-feL"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="10"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcA-3u-cJ8" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="106" width="374" height="44"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Card number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jvC-sE-O4F">
                                             <rect key="frame" x="10" y="0.0" width="319" height="44"/>
                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         </textField>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_card" translatesAutoresizingMaskIntoConstraints="NO" id="pVf-d9-keE">
                                             <rect key="frame" x="334" y="0.0" width="30" height="44"/>
@@ -84,16 +110,16 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="C2x-4l-mLP">
-                                    <rect key="frame" x="0.0" y="106" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="172" width="374" height="44"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ReT-Xs-QNr" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="179.5" height="44"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM / YY" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Amf-me-ahe">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM / YYYY" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Amf-me-ahe">
                                                     <rect key="frame" x="10" y="0.0" width="134.5" height="44"/>
                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 </textField>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_month" translatesAutoresizingMaskIntoConstraints="NO" id="MfK-i2-j2G">
                                                     <rect key="frame" x="149.5" y="0.0" width="20" height="44"/>
@@ -126,7 +152,7 @@
                                                     <rect key="frame" x="10" y="0.0" width="134.5" height="44"/>
                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 </textField>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_lock" translatesAutoresizingMaskIntoConstraints="NO" id="Rwd-ds-MI1">
                                                     <rect key="frame" x="149.5" y="0.0" width="20" height="44"/>
@@ -154,21 +180,21 @@
                                         </view>
                                     </subviews>
                                 </stackView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When choosing payment methods, please check the accuracy of you information" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jkh-pW-MM4">
-                                    <rect key="frame" x="0.0" y="172" width="374" height="36"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When choosing payment methods, please check the accuracy of your information" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jkh-pW-MM4">
+                                    <rect key="frame" x="0.0" y="238" width="374" height="36"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JDx-OC-jc1">
-                                    <rect key="frame" x="0.0" y="219" width="374" height="100"/>
+                                    <rect key="frame" x="0.0" y="285" width="374" height="100"/>
                                     <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="Kdb-cK-VuK"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7GQ-Yw-9Ao" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="230" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="296" width="374" height="44"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8J-GZ-DEY">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
@@ -200,7 +226,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bdv-r9-JbE">
-                                    <rect key="frame" x="0.0" y="296" width="374" height="1"/>
+                                    <rect key="frame" x="0.0" y="362" width="374" height="1"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="6TD-D1-Yed"/>
@@ -217,12 +243,23 @@
                         <constraint firstAttribute="bottom" secondItem="jZA-0c-z6a" secondAttribute="bottom" id="wNj-Sf-WXf"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u06-ju-oRg">
+                    <rect key="frame" x="0.0" y="48" width="414" height="441"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <connections>
+                        <action selector="dismissBtn:" destination="-1" eventType="touchUpInside" id="4Xk-Y0-Jqo"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="8Np-p1-MNq" firstAttribute="top" secondItem="u06-ju-oRg" secondAttribute="bottom" id="N2s-11-WUY"/>
+                <constraint firstItem="u06-ju-oRg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ofv-UI-hCQ"/>
                 <constraint firstItem="8Np-p1-MNq" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="VTS-1L-YUt"/>
                 <constraint firstItem="8Np-p1-MNq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ZwY-mq-FNd"/>
+                <constraint firstItem="u06-ju-oRg" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="dDI-gK-73Q"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="u06-ju-oRg" secondAttribute="trailing" id="mZE-yV-lgY"/>
                 <constraint firstItem="8Np-p1-MNq" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="vk2-BZ-7QU"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="76.339285714285708"/>

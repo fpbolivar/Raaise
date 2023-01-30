@@ -8,16 +8,53 @@
 import UIKit
 
 class SearchVC: UIViewController {
-
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchTf: UITextField!
     @IBOutlet weak var backImage: UIImageView!
+    @IBOutlet weak var noResultLbl:UILabel!
+    var result = SearchResultModel()
+    var searchParam:[String:String]!
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
         setup()
-        setupCollectionView()
+        self.setuptable()
+        searchTf.delegate = self
+        searchTf.addTarget(self, action: #selector(handleTextFieldDidChange), for: .editingChanged)
+        tableView.register(UINib(nibName: SearchCell.identifier, bundle: nil), forCellReuseIdentifier: SearchCell.identifier)
         // Do any additional setup after loading the view.
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    @objc func handleTextFieldDidChange(_ textField: UITextField) {
+        print("PPPPPPPPP")
+//        if !textField.text!.isEmpty{
+//            print(textField.text)
+//            let param = ["search":textField.text!,"limit":"10","page":"1"]
+//            searchParam = param
+//            searchApi(withText: param){
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                    if textField.text!.isEmpty{
+//                        self.tableView.isHidden = true
+//                    }else{
+//                        self.tableView.isHidden = false
+//                    }
+//                }
+//            }
+//        }else{
+//            self.tableView.isHidden = true
+//        }
+    }
+    func searchApi(withText text:[String:String],completion:@escaping()->Void){
+        DataManager.globalSearchApi(delegate: self, param: text) { json in
+            print("JSon",text,json)
+            let resultData = SearchResultModel(data: json["data"])
+            self.result = resultData
+            completion()
+        }
     }
     func setup(){
         searchTf.layer.cornerRadius = 10
@@ -25,43 +62,128 @@ class SearchVC: UIViewController {
         backImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(backAction)))
         //searchTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
         backImage.image = UIImage(named: "ic_back")?.addPadding(0, 0, 20, 0)
-        searchTf.paddingLeftRightTextField(left: 25, right: 0)
-        searchTf.attributedPlaceholder = NSAttributedString(string: "Search Video",attributes: [.foregroundColor: UIColor.lightGray])
+        searchTf.paddingLeftRightTextField(left: 35, right: 0)
+        searchTf.attributedPlaceholder = NSAttributedString(string: "Search Something",attributes: [.foregroundColor: UIColor.lightGray])
     }
-    func setupCollectionView(){
-        collectionView.register(UINib(nibName: ProfileVideoItemCell.identifier, bundle: nil), forCellWithReuseIdentifier: ProfileVideoItemCell.identifier)
-        collectionView.dataSource = self
-        collectionView.delegate = self
+    func setuptable(){
+        DispatchQueue.main.async {
+            self.tableView.delegate = self
+            self.tableView.dataSource = self
+            self.tableView.reloadData()
+        }
     }
+   
     @objc func backAction(){
         self.navigationController?.popViewController(animated: true)
     }
 }
-
-extension SearchVC: UICollectionViewDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 1
-//    }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+extension SearchVC: UITableViewDelegate,UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
     }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileVideoItemCell.identifier, for: indexPath) as! ProfileVideoItemCell
-        //cell.contentView.backgroundColor = .gray
-        //cell.updateCell(withImg: "")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.identifier, for: indexPath) as! SearchCell
+        cell.delegate = self
+        print("COllectionviewheight",cell.collectionView.collectionViewLayout.collectionViewContentSize.height)
+        switch indexPath.row{
+        case 0:
+            cell.setupSearchCell(withType: .users, data: result.userResult)
+            cell.collectionViewHeight.constant = cell.collectionView.collectionViewLayout.collectionViewContentSize.height
+            break
+        case 1:
+            cell.setupSearchCell(withType: .audio, data: result.audioResult)
+            cell.collectionViewHeight.constant = cell.collectionView.collectionViewLayout.collectionViewContentSize.height
+            break
+        case 2:
+            cell.setupSearchCell(withType: .post, data: result.postResult)
+            cell.collectionViewHeight.constant = cell.collectionView.collectionViewLayout.collectionViewContentSize.height
+            break
+        default:
+            print("INDEX OUT OF RANGE")
+            AlertView().showAlert(message: "INDEX OUT OF RANGE", delegate: self, pop: false)
+        }
         return cell
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    @objc func getHintsFromTextField(textField: UITextField) {
+        print("Hints for textField: \(textField.text)")
+        if !textField.text!.isEmpty{
+            print(textField.text)
+            let param = ["search":textField.text!,"limit":"5","page":"1"]
+            searchParam = param
+            searchApi(withText: param){
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    if textField.text!.isEmpty{
+                        self.tableView.isHidden = true
+                        self.noResultLbl.isHidden = true
+                    }else{
+                        self.noResultLbl.isHidden = !self.result.resultIsEmpty()
+                        self.tableView.isHidden = false
+                    }
+                }
+            }
+        }else{
+            self.tableView.isHidden = true
+        }
+    }
+}
 
-        let wFrame = collectionView.frame.width
-        let itemWidth = (wFrame/3)//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
-        let itemHeight =  itemWidth * 1.3
-        return CGSize.init(width: itemWidth, height: itemHeight)
+
+extension SearchVC:UITextFieldDelegate{
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        //print(textField.text)
+        NSObject.cancelPreviousPerformRequests(
+            withTarget: self,
+            selector: #selector(getHintsFromTextField),
+            object: textField)
+        self.perform(
+            #selector(getHintsFromTextField),
+            with: textField,
+            afterDelay: 0.5)
+        return true
+//        return true
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+}
+extension SearchVC:SelectedSearchItemDelegate{
+    func openProfileWithId(id: String) {
+        let vc = VisitProfileVC()
+        vc.id = id
+        self.navigationController?.pushViewController(vc, animated: true)
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+    
+    func tryAudioWithAudio(audio: AudioDataModel) {
+        let vc = TryAudioVC()
+        vc.audioData = audio
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func viewVideo(posts: [Post], selectedIndex: Int) {
+        let vc = ViewVideoVC()
+        vc.data = posts
+        vc.selectedRow = selectedIndex
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func gotoResultPage(resultType: ResultType) {
+        let vc = SearchResultVC()
+        vc.resultType = resultType
+        
+        vc.searchText = searchTf.text!
+        
+        switch resultType{
+        case .post:
+            print("aaaa")
+            vc.searchParam = ["search":searchTf.text!,"limit":"10","page":"1","type":"post"]
+            break
+        case .users:
+            print("aaaa1")
+            vc.searchParam = ["search":searchTf.text!,"limit":"10","page":"1","type":"user"]
+            break
+        case .audio:
+            print("aaaa2")
+            vc.searchParam = ["search":searchTf.text!,"limit":"10","page":"1","type":"audio"]
+            break
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

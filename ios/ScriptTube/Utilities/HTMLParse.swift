@@ -28,11 +28,11 @@ extension UIViewController{
 //            //            try self.init(data: data ?? Data(html.utf8), options: options, documentAttributes: nil)
 //                        return
 //                    }
-            if let data = data,let fontFamily = font?.familyName, let attr = try? NSMutableAttributedString(data: data, options: options, documentAttributes: nil){
+            if let data = data, let attr = try? NSMutableAttributedString(data: data, options: options, documentAttributes: nil){
                 let fontSize: CGFloat? = useDocumentFontSize ? nil : font!.pointSize
                 let range = NSRange(location: 0, length: attr.length)
                 let style = NSMutableParagraphStyle()
-                style.lineSpacing = 10
+                style.lineSpacing = 5
                 style.alignment = NSTextAlignment.justified
                 attr.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, attr.length))
                 attr.enumerateAttribute(.foregroundColor, in: range, options: .longestEffectiveRangeNotRequired) {attrib,range,_ in
@@ -52,24 +52,25 @@ extension UIViewController{
                         //print(htmlFont)
                     }
                 }
-//                attr.enumerateAttribute(.font, in: range, options: .longestEffectiveRangeNotRequired) { attrib, range, _ in
-//
-//                    if let htmlFont = attrib as? UIFont {
-//                        let traits = htmlFont.fontDescriptor.symbolicTraits
-//                        var descrip = htmlFont.fontDescriptor.withFamily(fontFamily)
-//
-//                        if (traits.rawValue & UIFontDescriptor.SymbolicTraits.traitBold.rawValue) != 0 {
-//                            descrip = descrip.withSymbolicTraits(.traitBold)!
-//                        }
-//
-//                        if (traits.rawValue & UIFontDescriptor.SymbolicTraits.traitItalic.rawValue) != 0 {
-//                            descrip = descrip.withSymbolicTraits(.traitItalic)!
-//                        }
-////                        attr.addAttribute(.foregroundColor, value: UIColor(named: "BackButtonColor"), range: range)
-//
-//                        attr.addAttribute(.font, value: UIFont(descriptor: descrip, size: fontSize ?? htmlFont.pointSize), range: range)
-//                    }
-//                }
+                attr.enumerateAttribute(.font, in: range, options: .longestEffectiveRangeNotRequired) { attrib, range, _ in
+
+                    if let htmlFont = attrib as? UIFont {
+                        print("hagchjsbcjhsdbc2",attrib)
+                        let traits = htmlFont.fontDescriptor.symbolicTraits
+                        var descrip = htmlFont.fontDescriptor.withFamily(htmlFont.familyName)
+                        
+                        if (traits.rawValue & UIFontDescriptor.SymbolicTraits.traitBold.rawValue) != 0 {
+                            descrip = descrip.withSymbolicTraits(.traitBold)!
+                        }
+
+                        if (traits.rawValue & UIFontDescriptor.SymbolicTraits.traitItalic.rawValue) != 0 {
+                            descrip = descrip.withSymbolicTraits(.traitItalic)!
+                        }
+                        attr.addAttribute(.foregroundColor, value: UIColor.white, range: range)
+
+                        attr.addAttribute(.font, value: UIFont(descriptor: descrip, size: fontSize ?? htmlFont.pointSize), range: range)
+                    }
+                }
                 return completion(attr)
             }
 

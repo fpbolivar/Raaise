@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FollowListVC" customModule="ScriptTube" customModuleProvider="target">
             <connections>
+                <outlet property="noResultLbl" destination="WGD-Yq-blG" id="J5Z-Hm-45e"/>
                 <outlet property="searchTf" destination="0bh-wB-vb8" id="i7W-KG-pjW"/>
                 <outlet property="tableView" destination="UTv-Dy-cfc" id="K13-0Y-s8h"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -44,6 +45,12 @@
                     <rect key="frame" x="0.0" y="188" width="414" height="674"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Result Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGD-Yq-blG">
+                    <rect key="frame" x="0.0" y="188" width="414" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" name="lightGray"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="BackgroundColor"/>
@@ -53,10 +60,13 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="UTv-Dy-cfc" secondAttribute="bottom" id="9Nf-tG-ebh"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0bh-wB-vb8" secondAttribute="trailing" constant="25" id="JJ8-lo-8va"/>
                 <constraint firstItem="0bh-wB-vb8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="e1h-lK-KTL"/>
+                <constraint firstItem="WGD-Yq-blG" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="fx7-WS-Uze"/>
                 <constraint firstItem="UTv-Dy-cfc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="iA1-3e-gMc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="UTv-Dy-cfc" secondAttribute="trailing" id="km0-7w-1dW"/>
                 <constraint firstItem="Q4y-y1-7sV" firstAttribute="centerX" secondItem="0bh-wB-vb8" secondAttribute="centerX" multiplier="0.25" id="nzM-T1-glB"/>
+                <constraint firstItem="WGD-Yq-blG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="oRK-om-8vd"/>
                 <constraint firstItem="UTv-Dy-cfc" firstAttribute="top" secondItem="0bh-wB-vb8" secondAttribute="bottom" constant="20" id="xv6-yW-sJ8"/>
+                <constraint firstItem="WGD-Yq-blG" firstAttribute="top" secondItem="0bh-wB-vb8" secondAttribute="bottom" constant="20" id="xvy-vU-aTl"/>
             </constraints>
             <point key="canvasLocation" x="120" y="20"/>
         </view>
@@ -68,6 +78,9 @@
         </namedColor>
         <namedColor name="TFcolor">
             <color red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="lightGray">
+            <color red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -30,33 +30,33 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="psy-e2-Pwx">
-                    <rect key="frame" x="0.0" y="108" width="414" height="788"/>
+                    <rect key="frame" x="20" y="108" width="374" height="788"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ySj-a7-iyg">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
+                            <rect key="frame" x="0.0" y="0.0" width="374" height="838"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IQt-N8-IHM">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                     <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="60" id="bMA-iq-FcZ"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j9Y-WV-Wjp">
-                                    <rect key="frame" x="0.0" y="70" width="414" height="157"/>
+                                    <rect key="frame" x="0.0" y="70" width="374" height="157"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_user" translatesAutoresizingMaskIntoConstraints="NO" id="cQC-MF-pXt">
-                                            <rect key="frame" x="25" y="0.0" width="80" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="80" id="0vQ-Vt-3II"/>
-                                                <constraint firstAttribute="width" constant="80" id="zXx-He-Qe3"/>
+                                                <constraint firstAttribute="height" constant="70" id="0vQ-Vt-3II"/>
+                                                <constraint firstAttribute="width" constant="70" id="zXx-He-Qe3"/>
                                             </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="jYU-1R-p1W">
-                                            <rect key="frame" x="112" y="10" width="131.5" height="16"/>
+                                            <rect key="frame" x="77" y="10" width="131.5" height="16"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="p6A-jQ-MbR">
-                                                    <rect key="frame" x="0.0" y="0.5" width="15" height="15"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_melody" translatesAutoresizingMaskIntoConstraints="NO" id="p6A-jQ-MbR">
+                                                    <rect key="frame" x="0.0" y="0.0" width="15" height="16"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="1gR-bs-A4r"/>
@@ -72,23 +72,23 @@
                                             </subviews>
                                         </stackView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@John_Doe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPq-JL-vvM">
-                                            <rect key="frame" x="112" y="29" width="93" height="20.5"/>
+                                            <rect key="frame" x="77" y="29" width="93" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vts-2z-i8g" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                            <rect key="frame" x="25" y="119" width="364" height="38"/>
+                                            <rect key="frame" x="0.0" y="119" width="374" height="38"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zX0-mp-bVg">
-                                                    <rect key="frame" x="0.0" y="0.0" width="364" height="38"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="38"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <connections>
                                                         <action selector="saveAudioBtnClicked:" destination="-1" eventType="touchUpInside" id="SUA-Rq-kbj"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try Audio" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6al-ZB-aCZ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="364" height="38"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="38"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -113,7 +113,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="GY9-QW-4me">
-                                            <rect key="frame" x="112" y="57" width="282" height="15"/>
+                                            <rect key="frame" x="77" y="57" width="277" height="15"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5op-2q-o7P">
                                                     <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
@@ -129,7 +129,7 @@
                                                     </connections>
                                                 </button>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5a4-zM-8on" customClass="CustomSlider" customModule="ScriptTube" customModuleProvider="target">
-                                                    <rect key="frame" x="28" y="0.0" width="241" height="16"/>
+                                                    <rect key="frame" x="28" y="0.0" width="229" height="16"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="thumbTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <connections>
@@ -137,7 +137,7 @@
                                                     </connections>
                                                 </slider>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sT1-WP-wU3">
-                                                    <rect key="frame" x="282" y="0.0" width="0.0" height="15"/>
+                                                    <rect key="frame" x="270" y="0.0" width="7" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -154,16 +154,16 @@
                                         <constraint firstAttribute="bottom" secondItem="Vts-2z-i8g" secondAttribute="bottom" id="8JC-uj-gLm"/>
                                         <constraint firstItem="GY9-QW-4me" firstAttribute="top" secondItem="sPq-JL-vvM" secondAttribute="bottom" constant="7.5" id="BvZ-ja-5h2"/>
                                         <constraint firstItem="cQC-MF-pXt" firstAttribute="top" secondItem="j9Y-WV-Wjp" secondAttribute="top" id="Q9U-R9-eCF"/>
-                                        <constraint firstItem="cQC-MF-pXt" firstAttribute="leading" secondItem="j9Y-WV-Wjp" secondAttribute="leading" constant="25" id="XR9-KR-Q0a"/>
+                                        <constraint firstItem="cQC-MF-pXt" firstAttribute="leading" secondItem="j9Y-WV-Wjp" secondAttribute="leading" id="XR9-KR-Q0a"/>
                                         <constraint firstItem="sPq-JL-vvM" firstAttribute="leading" secondItem="cQC-MF-pXt" secondAttribute="trailing" constant="7" id="bji-Jm-lhL"/>
                                         <constraint firstItem="jYU-1R-p1W" firstAttribute="top" secondItem="j9Y-WV-Wjp" secondAttribute="top" constant="10" id="faG-AI-J9U"/>
-                                        <constraint firstAttribute="trailing" secondItem="Vts-2z-i8g" secondAttribute="trailing" constant="25" id="gYo-l1-VKi"/>
+                                        <constraint firstAttribute="trailing" secondItem="Vts-2z-i8g" secondAttribute="trailing" id="gYo-l1-VKi"/>
                                         <constraint firstAttribute="trailing" secondItem="GY9-QW-4me" secondAttribute="trailing" constant="20" id="qqY-dW-5uP"/>
-                                        <constraint firstItem="Vts-2z-i8g" firstAttribute="leading" secondItem="j9Y-WV-Wjp" secondAttribute="leading" constant="25" id="tLC-uB-2uE"/>
+                                        <constraint firstItem="Vts-2z-i8g" firstAttribute="leading" secondItem="j9Y-WV-Wjp" secondAttribute="leading" id="tLC-uB-2uE"/>
                                     </constraints>
                                 </view>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="bhR-rE-d9H" customClass="AutoSizedCollectionView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="237" width="414" height="601"/>
+                                    <rect key="frame" x="0.0" y="237" width="374" height="601"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gCy-GP-5qM">
                                         <size key="itemSize" width="128" height="128"/>
@@ -236,18 +236,18 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="psy-e2-Pwx" secondAttribute="bottom" id="JXq-rs-Ude"/>
                 <constraint firstItem="psy-e2-Pwx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Sb7-gl-GGK"/>
-                <constraint firstItem="psy-e2-Pwx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="V3U-W3-crH"/>
+                <constraint firstItem="psy-e2-Pwx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="V3U-W3-crH"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Tbd-1e-h8W" secondAttribute="bottom" constant="20" id="Yb1-F2-w4b"/>
                 <constraint firstItem="Tbd-1e-h8W" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="gxA-q5-Z4N"/>
                 <constraint firstItem="psy-e2-Pwx" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="nsZ-cO-0p9"/>
-                <constraint firstAttribute="trailing" secondItem="psy-e2-Pwx" secondAttribute="trailing" id="o5k-VW-d6Q"/>
+                <constraint firstAttribute="trailing" secondItem="psy-e2-Pwx" secondAttribute="trailing" constant="20" id="o5k-VW-d6Q"/>
             </constraints>
             <point key="canvasLocation" x="21" y="20"/>
         </view>
     </objects>
     <resources>
+        <image name="ic_melody" width="16" height="16"/>
         <image name="ic_user" width="506" height="512"/>
-        <image name="music.note" catalog="system" width="96" height="128"/>
         <image name="play.fill" catalog="system" width="117" height="128"/>
         <namedColor name="BackgroundColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

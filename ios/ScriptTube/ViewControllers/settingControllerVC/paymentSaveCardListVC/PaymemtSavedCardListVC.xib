@@ -16,7 +16,10 @@
                 <outlet property="bottomInfoLbl" destination="K5E-lN-Tyo" id="bsH-UN-Lnq"/>
                 <outlet property="creditLbl" destination="IzB-jQ-74e" id="Kk2-is-2Ad"/>
                 <outlet property="messageLbl" destination="BfW-9E-8Gj" id="l6I-3B-ehT"/>
+                <outlet property="noCardLbl" destination="PCw-Ua-RS5" id="GTV-rO-SXO"/>
                 <outlet property="payBtn" destination="cUd-9l-jA2" id="vxg-LF-v3H"/>
+                <outlet property="payBtnView" destination="P9w-8V-Lil" id="UMW-OF-vZp"/>
+                <outlet property="payLbl" destination="xRS-bW-WwQ" id="Vcp-yo-5KL"/>
                 <outlet property="tableView" destination="FvD-jH-FWo" id="6ah-Ia-Haa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -26,11 +29,43 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P9w-8V-Lil" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                    <rect key="frame" x="20" y="798" width="374" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUd-9l-jA2">
+                            <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pay" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xRS-bW-WwQ">
+                            <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" name="ButtonColor"/>
+                    <constraints>
+                        <constraint firstItem="cUd-9l-jA2" firstAttribute="top" secondItem="P9w-8V-Lil" secondAttribute="top" id="2ri-r0-uSK"/>
+                        <constraint firstAttribute="trailing" secondItem="xRS-bW-WwQ" secondAttribute="trailing" id="4sH-fk-qzg"/>
+                        <constraint firstItem="cUd-9l-jA2" firstAttribute="leading" secondItem="P9w-8V-Lil" secondAttribute="leading" id="Aij-6A-p7W"/>
+                        <constraint firstAttribute="bottom" secondItem="xRS-bW-WwQ" secondAttribute="bottom" id="Fn1-SU-w3Q"/>
+                        <constraint firstAttribute="trailing" secondItem="cUd-9l-jA2" secondAttribute="trailing" id="Kn8-LS-VAT"/>
+                        <constraint firstItem="xRS-bW-WwQ" firstAttribute="leading" secondItem="P9w-8V-Lil" secondAttribute="leading" id="uWh-Ra-vcY"/>
+                        <constraint firstAttribute="bottom" secondItem="cUd-9l-jA2" secondAttribute="bottom" id="us7-CO-3g6"/>
+                        <constraint firstAttribute="height" constant="44" id="wG5-Kh-UAJ"/>
+                        <constraint firstItem="xRS-bW-WwQ" firstAttribute="top" secondItem="P9w-8V-Lil" secondAttribute="top" id="yT1-uQ-RMd"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XPP-o0-0Dm">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="454"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="VXD-1R-AM8">
-                            <rect key="frame" x="20" y="0.0" width="374" height="344"/>
+                            <rect key="frame" x="20" y="0.0" width="374" height="248.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vk2-Ft-rCV">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
@@ -63,14 +98,14 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BfW-9E-8Gj">
-                                    <rect key="frame" x="0.0" y="85" width="374" height="41"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select your default payment method." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BfW-9E-8Gj">
+                                    <rect key="frame" x="0.0" y="85" width="374" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" name="loginTFColor"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdt-He-DL6">
-                                    <rect key="frame" x="0.0" y="133.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="113" width="374" height="44"/>
                                     <subviews>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CREDIT CARD" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IzB-jQ-74e">
                                             <rect key="frame" x="0.0" y="0.0" width="108" height="44"/>
@@ -102,49 +137,17 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FvD-jH-FWo" customClass="ContentSizedTableView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="141" width="374" height="128"/>
+                                    <rect key="frame" x="0.0" y="120.5" width="374" height="128"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When choosing payment methods, please check the accuracy of you information" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5E-lN-Tyo">
-                                    <rect key="frame" x="0.0" y="276.5" width="374" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="248.5" width="374" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P9w-8V-Lil" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="284" width="374" height="44"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUd-9l-jA2">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pay" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xRS-bW-WwQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" name="ButtonColor"/>
-                                    <constraints>
-                                        <constraint firstItem="cUd-9l-jA2" firstAttribute="top" secondItem="P9w-8V-Lil" secondAttribute="top" id="2ri-r0-uSK"/>
-                                        <constraint firstAttribute="trailing" secondItem="xRS-bW-WwQ" secondAttribute="trailing" id="4sH-fk-qzg"/>
-                                        <constraint firstItem="cUd-9l-jA2" firstAttribute="leading" secondItem="P9w-8V-Lil" secondAttribute="leading" id="Aij-6A-p7W"/>
-                                        <constraint firstAttribute="bottom" secondItem="xRS-bW-WwQ" secondAttribute="bottom" id="Fn1-SU-w3Q"/>
-                                        <constraint firstAttribute="trailing" secondItem="cUd-9l-jA2" secondAttribute="trailing" id="Kn8-LS-VAT"/>
-                                        <constraint firstItem="xRS-bW-WwQ" firstAttribute="leading" secondItem="P9w-8V-Lil" secondAttribute="leading" id="uWh-Ra-vcY"/>
-                                        <constraint firstAttribute="bottom" secondItem="cUd-9l-jA2" secondAttribute="bottom" id="us7-CO-3g6"/>
-                                        <constraint firstAttribute="height" constant="44" id="wG5-Kh-UAJ"/>
-                                        <constraint firstItem="xRS-bW-WwQ" firstAttribute="top" secondItem="P9w-8V-Lil" secondAttribute="top" id="yT1-uQ-RMd"/>
-                                    </constraints>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                            <real key="value" value="10"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                </view>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sIB-2R-NIZ">
-                                    <rect key="frame" x="0.0" y="343" width="374" height="1"/>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIB-2R-NIZ">
+                                    <rect key="frame" x="0.0" y="248.5" width="374" height="1"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="fiM-hz-SpW"/>
@@ -154,22 +157,35 @@
                         </stackView>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="VXD-1R-AM8" secondAttribute="bottom" id="8t7-zV-Mu1"/>
                         <constraint firstItem="VXD-1R-AM8" firstAttribute="top" secondItem="XPP-o0-0Dm" secondAttribute="top" id="A7J-b4-MIv"/>
                         <constraint firstAttribute="trailing" secondItem="VXD-1R-AM8" secondAttribute="trailing" constant="20" id="I8A-ca-qWV"/>
                         <constraint firstItem="VXD-1R-AM8" firstAttribute="leading" secondItem="XPP-o0-0Dm" secondAttribute="leading" constant="20" id="J8C-N3-K2a"/>
                         <constraint firstItem="VXD-1R-AM8" firstAttribute="centerX" secondItem="XPP-o0-0Dm" secondAttribute="centerX" id="OSi-QW-oiW"/>
+                        <constraint firstAttribute="bottom" secondItem="VXD-1R-AM8" secondAttribute="bottom" id="SPL-MQ-aTU"/>
                     </constraints>
                 </scrollView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Looks like you have no saved cards. Click on Add new Card at top to add a new card" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PCw-Ua-RS5">
+                    <rect key="frame" x="20" y="48" width="374" height="750"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="BackgroundColor"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PCw-Ua-RS5" secondAttribute="trailing" constant="20" id="0DW-Ww-heK"/>
                 <constraint firstItem="XPP-o0-0Dm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="1z7-gd-uXE"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="P9w-8V-Lil" secondAttribute="bottom" constant="20" id="5js-bW-phb"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="P9w-8V-Lil" secondAttribute="trailing" constant="20" id="BKt-Ew-sSv"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XPP-o0-0Dm" secondAttribute="trailing" id="MwG-VL-mAp"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="XPP-o0-0Dm" secondAttribute="bottom" id="RXi-1N-5Yj"/>
                 <constraint firstItem="XPP-o0-0Dm" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ue6-wt-pp7"/>
+                <constraint firstItem="PCw-Ua-RS5" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="VlR-TD-CR3"/>
+                <constraint firstItem="P9w-8V-Lil" firstAttribute="top" secondItem="XPP-o0-0Dm" secondAttribute="bottom" id="VvA-if-a58"/>
                 <constraint firstItem="k30-fg-kjg" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.265" id="aVd-XL-nOs"/>
+                <constraint firstItem="P9w-8V-Lil" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="lqF-Yv-PpX"/>
+                <constraint firstItem="P9w-8V-Lil" firstAttribute="top" secondItem="PCw-Ua-RS5" secondAttribute="bottom" id="sZf-ON-hlp"/>
+                <constraint firstItem="PCw-Ua-RS5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="wQ9-Es-37j"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="76.339285714285708"/>
         </view>
@@ -181,9 +197,6 @@
         </namedColor>
         <namedColor name="ButtonColor">
             <color red="0.29803921568627451" green="0.45882352941176469" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="loginTFColor">
-            <color red="0.80392156862745101" green="0.80392156862745101" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="theme">
             <color red="0.29803921568627451" green="0.45882352941176469" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

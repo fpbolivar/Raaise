@@ -61,6 +61,10 @@ class CreatePasswordVC: BaseControllerVC {
         newTf.paddingLeftRightTextField(left: 25, right: 0)
         oldTf.paddingLeftRightTextField(left: 25, right: 0)
         
+        newTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        oldTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        updateLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
+        
 //        newTf.placeholder = "New Password"
 //        oldTf.placeholder = "Confirm Password"
     }
@@ -75,6 +79,10 @@ class CreatePasswordVC: BaseControllerVC {
         }else if (newTf.text != oldTf.text){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.passwordNotSame)
         }else{
+            if(!(Constant.check_Internet?.isReachable)!){
+                AlertView().showInternetErrorAlert(delegate: self)
+                return
+            }
             resetPasswordApi()
         }
     }
