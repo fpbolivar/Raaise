@@ -10,10 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignUpVC" customModule="ScriptTube" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignUpVC" customModule="Raaise_App" customModuleProvider="target">
             <connections>
                 <outlet property="alreadyhaveLbl" destination="AN7-FA-7QG" id="DWZ-Ej-jfV"/>
                 <outlet property="appleSignInLbl" destination="O91-mx-NXf" id="MmH-S9-KB9"/>
+                <outlet property="checkBox" destination="hNo-l0-DRF" id="Dyx-mB-x1Q"/>
                 <outlet property="cnfPassTF" destination="FO9-m9-nrt" id="CDp-ed-MKS"/>
                 <outlet property="cnfPassTfEyeImg" destination="Jvf-Ld-qL8" id="bZR-0x-mGX"/>
                 <outlet property="emailTF" destination="gkT-Va-8gX" id="DVO-90-gPF"/>
@@ -26,6 +27,7 @@
                 <outlet property="passTfEyeImg" destination="1LW-Ka-LB6" id="Kye-hH-0jh"/>
                 <outlet property="signUpBtn" destination="cOj-zr-r1p" id="ufx-VF-SGk"/>
                 <outlet property="signUpLbl" destination="u0O-VA-ryF" id="wYA-Yp-hdr"/>
+                <outlet property="termsandConditionsLbl" destination="bXQ-QC-Mnr" id="L3l-ax-PdY"/>
                 <outlet property="usernameTF" destination="m89-7o-xCt" id="kzK-Lq-nnb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -39,7 +41,7 @@
                     <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="qIX-LT-Zdr">
-                            <rect key="frame" x="20" y="0.0" width="374" height="600"/>
+                            <rect key="frame" x="20" y="0.0" width="374" height="880"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qml-aX-aEO">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="85"/>
@@ -87,7 +89,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6M-00-sbI" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6M-00-sbI" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="316" width="374" height="44"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GWP-8N-UXV">
@@ -124,7 +126,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MkT-vx-fyJ" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MkT-vx-fyJ" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="371" width="374" height="44"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FO9-m9-nrt">
@@ -167,8 +169,51 @@
                                         <constraint firstAttribute="height" constant="20" id="oC3-Vf-Xtg"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7H4-eH-kxi" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="457" width="374" height="44"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRn-Fm-MXh" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="457" width="374" height="50"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I have read and agree with terms of service and Privacy Policy" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXQ-QC-Mnr" customClass="ActiveLabel" customModule="Raaise_App" customModuleProvider="target">
+                                            <rect key="frame" x="25" y="0.0" width="349" height="50"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hNo-l0-DRF">
+                                            <rect key="frame" x="5" y="0.0" width="20" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="dbU-FG-1ek"/>
+                                                <constraint firstAttribute="width" constant="20" id="dfV-qv-SJu"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <connections>
+                                                <action selector="checkBoxClicked:" destination="-1" eventType="touchUpInside" id="1SL-D0-hlc"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" name="BackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="hNo-l0-DRF" firstAttribute="leading" secondItem="rRn-Fm-MXh" secondAttribute="leading" constant="5" id="3RS-he-RBm"/>
+                                        <constraint firstItem="bXQ-QC-Mnr" firstAttribute="top" secondItem="rRn-Fm-MXh" secondAttribute="top" id="Ebc-5f-5Bu"/>
+                                        <constraint firstItem="bXQ-QC-Mnr" firstAttribute="leading" secondItem="hNo-l0-DRF" secondAttribute="trailing" id="RXg-Gr-AZJ"/>
+                                        <constraint firstItem="hNo-l0-DRF" firstAttribute="top" secondItem="rRn-Fm-MXh" secondAttribute="top" id="d1I-Fx-9EY"/>
+                                        <constraint firstAttribute="bottom" secondItem="bXQ-QC-Mnr" secondAttribute="bottom" id="oiI-3Q-eTY"/>
+                                        <constraint firstAttribute="trailing" secondItem="bXQ-QC-Mnr" secondAttribute="trailing" id="zPe-kI-sEU"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="BackgroundColor"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7H4-eH-kxi" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="518" width="374" height="44"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cOj-zr-r1p">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
@@ -203,13 +248,13 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9sd-g5-Flq">
-                                    <rect key="frame" x="0.0" y="512" width="374" height="20"/>
+                                    <rect key="frame" x="0.0" y="573" width="374" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="GTs-OB-SfJ"/>
                                     </constraints>
                                 </view>
-                                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gD7-hz-nKq">
-                                    <rect key="frame" x="0.0" y="537.5" width="374" height="40"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gD7-hz-nKq">
+                                    <rect key="frame" x="0.0" y="604" width="374" height="40"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vmi-or-r7f">
                                             <rect key="frame" x="0.0" y="0.0" width="125.5" height="40"/>
@@ -230,7 +275,7 @@
                                                 <constraint firstItem="udv-xZ-i2Q" firstAttribute="centerX" secondItem="Vmi-or-r7f" secondAttribute="centerX" id="viU-qq-tL4"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or continue with  " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3F1-3X-iGs" customClass="PaddingLabel" customModule="ScriptTube" customModuleProvider="target">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or continue with  " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3F1-3X-iGs" customClass="PaddingLabel" customModule="Raaise_App" customModuleProvider="target">
                                             <rect key="frame" x="125.5" y="10.5" width="128" height="19.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -276,22 +321,15 @@
                                     </constraints>
                                 </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mrD-Gm-x2g">
-                                    <rect key="frame" x="0.0" y="543" width="374" height="1"/>
+                                    <rect key="frame" x="0.0" y="655" width="374" height="1"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="JCZ-WZ-gmR"/>
                                     </constraints>
                                 </view>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F67-GJ-0dK" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="549.5" width="374" height="45"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F67-GJ-0dK" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="667" width="374" height="45"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-T8-vI6">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <connections>
-                                                <action selector="fbLoginBtnClicked:" destination="-1" eventType="touchUpInside" id="jo5-QH-t9Q"/>
-                                            </connections>
-                                        </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n57-DL-iSJ">
                                             <rect key="frame" x="77.5" y="12" width="219" height="21"/>
                                             <subviews>
@@ -302,8 +340,8 @@
                                                         <constraint firstAttribute="width" constant="20" id="et3-gr-XBn"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Continue with Facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJs-r3-FM9">
-                                                    <rect key="frame" x="28" y="0.0" width="191" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Continue with Facebook" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJs-r3-FM9">
+                                                    <rect key="frame" x="20" y="0.0" width="199" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -312,7 +350,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="IJs-r3-FM9" secondAttribute="bottom" id="7Wr-9d-fmO"/>
                                                 <constraint firstAttribute="height" constant="21" id="Nzl-fJ-Lyx"/>
-                                                <constraint firstItem="IJs-r3-FM9" firstAttribute="leading" secondItem="Wnk-my-5Hw" secondAttribute="trailing" constant="8" id="Tns-pl-dEF"/>
+                                                <constraint firstItem="IJs-r3-FM9" firstAttribute="leading" secondItem="Wnk-my-5Hw" secondAttribute="trailing" id="Tns-pl-dEF"/>
                                                 <constraint firstAttribute="width" constant="219" id="Xtz-nZ-jDi"/>
                                                 <constraint firstItem="IJs-r3-FM9" firstAttribute="top" secondItem="n57-DL-iSJ" secondAttribute="top" id="YwZ-ps-nqh"/>
                                                 <constraint firstAttribute="trailing" secondItem="IJs-r3-FM9" secondAttribute="trailing" id="Z2F-Qt-aYP"/>
@@ -320,6 +358,13 @@
                                                 <constraint firstItem="Wnk-my-5Hw" firstAttribute="top" secondItem="n57-DL-iSJ" secondAttribute="top" constant="1" id="fUq-H5-nsP"/>
                                             </constraints>
                                         </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-T8-vI6">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <connections>
+                                                <action selector="fbLoginBtnClicked:" destination="-1" eventType="touchUpInside" id="jo5-QH-t9Q"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
@@ -343,16 +388,9 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t83-45-Xca" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="549.5" width="374" height="45"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t83-45-Xca" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="723" width="374" height="45"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAE-c0-aue">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <connections>
-                                                <action selector="googleLoginBtnClicked:" destination="-1" eventType="touchUpInside" id="a2L-SA-I7U"/>
-                                            </connections>
-                                        </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DnR-uF-0Wm">
                                             <rect key="frame" x="77.5" y="12" width="219" height="21"/>
                                             <subviews>
@@ -382,6 +420,13 @@
                                                 <constraint firstItem="sTf-MN-Dzi" firstAttribute="leading" secondItem="Im0-HJ-Xr6" secondAttribute="trailing" id="rah-Eg-DJz"/>
                                             </constraints>
                                         </view>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAE-c0-aue">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <connections>
+                                                <action selector="googleLoginBtnClicked:" destination="-1" eventType="touchUpInside" id="a2L-SA-I7U"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
@@ -405,8 +450,8 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ICF-pj-01F" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="549.5" width="374" height="45"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ICF-pj-01F" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="779" width="374" height="45"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zvN-Uj-oUg">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
@@ -416,7 +461,7 @@
                                             </connections>
                                         </button>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="applelogo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Oq8-aU-obE">
-                                            <rect key="frame" x="65" y="13" width="20" height="18.5"/>
+                                            <rect key="frame" x="72.5" y="13" width="20" height="18.5"/>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="2b6-3P-oGE"/>
@@ -424,7 +469,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Continue with Apple Sign in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O91-mx-NXf">
-                                            <rect key="frame" x="100" y="12.5" width="274" height="20.5"/>
+                                            <rect key="frame" x="107.5" y="12.5" width="266.5" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -441,7 +486,7 @@
                                         <constraint firstAttribute="bottom" secondItem="zvN-Uj-oUg" secondAttribute="bottom" id="hwN-TJ-5i8"/>
                                         <constraint firstAttribute="trailing" secondItem="O91-mx-NXf" secondAttribute="trailing" id="jws-r9-RzW"/>
                                         <constraint firstAttribute="trailing" secondItem="zvN-Uj-oUg" secondAttribute="trailing" id="jwt-B6-arp"/>
-                                        <constraint firstItem="Oq8-aU-obE" firstAttribute="centerX" secondItem="ICF-pj-01F" secondAttribute="centerX" multiplier="0.4" id="sGt-y6-btr"/>
+                                        <constraint firstItem="Oq8-aU-obE" firstAttribute="centerX" secondItem="ICF-pj-01F" secondAttribute="centerX" multiplier="0.44" id="sGt-y6-btr"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -455,12 +500,11 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGl-Qa-Zec" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="555" width="374" height="45"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGl-Qa-Zec" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="835" width="374" height="45"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Already have an account? SignIn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AN7-FA-7QG" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="12" width="374" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account? SignIn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AN7-FA-7QG" customClass="ActiveLabel" customModule="Raaise_App" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -468,6 +512,10 @@
                                     </subviews>
                                     <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
+                                        <constraint firstItem="AN7-FA-7QG" firstAttribute="top" secondItem="gGl-Qa-Zec" secondAttribute="top" id="946-yL-Jjz"/>
+                                        <constraint firstItem="AN7-FA-7QG" firstAttribute="leading" secondItem="gGl-Qa-Zec" secondAttribute="leading" id="Hp6-ei-yME"/>
+                                        <constraint firstAttribute="bottom" secondItem="AN7-FA-7QG" secondAttribute="bottom" id="aL1-l8-IsB"/>
+                                        <constraint firstAttribute="trailing" secondItem="AN7-FA-7QG" secondAttribute="trailing" id="c0A-93-eaa"/>
                                         <constraint firstAttribute="height" constant="45" id="c12-fl-Te0"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
@@ -511,6 +559,9 @@
         </designable>
         <designable name="AN7-FA-7QG">
             <size key="intrinsicContentSize" width="246.5" height="20.5"/>
+        </designable>
+        <designable name="bXQ-QC-Mnr">
+            <size key="intrinsicContentSize" width="399" height="17"/>
         </designable>
     </designables>
     <resources>

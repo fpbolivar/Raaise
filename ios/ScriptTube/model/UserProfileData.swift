@@ -4,7 +4,7 @@
 //
 //  Created by Code Optimal Solutions Ios on 25/11/22.
 //
-
+//MARK: - Data Model for a Single User
 import Foundation
 class UserProfileData{
     var id = ""
@@ -29,6 +29,9 @@ class UserProfileData{
     var address = ""
     var donatedAmount = ""
     var accountHolderName = ""
+    var dob = ""
+    var ssnNumber = ""
+    var accountHolderLastName = ""
     var unReadNotificationCount = 0
     var follow = false
     var isDeleted = true
@@ -63,11 +66,17 @@ class UserProfileData{
         self.donatedAmount = data[ApiKeys.donatedAmount.rawValue].stringValue
         self.accountHolderName = data[ApiKeys.accountHolderName.rawValue].stringValue
         self.isDeleted = data[ApiKeys.isDeleted.rawValue].boolValue
+        self.dob = data[ApiKeys.dob.rawValue].stringValue
+        self.accountHolderLastName = data[ApiKeys.accountHolderlastName.rawValue].stringValue
+        self.ssnNumber = data[ApiKeys.ssnNumber.rawValue].stringValue
         
     }
 }
 enum ApiKeys:String{
     case id = "_id"
+    case dob = "dob"
+    case ssnNumber = "SNNNumber"
+    case accountHolderlastName = "accountHolderLastName"
     case name = "name"
     case userName = "userName"
     case email = "email"

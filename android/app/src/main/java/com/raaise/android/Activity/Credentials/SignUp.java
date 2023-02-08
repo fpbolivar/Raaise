@@ -254,27 +254,28 @@ public class SignUp extends AppCompatActivity {
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             showMessage("Please enter a valid Email Address");
             return;
-        } else if (phoneNum.isEmpty()) {
-            showMessage("Please enter Phone number");
-            return;
+        } else if (!phoneNum.isEmpty()) {
+            if (phoneNum.length() < 10) {
+                showMessage("Phone number must be 10 digits");
+                return;
+            }
+
         } else if (pswrd.isEmpty()) {
             showMessage("Please enter Password");
             return;
         } else if (ConfirmPassword.isEmpty()) {
             showMessage("Please enter Confirm password filed");
             return;
-        } else if (phoneNum.length() < 8) {
-            showMessage("Phone number must be 10 digits");
-            return;
-        }
-
-        else if (!HelperClass.passwordCharValidation(pswrd)) {
+        } else if (!HelperClass.passwordCharValidation(pswrd)) {
             showMessage("Password Must Contain 1 Uppercase,1 Lowercase,1 Special character with length 8");
         } else if (!ConfirmPassword.matches(pswrd)) {
             showMessage("New password and confirm password must match");
         } else {
 
             Dialogs.createProgressDialog(SignUp.this);
+            if (phoneNum.isEmpty()){
+                phoneNum = "";
+            }
             SignUpModel signUpModel = new SignUpModel(name, username, email, pswrd, phoneNum, "android");
             apiManager.SignUp(signUpModel, new DataCallback<SignUpModel>() {
                 @Override

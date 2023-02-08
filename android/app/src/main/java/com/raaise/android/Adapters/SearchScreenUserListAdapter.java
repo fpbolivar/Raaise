@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.raaise.android.ApiManager.ApiModels.GlobalSearchModel;
 import com.raaise.android.Home.Fragments.OtherUserProfileActivity;
 import com.raaise.android.R;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class SearchScreenUserListAdapter extends RecyclerView.Adapter<SearchScre
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GlobalSearchModel.Data.Users obj = list.get(position);
 
-        Glide.with(context).load(obj.getProfileImage()).placeholder(R.drawable.placeholder).into(holder.userProfileIV);
+        Glide.with(context).load(Prefs.GetBaseUrl(context) + obj.getProfileImage()).placeholder(R.drawable.placeholder).into(holder.userProfileIV);
         holder.userNameTV.setText(obj.getUserName());
         holder.MainLayoutOfUsersInSearch.setOnClickListener(view -> {
             context.startActivity(new Intent(context, OtherUserProfileActivity.class).putExtra("UserIdForProfile", obj.get_id()).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

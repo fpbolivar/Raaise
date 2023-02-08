@@ -13,12 +13,14 @@ import io.socket.client.Socket;
 
 public class App extends Application {
     public static ApiManagerImplementation apiManager;
+    public static boolean fromTryAudio = false;
+    public static String musicTitle = "";
     private static Context context;
     private final Socket mSocket;
 
     {
         try {
-            mSocket = IO.socket("http://13.233.101.218:3000");
+            mSocket = IO.socket("http://82.180.161.7:5000");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }

@@ -9,6 +9,7 @@ import Foundation
 import FBSDKCoreKit
 import GoogleSignIn
 
+//MARK: - FACEBOOK AND GOOGLE LOGIN METHOD
 extension AppDelegate{
     
     func application(

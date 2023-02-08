@@ -18,25 +18,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        //window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-        //window.windowScene = windowScene
-        
         Self.shared = self
         if UserDefaultHelper.getAccessToken() != ""{
-            //let vc = MainTabBarVC()
             window.rootViewController = MainTabBarVC()
             self.window = window
             window.makeKeyAndVisible()
         }else{
-            let navVc = UINavigationController(rootViewController: OnboardingBaseController())
+            let navVc = UINavigationController(rootViewController: LoginVC()) 
             let vc  = navVc
             window.rootViewController = vc
             self.window = window
             window.makeKeyAndVisible()
         }
-        
-       // let vc = UINavigationController(rootViewController: SettingVC())
-       
     }
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url else {

@@ -120,17 +120,32 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
         if (VideoPath != null) {
             ((Home) requireActivity()).videoPath = VideoPath;
         }
+        Log.i("fromTryAudio", "onCreateView: without " + ((Home) requireActivity()).videoUri);
         Initialization(v);
+        if (App.fromTryAudio){
+            videoView.setVideoURI(Uri.parse(((Home) requireActivity()).videoPath));
+            videoView.requestFocus();
+            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    mediaPlayer.setLooping(true);
+                    videoView.start();
+                }
+            });
+            Log.i("fromTryAudio", "onCreateView: " + ((Home) requireActivity()).videoUri);
+            merge(VideoPath);
+        } else {
+            videoView.setVideoURI(Uri.parse(((Home) requireActivity()).videoPath));
+            videoView.requestFocus();
+            videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    mediaPlayer.setLooping(true);
+                    videoView.start();
+                }
+            });
+        }
 
-        videoView.setVideoURI(Uri.parse(((Home) requireActivity()).videoPath));
-        videoView.requestFocus();
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mediaPlayer.setLooping(true);
-                videoView.start();
-            }
-        });
         SelectAudio.setOnClickListener(v1 -> {
             if (videoView.isPlaying())
                 videoView.stopPlayback();
@@ -152,9 +167,25 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                 if (videoView.isPlaying()) {
                     videoView.pause();
                 }
+                Bitmap thumb;
+                if (((Home) requireActivity()).fromGallery){
+                    Log.i("thumbFile", "onClick: fromGallery");
+                    thumb = ThumbnailUtils.createVideoThumbnail(getRealPathFromUri(getContext(), Uri.parse(((Home) requireActivity()).videoUri)), MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
+                } else {
 
-
-                Bitmap thumb = MERGED_VIDEO_PATH.equals("") ? ThumbnailUtils.createVideoThumbnail(((Home) requireActivity()).videoPath, MediaStore.Images.Thumbnails.FULL_SCREEN_KIND) : ThumbnailUtils.createVideoThumbnail(MERGED_VIDEO_PATH, MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
+//                    if (MERGED_VIDEO_PATH.equals("")){
+//                        Log.i("thumbFile", "onClick: from not merged");
+//                        Log.i("thumbFile", "onClick: from video path " + VideoPath);
+//                        Log.i("thumbFile", "onClick: from video full path " + getRealPathFromUri(getContext(), Uri.parse(VideoPath)));
+//
+//                        thumb = ThumbnailUtils.createVideoThumbnail(getRealPathFromUri(getContext(), Uri.parse(VideoPath)), MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
+//                        Log.i("thumbFile", "onClick: " + (thumb == null));
+//                    } else {
+//                        Log.i("thumbFile", "onClick: from merged ");
+//                        thumb = ThumbnailUtils.createVideoThumbnail(MERGED_VIDEO_PATH, MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
+//                    }
+                    thumb = MERGED_VIDEO_PATH.equals("") ? ThumbnailUtils.createVideoThumbnail(getRealPathFromUri(getContext(), Uri.parse(VideoPath)), MediaStore.Images.Thumbnails.FULL_SCREEN_KIND) : ThumbnailUtils.createVideoThumbnail(MERGED_VIDEO_PATH, MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
+                }
 
 
                 if (IsShowingDialog) {
@@ -166,7 +197,12 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                             IsShowingDialog = true;
                         }
                     }, 2000);
-                    showUploadVideoDialog(thumb);
+                    if (thumb == null){
+                        Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    } else {
+                        showUploadVideoDialog(thumb);
+                    }
+
                 }
 
 
@@ -198,29 +234,55 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
     }
 
     private void merge(String videoUri) {
-
-
         mergedVideoName = "merged" + new Date().getTime();
         Dialogs.showProgressDialog(getActivity());
-        String[] c = {"-i", Uri.parse(videoUri).getPath()
-                , "-i", Environment.getExternalStorageDirectory().getPath()
-                + "/Download/" + ((Home) requireActivity()).musicTitle
-                , "-c:v", "copy", "-c:a", "aac", "-map", "0:v:0", "-map", "1:a:0", "-shortest",
-                Environment.getExternalStorageDirectory().getPath()
-                        + "/Download/" + mergedVideoName + ".mp4"};
+        String[] c;
+
+        if (App.fromTryAudio){
+            c = new String[]{"-i", getRealPathFromUri(getContext(), Uri.parse(VideoPath))
+                    , "-i", Environment.getExternalStorageDirectory().getPath()
+                    + "/Download/" + App.musicTitle
+                    , "-c:v", "copy", "-c:a", "aac", "-map", "0:v:0", "-map", "1:a:0", "-shortest",
+                    Environment.getExternalStorageDirectory().getPath()
+                            + "/Download/" + mergedVideoName + ".mp4"};
+        } else
+        if (((Home) requireActivity()).fromGallery){
+            c = new String[]{"-i", getRealPathFromUri(getContext(), Uri.parse(((Home) requireActivity()).videoUri))
+                    , "-i", Environment.getExternalStorageDirectory().getPath()
+                    + "/Download/" + ((Home) requireActivity()).musicTitle
+                    , "-c:v", "copy", "-c:a", "aac", "-map", "0:v:0", "-map", "1:a:0", "-shortest",
+                    Environment.getExternalStorageDirectory().getPath()
+                            + "/Download/" + mergedVideoName + ".mp4"};
+        } else {
+            c = new String[]{"-i", getRealPathFromUri(getContext(), Uri.parse(VideoPath))
+                    , "-i", Environment.getExternalStorageDirectory().getPath()
+                    + "/Download/" + ((Home) requireActivity()).musicTitle
+                    , "-c:v", "copy", "-c:a", "aac", "-map", "0:v:0", "-map", "1:a:0", "-shortest",
+                    Environment.getExternalStorageDirectory().getPath()
+                            + "/Download/" + mergedVideoName + ".mp4"};
+        }
+
         MergeVideo(c);
     }
 
     private void MergeVideo(String[] co) {
         FFmpeg.executeAsync(co, (executionId, returnCode) -> {
+            Log.i("debugAudio", "inside merge video Success : ");
             Dialogs.dismissProgressDialog();
             if (videoView.isPlaying())
                 videoView.stopPlayback();
 
 
             MERGED_VIDEO_PATH = Environment.getExternalStorageDirectory().getPath() + "/Download/" + mergedVideoName + ".mp4";
-            videoView.setVideoPath(MERGED_VIDEO_PATH);
-            videoView.start();
+            File file = new File(MERGED_VIDEO_PATH);
+            if (file.exists()){
+                videoView.setVideoPath(MERGED_VIDEO_PATH);
+                videoView.start();
+            } else {
+                videoView.setVideoPath(VideoPath);
+                videoView.start();
+            }
+
         });
     }
 
@@ -238,11 +300,16 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
         DiscardButton.setOnClickListener(view ->
         {
             dialog.dismiss();
-            ((Home) requireActivity()).musicTitle = "";
-            ((Home) requireActivity()).musicData = "";
-            ((Home) requireActivity()).videoPath = "";
-            ((Home) requireActivity()).videoUri = "";
-            ((Home) requireActivity()).SelectHomeScreen();
+            try {
+                ((Home) requireActivity()).musicTitle = "";
+                ((Home) requireActivity()).musicData = "";
+                ((Home) requireActivity()).videoPath = "";
+                ((Home) requireActivity()).videoUri = "";
+                ((Home) requireActivity()).SelectHomeScreen();
+            } catch (Exception e){
+                Log.e("PlusFragment", "handleBackButtonClicked: " + e.getMessage());
+            }
+
         });
         BackToEditingButton.setOnClickListener(view ->
         {
@@ -253,6 +320,11 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
     }
 
     private void showUploadVideoDialog(Bitmap thumb) {
+        if (thumb == null){
+            Log.i("thumbNail", "showUploadVideoDialog: null");
+        } else {
+            Log.i("thumbNail", "showUploadVideoDialog: not null");
+        }
         Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.upload_video_layout);
@@ -406,7 +478,7 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                 CategoryID = RequestBody.create(MediaType.parse("text/plain"), CategoryId);
                 RequestBody finalAudioID = audioID;
                 RequestBody finalCategoryID = CategoryID;
-                Dialogs.showProgressDialog(getActivity());
+                Dialogs.showProgressDialog(getContext());
 
 
                 Dialogs.dismissProgressDialog();
@@ -420,21 +492,22 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                     vdoBody = MultipartBody.Part.createFormData("video", vdoFile.getName(), requestFile);
 
                 } else {
-                    vdoFile = new File(VideoPath);
+                    vdoFile = new File(getRealPathFromUri(getContext(), Uri.parse(VideoPath)));
                     requestFile = RequestBody.create(MediaType.parse("video/*"), vdoFile);
                     vdoBody = MultipartBody.Part.createFormData("video", vdoFile.getName(), requestFile);
 
                 }
 
-
-                Dialogs.showProgressDialog(getActivity());
+                Log.i("videoRes", "onResponse: getting upload");
+                Dialogs.createProgressDialog(getContext());
                 dialog.dismiss();
                 ApiUtilities.getApiInterface().uploadVideo(Prefs.GetBearerToken(getActivity()), videoCaption, isDonation, donationAmt, finalAudioID, finalCategoryID, vdoBody, imageBody).enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
+                        Log.i("videoRes", "onResponse: under res " + response.code());
 
                         if (response.isSuccessful()) {
+                            Log.i("videoRes", "onResponse: Success");
                             try {
 
                                 File audioFile = new File(Environment.getExternalStorageDirectory().getPath() + "/Download/" + ((Home) requireActivity()).musicTitle);
@@ -448,18 +521,22 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                                 Toast.makeText(getActivity(), "2" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                             ((Home) requireActivity()).shouldMergeAudio = false;
+                            ((Home) requireActivity()).fromGallery = false;
                             ((Home) requireActivity()).musicData = "";
                             ((Home) requireActivity()).musicTitle = "";
                             MERGED_VIDEO_PATH = "";
-                            Dialogs.dismissProgressDialog();
-
+                            Toast.makeText(getContext(), "Post created successfully", Toast.LENGTH_SHORT).show();
+                            Dialogs.HideProgressDialog();
+                            Log.i("videoRes", "onResponse: under select home scr " );
                             ((Home) requireActivity()).SelectHomeScreen();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable t) {
-                        Dialogs.dismissProgressDialog();
+                        Toast.makeText(getContext(), "" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        Log.i("videoRes", "onResponse: under failure " + t.getLocalizedMessage());
+                        Dialogs.HideProgressDialog();
 
                     }
 
@@ -511,7 +588,6 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
         thumb.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
         byte[] bitmapdata = bos.toByteArray();
 
-
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(f);
@@ -534,6 +610,9 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
     public void onDetach() {
         super.onDetach();
         ((Home) requireActivity()).shouldMergeAudio = false;
+        ((Home) requireActivity()).fromGallery = false;
+        App.fromTryAudio = false;
+        App.musicTitle = "";
         Log.i("onDetach", "onDetach: Called");
     }
 }

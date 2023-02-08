@@ -29,6 +29,7 @@ class ChatCell: UITableViewCell  {
 
         // Configure the view for the selected state
     }
+    //MARK: - Update Data
     @objc func visitProfile(){
         delegate?.visitOtherUserProfile()
     }
@@ -44,7 +45,7 @@ class ChatCell: UITableViewCell  {
         messageView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMaxXMinYCorner,.layerMinXMaxYCorner]
     }
 }
-
+//MARK: - Protocols
 protocol ChatDelegate {
     func visitOtherUserProfile()
 }

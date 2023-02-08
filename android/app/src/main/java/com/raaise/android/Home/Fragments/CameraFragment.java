@@ -1,22 +1,19 @@
 package com.raaise.android.Home.Fragments;
 
 import static android.app.Activity.RESULT_OK;
-import static com.arthenica.mobileffmpeg.Config.getPackageName;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraControl;
 import androidx.camera.core.CameraSelector;
@@ -36,69 +34,53 @@ import androidx.camera.core.Preview;
 import androidx.camera.core.VideoCapture;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.Home.MainHome.Home;
 import com.raaise.android.R;
 
-import java.io.File;
-import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 
 public class CameraFragment extends Fragment {
-
     public boolean isRecording = false;
     ImageView flashBtn;
     private CameraControl cameraControl;
     boolean flashEnabled = false;
     View v;
     PreviewView previewView;
-    MediaProjectionManager mProjectionManager;
     ImageView GallerySelected;
     ImageView CameraButtonOuterShell;
     RelativeLayout CameraClickButton;
-    File VideoPath;
-    Handler h = new Handler();
     TextView Timer;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
     private VideoCapture videoCapture;
-
+    int PERMISSION_ALL = 1;
+    String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO,
+            android.Manifest.permission.CAMERA
+    };
+    ProcessCameraProvider cameraProvider;
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_camera, container, false);
-        previewView = v.findViewById(R.id.PreviewVIew);
-        flashBtn = v.findViewById(R.id.flash_button);
-        Timer = v.findViewById(R.id.Timer);
-
-        flashBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (flashEnabled){
-                    Log.i("flashCheck", "onClick: setting off");
-                    flashEnabled = false;
-                    flashBtn.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.flash_off));
-                } else {
-                    Log.i("flashCheck", "onClick: setting on");
-                    flashEnabled = true;
-                    flashBtn.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.flash_on));
-                }
-            }
-        });
+        Initialization();
+        Log.i("Initialization", "onCreateView: " + (cameraProviderFuture == null));
         cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
 
 
         cameraProviderFuture.addListener(() -> {
             try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                cameraProvider = cameraProviderFuture.get();
                 startCameraX(cameraProvider);
             } catch (ExecutionException e) {
                 e.printStackTrace();
@@ -108,8 +90,16 @@ public class CameraFragment extends Fragment {
 
         }, getExecuter());
 
-        Initialization();
         ClickListeners();
+        flashBtn.setOnClickListener(view -> {
+            if (flashEnabled){
+                flashEnabled = false;
+                flashBtn.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.flash_off));
+            } else {
+                flashEnabled = true;
+                flashBtn.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.flash_on));
+            }
+        });
 
         return v;
     }
@@ -117,43 +107,25 @@ public class CameraFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        checkPermissions();
+//        checkPermissions();
     }
 
     private void checkPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (!Environment.isExternalStorageManager()) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                startActivity(intent);
-                Toast.makeText(getActivity(), "Please Allow Permissions", Toast.LENGTH_SHORT).show();
-            }
-
+        if (!hasPermissions(getContext(), PERMISSIONS)) {
+            ActivityCompat.requestPermissions(((Home) requireActivity()), PERMISSIONS, PERMISSION_ALL);
         }
-        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 1001);
-        }
-        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1002);
-        }
-        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1003);
-        }
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.RECORD_AUDIO},
-                    1004);
-
-        }
-
     }
-
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @SuppressLint("RestrictedApi")
     private void ClickListeners() {
         GallerySelected.setOnClickListener(view -> {
@@ -164,28 +136,29 @@ public class CameraFragment extends Fragment {
         CameraClickButton.setOnClickListener(view -> {
 
             if (!isRecording) {
-                GallerySelected.setVisibility(View.GONE);
-                isRecording = true;
-                ShowTimer();
-                CameraButtonOuterShell.setColorFilter(ContextCompat.getColor(v.getContext(), R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
-                recordVideo();
-                h.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (isRecording) {
-                            videoCapture.stopRecording();
-                            GallerySelected.setVisibility(View.VISIBLE);
-                        }
-                    }
-                }, 30000);
+//                CameraButtonOuterShell.setColorFilter(ContextCompat.getColor(v.getContext(), R.color.WhiteColor), android.graphics.PorterDuff.Mode.SRC_IN);
+                try {
+                            recordVideo();
+
+                } catch (Exception e){
+                    Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
             } else {
                 GallerySelected.setVisibility(View.VISIBLE);
+                flashBtn.setVisibility(View.VISIBLE);
                 Timer.setVisibility(View.GONE);
                 isRecording = false;
-                videoCapture.stopRecording();
-                if (flashEnabled){
-                    cameraControl.enableTorch(false);
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        videoCapture.stopRecording();
+                        if (flashEnabled){
+                            cameraControl.enableTorch(false);
+                        }
+                    }
+                }).start();
+
             }
         });
     }
@@ -198,8 +171,12 @@ public class CameraFragment extends Fragment {
                 Timer.setText("Remaining Time: " + millisUntilFinished / 1000);
             }
 
+            @SuppressLint("RestrictedApi")
             public void onFinish() {
                 Timer.setText("00:00");
+                if (isRecording)
+                    videoCapture.stopRecording();
+                isRecording = false;
             }
 
         }.start();
@@ -218,8 +195,10 @@ public class CameraFragment extends Fragment {
             
             String selectedImagePath = getPath(selectedImageUri);
             if (selectedImagePath != null) {
+                ((Home) requireActivity()).fromGallery = true;
                 ((Home) requireActivity()).videoPath = selectedImagePath;
                 ((Home) requireActivity()).videoUri = data.getData().toString();
+                cameraProvider.unbindAll();
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .setReorderingAllowed(true)
@@ -242,60 +221,17 @@ public class CameraFragment extends Fragment {
             return null;
     }
 
-
-    @SuppressLint("RestrictedApi")
-    private void recordVideo() {
-        if (videoCapture != null) {
-            File movieDir = new File(Environment.getExternalStorageDirectory().getPath() + "/" + "Scriptube" + "/" + App.getContext().getPackageName() + "/" + "Created_Videos");
-            if (!movieDir.exists()) {
-                boolean yes = movieDir.mkdir();
-                if (!yes) {
-                    Toast.makeText(v.getContext(), "Failed", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            Date date = new Date();
-            VideoPath = new File(movieDir.getAbsolutePath() + "/" + new Date().getTime() + ".mp4");
-
-            if (ActivityCompat.checkSelfPermission(v.getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            if (flashEnabled){
-                cameraControl.enableTorch(true);
-            }
-            videoCapture.startRecording(
-                    new VideoCapture.OutputFileOptions.Builder(VideoPath).build(),
-                    getExecuter(),
-                    new VideoCapture.OnVideoSavedCallback() {
-                        @Override
-                        public void onVideoSaved(@NonNull VideoCapture.OutputFileResults outputFileResults) {
-                            getActivity().getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .setReorderingAllowed(true)
-                                    .replace(R.id.FragmentContainer, new PlusFragment(VideoPath.getPath()), null)
-                                    .commit();
-                        }
-
-                        @Override
-                        public void onError(int videoCaptureError, @NonNull String message, @Nullable Throwable cause) {
-                            Toast.makeText(v.getContext(), cause + "", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(v.getContext(), message + "", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-            );
-        }
-
-    }
-
     private void Initialization() {
         GallerySelected = v.findViewById(R.id.GallerySelected);
         CameraButtonOuterShell = v.findViewById(R.id.CameraButtonOuterShell);
         CameraClickButton = v.findViewById(R.id.CameraClickButton);
+        previewView = v.findViewById(R.id.PreviewVIew);
+        flashBtn = v.findViewById(R.id.flash_button);
+        Timer = v.findViewById(R.id.Timer);
     }
 
     private Executor getExecuter() {
-        return ContextCompat.getMainExecutor(getActivity());
+        return ContextCompat.getMainExecutor(requireContext());
     }
 
     @SuppressLint("RestrictedApi")
@@ -316,7 +252,92 @@ public class CameraFragment extends Fragment {
                 .setVideoFrameRate(30)
                 .build();
 
-        Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture, videoCapture);
+        Camera camera = cameraProvider.bindToLifecycle(getActivity(), cameraSelector, preview, videoCapture);
         cameraControl = camera.getCameraControl();
+    }
+
+    @SuppressLint("RestrictedApi")
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    private void recordVideo() {
+        if (videoCapture != null) {
+
+            String videoName = "Raaise" + System.currentTimeMillis();
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, videoName);
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4");
+
+            try {
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, 1002);
+
+                    return;
+                } else {
+
+                    // Set background
+                    CameraButtonOuterShell.setColorFilter(ContextCompat.getColor(v.getContext(), R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
+            if (flashEnabled){
+                cameraControl.enableTorch(true);
+            }
+                    GallerySelected.setVisibility(View.GONE);
+                    ShowTimer();
+                    isRecording = true;
+                    flashBtn.setVisibility(View.GONE);
+                    videoCapture.startRecording(
+                            new VideoCapture.OutputFileOptions.Builder(
+                                    getActivity().getContentResolver(),
+                                    MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                                    contentValues
+                            ).build(),
+                            getActivity().getMainExecutor(),
+                            new VideoCapture.OnVideoSavedCallback() {
+                                @Override
+                                public void onVideoSaved(@NonNull VideoCapture.OutputFileResults outputFileResults) {
+                                    Log.i("onVideoSaved", "onVideoSaved: " + outputFileResults.getSavedUri().toString());
+
+                                    try {
+
+                                        getActivity().getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .setReorderingAllowed(true)
+                                                .replace(R.id.FragmentContainer, new PlusFragment(String.valueOf(outputFileResults.getSavedUri())), null)
+                                                .commit();
+                                    } catch (Exception e){
+                                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Log.i("debugAudio", "onVideoSavedError: " + e.getMessage());
+                                    }
+
+                                }
+
+                                @Override
+                                public void onError(int videoCaptureError, @NonNull String message, @Nullable Throwable cause) {
+                                    Toast.makeText(getActivity(), "Error saving video: " + message, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                    );
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i("cameraProvider", "onDetach: " + (cameraProvider == null));
+        if (cameraProvider != null){
+            cameraProvider.unbindAll();
+        }
     }
 }

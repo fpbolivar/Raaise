@@ -6,15 +6,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
+
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
-        android:name="android.permission.CAMERA"
-        android:required="true" />
+        android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
@@ -24,13 +22,12 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission
-        android:name="android.permission.CAMERA"
-        android:required="true" />
+
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".ApiManager.RetrofitHelper.App"
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:configChanges="orientation|keyboardHidden"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -102,15 +99,6 @@
         </activity>
         <activity
             android:name=".Home.Fragments.ShowOtherUserVideoActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:exported="false"
-            android:screenOrientation="nosensor">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Activity.Introduction.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden"
             android:exported="false"
             android:screenOrientation="nosensor">

@@ -37,7 +37,7 @@
                                         <constraint firstAttribute="height" constant="70" id="JgH-tR-MIy"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is your unique name to be used in the ScripTube and how your friends find and add you." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lSl-ig-neG" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is your unique name to be used in the Raaise and how your friends find and add you." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lSl-ig-neG" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="80" width="374" height="31.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" name="lightGray"/>
@@ -127,7 +127,7 @@
     </objects>
     <designables>
         <designable name="lSl-ig-neG">
-            <size key="intrinsicContentSize" width="558.5" height="16"/>
+            <size key="intrinsicContentSize" width="538.5" height="16"/>
         </designable>
     </designables>
     <resources>

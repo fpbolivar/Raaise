@@ -1,5 +1,8 @@
 package com.raaise.android.Home.Fragments;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
@@ -40,7 +44,13 @@ public class HomeFragment extends Fragment {
     Home_FollowingFragment followingFrag;
     ApiManager apiManager = App.getApiManager();
     TextView NotificationCount;
-
+    int PERMISSION_ALL = 1;
+    String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO,
+            android.Manifest.permission.CAMERA
+    };
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,11 +58,32 @@ public class HomeFragment extends Fragment {
 
         Initialization(v);
         clickListeners();
-
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            if (!Environment.isExternalStorageManager()) {
+//                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+//                Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+//                intent.setData(uri);
+//                startActivity(intent);
+//                Toast.makeText(getContext(), "Please Allow Permissions", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }
+//        if (!hasPermissions(getContext(), PERMISSIONS)) {
+//            ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, PERMISSION_ALL);
+//        }
 
         return v;
     }
-
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     void GetUserProfile() {
         apiManager.GetUserProfile(Prefs.GetBearerToken(v.getContext()), new DataCallback<GetUserProfile>() {
             @Override
@@ -121,6 +152,7 @@ public class HomeFragment extends Fragment {
                 if (unReadNotificationCountModel.getNotificationUnreadCount() == 0) {
                     NotificationCount.setVisibility(View.INVISIBLE);
                 } else {
+                    NotificationCount.setVisibility(View.VISIBLE);
                     NotificationCount.setText(String.valueOf(unReadNotificationCountModel.getNotificationUnreadCount()));
                 }
             }

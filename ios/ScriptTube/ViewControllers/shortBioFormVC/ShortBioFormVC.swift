@@ -22,9 +22,8 @@ class ShortBioFormVC: BaseControllerVC {
             textCountLbl.textColor = .red
         }
         addNavBar(headingText:"Short Bio",redText:"Bio")
-
-        // Do any additional setup after loading the view.
     }
+    //MARK: - Setup
     func setfonts(){
         updateLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
         textCountLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
@@ -35,13 +34,12 @@ class ShortBioFormVC: BaseControllerVC {
         bioTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         bioTF.text = AuthManager.currentUser.shortBio
     }
+    //MARK: -Api method
     func updateProfileApi(){
         let param = ["shortBio":bioTF.text ?? ""]
         AuthManager.updateUserProfileApi(delegate: self, param: param) {
             DispatchQueue.main.async {
-                //self.gotoShortBioForm()
                 ToastManager.successToast(delegate: self, msg: "Bio Updated Successfully")
-                //self.navigationController?.popViewController(animated: true)
             }
         }
     }

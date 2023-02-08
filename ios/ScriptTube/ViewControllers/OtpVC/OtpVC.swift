@@ -20,17 +20,18 @@ class OtpVC: BaseControllerVC {
         addNavBar(headingText: "OTP", redText: "")
         // Do any additional setup after loading the view.
     }
+    //MARK: - Setup
     func setup(){
         headingLbl.text = "Otp has been sent on your email \(email)"
         verifyLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX18)
         headingLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         otpTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
-        //otpTf.placeholder = "Enter Otp"
         otpTf.attributedPlaceholder = NSAttributedString(string: "Enter OTP",attributes: [.foregroundColor: UIColor.white])
         otpTf.paddingLeftRightTextField(left: 25, right: 0)
         otpTf.overrideUserInterfaceStyle = .light
         otpTf.layer.cornerRadius = 10
     }
+    //MARK: - Validation
     func checkValidations(){
         if (otpTf.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyOtp)
@@ -49,6 +50,7 @@ class OtpVC: BaseControllerVC {
         vc.token = token
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    //MARK: - Api Methods
     func verifyOtpApi(){
         let param = ["email":email,"otp":otpTf.text ?? ""]
         AuthManager.verifyOtp(delegate: self, param: param) { token in

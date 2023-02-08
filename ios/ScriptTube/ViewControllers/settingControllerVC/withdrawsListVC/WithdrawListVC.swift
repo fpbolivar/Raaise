@@ -16,6 +16,24 @@ class WithdrawListVC: BaseControllerVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         addNavBar(headingText:"Withdrawals",redText:"",type: .largeNavBarOnlyBackWithRightBtn)
+        setup()
+        // Do any additional setup after loading the view.
+    }
+    @objc private  func rightAction(){
+        let vc = BankAddDetailVC()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    //MARK: - Api Methods
+    func getWithdrawlList(completion:@escaping()->Void){
+        DataManager.withdrawList(delegate: self, param: ["userId":AuthManager.currentUser.id]) { data in
+            data["data"].forEach { (_,json) in
+                self.data.append(WithdrawListData(data: json))
+            }
+            completion()
+        }
+    }
+    //MARK: - Setup
+    func setup(){
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .white
         navView.rigthBtn.setTitle("Bank Details", for: .normal)
@@ -26,18 +44,6 @@ class WithdrawListVC: BaseControllerVC {
         getWithdrawlList{
             DispatchQueue.main.async {
                 self.executeTblDelegate()
-            }
-        }
-        
-        // Do any additional setup after loading the view.
-    }
-    @objc private  func rightAction(){
-
-    }
-    func getWithdrawlList(ocmpletion:@escaping()->Void){
-        DataManager.withdrawList(delegate: self, param: ["userId":AuthManager.currentUser.id]) { data in
-            data["data"].forEach { (_,json) in
-                self.data.append(WithdrawListData(data: json))
             }
         }
     }
@@ -52,6 +58,7 @@ class WithdrawListVC: BaseControllerVC {
     }
 
 }
+//MARK: - Table View Delegate
 extension WithdrawListVC:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         1

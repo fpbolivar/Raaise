@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		010281A0294AF54C00649096 /* SharePopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0102819E294AF54C00649096 /* SharePopUpVC.swift */; };
 		010281A1294AF54C00649096 /* SharePopUpVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0102819F294AF54C00649096 /* SharePopUpVC.xib */; };
+		01067893298A5FFB009AC9AC /* BlockUserPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01067891298A5FFB009AC9AC /* BlockUserPopUp.swift */; };
+		01067894298A5FFB009AC9AC /* BlockUserPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01067892298A5FFB009AC9AC /* BlockUserPopUp.xib */; };
+		01067896298A683C009AC9AC /* DonationUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01067895298A683C009AC9AC /* DonationUserModel.swift */; };
 		0123AF48295D71260016A1D9 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 0123AF47295D71260016A1D9 /* SocketIO */; };
 		0123AF4A295D74FE0016A1D9 /* SocketChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123AF49295D74FE0016A1D9 /* SocketChatManager.swift */; };
 		0123AF4C295DD0ED0016A1D9 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123AF4B295DD0ED0016A1D9 /* ChatModel.swift */; };
@@ -438,6 +441,9 @@
 /* Begin PBXFileReference section */
 		0102819E294AF54C00649096 /* SharePopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePopUpVC.swift; sourceTree = "<group>"; };
 		0102819F294AF54C00649096 /* SharePopUpVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SharePopUpVC.xib; sourceTree = "<group>"; };
+		01067891298A5FFB009AC9AC /* BlockUserPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockUserPopUp.swift; sourceTree = "<group>"; };
+		01067892298A5FFB009AC9AC /* BlockUserPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockUserPopUp.xib; sourceTree = "<group>"; };
+		01067895298A683C009AC9AC /* DonationUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationUserModel.swift; sourceTree = "<group>"; };
 		0123AF49295D74FE0016A1D9 /* SocketChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketChatManager.swift; sourceTree = "<group>"; };
 		0123AF4B295DD0ED0016A1D9 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		0123AF4D2962B85C0016A1D9 /* SharePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePopUp.swift; sourceTree = "<group>"; };
@@ -528,7 +534,7 @@
 		01719E972983ADC200929EDD /* AVMutableComposition+MultipleVideoMerge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVMutableComposition+MultipleVideoMerge.swift"; sourceTree = "<group>"; };
 		0172FDB8296C1547004141D6 /* PaymentSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSuccessVC.swift; sourceTree = "<group>"; };
 		0172FDB9296C1547004141D6 /* PaymentSuccessVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentSuccessVC.xib; sourceTree = "<group>"; };
-		018367F4291B79320017193A /* ScriptTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScriptTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		018367F4291B79320017193A /* Raaise App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Raaise App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		018367F7291B79320017193A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		018367F9291B79320017193A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		018367FB291B79320017193A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -1099,6 +1105,8 @@
 				0172FDB9296C1547004141D6 /* PaymentSuccessVC.xib */,
 				01719E59297A97EE00929EDD /* FilterPopUpVC.swift */,
 				01719E5A297A97EE00929EDD /* FilterPopUpVC.xib */,
+				01067891298A5FFB009AC9AC /* BlockUserPopUp.swift */,
+				01067892298A5FFB009AC9AC /* BlockUserPopUp.xib */,
 			);
 			path = popUpXib;
 			sourceTree = "<group>";
@@ -1235,7 +1243,7 @@
 		018367F5291B79320017193A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				018367F4291B79320017193A /* ScriptTube.app */,
+				018367F4291B79320017193A /* Raaise App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1909,6 +1917,7 @@
 				01D4E25A2959C09400C74DE7 /* NotificationDataModel.swift */,
 				01D4E261295D5F9700C74DE7 /* ChatChannelModel.swift */,
 				0123AF4B295DD0ED0016A1D9 /* ChatModel.swift */,
+				01067895298A683C009AC9AC /* DonationUserModel.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2367,7 +2376,7 @@
 				0123AF47295D71260016A1D9 /* SocketIO */,
 			);
 			productName = ScriptTube;
-			productReference = 018367F4291B79320017193A /* ScriptTube.app */;
+			productReference = 018367F4291B79320017193A /* Raaise App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2453,6 +2462,7 @@
 				7D64FA8D292BA6CB009F2754 /* HomeTableViewCell.xib in Resources */,
 				7DEB61E82926409B00DA43EC /* NotoSans-ExtraLightItalic.ttf in Resources */,
 				01D4E24C2955A78000C74DE7 /* UserResultCell.xib in Resources */,
+				01067894298A5FFB009AC9AC /* BlockUserPopUp.xib in Resources */,
 				7D64FA332927B968009F2754 /* SettingCell.xib in Resources */,
 				01C24105293218B90072861D /* CreatePasswordVC.xib in Resources */,
 				7D64FAA3292BB913009F2754 /* UserHeaderReusableView.xib in Resources */,
@@ -2763,6 +2773,7 @@
 				01C240E82930CFDD0072861D /* SDWebImageDownloaderRequestModifier.m in Sources */,
 				7DEB61F02926503B00DA43EC /* SignUpVC.swift in Sources */,
 				7D64FA64292B7D34009F2754 /* DonationCell.swift in Sources */,
+				01067893298A5FFB009AC9AC /* BlockUserPopUp.swift in Sources */,
 				01C23FC9293083E80072861D /* MultipartUpload.swift in Sources */,
 				01C240B12930CFDD0072861D /* SDAnimatedImageView+WebCache.m in Sources */,
 				01C240C92930CFDD0072861D /* SDWebImageDownloaderResponseModifier.m in Sources */,
@@ -2845,6 +2856,7 @@
 				01C240B22930CFDD0072861D /* SDImageCoder.m in Sources */,
 				01C240B72930CFDD0072861D /* UIImageView+HighlightedWebCache.m in Sources */,
 				01836812291B7D490017193A /* LoginVC.swift in Sources */,
+				01067896298A683C009AC9AC /* DonationUserModel.swift in Sources */,
 				013AFC822941BBFE004469E1 /* VideoDownloader.swift in Sources */,
 				01C23FBB293083E80072861D /* Session.swift in Sources */,
 				01C23F7C292F8D410072861D /* FraudsterToast.swift in Sources */,
@@ -3033,15 +3045,15 @@
 				CODE_SIGN_ENTITLEMENTS = ScriptTube/ScriptTube.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 7UC293X6F5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScriptTube/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Raaise App";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow to access camera to record videos";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow to access microphone to record audio";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "please allow";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "please allow";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please Allow Access to Camera to Create Videos";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow to access microphone to record videos.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please Allow Access to Photo Library to Save your videos to device";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please Allow Access to Photo Library to Use Recent Videos to Create and post videos on App";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -3055,7 +3067,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.raaise.ios;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Raaise App";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "ScriptTube-Bridging-Header.h";
@@ -3073,15 +3085,15 @@
 				CODE_SIGN_ENTITLEMENTS = ScriptTube/ScriptTube.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 7UC293X6F5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScriptTube/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Raaise App";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow to access camera to record videos";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow to access microphone to record audio";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "please allow";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "please allow";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please Allow Access to Camera to Create Videos";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow to access microphone to record videos.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please Allow Access to Photo Library to Save your videos to device";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please Allow Access to Photo Library to Use Recent Videos to Create and post videos on App";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -3095,7 +3107,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.raaise.ios;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Raaise App";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "ScriptTube-Bridging-Header.h";

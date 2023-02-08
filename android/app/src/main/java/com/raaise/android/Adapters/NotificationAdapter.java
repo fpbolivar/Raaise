@@ -19,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.raaise.android.ApiManager.ApiModels.GetUserNotificationsModel;
 import com.raaise.android.Home.Fragments.OtherUserProfileActivity;
-import com.raaise.android.Home.Fragments.SingleVideoActivity;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,10 +31,12 @@ import java.util.Locale;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     Context context;
     List<GetUserNotificationsModel.NotificationMessage> list;
+    notificationListener listener;
 
-    public NotificationAdapter(Context context, List<GetUserNotificationsModel.NotificationMessage> list) {
+    public NotificationAdapter(Context context, List<GetUserNotificationsModel.NotificationMessage> list, notificationListener mListener) {
         this.context = context;
         this.list = list;
+        this.listener = mListener;
     }
 
     @NonNull
@@ -46,7 +48,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, int position) {
         GetUserNotificationsModel.NotificationMessage model = list.get(position);
-        Glide.with(context).load(model.getFromProfileImage()).placeholder(R.drawable.placeholder).into(holder.NotificationImage);
+        Glide.with(context).load(Prefs.GetBaseUrl(context) + model.getFromProfileImage()).placeholder(R.drawable.placeholder).into(holder.NotificationImage);
 
         String s = model.getFromUserName() + " " + model.getMessage();
         SpannableString ss1 = new SpannableString(s);
@@ -73,7 +75,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     || model.getType().equalsIgnoreCase("comment-reply")
                     || model.getType().equalsIgnoreCase("payment-donate")
                     || model.getType().equalsIgnoreCase("like-video"))) {
-                context.startActivity(new Intent(context, SingleVideoActivity.class).putExtra("SlugForSingleVideo", model.getSlug()));
+                listener.showVideo(model.getSlug());
             } else if ((!model.getSlug().equalsIgnoreCase("") && model.getType().equalsIgnoreCase("user-follow"))) {
                 context.startActivity(new Intent(context, OtherUserProfileActivity.class).putExtra("UserIdForProfile", model.getSlug()).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
@@ -88,6 +90,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return list.size();
     }
 
+    public void markAllAsRead() {
+        for (int i = 0; i < list.size(); i++){
+            if (!list.get(i).isRead){
+                list.get(i).setRead(true);
+                HelperClass.ReadNotification(list.get(i).getId(), context);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView NotificationImage;
         TextView NotificationName, NotificationDate;
@@ -100,5 +112,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             NotificationName = itemView.findViewById(R.id.NotificationName);
             NotificationDate = itemView.findViewById(R.id.NotificationDate);
         }
+    }
+
+    public interface notificationListener{
+        void showVideo(String slug);
     }
 }

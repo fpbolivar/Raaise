@@ -2,9 +2,9 @@ package com.raaise.android.Utilities.HelperClasses;
 
 public class StringHelper {
 
-    public static final String WaterMarkLogo = "https://scriptube-s3.s3.amazonaws.com/AppLogo/logo.png";
+    public static final String WaterMarkLogo = "https://scrip-tube-s3.s3.amazonaws.com/logos/raaise.png";
 
-    public static final String BASE_URL = "http://13.233.101.218:3000/user/";
+    public static final String BASE_URL = "https://raaise.app/backend/user/";
     public static final String AUTHORIZATION = "Authorization";
     public static final String SIGN_UP_URL = "register";
     public static final String LOGIN_URL = "login";
@@ -62,4 +62,5 @@ public class StringHelper {
     public static final String PROFILE_CHAT_API = "profile-chat";
     public static final String DONATION_HISTORY = "donation-history";
     public static final String VIDEO_DONATION_HISTORY = "get-video-donation-history";
+    public static final String GET_USER_WITHDRAWAL = "get-user-withdrawal-request";
 }

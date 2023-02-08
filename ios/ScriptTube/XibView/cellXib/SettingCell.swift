@@ -29,6 +29,7 @@ class SettingCell: UITableViewCell {
         print(sender.isOn)
         notificationStateChanged!(sender.isOn)
     }
+    // MARK: - Update Data
     func setupText(item:SettingOptionItems){
         switchItem.isHidden = true
         switchItemContainer.isHidden = true

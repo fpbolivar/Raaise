@@ -44,7 +44,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
 
         if (!Prefs.GetUserID(mContext).equalsIgnoreCase(model.getSenderId().get_id()) && model.getSenderId() != null) {
             Glide.with(holder.userImage)
-                    .load(model.getSenderId().getProfileImage())
+                    .load(Prefs.GetBaseUrl(mContext) + model.getSenderId().getProfileImage())
                     .circleCrop()
                     .placeholder(R.drawable.placeholder)
                     .into(holder.userImage);
@@ -66,7 +66,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         } else {
             if (model.getReceiverId() != null) {
                 Glide.with(holder.userImage)
-                        .load(model.getReceiverId().getProfileImage())
+                        .load(Prefs.GetBaseUrl(mContext) + model.getReceiverId().getProfileImage())
                         .circleCrop()
                         .placeholder(R.drawable.placeholder)
                         .into(holder.userImage);

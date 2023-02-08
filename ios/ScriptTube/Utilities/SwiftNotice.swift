@@ -20,20 +20,11 @@ extension UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.rotatedForLoader), name: UIDevice.orientationDidChangeNotification, object: nil)
 
-        //  UIDevice.orientationDidChangeNotification
     }
 
     func noticeOnlyText(_ text: String) {
         SwiftNotice.showText(text)
     }
-    //    @objc func clearAllNotice2() {
-    //        DispatchQueue.main.async(execute: {
-    //            self.view.isUserInteractionEnabled = true
-    //            SwiftNotice.clear()
-    //
-    //        })
-    //
-    //    }
     func clearAllNotice() {
         DispatchQueue.main.async(execute: {
             self.view.isUserInteractionEnabled = true
@@ -70,7 +61,7 @@ extension UIWindow{
 class SwiftNotice: NSObject {
 
     static var mainViews = Array<UIView>()
-    static let rv =   UIWindow.keyWin//(UIApplication.shared.keyWindow?.subviews.first)! as UIView
+    static let rv =   UIWindow.keyWin
 
     static func clear() {
         for i in mainViews {
@@ -87,17 +78,10 @@ class SwiftNotice: NSObject {
 
 
         let mainView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width , height:  UIScreen.main.bounds.height))
-        //UIView(frame: CGRect(x: 0, y: 0, width: 6000 , height: 6000))
-
         mainView.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 0.4)
-
-
         var myView = UIView()
         var lbl = UILabel()
         myView.frame.size = CGSize(width: 200, height: 100)
-
-
-
         let ai = UIActivityIndicatorView()
         ai.frame = CGRect(x: 0, y:0, width: 36, height: 36)
         ai.color = UIColor.white
@@ -112,20 +96,10 @@ class SwiftNotice: NSObject {
 
         myView.center = mainView.center
         mainView.addSubview(myView)
-
-        //   ai.center = mainView.center
-
-
-
-
-        // mainView.addSubview(ai)
-
         mainView.center = rv.center
         rv.addSubview(mainView)
 
         mainViews.append(mainView)
-        //
-
     }
     @objc func clean (){
 

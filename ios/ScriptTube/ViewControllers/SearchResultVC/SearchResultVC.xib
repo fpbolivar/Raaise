@@ -35,7 +35,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="q6x-yI-Aff">
-                    <rect key="frame" x="34" y="118.5" width="15" height="13.5"/>
+                    <rect key="frame" x="42" y="118.5" width="15" height="13.5"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -78,7 +78,7 @@
                 <constraint firstItem="yKw-Og-1Ol" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Go1-6r-rto"/>
                 <constraint firstItem="Ky2-Zl-RO3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fNY-Xc-lOy"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Ky2-Zl-RO3" secondAttribute="bottom" id="fO0-la-svv"/>
-                <constraint firstItem="q6x-yI-Aff" firstAttribute="centerX" secondItem="lpr-e7-Ovj" secondAttribute="centerX" multiplier="0.2" id="gD0-80-6go"/>
+                <constraint firstItem="q6x-yI-Aff" firstAttribute="centerX" secondItem="lpr-e7-Ovj" secondAttribute="centerX" multiplier="0.24" id="gD0-80-6go"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="yKw-Og-1Ol" secondAttribute="trailing" id="qVu-vY-vG2"/>
                 <constraint firstItem="yKw-Og-1Ol" firstAttribute="top" secondItem="lpr-e7-Ovj" secondAttribute="bottom" constant="20" id="qy4-Pw-Gid"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lpr-e7-Ovj" secondAttribute="trailing" constant="20" id="sDq-M4-az7"/>

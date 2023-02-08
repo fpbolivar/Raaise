@@ -54,6 +54,9 @@ import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicData;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.VideoDonationModal;
+import com.raaise.android.model.VideoDonationPojo;
+import com.raaise.android.model.WithdrawalsPojo;
 
 import java.util.ArrayList;
 
@@ -161,4 +164,8 @@ public interface ApiManager {
     void DonationHistory(String Token, DataCallback<UserDonationHistoryModel> Callback);
 
     void VideoDonationHistory(String Token, UserVideoDonationHistoryModel userVideoDonationHistoryModel, DataCallback<UserVideoDonationHistoryModel> Callback);
+
+    void getVideoDonationHistory(String token, VideoDonationModal videoDonationPojo, DataCallback<VideoDonationPojo> callback);
+
+    void getUSerWithdrawals(String token, DataCallback<WithdrawalsPojo> callback);
 }

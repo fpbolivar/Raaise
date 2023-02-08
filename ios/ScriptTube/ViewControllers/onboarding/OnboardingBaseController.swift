@@ -101,16 +101,6 @@ class OnboardingBaseController: UIViewController,UIScrollViewDelegate {
         view.frame = CGRect(x: holderScrollView.frame.width*CGFloat(index), y:0, width: holderScrollView.frame.width, height: holderScrollView.frame.height)
         holderScrollView.addSubview(view)
     }
-
-    /*
-     // MARK: - Navigation
-
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     @IBAction func skipBtnAction(_ sender: AnyObject) {
         gotoLogin();
     }
@@ -133,12 +123,10 @@ class OnboardingBaseController: UIViewController,UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
         let pageIndex = round(scrollView.contentOffset.x/view.frame.width)
-        // pageControl.currentPage = Int(pageIndex)
           pageno = Int(pageIndex)
         print(pageno)
         pageControll.currentpage = pageno
         updateProgress(index:pageno);
-     //  pageControl.set_view(arrayOnboarding.count, current: pageno, current_color: .white)
         pageControl.scroll_did(scrollView)
 
     }

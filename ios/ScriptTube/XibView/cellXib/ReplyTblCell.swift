@@ -31,6 +31,7 @@ class ReplyTblCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    //MARK: - Update Data
     func setup(data:ReplyDataModel){
         replyData = data
         self.commentLbl.text = data.reply
@@ -40,14 +41,12 @@ class ReplyTblCell: UITableViewCell {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let date = dateFormatter.date(from: data.replyTime)
-        print("date: \(date)")
         let currentDate = Date()
         if currentDate.offsetFrom(date: date!) == ""{
             self.timeLbl.text = "Just Now"
         }else{
             self.timeLbl.text = currentDate.offsetFrom(date: date!)
         }
-        //loadImg(url: data.commentprofileImage)
     }
     @objc func gotoProfile(){
         delegate?.gotoProfile(withId: replyData.userId)

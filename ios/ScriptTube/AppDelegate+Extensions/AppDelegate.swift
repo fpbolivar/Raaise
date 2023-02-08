@@ -21,20 +21,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enableAutoToolbar = true
         IQKeyboardManager.shared.shouldShowToolbarPlaceholder = false
         IQKeyboardManager.shared.previousNextDisplayMode = .alwaysHide
-        sleep(2)
-        //Facebook Login
+        
+        ///Facebook Login
         ApplicationDelegate.shared.application(
             application,
             didFinishLaunchingWithOptions:
             launchOptions
         )
-        //Googole Sign In
+        
+        ///Googole Sign In
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
           if error != nil || user == nil {
             // Show the app's signed-out state.
-              print("GOOGLE SIGN IN ERROR",error)
+              print("GOOGLE SIGN IN ERROR",error?.localizedDescription as Any)
           } else {
-              print("GOOGLE SIGN IN COMPLETE",user)
+              print("GOOGLE SIGN IN COMPLETE",user as Any)
             // Show the app's signed-in state.
           }
         }

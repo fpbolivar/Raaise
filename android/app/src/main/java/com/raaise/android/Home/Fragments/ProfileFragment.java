@@ -2,7 +2,6 @@ package com.raaise.android.Home.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,16 +109,16 @@ public class ProfileFragment extends Fragment implements GetAllUserVideoAdapter.
                     } else {
                         FollowersTextView.setText("Followers");
                     }
-                    userShortBio.setText(getUserProfile.data.shortBio == null ? "" : getUserProfile.data.shortBio);
+                    userShortBio.setText(getUserProfile.data.shortBio == null ? "" : getUserProfile.data.shortBio.replace("\n", " "));
                     if (getUserProfile.getData().isVerified()) {
                         Verification_Badge.setVisibility(View.VISIBLE);
                     }
                     Glide.with(v.getContext())
-                            .load(getUserProfile.getData().getProfileImage())
+                            .load(Prefs.GetBaseUrl(getContext()) + getUserProfile.getData().getProfileImage())
                             .circleCrop()
                             .placeholder(R.drawable.placeholder)
                             .into(ProfileImage);
-                    totalDonationTV.setText(String.format("Total Donated ($%s)", (getUserProfile.getData().getDonatedAmount().equalsIgnoreCase("0")) ? "00:00" : getUserProfile.getData().getDonatedAmount()));
+                    totalDonationTV.setText(String.format("Total Supported ($%s)", (getUserProfile.getData().getDonatedAmount().equalsIgnoreCase("0")) ? "00:00" : getUserProfile.getData().getDonatedAmount()));
                     GetAllUserVideo();
                 } catch (Exception e) {
                     e.printStackTrace();

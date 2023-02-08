@@ -301,6 +301,7 @@
                 android:id="@+id/DollarDonation1"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:visibility="gone"
                 android:src="@drawable/donation_in_single" />
 
             <TextView
@@ -308,6 +309,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Donation"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textFontWeight="300"
                 android:textSize="12dp" />
@@ -398,6 +400,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:gravity="center"
+            android:visibility="gone"
             android:src="@drawable/more_options_btns" />
 
     </LinearLayout>

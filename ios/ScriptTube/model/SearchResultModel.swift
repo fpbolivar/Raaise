@@ -4,7 +4,7 @@
 //
 //  Created by Code Optimal Solutions Ios on 23/12/22.
 //
-
+//MARK: - Data Model for Search Result
 import Foundation
 class SearchResultModel{
     var audioResult:[AudioDataModel] = []
@@ -25,7 +25,6 @@ class SearchResultModel{
         data["users"].forEach { (message,json) in
             self.userResult.append(UserProfileData(data: json))
         }
-        print("SEARHCSJ",self.self.audioResult.count,self.postResult.count,self.userResult.count)
     }
     func resultIsEmpty()->Bool{
         return audioResult.isEmpty && postResult.isEmpty && userResult.isEmpty

@@ -106,10 +106,10 @@
             android:layout_marginTop="4dp"
             android:fontFamily="@font/noto_sans"
             android:gravity="center"
-            android:text="Total Donated"
+            android:text="Total Supported"
             android:textColor="@color/white"
             android:textFontWeight="300"
-            android:textSize="10sp"
+            android:textSize="11sp"
             android:textStyle="bold" />
 
         <TextView
@@ -135,7 +135,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/noto_sans"
             android:gravity="center"
-            android:maxLines="2"
+            android:maxLines="1"
             android:text=""
             android:textColor="@color/DarkGrey"
             android:textSize="12sp"

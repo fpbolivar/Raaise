@@ -20,6 +20,15 @@ class SharePopUp: BaseControllerVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
+        setup()
+        let param = ["limit":"10","page":"\(page)"]
+        getChatListApi(param: param) {
+            self.setupTable()
+        }
+        // Do any additional setup after loading the view.
+    }
+    //MARK: - Setup
+    func setup(){
         searchTf.attributedPlaceholder = NSAttributedString(string: "Search Users",attributes: [.foregroundColor: UIColor.lightGray])
         searchTf.paddingLeftRightTextField(left: 35, right: 0)
         searchTf.layer.cornerRadius = 10
@@ -27,23 +36,25 @@ class SharePopUp: BaseControllerVC {
         tableView.register(UINib(nibName: SelectionCell.identifier, bundle: nil), forCellReuseIdentifier: SelectionCell.identifier)
         otherImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(shareToOtherApp)))
         searchTf.delegate = self
-        let param = ["limit":"10","page":"\(page)"]
-        getChatListApi(param: param) {
-            self.setupTable()
-        }
-        // Do any additional setup after loading the view.
     }
+    func setupTable(){
+        DispatchQueue.main.async {
+            self.tableView.delegate = self
+            self.tableView.dataSource = self
+            self.tableView.reloadData()
+        }
+    }
+
     @objc func shareToOtherApp(){
         delegate?.shareToOtherApp()
     }
-    
+   
     @IBAction func dismissBtn(_ sender: Any) {
         self.dismiss(animated: true)
     }
+    //MARK: - Sharing Video Api's
     func getChatListApi(param:[String:String],completion:@escaping()->Void){
-        
         DataManager.getChatListAPI(delegate: self, param: param) { json in
-            //
             json["data"].forEach { (message,data) in
                 print("MESAGE",message)
                 self.userListData.append(ChatChannelModel(data: data))
@@ -58,14 +69,8 @@ class SharePopUp: BaseControllerVC {
             completion(videoDetail["videoShareCount"].stringValue)
         }
     }
-    func setupTable(){
-        DispatchQueue.main.async {
-            self.tableView.delegate = self
-            self.tableView.dataSource = self
-            self.tableView.reloadData()
-        }
-    }
 }
+//MARK: - Table View Delegates
 extension SharePopUp:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return userListData.count
@@ -81,8 +86,6 @@ extension SharePopUp:UITableViewDelegate,UITableViewDataSource{
         self.dismiss(animated: true){
             self.sharePost { count in
                 self.delegate?.newShareCount(count: count,otherUser:self.userListData[indexPath.row].otherUser,slug:self.userListData[indexPath.row].slug)
-                
-               // self.dismiss(animated: true)
             }
         }
         
@@ -90,6 +93,7 @@ extension SharePopUp:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
+    //MARK: - Pagination
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let height = scrollView.frame.size.height
         let contentYOffset = scrollView.contentOffset.y
@@ -104,13 +108,9 @@ extension SharePopUp:UITableViewDelegate,UITableViewDataSource{
         }
     }
 }
-protocol SharePopUpDelegate{
-    func shareToOtherApp()
-    func newShareCount(count:String,otherUser:UserProfileData,slug:String)
-}
+//MARK: - Search Extension
 extension SharePopUp:UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        //print(textField.text)
         NSObject.cancelPreviousPerformRequests(
             withTarget: self,
             selector: #selector(getHintsFromTextField),
@@ -120,12 +120,9 @@ extension SharePopUp:UITextFieldDelegate{
             with: textField,
             afterDelay: 0.5)
         return true
-//        return true
     }
     @objc func getHintsFromTextField(textField: UITextField) {
-        print("Hints for textField: \(textField.text)")
         if !textField.text!.isEmpty{
-            print(textField.text)
             let param = ["search":textField.text!,"limit":"10","page":"1"]
             self.userListData = []
             getChatListApi(param: param) {
@@ -153,4 +150,9 @@ extension SharePopUp:UITextFieldDelegate{
             }
         }
     }
+}
+//MARK: - Protocols
+protocol SharePopUpDelegate{
+    func shareToOtherApp()
+    func newShareCount(count:String,otherUser:UserProfileData,slug:String)
 }

@@ -267,4 +267,16 @@ public class SearchFragment extends Fragment implements SearchScreenAudioListAda
         } else
             return null;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (App.fromTryAudio){
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.FragmentContainer, new CameraFragment())
+                    .commit();
+        }
+    }
 }

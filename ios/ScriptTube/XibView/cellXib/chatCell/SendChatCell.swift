@@ -26,6 +26,7 @@ class SendChatCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    //MARK: - Update Data
     func updateCell(data:ChatModel){
         chat = data
         messageLbl.text = data.message
@@ -39,6 +40,7 @@ class SendChatCell: UITableViewCell {
     }
     
 }
+//MARK: - Caontextual Menu Delegate
 extension SendChatCell:UIContextMenuInteractionDelegate{
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in

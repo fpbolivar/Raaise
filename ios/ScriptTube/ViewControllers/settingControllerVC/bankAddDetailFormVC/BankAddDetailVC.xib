@@ -12,16 +12,19 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BankAddDetailVC" customModule="ScriptTube" customModuleProvider="target">
             <connections>
+                <outlet property="accountHolderLastName" destination="upV-Ps-xaR" id="gE7-w1-zUS"/>
                 <outlet property="accountNameTF" destination="R3E-Sk-n2l" id="YSm-dc-CtE"/>
                 <outlet property="accountNoTF" destination="Sqd-gY-bwH" id="jB1-aq-rFd"/>
                 <outlet property="addressTf" destination="Ofs-QR-tcj" id="a6j-8Q-UDb"/>
                 <outlet property="cityTf" destination="WTJ-mj-IUt" id="gyg-Eu-X4R"/>
                 <outlet property="cnfAccountNoTF" destination="BdN-Jm-DE3" id="KAa-ra-sSb"/>
                 <outlet property="descriptionLbl" destination="sL0-Iy-CHp" id="d0A-YG-8NM"/>
+                <outlet property="dobTf" destination="Gat-No-8wU" id="tUj-PE-VRB"/>
                 <outlet property="phoneNumberTf" destination="8CC-q4-VWa" id="qv5-aO-LWC"/>
                 <outlet property="postalCodeTf" destination="IOL-Ot-KKz" id="kbM-Wy-0Wp"/>
                 <outlet property="routingNoTF" destination="vIq-B8-bIt" id="Cb5-Vo-Bt8"/>
                 <outlet property="saveLbl" destination="h5h-Br-cL8" id="IMT-6E-kQl"/>
+                <outlet property="ssnTf" destination="2X5-vC-c3Z" id="g78-55-kb9"/>
                 <outlet property="stateTf" destination="0ty-eV-4yU" id="P5t-Mt-vNb"/>
                 <outlet property="submitBtn" destination="Zuu-Pn-Bgx" id="WQG-1c-RDH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -36,7 +39,7 @@
                     <rect key="frame" x="0.0" y="48" width="414" height="848"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="z2f-By-eQV">
-                            <rect key="frame" x="20" y="0.0" width="374" height="698.5"/>
+                            <rect key="frame" x="20" y="0.0" width="374" height="770"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="prP-Kx-Hwf">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
@@ -45,14 +48,14 @@
                                         <constraint firstAttribute="height" constant="70" id="sT3-de-8nH"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sL0-Iy-CHp" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="85" width="374" height="31.5"/>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sL0-Iy-CHp" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="77.5" width="374" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account holder name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R3E-Sk-n2l">
-                                    <rect key="frame" x="0.0" y="131.5" width="374" height="44"/>
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account holder first name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R3E-Sk-n2l">
+                                    <rect key="frame" x="0.0" y="85" width="374" height="44"/>
                                     <color key="backgroundColor" name="TFcolor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="ebp-CL-Osw"/>
@@ -61,8 +64,18 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account holder last name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="upV-Ps-xaR">
+                                    <rect key="frame" x="0.0" y="144" width="374" height="44"/>
+                                    <color key="backgroundColor" name="TFcolor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="7EJ-hB-Cl8"/>
+                                    </constraints>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sqd-gY-bwH">
-                                    <rect key="frame" x="0.0" y="190.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="203" width="374" height="44"/>
                                     <color key="backgroundColor" name="TFcolor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="Wmn-QS-TQO"/>
@@ -72,7 +85,7 @@
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Account number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BdN-Jm-DE3">
-                                    <rect key="frame" x="0.0" y="249.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="262" width="374" height="44"/>
                                     <color key="backgroundColor" name="TFcolor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="FuK-cW-jZ8"/>
@@ -82,7 +95,7 @@
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Routing Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vIq-B8-bIt">
-                                    <rect key="frame" x="0.0" y="308.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="321" width="374" height="44"/>
                                     <color key="backgroundColor" name="TFcolor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="k2j-UG-1ZB"/>
@@ -92,7 +105,7 @@
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="9sp-Og-hpH">
-                                    <rect key="frame" x="0.0" y="367.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="380" width="374" height="44"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WTJ-mj-IUt">
                                             <rect key="frame" x="0.0" y="0.0" width="179.5" height="44"/>
@@ -116,8 +129,33 @@
                                         </textField>
                                     </subviews>
                                 </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Dc9-Q3-zKM">
+                                    <rect key="frame" x="0.0" y="439" width="374" height="44"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="D.O.B" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gat-No-8wU">
+                                            <rect key="frame" x="0.0" y="0.0" width="179.5" height="44"/>
+                                            <color key="backgroundColor" name="TFcolor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="Bso-tB-MhN"/>
+                                            </constraints>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSN(Last 4 digit)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2X5-vC-c3Z">
+                                            <rect key="frame" x="194.5" y="0.0" width="179.5" height="44"/>
+                                            <color key="backgroundColor" name="TFcolor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="K5Z-z7-kkh"/>
+                                            </constraints>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        </textField>
+                                    </subviews>
+                                </stackView>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ofs-QR-tcj">
-                                    <rect key="frame" x="0.0" y="426.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="498" width="374" height="44"/>
                                     <color key="backgroundColor" name="TFcolor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="W4Z-eb-LN3"/>
@@ -127,7 +165,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Postal Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IOL-Ot-KKz">
-                                    <rect key="frame" x="0.0" y="485.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="557" width="374" height="44"/>
                                     <color key="backgroundColor" name="TFcolor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="YQK-th-iyq"/>
@@ -137,7 +175,7 @@
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8CC-q4-VWa">
-                                    <rect key="frame" x="0.0" y="544.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="616" width="374" height="44"/>
                                     <color key="backgroundColor" name="TFcolor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="mOZ-Oa-Aea"/>
@@ -147,14 +185,14 @@
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ML0-v6-7mI">
-                                    <rect key="frame" x="0.0" y="603.5" width="374" height="20"/>
+                                    <rect key="frame" x="0.0" y="675" width="374" height="20"/>
                                     <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="Ahc-sT-dIZ"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygZ-WC-VqP" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="638.5" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="710" width="374" height="44"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zuu-Pn-Bgx">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
@@ -189,7 +227,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ds-It-Yse">
-                                    <rect key="frame" x="0.0" y="697.5" width="374" height="1"/>
+                                    <rect key="frame" x="0.0" y="769" width="374" height="1"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="hq9-gM-7hQ"/>

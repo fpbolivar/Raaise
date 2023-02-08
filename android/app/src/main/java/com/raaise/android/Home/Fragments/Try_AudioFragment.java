@@ -2,23 +2,31 @@ package com.raaise.android.Home.Fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -62,6 +70,21 @@ public class Try_AudioFragment extends Fragment {
     boolean playing = false;
     private AudioManager mAudioManager;
 
+    private long downloadID;
+    private final BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+
+            if (downloadID == id) {
+                Dialogs.HideProgressDialog();
+                requireActivity().onBackPressed();
+
+            }
+        }
+    };
+
     public Try_AudioFragment(String audioId) {
         AudioId = audioId;
     }
@@ -76,6 +99,7 @@ public class Try_AudioFragment extends Fragment {
         Initialization();
         ClickListeners();
         HitGetVideoBaseOnAudioAPi();
+        getActivity().registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
         return v;
     }
@@ -98,7 +122,9 @@ public class Try_AudioFragment extends Fragment {
                 list.addAll(getVideosBasedOnAudioIdModel.getVideos());
                 adapter.notifyDataSetChanged();
                 MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-                retriever.setDataSource(AudioLink);
+                Log.i("audioLink", "onSuccess: " + (retriever == null) + AudioLink);
+                String link = Prefs.GetBaseUrl(getContext()) + AudioLink;
+                retriever.setDataSource(link);
                 String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
                 long timeInmillisec = Long.parseLong(time);
                 long duration = timeInmillisec / 1000;
@@ -192,11 +218,12 @@ public class Try_AudioFragment extends Fragment {
                 mMediaPlayer.stop();
                 mMediaPlayer.reset();
             }
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.try_audio_container, new TryAudioCameraFragment(AudioLink, AudioID, AudioName, 1), null)
-                    .commit();
+//            getActivity().getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .setReorderingAllowed(true)
+//                    .replace(R.id.try_audio_container, new TryAudioCameraFragment(AudioLink, AudioID, AudioName, 1), null)
+//                    .commit();
+            beginDownload(AudioLink);
 
 
         });
@@ -227,7 +254,7 @@ public class Try_AudioFragment extends Fragment {
                         public void run() {
                             int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                             if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                                mMediaPlayer = MediaPlayer.create(getActivity(), Uri.parse(AudioLink));
+                                mMediaPlayer = MediaPlayer.create(getActivity(), Uri.parse(Prefs.GetBaseUrl(getContext()) + AudioLink));
                                 mMediaPlayer.start();
                                 mMediaPlayer.setOnCompletionListener(mCompletionListener);
                             }
@@ -238,6 +265,40 @@ public class Try_AudioFragment extends Fragment {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void beginDownload(String audioLink) {
+        try {
+            Dialogs.createProgressDialog(getContext());
+            DownloadManager.Request downloadRequest = new DownloadManager.Request(Uri.parse(Prefs.GetBaseUrl(getContext()) + audioLink));
+
+
+            String title = URLUtil.guessFileName(audioLink, null, null);
+            App.musicTitle = title;
+//            ((Home) requireActivity()).musicData = new Gson().toJson(data);
+            App.fromTryAudio = true;
+
+            downloadRequest.setTitle(title);
+
+            downloadRequest.setDescription("Downloading, Please Wait...!!!");
+
+            String cookie = CookieManager.getInstance().getCookie(audioLink);
+
+            downloadRequest.addRequestHeader("cookie", cookie);
+
+            downloadRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
+            downloadRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
+
+            downloadRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
+
+
+            DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+            downloadID = downloadManager.enqueue(downloadRequest);
+        } catch (Exception e) {
+            Log.i("downloadException", "beginDownload: " + e.getMessage());
+            Dialogs.HideProgressDialog();
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void releaseMediaPlayer() {
@@ -319,5 +380,14 @@ public class Try_AudioFragment extends Fragment {
         }
     };
 
-
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mMediaPlayer != null) {
+            if (mMediaPlayer.isPlaying()) {
+                mMediaPlayer.stop();
+                releaseMediaPlayer();
+            }
+        }
+    }
 }

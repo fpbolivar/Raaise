@@ -105,7 +105,7 @@ public class ShowUserVideoFragment extends Fragment implements View.OnClickListe
 
         try {
             File f = new File(path);
-            String WaterMarkVideoName = "Scriptube_share" + new Date().getTime();
+            String WaterMarkVideoName = "Raaise_share" + new Date().getTime();
             String command = "-i " + f.getPath() + " -i " + Uri.parse(StringHelper.WaterMarkLogo) + " -filter_complex \"[1]scale=iw/2:-1[wm];[0][wm]  overlay=20:main_h-overlay_h\" " + Environment.getExternalStorageDirectory() + "/" + "Scriptube" + "/" + App.getContext().getPackageName() + "/" + "Shared_Videos" + "/" + WaterMarkVideoName + ".mp4";
             FFmpeg.executeAsync(command, new ExecuteCallback() {
                 @Override
@@ -325,7 +325,9 @@ public class ShowUserVideoFragment extends Fragment implements View.OnClickListe
         });
         delete_video_btn.setOnClickListener(view -> {
             dialog.dismiss();
-            HitDeleteVideoApi(slug, list, position);
+
+            showConfirmationDialog(slug, list, position);
+
         });
 
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -334,6 +336,28 @@ public class ShowUserVideoFragment extends Fragment implements View.OnClickListe
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.setCancelable(true);
         dialog.show();
+    }
+
+    private void showConfirmationDialog(String slug, List<GetAllUserVideoModel.Data> list, int position) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.delete_video_dialog);
+
+        TextView deleteVdoBtn = dialog.findViewById(R.id.yes_btn);
+        TextView noBtn = dialog.findViewById(R.id.no_btn);
+        noBtn.setOnClickListener(view -> dialog.dismiss());
+
+        deleteVdoBtn.setOnClickListener(view -> {
+            dialog.dismiss();
+            HitDeleteVideoApi(slug, list, position);
+        });
+
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.setCancelable(true);
+        dialog.show();
+
     }
 
     private void ShowEditVideoSheet(String slug, TextView caption, String link, String captionText, List<GetAllUserVideoModel.Data> list, int position) {
@@ -547,7 +571,7 @@ public class ShowUserVideoFragment extends Fragment implements View.OnClickListe
         protected String doInBackground(String... strings) {
             InputStream input = null;
             OutputStream output = null;
-            String DestinationFilePath = Environment.getExternalStorageDirectory() + "/" + "Scriptube" + "/" + App.getContext().getPackageName() + "/" + "Shared_Videos" + "/";
+            String DestinationFilePath = Environment.getExternalStorageDirectory() + "/" + "Raaise" + "/" + App.getContext().getPackageName() + "/" + "Shared_Videos" + "/";
             File fell = new File(DestinationFilePath);
 
             if (fell.exists()) {

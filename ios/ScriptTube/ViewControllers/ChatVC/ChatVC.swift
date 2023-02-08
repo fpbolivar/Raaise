@@ -36,9 +36,6 @@ class ChatVC: BaseControllerVC {
             }
             guard let i = i else{return}
             self.chatData.remove(at: i)
-//            self.chatData.removeAll { chat in
-//                chat.id == data
-//            }
             DispatchQueue.main.async {
                 self.tableView.deleteRows(at: [IndexPath(row: i, section: 1)], with: .fade)
             }
@@ -52,12 +49,6 @@ class ChatVC: BaseControllerVC {
             self.chatSlug = data["chatSlug"].stringValue
            
         }
-//        ch.listenUser2(otherUser: otherUser.id) { data in
-//            self.appendChat(data: data)
-//            self.chatSlug = data["chatSlug"].stringValue
-//
-//
-//        }
         ch.getChat { data in
             self.appendChat(data: data)
         }
@@ -76,23 +67,21 @@ class ChatVC: BaseControllerVC {
         super.viewDidDisappear(animated)
         ch.stop()
     }
+    //MARK: - Append Chat
     func appendChat(data:JSON){
-        print("CHATTTT",data)
+        
         self.chatData.append(ChatModel(data: data))
         DispatchQueue.main.async {
-            print("CHATTTT2",data)
-//            print("CHATTTT3",self.tableView.numberOfRows(inSection: 1),self.chatData.count)
-            let i = self.tableView.numberOfRows(inSection: 1)
             
             if self.tableView.numberOfRows(inSection: 1) == self.chatData.count - 1{
                 self.tableView.insertRows(at: [IndexPath(row: self.chatData.count - 1, section: 1)], with: .bottom)
-                print("CHATTTT3",self.tableView.numberOfRows(inSection: 1),self.chatData.count)
+                
             }else{
                 let arr = (self.tableView.numberOfRows(inSection: 1)..<(self.chatData.count)).map({IndexPath(row: $0, section: 1)})
                 self.tableView.beginUpdates()
                 self.tableView.insertRows(at: arr, with: .bottom)
                 self.tableView.endUpdates()
-                print("CHATTTT4",data)
+               
             }
         }
         self.scrollToLastMsg()
@@ -121,14 +110,13 @@ class ChatVC: BaseControllerVC {
             }
         }
     }
+    //MARK: - Api Method
     func getchat(pagination:Bool = false,completion:@escaping()->Void){
         let param = ["limit":"15","page":"\(page)","chatSlug":chatSlug]
-        //let param = ["limit":"15","page":"\(page)","senderId":AuthManager.currentUser.id,"receiverId":otherUser.id]
         print("GETCHATPARAm",param)
         DataManager.getChatApi(delegate: self, param: param) { json in
             print("chatget",json)
             json["data"].forEach { (_,data) in
-                //
                 if pagination{
                     self.chatData.insert(ChatModel(data: data), at:0)
                 }else{
@@ -138,16 +126,13 @@ class ChatVC: BaseControllerVC {
             completion()
         }
     }
+    //MARK: - Setup
     func setup(){
-//        messageTf.paddingLeftRightTextField(left: 20, right: 0)
-//        messageTf.attributedPlaceholder = NSAttributedString(string: "Message....",attributes: [.foregroundColor:UIColor.lightGray])
         tableView.register(UINib(nibName: ChatHeaderCell.identifier, bundle: nil), forCellReuseIdentifier: ChatHeaderCell.identifier)
         tableView.register(UINib(nibName: ChatCell.identifier, bundle: nil), forCellReuseIdentifier: ChatCell.identifier)
         tableView.register(UINib(nibName: SendChatCell.identifier, bundle: nil), forCellReuseIdentifier: SendChatCell.identifier)
         tableView.register(UINib(nibName: SendVideoCell.identifier, bundle: nil), forCellReuseIdentifier: SendVideoCell.identifier)
         tableView.register(UINib(nibName: ChatVideoCell.identifier, bundle: nil), forCellReuseIdentifier: ChatVideoCell.identifier)
-//        tableView.register(UINib(nibName: ChatHeaderView.identifier, bundle: nil), forHeaderFooterViewReuseIdentifier: ChatHeaderView.identifier)
-        
     }
     func setupTable(){
         DispatchQueue.main.async {
@@ -156,6 +141,7 @@ class ChatVC: BaseControllerVC {
             self.tableView.reloadData()
         }
     }
+    //MARK: - Pagination
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let scroll = scrollView as? UITableView else{
             return
@@ -245,17 +231,6 @@ extension ChatVC: UITableViewDelegate, UITableViewDataSource{
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch chatData[indexPath.row].messageType{
-        case .text:
-            print("NOACTIONFORTEXTCELL LUDBAK")
-        case .video:
-            print("NOACTIONFORTEXTCELL LUDBAK")
-//            let vc = ViewVideoVC()
-//            vc.slug = chatData[indexPath.row].videoSlug
-//            self.navigationController?.pushViewController(vc, animated: false)
-        case .none:
-            print("UNKOWNCELL CLICKED")
-        }
     }
 }
 

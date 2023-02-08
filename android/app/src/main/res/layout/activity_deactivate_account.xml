@@ -125,7 +125,7 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
-                android:text="Your porfile, photos, comments and likes\nwill be hidden until you enable it by logging back in."
+                android:text="Your profile, photos, comments and likes\nwill be hidden until you enable it by logging back in."
                 android:textColor="@color/TextColor"
                 android:textFontWeight="300"
                 android:textSize="12sp" />

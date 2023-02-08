@@ -22,6 +22,7 @@ class DeactivateAccountVC: BaseControllerVC {
         setfonts()
         // Do any additional setup after loading the view.
     }
+    //MARK: -Setup
     func setfonts(){
         submitLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
         questionLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX22)
@@ -32,21 +33,20 @@ class DeactivateAccountVC: BaseControllerVC {
         nameLbl.text = AuthManager.currentUser.name
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
         profileImage.loadImgForProfile(url: AuthManager.currentUser.profileImage)
-        //loadImg(url: AuthManager.currentUser.profileImage)
     }
     @IBAction func submitBtnClicked(_ sender: Any) {
         createDeactivateAlert()
     }
+    //MARK: -Api method
     func deactivateApi(completion:@escaping()->Void){
         AuthManager.deactivateAccount(delegate: self, param: ["userId":AuthManager.currentUser.id]) {
             DispatchQueue.main.async {
-                //ToastManager.successToast(delegate: self, msg: "Account Deactivated")
                 completion()
             }
         }
     }
     func createDeactivateAlert(){
-        let alert = UIAlertController(title: "ScripTube", message: "Are you sure you want to Deactivate Your Account?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Raaise App", message: "Are you sure you want to Deactivate Your Account?", preferredStyle: .alert)
         let logOutAction = UIAlertAction(title: "Deactivate Account", style: .destructive){action in
             if(!(Constant.check_Internet?.isReachable)!){
                 AlertView().showInternetErrorAlert(delegate: self)

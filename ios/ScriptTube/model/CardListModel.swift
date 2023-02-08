@@ -4,7 +4,7 @@
 //
 //  Created by Code Optimal Solutions Ios on 19/12/22.
 //
-
+//MARK: - Data Model for Cards List For Payment
 import Foundation
 
 class CardListModel{

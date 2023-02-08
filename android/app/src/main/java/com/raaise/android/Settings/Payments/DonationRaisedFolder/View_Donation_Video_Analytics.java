@@ -1,6 +1,8 @@
 package com.raaise.android.Settings.Payments.DonationRaisedFolder;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +37,33 @@ public class View_Donation_Video_Analytics extends AppCompatActivity {
         setContentView(R.layout.activity_view_donation_video_analytics);
         Initialization();
         ClickListeners();
-        HitApi();
+        Intent intent = getIntent();
+        String videoID = intent.getStringExtra("HistoryVideoId");
+        Log.i("videoIDS", "onCreate: " + videoID);
+        Log.i("videoIDS", "onCreate: " + Prefs.GetBearerToken(this));
+
+//        VideoDonationModal modal = new VideoDonationModal(videoID);
+//        apiManager.getVideoDonationHistory(Prefs.GetBearerToken(this), modal, new DataCallback<VideoDonationPojo>() {
+//            @Override
+//            public void onSuccess(VideoDonationPojo videoDonationPojo) {
+//                Log.i("apiResponse", "onSuccess: " + new Gson().toJson(videoDonationPojo));
+//                if (videoDonationPojo.getData() != null){
+//                    totalPostsTV.setText("" + videoDonationPojo.getData().size());
+//                }
+//                TotalRaisedInVideoAnalytics.setText(videoDonationPojo.getRaisedDonationAmount());
+//                TotalWithdrawalInVideoAnalytics.setText(videoDonationPojo.getCompletedDonationAmount());
+//                AmountToBeClaimedInVideoAnalytics.setText(videoDonationPojo.getClaimedAmount());
+//
+//                if (videoDonationPojo.getData() != null)
+//                    adapter.setList(videoDonationPojo.getData());
+//
+//            }
+//
+//            @Override
+//            public void onError(ServerError serverError) {
+//                Log.i("apiResponse", "onError: " + serverError.error);
+//            }
+//        });
     }
 
     private void HitApi() {

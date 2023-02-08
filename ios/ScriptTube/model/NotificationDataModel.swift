@@ -4,7 +4,7 @@
 //
 //  Created by Code Optimal Solutions Ios on 26/12/22.
 //
-
+//MARK: - Data Model for Single Notification
 import Foundation
 
 class NotificationDataModel{
@@ -22,7 +22,6 @@ class NotificationDataModel{
     init(data:JSON){
         self.id = data[NotificationKeys.id.rawValue].stringValue
         setNotificationType(text: data[NotificationKeys.type.rawValue].stringValue)
-       // self.type =
         self.name = data[NotificationKeys.name.rawValue].stringValue
         self.profileImage = data[NotificationKeys.profileImage.rawValue].stringValue
         self.message = data[NotificationKeys.message.rawValue].stringValue

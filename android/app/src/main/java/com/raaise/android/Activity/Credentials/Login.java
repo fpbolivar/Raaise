@@ -24,8 +24,10 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.FacebookLoginModel;
+import com.raaise.android.ApiManager.ApiModels.GetPolicyModel;
 import com.raaise.android.ApiManager.ApiModels.GoogleLoginModel;
 import com.raaise.android.ApiManager.ApiModels.LoginModel;
 import com.raaise.android.ApiManager.DataCallback;
@@ -105,9 +107,22 @@ public class Login extends AppCompatActivity {
                     public void onSuccess(GoogleLoginModel googleLoginModel) {
                         Dialogs.HideProgressDialog();
                         try {
-                            Prefs.SetBearerToken(getApplicationContext(), googleLoginModel.getToken());
-                            startActivity(new Intent(getApplicationContext(), Home.class));
-                            finish();
+
+                            apiManager.GetPolicy(googleLoginModel.token, new GetPolicyModel("s3bucket"), new DataCallback<GetPolicyModel>() {
+                                @Override
+                                public void onSuccess(GetPolicyModel getPolicyModel) {
+                                    Prefs.SetBaseUrl(Login.this, getPolicyModel.getData().getDescription());
+                                    Prefs.SetBearerToken(getApplicationContext(), googleLoginModel.getToken());
+                                    startActivity(new Intent(getApplicationContext(), Home.class));
+                                    finish();
+                                }
+
+                                @Override
+                                public void onError(ServerError serverError) {
+
+                                }
+                            });
+
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -203,18 +218,33 @@ public class Login extends AppCompatActivity {
                 if (task.isSuccessful()) {
 
                     LoginPojo loginPojo = new LoginPojo(Email, Password, task.getResult());
+                    Log.i("loginPojo", "PerformLogin: " + new Gson().toJson(loginPojo));
                     apiManager.Login(loginPojo, new DataCallback<LoginModel>() {
                         @Override
                         public void onSuccess(LoginModel loginModel) {
                             Dialogs.HideProgressDialog();
-                            try {
-                                Prefs.SetBearerToken(getApplicationContext(), loginModel.getToken());
-                                startActivity(new Intent(getApplicationContext(), Home.class));
-                                Log.i("Token", loginModel.getToken());
-                                finish();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+                                Log.i("loginPojo", "PerformLogin: success " + new Gson().toJson(loginModel));
+                                apiManager.GetPolicy(loginModel.token, new GetPolicyModel("s3bucket"), new DataCallback<GetPolicyModel>() {
+                                    @Override
+                                    public void onSuccess(GetPolicyModel getPolicyModel) {
+                                        Log.i("loginPojo", "PerformLogin: success s3Bucket " + getPolicyModel.getData().getDescription());
+                                        Prefs.SetBaseUrl(Login.this, getPolicyModel.getData().getDescription());
+                                        Prefs.SetBearerToken(getApplicationContext(), loginModel.getToken());
+                                        startActivity(new Intent(getApplicationContext(), Home.class));
+                                        Log.i("Token", loginModel.getToken());
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onError(ServerError serverError) {
+
+                                    }
+                                });
+
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
                         }
 
                         @Override
@@ -241,13 +271,25 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onSuccess(FacebookLoginModel facebookLoginModel) {
                         Dialogs.HideProgressDialog();
-                        if (!facebookLoginModel.getToken().isEmpty()) {
-                            startActivity(new Intent(getApplicationContext(), Home.class));
-                            Prefs.SetBearerToken(Login.this, facebookLoginModel.getToken());
-                            finish();
-                        } else {
-                            Prompt.SnackBar(findViewById(android.R.id.content), facebookLoginModel.getMessage());
-                        }
+                        apiManager.GetPolicy(facebookLoginModel.token, new GetPolicyModel("s3bucket"), new DataCallback<GetPolicyModel>() {
+                            @Override
+                            public void onSuccess(GetPolicyModel getPolicyModel) {
+                                Prefs.SetBaseUrl(Login.this, getPolicyModel.getData().getDescription());
+                                if (!facebookLoginModel.getToken().isEmpty()) {
+                                    startActivity(new Intent(getApplicationContext(), Home.class));
+                                    Prefs.SetBearerToken(Login.this, facebookLoginModel.getToken());
+                                    finish();
+                                } else {
+                                    Prompt.SnackBar(findViewById(android.R.id.content), facebookLoginModel.getMessage());
+                                }
+                            }
+
+                            @Override
+                            public void onError(ServerError serverError) {
+
+                            }
+                        });
+
                     }
 
                     @Override

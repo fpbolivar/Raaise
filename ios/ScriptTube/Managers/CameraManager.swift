@@ -98,15 +98,13 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
         removeAllTempFiles()
     }
     
-
+    //Method to setup camera
+    
     fileprivate func setupCamera(position:AVCaptureDevice.Position,completion: @escaping RegularCompletionBlock){
         captureSession = AVCaptureSession()
         guard let device = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: .video, position: position) else { return }
         captureDevice = device
         guard let audioDevice = AVCaptureDevice.default(for: .audio) else { return }
-        
-        //var deviceInput: AVCaptureDeviceInput!
-        //var audioDeviceInput: AVCaptureDeviceInput!
         do {
             if let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
                 self.frontCamera = try AVCaptureDeviceInput(device: frontCamera)
@@ -114,12 +112,6 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
             if let rearCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
                 self.rearCamera = try AVCaptureDeviceInput(device: rearCamera)
             }
-            
-//            deviceInput = try AVCaptureDeviceInput(device: captureDevice)
-//            guard deviceInput != nil else {
-//                print("error: cant get deviceInput")
-//                return
-//            }
             audioDeviceInput = try AVCaptureDeviceInput(device: audioDevice)
             guard audioDeviceInput != nil else {
                 print("error: cant get audioDeviceInput")
@@ -161,14 +153,12 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
             }
             
         } catch let error as NSError {
-            //deviceInput = nil
             print("Device Input Error: \(error.localizedDescription)")
         }
         
     }
+    //Method to switch between rear and front camera
     func switchCamera(){
-         print("HADBHAJBDAJX JAS ",captureDevice.position == .front)
-        print("alalalalal2")
         guard let session = captureSession, let frontCamera = frontCamera, let rearCamera = rearCamera, let audio = audioDeviceInput else { return }
         session.removeInput(audio)
         let currentInput = session.inputs[0] as? AVCaptureDeviceInput
@@ -206,9 +196,7 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
         urls.append(outputFileURL)
         if let error = error {
             print("Saving video failed: \(error.localizedDescription)",outputFileURL)
-//            delegate.finishRecording(outputFileURL, error)
         } else {
-            print("Saving video failed22: \(error?.localizedDescription)",outputFileURL)
             AVMutableComposition().mergeVideo(urls) { url, error in
                 guard let url = url else{
                     self.delegate.finishRecording(nil, error)

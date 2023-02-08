@@ -8,10 +8,13 @@
 import UIKit
 
 class SearchResultVC: BaseControllerVC {
+    //MARK: - UI Components
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var seachTf: UITextField!
     @IBOutlet weak var noResultLbl:UILabel!
+    
+    //MARK: - Variables
     var resultType:ResultType!
     var selectedIndex: IndexPath? = nil
     var audioListData:[AudioDataModel] = []
@@ -41,6 +44,7 @@ class SearchResultVC: BaseControllerVC {
         }
         // Do any additional setup after loading the view.
     }
+    //MARK: - Api Methods
     func getAudioApi(param:[String:String],completion:@escaping()->Void){
         print("SerachParam",param)
         DataManager.globalSearchApi(delegate: self, param: param) { json in
@@ -73,6 +77,7 @@ class SearchResultVC: BaseControllerVC {
             completion()
         }
     }
+    //MARK: - Setup
     func setup(withParam param:[String:String],completion:@escaping()->Void){
         switch resultType{
         case.audio:
@@ -128,6 +133,7 @@ class SearchResultVC: BaseControllerVC {
         collectionView.reloadData()
         collectionSetup = true
     }
+    //MARK: - Pagination
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let height = scrollView.frame.size.height
         let contentYOffset = scrollView.contentOffset.y
@@ -154,6 +160,7 @@ class SearchResultVC: BaseControllerVC {
         }
     }
 }
+//MARK: - Table View Delegate
 extension SearchResultVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if resultType == .users{
@@ -172,18 +179,18 @@ extension SearchResultVC:UITableViewDelegate,UITableViewDataSource{
             let cell =  tableView.dequeueReusableCell(withIdentifier: SelectionCell.identifier, for: indexPath) as! SelectionCell
             
             cell.selectionStyle = .none
-       //     if isForSelectAudio{
+       
                 cell.playAudio = { url in
                     if self.selectedIndex == nil{
                         self.selectedIndex = indexPath
-                        //self.playSound(withUrl: url)
+                        
                         if self.isPlaying{
                             cell.playBtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
                         }else{
                             cell.playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
                         }
                     }else if self.selectedIndex == indexPath{
-                        //self.playSound(withUrl: url)
+                        
                         if self.isPlaying{
                             cell.playBtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
                         }else{
@@ -198,7 +205,7 @@ extension SearchResultVC:UITableViewDelegate,UITableViewDataSource{
                         }else{
                             cell2.playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
                         }
-                        //self.playSound(withUrl: url)
+                        
                         if self.isPlaying{
                             cell.playBtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
                         }else{
@@ -220,20 +227,19 @@ extension SearchResultVC:UITableViewDelegate,UITableViewDataSource{
     }
 }
 
-
+//MARK: - Collection View Delegate
 extension SearchResultVC:UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return userVideos.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileVideoItemCell.identifier, for: indexPath) as!  ProfileVideoItemCell
-        //cell.updateCell(withImg: userVideos[indexPath.row].videoImage)
         cell.updateCellData(data: userVideos[indexPath.row])
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let wFrame = collectionView.frame.width
-        let itemWidth = (wFrame/3) - 2//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
+        let itemWidth = (wFrame/3) - 2
         let itemHeight =  itemWidth * 1.3
         return CGSize.init(width: itemWidth, height: itemHeight)
     }
@@ -246,14 +252,10 @@ extension SearchResultVC:UICollectionViewDelegate,UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = ViewVideoVC()
         vc.data = self.userVideos
-//        if AuthManager.currentUser.id == self.userVideos[indexPath.row].id{
-//            vc.visitingProfile = true
-//        }else{
-//            vc.visitingProfile = false
-//        }
         vc.selectedRow = indexPath.row
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    //MARK: - CollectionView Pagination
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.row == userVideos.count - 2 && searchMore{
             self.page = page + 1
@@ -266,6 +268,7 @@ extension SearchResultVC:UICollectionViewDelegate,UICollectionViewDelegateFlowLa
         }
     }
 }
+//MARK: - Search Delegate
 extension SearchResultVC:UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
             NSObject.cancelPreviousPerformRequests(

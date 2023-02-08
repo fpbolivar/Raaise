@@ -4,7 +4,8 @@
 import Foundation
 
 class URLHelper{
-    static let BASE_URL: String               = "http://82.180.161.7/backend/"
+    static let BASE_URL: String               = "https://raaise.app/backend/"
+    //"http://82.180.161.7/backend/"
     //"http://13.233.101.218:3000/"
       //"https://raaise.app/"
     static let SEGMENTCLIENT: String          =       ""
@@ -67,5 +68,6 @@ class URLHelper{
     static let VIDEO_ANALYTICSx = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-video-donation-history"
     static let CLAIM_DONATIONx = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/send-request-to-payment"
     static let WITHDRAW_LIST = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-user-withdrawal-request"
+    static let BLOCK_USER = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/block-user"
 }
 

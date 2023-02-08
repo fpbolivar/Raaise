@@ -16,8 +16,8 @@ class UserNameFormVC: BaseControllerVC {
         super.viewDidLoad()
         addNavBar(headingText:"Username",redText:"")
         setfonts()
-        // Do any additional setup after loading the view.
     }
+    //MARK: -Setup
     func setfonts(){
         nameTF.overrideUserInterfaceStyle = .light
         descriptionLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
@@ -31,20 +31,16 @@ class UserNameFormVC: BaseControllerVC {
         tf.paddingLeftRightTextField(left: CGFloat(value), right: CGFloat(value))
     }
     func setPlaceholder(){
-        //nameTF.placeholder = "Username"
         nameTF.attributedPlaceholder = NSAttributedString(string: "Username",attributes: [.foregroundColor: UIColor.lightGray])
         nameTF.layer.cornerRadius = 10
         nameTF.text = AuthManager.currentUser.userName
     }
+    //MARK: -Validation
     func checkValidations(){
         if (nameTF.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyUsername)
             return
         }
-//        else if(!Validator.isValidEmail(email: nameTF.text ?? "")){
-//            ToastManager.errorToast(delegate: self, msg: LocalStrings.validUsername)
-//            return
-//        }
         else{
             if(!(Constant.check_Internet?.isReachable)!){
                 AlertView().showInternetErrorAlert(delegate: self)
@@ -53,13 +49,12 @@ class UserNameFormVC: BaseControllerVC {
             updateProfileApi()
         }
     }
+    //MARK: -Api method
     func updateProfileApi(){
         let param = ["userName":nameTF.text ?? ""]
         AuthManager.updateUserProfileApi(delegate: self, param: param) {
             DispatchQueue.main.async {
-                //self.gotoShortBioForm()
                 ToastManager.successToast(delegate: self, msg: "Username Updated Successfully")
-                //self.navigationController?.popViewController(animated: true)
             }
         }
     }

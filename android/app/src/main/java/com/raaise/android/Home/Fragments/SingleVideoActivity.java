@@ -160,7 +160,7 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
                 Dialogs.HideProgressDialog();
                 GetSingleVideoModel.Data obj1 = getSingleVideoModel.getData();
                 obj = obj1;
-                VideoViewInHomeReels.setVideoURI(Uri.parse(obj1.getGetVideo().getVideoLink()));
+                VideoViewInHomeReels.setVideoPath(Prefs.GetBaseUrl(SingleVideoActivity.this) + Uri.parse(obj1.getGetVideo().getVideoLink()));
                 VideoViewInHomeReels.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mediaPlayer) {
@@ -199,7 +199,7 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
                 CommentCountInHomeVideoSingleItem.setText(String.valueOf(obj1.getGetVideo().getVideoCommentCount()));
                 VideoShareCountInHomeVideoSingleItem.setText(String.valueOf(obj1.getGetVideo().getVideoShareCount()));
                 if (obj1.getGetVideo().getUserId().getProfileImage() != null) {
-                    Glide.with(SingleVideoActivity.this).load(obj1.getGetVideo().getUserId().getProfileImage()).placeholder(R.drawable.placeholder).into(ImageProfileInAdapter);
+                    Glide.with(SingleVideoActivity.this).load(Prefs.GetBaseUrl(SingleVideoActivity.this) + obj1.getGetVideo().getUserId().getProfileImage()).placeholder(R.drawable.placeholder).into(ImageProfileInAdapter);
                 }
                 if (obj1.isLike()) {
                     LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(SingleVideoActivity.this, R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
@@ -225,7 +225,7 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
                     lottie_main.setVisibility(View.VISIBLE);
                     SongNameInHomeVideoSingleItem.setVisibility(View.VISIBLE);
                     SongNameInHomeVideoSingleItem.setText(obj1.getGetVideo().getAudioId().getSongName());
-                    Glide.with(SingleVideoActivity.this).load(obj1.getGetVideo().getAudioId().getThumbnail()).placeholder(R.drawable.placeholder).into(SongImage);
+                    Glide.with(SingleVideoActivity.this).load(Prefs.GetBaseUrl(SingleVideoActivity.this) + obj1.getGetVideo().getAudioId().getThumbnail()).placeholder(R.drawable.placeholder).into(SongImage);
                 }
 
 
@@ -233,6 +233,7 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
 
             @Override
             public void onError(ServerError serverError) {
+                Log.i("videoFound", "onError: Not found");
                 Dialogs.HideProgressDialog();
                 Prompt.SnackBar(findViewById(android.R.id.content), serverError.getErrorMsg());
                 FinishUserHere(serverError.getErrorMsg());

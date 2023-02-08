@@ -1,6 +1,7 @@
 package com.raaise.android;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,6 @@ import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.ApiManager.ServerError;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +101,7 @@ public class FollowersListFragment extends Fragment implements View.OnClickListe
     private void inItWidgets(View view) {
         NoResultFound = view.findViewById(R.id.NoResultFound);
         CommonFollowerFollowingListSearchView = view.findViewById(R.id.CommonFollowerFollowingListSearchView);
+        CommonFollowerFollowingListSearchView.setQueryHint(Html.fromHtml("<font color = #949292>" + "Search Users" + "</font>", Html.FROM_HTML_MODE_LEGACY));
         select_audio_title = view.findViewById(R.id.select_audio_title);
         backBTN = view.findViewById(R.id.backBtn);
         followers_list_RV = view.findViewById(R.id.followers_list_RV);

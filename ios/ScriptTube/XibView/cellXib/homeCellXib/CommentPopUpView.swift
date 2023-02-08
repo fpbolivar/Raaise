@@ -33,7 +33,6 @@ class CommentPopUpView: UIView {
     }
     @objc func animatePopUpView(sender: UIPanGestureRecognizer){
         let transition = sender.translation(in: popUpView)
-        // Rules: PopupView cannot go over the min Y, only dismiss when the gesture velocity exceeds 300
         switch sender.state {
         case .began, .changed:
             if totalSlidingDistance <= 0 && transition.y < 0 {return} //Only allow swipe down or up to the minY of PopupView
@@ -67,7 +66,6 @@ class CommentPopUpView: UIView {
         }
     }
     func setup(){
-        //self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismiss)))
         popUpView.clipsToBounds = true
         popUpView.layer.cornerRadius = 10
         popUpView.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
@@ -96,23 +94,6 @@ class CommentPopUpView: UIView {
             
         }
     }
-//    @objc func show2(view:UIView){
-//        // Add CommentPopUpView in the front of the current window
-//        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//          let sceneDelegate = windowScene.delegate as? SceneDelegate
-//        else {
-//          return
-//        }
-//        view.addSubview(self)
-//        //sceneDelegate.window?.addSubview(self)
-//        
-//        UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseOut, animations: {
-//            self.frame.origin.y = 0
-//        }) { finished in
-//            
-//        }
-//    }
-
 }
 extension CommentPopUpView:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

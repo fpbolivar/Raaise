@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/noto_sans"
-                    android:text="Total Donation"
+                    android:text="Total Supported"
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     app:layout_constraintLeft_toLeftOf="parent"

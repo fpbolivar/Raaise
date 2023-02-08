@@ -24,15 +24,9 @@ class InboxVC: BaseControllerVC {
         searchTf.paddingLeftRightTextField(left: 35, right: 0)
         searchTf.layer.cornerRadius = 10
         searchTf.overrideUserInterfaceStyle = .light
-        //let param = ["limit":"10","page":"\(page)"]
-//        getChatListApi(param: param) {
-//            self.setTableView()
-//        }
         searchTf.delegate = self
         addNavBar(headingText: "Chat", redText: "",type: .onlyTopTitle)
         searchTf.attributedPlaceholder = NSAttributedString(string: "Search Users",attributes: [.foregroundColor: UIColor.lightGray])
-        //searchTf.delegate = self
-        // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -41,6 +35,16 @@ class InboxVC: BaseControllerVC {
         noResultLbl.isHidden = true
         inboxData()
         self.tabBarController?.tabBar.isHidden = false
+    }
+    //MARK: - Setup
+    func setTableView(){
+        DispatchQueue.main.async {
+            self.notificationTable.dataSource = self
+            self.notificationTable.delegate = self
+            self.notificationTable.reloadData()
+            self.tableSetup = true
+            self.addRefreshControl()
+        }
     }
     func inboxData(){
         DataManager.getUnreadChatCount(delegate: self) { json in
@@ -51,7 +55,6 @@ class InboxVC: BaseControllerVC {
                 self.tabBarController?.tabBar.items?[3].badgeValue =  nil
             }
         }
-        //self.chatListData = []
         let param = ["limit":"10","page":"\(page)"]
         getChatListApi(param: param){
             DispatchQueue.main.async {
@@ -71,7 +74,6 @@ class InboxVC: BaseControllerVC {
             json["data"].forEach { (message,data) in
                 print("MESAGE",message)
                 chat.append(ChatChannelModel(data: data))
-                //self.chatListData.append(ChatChannelModel(data: data))
             }
             self.chatListData = chat
             completion()
@@ -107,6 +109,7 @@ class InboxVC: BaseControllerVC {
         self.customView.spinner.startAnimating()
         inboxData()
     }
+    //MARK: - Pagination
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let height = scrollView.frame.size.height
         let contentYOffset = scrollView.contentOffset.y
@@ -115,7 +118,6 @@ class InboxVC: BaseControllerVC {
             print("YYYYYYYYYYYYY")
             page = page + 1
             let param = ["limit":"10","page":"\(page)"]
-            //self.chatListData = []
             getChatListApi(param: param) {
                 DispatchQueue.main.async {
                     self.notificationTable.isUserInteractionEnabled = false
@@ -125,16 +127,9 @@ class InboxVC: BaseControllerVC {
             }
         }
     }
-    func setTableView(){
-        DispatchQueue.main.async {
-            self.notificationTable.dataSource = self
-            self.notificationTable.delegate = self
-            self.notificationTable.reloadData()
-            self.tableSetup = true
-            self.addRefreshControl()
-        }
-    }
+
 }
+//MARK: - Table View Delegate
 extension InboxVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatListData.count
@@ -147,7 +142,6 @@ extension InboxVC: UITableViewDelegate, UITableViewDataSource{
        
         cell.selectionStyle = .none
         cell.chatList(data: chatListData[indexPath.row])
-        //cell.containerView.backgroundColor = UIColor(named: "TFcolor")
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -158,9 +152,9 @@ extension InboxVC: UITableViewDelegate, UITableViewDataSource{
         
     }
 }
+//MARK: - Search Delegate
 extension InboxVC:UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        //print(textField.text)
         NSObject.cancelPreviousPerformRequests(
             withTarget: self,
             selector: #selector(getHintsFromTextField),
@@ -170,28 +164,21 @@ extension InboxVC:UITextFieldDelegate{
             with: textField,
             afterDelay: 0.5)
         return true
-//        return true
     }
     @objc func getHintsFromTextField(textField: UITextField) {
-        print("Hints for textField: \(textField.text)")
         if !textField.text!.isEmpty{
-            print(textField.text)
             let param = ["search":textField.text!,"limit":"10","page":"1"]
-            //self.chatListData = []
             getChatListApi(param: param) {
                 DispatchQueue.main.async {
                     self.noResultLbl.isHidden = !self.chatListData.isEmpty
-                    //self.noResultLbl.isHidden = !self.chatListData.isEmpty
                     self.notificationTable.reloadData()
                 }
             }
         }else{
             let param = ["limit":"10","page":"1"]
-            //self.chatListData = []
             getChatListApi(param: param) {
                 DispatchQueue.main.async {
                     self.noResultLbl.isHidden = !self.chatListData.isEmpty
-                    //self.noResultLbl.isHidden = true
                     self.notificationTable.reloadData()
                 }
             }

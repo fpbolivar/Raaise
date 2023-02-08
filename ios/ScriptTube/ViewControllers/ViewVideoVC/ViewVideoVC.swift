@@ -6,11 +6,15 @@
 //
 
 import UIKit
-
+import Photos
+protocol ViewVideoErrorDelegate{
+    func popAndShowError(error:String)
+}
 class ViewVideoVC: BaseControllerVC {
     @IBOutlet weak var menuImage: UIImageView!
     @IBOutlet weak var backImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+    var errorDelegate:ViewVideoErrorDelegate?
     var shareVideoLink:String = ""
     var visibleCell: HomeTableViewCell?
     var data = [Post]()
@@ -32,10 +36,7 @@ class ViewVideoVC: BaseControllerVC {
             self.pleaseWait()
             getVideoData(slug: slug){
                 DispatchQueue.main.async {
-//                    self.tableView.isHidden = true
                     self.setupTableView()
-                    //self.tableView.reloadData()
-                    
                     self.clearAllNotice()
                 }
             }
@@ -43,9 +44,6 @@ class ViewVideoVC: BaseControllerVC {
             self.tableView.isHidden = true
             setupTableView()
         }
-        //addNavBar(headingText: "User Videos", redText: "Videos")
-        
-        // Do any additional setup after loading the view.
     }
     @objc func popBack(){
         self.navigationController?.popViewController(animated: false)
@@ -71,17 +69,22 @@ class ViewVideoVC: BaseControllerVC {
         super.viewWillDisappear(animated)
         checkPause()
     }
+    //MARK: - API Methods
     func getVideoData(slug:String,completion:@escaping()->Void){
         let param = ["slug":slug]
         DataManager.getSingleVideoDetail(delegate: self, param: param) { json in
             let obj = Post(data2: json["data"])
             self.data.append(obj)
             self.data.append(obj)
-            guard let url = URL(string: obj.videoLink) else{return}
+            guard let url = URL(string: UserDefaultHelper.getBaseUrl()+obj.videoLink) else{return}
             self.items.append(url)
             completion()
+        } onError: { error in
+            self.navigationController?.popViewController(animated: true)
+            self.errorDelegate?.popAndShowError(error: error)
         }
     }
+    //MARK: - Setup
     func setupTableView(){
         DispatchQueue.main.async {
             self.tableView.tableFooterView = UIView()
@@ -107,6 +110,7 @@ class ViewVideoVC: BaseControllerVC {
         
     }
 }
+//MARK: - Table View Delegate
 extension ViewVideoVC:UITableViewDelegate,UITableViewDataSource,UITableViewDataSourcePrefetching{
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         print("lalaoals")
@@ -120,8 +124,6 @@ extension ViewVideoVC:UITableViewDelegate,UITableViewDataSource,UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: indexPath) as! HomeTableViewCell
         cell.delegate = self
         cell.configure(post: data[indexPath.row])
-        
-        //visitingProfile ? print("SHOWDONATION") : cell.viewProfileVideo()
         return cell
     }
 
@@ -131,18 +133,13 @@ extension ViewVideoVC:UITableViewDelegate,UITableViewDataSource,UITableViewDataS
 
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // If the cell is the first cell in the tableview, the queuePlayer automatically starts.
-        // If the cell will be displayed, pause the video until the drag on the scroll view is ended
         if let cell = cell as? HomeTableViewCell{
-            
             print("INDEXPATY1",indexPath.row)
-            //cell.play()
             cell.pauseImgView.alpha = 0
         }
     }
 
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // Pause the video if the cell is ended displaying
         if let cell = cell as? HomeTableViewCell {
             cell.pause()
             print("INDEXPATY2",indexPath.row)
@@ -153,6 +150,7 @@ extension ViewVideoVC:UITableViewDelegate,UITableViewDataSource,UITableViewDataS
        
     }
 }
+//MARK: - Scrolling Methods
 extension ViewVideoVC:UIScrollViewDelegate{
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate { check() }
@@ -160,6 +158,7 @@ extension ViewVideoVC:UIScrollViewDelegate{
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         check()
     }
+    //MARK: - Video Play & Preload Methods
     func check() {
         if(!(Constant.check_Internet?.isReachable)!){
             AlertView().showInternetErrorAlert(delegate: self)
@@ -204,9 +203,8 @@ extension ViewVideoVC:UIScrollViewDelegate{
         self.visibleCell = visibleCell
     }
 }
+//MARK: - Video Cell Navigaton Delegates
 extension ViewVideoVC:HomeCellNavigationDelegate{
-    
-    
     func clickedFollowBtn(forUser id: String, isFollowing: Bool) {
         let sameUser = self.data.filter { post in
             return post.userDetails?.id == id
@@ -249,7 +247,6 @@ extension ViewVideoVC:HomeCellNavigationDelegate{
     }
     
     func navigateToTryAudio() {
-        //
     }
     
     func reportVideo(withId id: String,isReported:Bool) {
@@ -270,6 +267,11 @@ extension ViewVideoVC:HomeCellNavigationDelegate{
         vc.modalPresentationStyle = .popover
         self.shareVideoLink = url
         self.tabBarController?.present(vc, animated: true)
+    }
+    func gotoUserProfileOfSupporter(withUser user: DonationUserModel) {
+        let vc = VisitProfileVC()
+        vc.id = user.id
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func gotoUserProfile(withUser user:UserProfileData,isFollowing:Bool) {
@@ -355,8 +357,8 @@ extension ViewVideoVC:SharePopUpDelegate{
         
         let vid  = AudioVideoMerger()
         vid.downloadVideoToCameraRoll(videoUrl: self.shareVideoLink) { url in
-            print("URLLLLL",url)
-            if let name = URL(string: "https://itunes.apple.com/us/app/myapp/idxxxxxxxx?ls=1&mt=8"), !name.absoluteString.isEmpty {
+            //MARK: - Add App Url here
+            if let name = URL(string: LocalStrings.APP_URL), !name.absoluteString.isEmpty {
                 let objectsToShare = [url]
                 let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
                 DispatchQueue.main.async {
@@ -366,41 +368,19 @@ extension ViewVideoVC:SharePopUpDelegate{
                 
             } else {
                 // show alert for not available
-                AlertView().showAlert(message: "ERROR in sharing", delegate: self, pop: false)
+                AlertView().showAlert(message: "Error in sharing Video", delegate: self, pop: false)
             }
-            //            DispatchQueue.main.async {
-            //                PHPhotoLibrary.shared().performChanges({
-            //                   PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
-            //                }) { saved, error in
-            //                if saved {
-            //                    print("Saved")
-            //                }
-            //                }
-            //            }
-            //        }
-            //        var videoPath:URL? = nil
-            //        let videoImageUrl = url
-            //
-            //        DispatchQueue.global(qos: .background).async {
-            //            if let url = URL(string: videoImageUrl),
-            //                let urlData = NSData(contentsOf: url) {
-            //                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
-            //                let date =  Date().millisecondsSince1970
-            //                let filePath="\(documentsPath)/\(date).mp4"
-            //                videoPath = URL(fileURLWithPath: filePath)
-            //                DispatchQueue.main.async {
-            //                    urlData.write(toFile: filePath, atomically: true)
-            //                    PHPhotoLibrary.shared().performChanges({
-            //                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
-            //                    }) { completed, error in
-            //                        if completed {
-            //                            print("Video is saved!")
-            
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
+        }
+    }
+    func saveVideoToGallery(url:URL){
+        DispatchQueue.main.async {
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
+            }) { saved, error in
+                if saved {
+                    print("Saved")
+                }
+            }
         }
     }
 }

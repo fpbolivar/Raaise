@@ -3,15 +3,16 @@ package com.raaise.android.Home.Fragments.Home_Following_foryou_Fragments;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,7 +36,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.arthenica.mobileffmpeg.ExecuteCallback;
 import com.arthenica.mobileffmpeg.FFmpeg;
 import com.raaise.android.Adapters.CommentsAdapter;
 import com.raaise.android.Adapters.HomeFollowingAdapter;
@@ -104,37 +104,35 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
 
         try {
             File f = new File(path);
+
             String WaterMarkVideoName = "Scriptube_share" + new Date().getTime();
-            String command = "-i " + f.getPath() + " -i " + Uri.parse(StringHelper.WaterMarkLogo) + " -filter_complex \"[1]scale=iw/2:-1[wm];[0][wm]  overlay=20:main_h-overlay_h\" " + Environment.getExternalStorageDirectory() + "/" + "Scriptube" + "/" + App.getContext().getPackageName() + "/" + "Shared_Videos" + "/" + WaterMarkVideoName + ".mp4";
-            FFmpeg.executeAsync(command, new ExecuteCallback() {
-                @Override
-                public void apply(long executionId, int returnCode) {
-                    if (returnCode == RETURN_CODE_SUCCESS) {
-                        try {
-                            Intent intent = new Intent(Intent.ACTION_SEND);
-                            intent.setType("video/mp4");
-                            intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(Objects.requireNonNull(App.getContext()), BuildConfig.APPLICATION_ID + ".provider", new File(Environment.getExternalStorageDirectory() + "/" + "Scriptube" + "/" + App.getContext().getPackageName() + "/" + "Shared_Videos" + "/" + WaterMarkVideoName + ".mp4")));
-                            App.getContext().startActivity(Intent.createChooser(intent, "share").setFlags(FLAG_ACTIVITY_NEW_TASK));
-                            if (f.exists()) {
-                                f.delete();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+            String command = "-i " + f.getPath() + " -i " + StringHelper.WaterMarkLogo + " -filter_complex \"[1]scale=iw/4:-1[wm];[0][wm]  overlay=20:main_h-overlay_h\" " + Environment.getExternalStorageDirectory() + "/" + "Scriptube" + "/" + App.getContext().getPackageName() + "/" + "Shared_Videos" + "/" + WaterMarkVideoName + ".mp4";
+            FFmpeg.executeAsync(command, (executionId, returnCode) -> {
+                if (returnCode == RETURN_CODE_SUCCESS) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("video/mp4");
+                        intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(Objects.requireNonNull(App.getContext()), BuildConfig.APPLICATION_ID + ".provider", new File(Environment.getExternalStorageDirectory() + "/" + "Scriptube" + "/" + App.getContext().getPackageName() + "/" + "Shared_Videos" + "/" + WaterMarkVideoName + ".mp4")));
+                        App.getContext().startActivity(Intent.createChooser(intent, "share").setFlags(FLAG_ACTIVITY_NEW_TASK));
+                        if (f.exists()) {
+                            f.delete();
                         }
-
-                    } else {
-
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    Dialogs.dismissProgressDialog();
+
+                } else {
 
                 }
+                Dialogs.dismissProgressDialog();
+
             });
         } catch (Exception e) {
-
         }
 
     }
 
+    @SuppressLint("WrongThread")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -196,9 +194,7 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
 
         if (((Home) requireActivity()).adapterVideoVIew != null && ((Home) requireActivity()).adapterVideoVIew.isPlaying())
             ((Home) requireActivity()).adapterVideoVIew.stopPlayback();
-//        if (homeFollowingAdapter != null) {
-//            homeFollowingAdapter.clearList();
-//        }
+
         super.onResume();
     }
 
@@ -259,6 +255,7 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
         ShareVideoUserListAdapter adapter = new ShareVideoUserListAdapter(UserListDialog.getContext(), Home_ForYouFragment.this, chatListModels);
         RecyclerView rv = UserListDialog.findViewById(R.id.chatListRV);
         SearchView SearchUserForShare = UserListDialog.findViewById(R.id.SearchUserForShare);
+        SearchUserForShare.setQueryHint(Html.fromHtml("<font color = #949292>" + "Search Users" + "</font>", Html.FROM_HTML_MODE_LEGACY));
         SearchUserForShare.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -279,11 +276,11 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
         imageCloseInShareVideo.setOnClickListener(view -> {
             UserListDialog.dismiss();
         });
-//        ShareOnOtherApps.setOnClickListener(view -> {
-//            UserListDialog.dismiss();
-//            Dialogs.showProgressDialog(getActivity());
-//            new BackgroundVideoDownload(videoLink).execute();
-//        });
+        ShareOnOtherApps.setOnClickListener(view -> {
+            UserListDialog.dismiss();
+            Dialogs.showProgressDialog(getActivity());
+            new BackgroundVideoDownload(Prefs.GetBaseUrl(requireContext()) + videoLink).execute();
+        });
         Dialogs.createProgressDialog(v.getContext());
         GetUserListApi("", adapter);
 
@@ -615,7 +612,7 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
 
     @Override
     public void chatSelected(String Slug, String ReceiverId, String SenderId, String UserImageLink, String Username, String
-            ShortBio) {
+        ShortBio) {
         if (UserListDialog.isShowing()) {
             UserListDialog.dismiss();
         }

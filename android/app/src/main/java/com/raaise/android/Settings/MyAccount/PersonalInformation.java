@@ -211,8 +211,9 @@ public class PersonalInformation extends AppCompatActivity {
                         if (response.body().getStatusCode() == 200) {
                             Dialogs.HideProgressDialog();
                             Prompt.SnackBar(findViewById(android.R.id.content), response.body().getMessage());
+                            Log.i("personalImg", "onResponse: " + Prefs.GetBaseUrl(PersonalInformation.this) + response.body().getData().getProfileImage());
                             Glide.with(PersonalInformation.this)
-                                    .load(response.body().getData().getProfileImage())
+                                    .load(Prefs.GetBaseUrl(PersonalInformation.this) + response.body().getData().getProfileImage())
                                     .circleCrop()
                                     .placeholder(R.drawable.placeholder)
                                     .into(userImage);
@@ -259,7 +260,7 @@ public class PersonalInformation extends AppCompatActivity {
                     imageFile = new File(getRealPathFromURI(imageUri));
 
                     Glide.with(this)
-                            .load(imageUri)
+                            .load(Prefs.GetBaseUrl(PersonalInformation.this) + imageUri)
                             .circleCrop()
                             .placeholder(R.drawable.placeholder)
                             .into(userImage);
@@ -274,7 +275,7 @@ public class PersonalInformation extends AppCompatActivity {
                     imageUri = data.getData();
                     imageFile = new File(getRealPathFromURI(imageUri));
                     Glide.with(this)
-                            .load(imageUri)
+                            .load(Prefs.GetBaseUrl(PersonalInformation.this) + imageUri)
                             .circleCrop()
                             .placeholder(R.drawable.placeholder)
                             .into(userImage);
@@ -311,7 +312,7 @@ public class PersonalInformation extends AppCompatActivity {
             UserNameEditTextInPersonalInformation.setText(Prefs.GetUserEmail(PersonalInformation.this));
             PhoneNumberEditTextInPersonalInformation.setText(Prefs.GetPhoneNumberOfTheUser(PersonalInformation.this));
             Glide.with(PersonalInformation.this)
-                    .load(Prefs.getUserImage(PersonalInformation.this))
+                    .load(Prefs.GetBaseUrl(PersonalInformation.this) + Prefs.getUserImage(PersonalInformation.this))
                     .placeholder(R.drawable.placeholder)
                     .circleCrop()
                     .into(userImage);

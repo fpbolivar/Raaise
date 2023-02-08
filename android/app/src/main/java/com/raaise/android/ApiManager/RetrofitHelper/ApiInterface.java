@@ -56,6 +56,9 @@ import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicResponse;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.VideoDonationModal;
+import com.raaise.android.model.VideoDonationPojo;
+import com.raaise.android.model.WithdrawalsPojo;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -279,4 +282,9 @@ public interface ApiInterface {
     @POST(StringHelper.VIDEO_DONATION_HISTORY)
     Call<UserVideoDonationHistoryModel> VideoDonationHistory(@Header(StringHelper.AUTHORIZATION) String token, @Body UserVideoDonationHistoryModel userVideoDonationHistoryModel);
 
+    @POST(StringHelper.VIDEO_DONATION_HISTORY)
+    Call<VideoDonationPojo> getVideoDonationHistory(@Header(StringHelper.AUTHORIZATION) String token, @Body VideoDonationModal modal);
+
+    @POST(StringHelper.GET_USER_WITHDRAWAL)
+    Call<WithdrawalsPojo> getUserWithdrawal(@Header(StringHelper.AUTHORIZATION) String token);
 }

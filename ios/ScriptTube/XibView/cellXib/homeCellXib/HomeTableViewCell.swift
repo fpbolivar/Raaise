@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-
+// MARK: - Protocol
 protocol HomeCellNavigationDelegate: AnyObject {
     // Navigate to Profile Page
     func donationPopUp(post:Post)
@@ -22,11 +22,12 @@ protocol HomeCellNavigationDelegate: AnyObject {
     func goTiTryAudio(withId audio :AudioDataModel)
     func viewCountError(error:String)
     func clickedFollowBtn(forUser id: String,isFollowing: Bool)
+    func gotoUserProfileOfSupporter(withUser user:DonationUserModel)
    
 }
 
 class HomeTableViewCell: UITableViewCell {
-    
+    // MARK: - UI Components
     @IBOutlet weak var topRewardView3: UIView!
     @IBOutlet weak var topRewardView2: UIView!
     @IBOutlet weak var topRewardView1: UIView!
@@ -52,9 +53,7 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var totalRaisedLbl: UILabel!
     @IBOutlet weak var userNameLbl: UILabel!
     static var identifier = "HomeTableViewCell"
-    // MARK: - UI Components
     @IBOutlet weak var nameLbl: UILabel!
-    //var playerView = VideoPlayerView()
     @IBOutlet weak var nameBtn: UIButton!
     @IBOutlet weak var captionLbl: UILabel!
     @IBOutlet weak var musicLbl: MarqueeLabel!
@@ -95,7 +94,7 @@ class HomeTableViewCell: UITableViewCell {
         
         resetViewsForReuse()
     }
-    
+    // MARK: - Setup
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -120,9 +119,7 @@ class HomeTableViewCell: UITableViewCell {
         topRewardPic2.layer.cornerRadius = 12.5
         topRewardPic3.layer.cornerRadius = 10
         seeMoreBtn.titleLabel?.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
-        
         playerView.contentMode = .scaleToFill
-            //.scaleAspectFit
         profileImg.layer.cornerRadius = profileImg.frame.height / 2
         profileImg.contentMode = .scaleAspectFill
         profileImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openProfile)))
@@ -143,7 +140,6 @@ class HomeTableViewCell: UITableViewCell {
         songIcon.layer.cornerRadius = songIcon.frame.height / 2
         musicLbl.holdScrolling = false
         musicLbl.animationDelay = 0
-        //musicBtn.addTarget(self, action: #selector(navigatetotryaudio), for: .touchUpInside)
         let pauseGesture = UITapGestureRecognizer(target: self, action: #selector(handlePause))
         self.contentView.addGestureRecognizer(pauseGesture)
         
@@ -156,7 +152,7 @@ class HomeTableViewCell: UITableViewCell {
         musicLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(navigatetotryaudio)))
         musicNoteImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(navigatetotryaudio)))
     }
-    
+    // MARK: - Update Data
     func viewProfileVideo(){
         profileImgView.isHidden = true
         donationLbl.isHidden = true
@@ -168,13 +164,8 @@ class HomeTableViewCell: UITableViewCell {
     func checkFollow(){
         self.isFollowing = post?.isFollow ?? true
         if self.isFollowing{
-//            followBtnView.borderWidth = 1
-//            followBtnView.backgroundColor = .clear
-//            followBtnView.borderColor = UIColor.theme
             self.followLbl.text = "Following"
         }else{
-//            followBtnView.borderWidth = 0
-//            followBtnView.backgroundColor = UIColor.theme
             self.followLbl.text = "Follow"
         }
     }
@@ -187,16 +178,10 @@ class HomeTableViewCell: UITableViewCell {
         }else{
             self.likeBtn.tintColor = .white
         }
-        //reportBtn.isHidden = post.isReported
         self.isFollowing = post.isFollow
         if self.isFollowing{
-//            followBtnView.borderWidth = 1
-//            followBtnView.backgroundColor = .clear
-//            followBtnView.borderColor = UIColor.theme
             self.followLbl.text = "Following"
         }else{
-//            followBtnView.borderWidth = 0
-//            followBtnView.backgroundColor = UIColor.theme
             self.followLbl.text = "Follow"
         }
         if !self.post!.isDonation{
@@ -209,12 +194,12 @@ class HomeTableViewCell: UITableViewCell {
         if AuthManager.currentUser.id == self.post?.userDetails?.id{
             self.viewProfileVideo()
         }
+        setTopSupporters()
+        
         image_cell.loadImg(url: post.videoImage)
         nameLbl.text = post.userDetails?.name.localizedCapitalized
         userNameLbl.text = "@"+(post.userDetails?.userName ?? "")
-        //nameBtn.setTitle("@" + post.autherName, for: .normal)
         nameBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        //musicLbl.text = "music" + "   music   " + "music" + "   music  " + "music" + "   "// Long enough to enable scrolling
         musicLbl.text = post.audioDetails?.songName
         if post.audioDetails?.songName == ""{
             self.hideMusic()
@@ -233,19 +218,56 @@ class HomeTableViewCell: UITableViewCell {
             totalRaisedLbl.text = "Total Raised: $0"
         }
         print("CUTKLABEL",captionLbl.isTruncated)
-//        seeMoreBtn.isHidden = !captionLbl.isTruncated
         if captionLbl.isTruncated{
             captionLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(expandCaption)))
             seeMoreBtn.addTarget(self, action: #selector(expandCaption), for: .touchUpInside)
             seeMoreBtn.isHidden = false
         }
-        guard let url = URL(string: post.videoLink) else{return}
+        guard let url = URL(string: UserDefaultHelper.getBaseUrl()+post.videoLink) else{return}
         self.url = url
         print("ALKMLKADMKA",url)
         
+        
     }
-    
-  
+    func setTopSupporters(){
+        guard let supportersList = self.post?.topSupportersList else{return}
+        switch supportersList.count{
+        case 0:
+            print("asd")
+            topRewardStack.isHidden = true
+            topRewardedLbl.isHidden = true
+            break
+        case 1:
+            print("asd1")
+            topRewardPic1.loadImgForProfile(url: supportersList[0].profileImage)
+            topRewardLbl1.text = "@"+supportersList[0].name
+            topRewardView2.isHidden = true
+            topRewardView3.isHidden = true
+            break
+        case 2:
+            topRewardPic1.loadImgForProfile(url: supportersList[0].profileImage)
+            topRewardLbl1.text = "@"+supportersList[0].name
+            topRewardPic2.loadImgForProfile(url: supportersList[1].profileImage)
+            topRewardLbl2.text = "@"+supportersList[1].name
+            topRewardView3.isHidden = true
+            print("asd2")
+            break
+        case 3:
+            topRewardPic1.loadImgForProfile(url: supportersList[0].profileImage)
+            topRewardLbl1.text = "@"+supportersList[0].name
+            topRewardPic2.loadImgForProfile(url: supportersList[1].profileImage)
+            topRewardLbl2.text = "@"+supportersList[1].name
+            topRewardPic3.loadImgForProfile(url: supportersList[2].profileImage)
+            topRewardLbl3.text = "@"+supportersList[2].name
+            print("asd3")
+            break
+        default:
+            print("asd4")
+            break
+        }
+        
+    }
+    // MARK: - Video Play/Pause methods
     func replay(){
         if !isPlaying {
             playerView.replay()
@@ -255,14 +277,13 @@ class HomeTableViewCell: UITableViewCell {
     }
     
     func play() {
-        //guard let url = URL(string: post?.videoLink ?? "") else{return}
         playerView.play(for: self.url)
         self.pauseImgView.alpha = 0
-        print("VIEWCHECKK",self.post?.isViewed,self.playedOnce)
+        print("VIEWCHECKK",self.post?.isViewed,self.playedOnce,playerView.bufferProgress)
        
         playerView.playToEndTime = {
             guard let alreadyViewed = self.post?.isViewed else {return}
-            if !alreadyViewed  {  //&& !self.playedOnce
+            if !alreadyViewed  {
                 print("ONEVIEW")
                 self.playedOnce = true
                 print("VIEWCHECKK",self.post?.isViewed)
@@ -272,13 +293,8 @@ class HomeTableViewCell: UITableViewCell {
                 self.playedOnce = true
                 print("MULTIPLEVIEW")
             }
-            
         }
-//        pauseImgView.isHidden = true
         if !isPlaying {
-            
-//            videoPlayer?.player?.play()
-            //playerView.play()
             musicLbl.holdScrolling = false
             isPlaying = true
         }
@@ -287,8 +303,6 @@ class HomeTableViewCell: UITableViewCell {
     func pause(){
         playerView.pause(reason: .hidden)
         if isPlaying {
-//            videoPlayer?.player?.pause()
-//            playerView.pause()
             musicLbl.holdScrolling = true
             isPlaying = false
         }
@@ -296,8 +310,6 @@ class HomeTableViewCell: UITableViewCell {
     func pauseWithoutHide(){
         playerView.pause(reason: .userInteraction)
         if isPlaying {
-//            videoPlayer?.player?.pause()
-//            playerView.pause()
             musicLbl.holdScrolling = true
             isPlaying = false
         }
@@ -307,7 +319,6 @@ class HomeTableViewCell: UITableViewCell {
         delegate?.gotoUserProfile(withUser:post?.userDetails ?? UserProfileData(), isFollowing: post?.isFollow ?? false)
     }
     @objc func navigatetotryaudio(){
-        //delegate?.navigateToTryAudio()
         delegate?.goTiTryAudio(withId: post?.audioDetails ?? AudioDataModel())
         print("CURRENTPOSTAUDIOID",post?.audioDetails?.id)
     }
@@ -317,7 +328,6 @@ class HomeTableViewCell: UITableViewCell {
             UIView.animate(withDuration: 0.075, delay: 0, options: .curveEaseIn, animations: { [weak self] in
                 guard let self = self else { return }
                 self.pauseImgView.alpha = 1.0
-                //0.35
                 self.pauseImgView.transform = CGAffineTransform.init(scaleX: 0.45, y: 0.45)
             }, completion: { [weak self] _ in
                 self?.pauseWithoutHide()
@@ -337,8 +347,6 @@ class HomeTableViewCell: UITableViewCell {
     }
     
     func resetViewsForReuse(){
-        //likeBtn.tintColor = .white
-        //likeVideo()
         donationLbl.isHidden = false
         profileImgView.isHidden = false
         pauseImgView.alpha = 0
@@ -357,13 +365,10 @@ class HomeTableViewCell: UITableViewCell {
         topRewardStack.isHidden = false
     }
     func hideMusic(){
-//        self.songIcon.isHidden = true
-//        self.musicLbl.isHidden = true
-//        musicNoteImg.isHidden = true
         musicStack.isHidden = true
     }
+    // MARK: - Count Video Views
     func countViewApi(){
-        
         guard let id = self.post?.id else{
             return
         }
@@ -379,18 +384,22 @@ class HomeTableViewCell: UITableViewCell {
             }
         }
     }
-    
+    // MARK: - Actions
     @IBAction func topRewardedBtnClicked(_ sender: Any) {
+        guard let post = self.post else{return}
         let sender = sender as! UIButton
         switch sender.tag{
         case 0:
             print("0")
+            delegate?.gotoUserProfileOfSupporter(withUser: post.topSupportersList[0])
             break;
         case 1:
             print("1")
+            delegate?.gotoUserProfileOfSupporter(withUser: post.topSupportersList[1])
             break;
         case 2:
             print("2")
+            delegate?.gotoUserProfileOfSupporter(withUser: post.topSupportersList[2])
             break;
         default:
             print("3")
@@ -404,7 +413,7 @@ class HomeTableViewCell: UITableViewCell {
         delegate?.reportVideo(withId: post.id,isReported: post.isReported)
         
     }
-    // MARK: - Actions
+    
     // Like Video Actions
     @IBAction func like(_ sender: Any) {
         let param = ["slug":post?.slug ?? ""]
@@ -425,18 +434,12 @@ class HomeTableViewCell: UITableViewCell {
         DataManager.followUnfollowUser(param: param) { errorMessage in
             print("FOLLOWERROr",errorMessage)
         } completion: {
-            
             DispatchQueue.main.async {
                 self.isFollowing = !self.isFollowing
                 self.delegate?.clickedFollowBtn(forUser: (self.post?.userDetails?.id)!, isFollowing: self.isFollowing)
                 if self.isFollowing{
-        //            followBtnView.borderWidth = 1
-        //            followBtnView.backgroundColor = .clear
-        //            followBtnView.borderColor = UIColor.theme
                     self.followLbl.text = "Following"
                 }else{
-        //            followBtnView.borderWidth = 0
-        //            followBtnView.backgroundColor = UIColor.theme
                     self.followLbl.text = "Follow"
                 }
             }
@@ -479,28 +482,22 @@ class HomeTableViewCell: UITableViewCell {
     
     @IBAction func comment(_ sender: Any) {
         delegate?.showComments(id: post?.id ?? "", numberOfComments: post?.videoCommentCount ?? "0")
-//        let commentView = CommentPopUpView.instanceFromNib() as! CommentPopUpView
-//        commentView.frame = CGRect(x: 0, y: ScreenSize.Height, width: ScreenSize.Width, height: ScreenSize.Height)
-//        commentView.setup()
-//        commentView.show()
     }
     
     @IBAction func share(_ sender: Any) {
         guard let post = self.post else{return}
-        delegate?.shareVideo(withUrl: post.videoLink, id: post.id)
+        delegate?.shareVideo(withUrl: UserDefaultHelper.getBaseUrl()+post.videoLink, id: post.id)
     }
     
     @objc func donationPopUp(){
         print("pOPuO")
         guard let post = post else { return }
-        //let post = Post(dictionary: [:])
         delegate?.donationPopUp(post: post)
     }
     
 }
-
+//Label Truncation Extension
 extension UILabel {
-
     var isTruncated: Bool {
 
         guard let labelText = text else {

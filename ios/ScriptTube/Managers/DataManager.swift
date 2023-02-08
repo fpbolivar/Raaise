@@ -6,9 +6,10 @@
 //
 
 import Foundation
+//MARK: - Get Data From Api Functions
 class DataManager{
-    class func getsettingsData(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
-        delegate.pleaseWait()
+    class func getsettingsData(delegate:UIViewController,param:[String:String],needLoader:Bool = true,completion:@escaping(JSON)->Void){
+        needLoader ? delegate.pleaseWait() : print("Noloader")
         APIManager.postService(url: URLHelper.GET_SETTINGS_URL, parameters: param) { json, error, status in
             delegate.clearAllNotice()
             if let error = error{
@@ -55,7 +56,7 @@ class DataManager{
     class func getUserVideos(delegate:UIViewController,completion:@escaping(JSON)->Void){
         APIManager.getService(url: URLHelper.GET_USER_PROFILE_VIDEOS_URL) { json, error, status in
             if let error = error{
-                print("USERVIDEOS",error)
+                print("USERVIDEOS",error,status)
                 AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
                 return
             }else{
@@ -472,11 +473,13 @@ class DataManager{
             }
         }
     }
-    class func getSingleVideoDetail(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
+    class func getSingleVideoDetail(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void,onError:@escaping(String)->Void){
         APIManager.postService(url: URLHelper.GET_SINGLE_VIDEO_DETAIL_URL, parameters: param) { json, error, statusCode in
+            delegate.clearAllNotice()
             if let error = error{
                 print("GETSINGELEVIDEO",error)
-                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+//                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                onError(error.localizedDescription)
                 return
             }else{
                 print("GETSINGELEVIDEO",json,statusCode)
@@ -484,10 +487,12 @@ class DataManager{
                     if jsonData["status"].intValue == 200{
                         completion(jsonData)
                     }else{
+                        
                         if jsonData["status"].intValue == 401{
                             AuthManager.invalidToken()
                         }
-                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+//                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                        onError(jsonData["message"].stringValue)
                     }
                 }
             }

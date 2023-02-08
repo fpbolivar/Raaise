@@ -28,12 +28,11 @@ class DonationRaisedListVC: BaseControllerVC {
     var totalDonated = ""
     var totalRaised = ""
     var totalWithdraw = ""
+    var canClaim = false
     var videoDetails = [DonationRaisedVideoList]()
     override func viewDidLoad() {
         super.viewDidLoad()
         addNavBar(headingText: "Support Raised", redText: "Raised")
-//        navView.rigthBtn.setTitle("Withdrawal Donation", for: .normal)
-//        navView.rigthBtn.addTarget(self, action: #selector(rightAction), for: .touchUpInside)
         setfonts()
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: DonationRaisedCell.identifier, bundle: nil), forCellReuseIdentifier: DonationRaisedCell.identifier)
@@ -46,17 +45,20 @@ class DonationRaisedListVC: BaseControllerVC {
         
         // Do any additional setup after loading the view.
     }
+    //MARK: - APi Methods
     func getDonationRaisedData(completion:@escaping()->Void){
         DataManager.donationRaisedData(delegate: self, param: ["userId":AuthManager.currentUser.id]) { data in
             self.totalDonated = data["data"]["donatedAmount"].stringValue
             self.totalRaised = data["data"]["totalRaised"].stringValue
             self.totalWithdraw = data["data"]["totalWithdraw"].stringValue
+            self.canClaim = data["data"]["isAlreadyRaisedRequest"].boolValue
             data["data"]["userVideo"].forEach { (_,json) in
                 self.videoDetails.append(DonationRaisedVideoList(data: json))
             }
             completion()
         }
     }
+    //MARK: - Setup
     func setData(){
         DispatchQueue.main.async {
             self.raisedAmtLbl.text = "$\(self.totalRaised)"
@@ -90,6 +92,7 @@ class DonationRaisedListVC: BaseControllerVC {
         }
     }
 }
+//MARK: - Table View Delegate
 extension DonationRaisedListVC:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         1
@@ -115,11 +118,14 @@ extension DonationRaisedListVC:UITableViewDelegate,UITableViewDataSource{
     }
 
 }
+//MARK: - Navigation Delegate
 extension DonationRaisedListVC:DonationRaisedCellDelegate{
     func statusBtnClicked(status: StatusType,videoId:String) {
         let vc = VideoAnalyticsVC()
         vc.statusType = status
         vc.videoId = videoId
+        vc.canClaim = self.canClaim
+        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -144,5 +150,15 @@ class DonationRaisedVideoList{
         }else{
             status = .review
         }
+    }
+}
+extension DonationRaisedListVC:VideoAnalyticsDelegate{
+    func amountClaimed(withId id: String) {
+        videoDetails.forEach { video in
+            if video.id == id{
+                video.status = .review
+            }
+        }
+        self.tableView.reloadData()
     }
 }

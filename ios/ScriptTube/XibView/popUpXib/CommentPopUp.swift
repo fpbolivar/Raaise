@@ -41,6 +41,12 @@ class CommentPopUp: UIViewController {
         super.viewWillDisappear(animated)
         delegate?.dismissAfterComment(numberOfComments: "\(self.commentData.count)")
     }
+    //MARK: - Setup
+    func setData(withNumberOfComments num :String){
+        DispatchQueue.main.async {
+            self.totalCommentsLbl.text = "\(num) comments"
+        }
+    }
     func setupTable(){
         DispatchQueue.main.async {
             self.tableView.register(UINib(nibName: CommentTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: CommentTableViewCell.identifier)
@@ -68,39 +74,21 @@ class CommentPopUp: UIViewController {
             self.commentTf.text = ""
             self.replyToView.isHidden = true
             self.commentId = nil
-        }else{
-            //AlertView().showAlert(message: "dd", delegate: self, pop: false)
         }
     }
+    //MARK: - Posting Comment & Reply Api
     func postReply(){
-        //self.tableView.isScrollEnabled = false
         let param = ["commentId":self.commentId!,"reply":commentTf.text!]
         print("REPLYTOCOMMENT",AuthManager.currentUser.profileImage,AuthManager.currentUser.userName)
         AuthManager.postReply(delegate: self, param: param) { data in
-//            let reply  = self.commentData.filter { comment in
-//                return self.commentId == comment.id
-//            }
             let cell = self.tableView.cellForRow(at: self.replyIndex!) as! CommentTableViewCell
             cell.commentData.replies.append(ReplyDataModel(data2: data["data"]))
-            //reply.first?.replies.append( ReplyDataModel(data2: data["data"]))
             DispatchQueue.main.async {
-               // self.tableView.reloadData()
                 self.tableView.reloadSections([self.replyIndex!.section], with: .none)
-                //self.tableView.reloadRows(at: [self.replyIndex!], with: .none)
-                //cell.replyTableView.reloadData()
             }
-            //print("REPLYTOCOMMENT",reply.first?.id,reply.first?.replies.count,self.commentId)
-//            self.commentData = []
-//            self.getCommentsApi {
-//                DispatchQueue.main.async {
-//                    self.setupTable()
-//                    self.tableView.isScrollEnabled = true
-//                }
-//            }
         }
     }
     func postComment(){
-        //self.tableView.isScrollEnabled = false
         let param = ["videoId":self.videoId,"comment":commentTf.text!]
         print("EMOJEEE",commentTf.text!)
         AuthManager.postCommentApi(delegate: self, param: param) { data in
@@ -110,18 +98,9 @@ class CommentPopUp: UIViewController {
                 self.tableView.reloadData()
                 self.totalCommentsLbl.text = "\(self.commentData.count) comments"
             }
-//            self.getCommentsApi {
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
-//            }
         }
     }
-    func setData(withNumberOfComments num :String){
-        DispatchQueue.main.async {
-            self.totalCommentsLbl.text = "\(num) comments"
-        }
-    }
+    //MARK: - Get Chat Data Api
     func getCommentsApi(completion:@escaping()->Void){
         let param = ["videoId":videoId,"limit":"10","page":"\(page)"]
         DataManager.getVideoComments(param: param) { errorMessage in
@@ -137,6 +116,7 @@ class CommentPopUp: UIViewController {
         }
     }
 }
+//MARK: - Table View Delegates
 extension CommentPopUp:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         return commentData.count
@@ -159,18 +139,14 @@ extension CommentPopUp:UITableViewDelegate,UITableViewDataSource{
             cell.showReplyView = {
                 self.replyIndex = indexPath
             }
-            //cell.tableViewHeight.constant = cell.replyTableView.contentSize.height
             cell.showReplyTable = {
-                //cell.replyTableView.reloadData()
                 self.commentData[indexPath.section].viewReply = !self.commentData[indexPath.section].viewReply
                 UIView.setAnimationsEnabled(false)
                 self.tableView.beginUpdates()
                 self.tableView.reloadSections([indexPath.section], with: .none)
                 self.tableView.endUpdates()
                 UIView.setAnimationsEnabled(true)
-//                self.tableView.reloadSections([indexPath.section], with: .none)
                 self.replyIndex = indexPath
-                //self.tableView.performBatchUpdates(nil)
             }
             cell.delegate = self
             if self.commentData[indexPath.section].viewReply{
@@ -184,19 +160,18 @@ extension CommentPopUp:UITableViewDelegate,UITableViewDataSource{
             let cell = tableView.dequeueReusableCell(withIdentifier: ReplyTblCell.identifier, for: indexPath) as! ReplyTblCell
             cell.delegate = self
             cell.setup(data: commentData[indexPath.section].replies[indexPath.row - 1])
-            
-//            guard let commentCell = tableView.cellForRow(at: IndexPath(row: indexPath.row - 1, section: indexPath.section))
-//            else{return cell}
-//            commentCell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+            if commentData[indexPath.section].replies.count == indexPath.row {
+                cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            }else{
+                cell.separatorInset =  UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+            }
             return cell
         }
         
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == self.commentData.count - 2{
- 
-        }
     }
+    //MARK: - Pagination
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let height = scrollView.frame.size.height
         let contentYOffset = scrollView.contentOffset.y
@@ -211,7 +186,7 @@ extension CommentPopUp:UITableViewDelegate,UITableViewDataSource{
         }
     }
 }
-
+//MARK: - Comment & Reply Delegates
 extension CommentPopUp:CommentCellDelegate,ReplyDelegate{
     func gotoProfile(withId id: String) {
         dismiss(animated: true){

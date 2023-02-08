@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="5xo-pH-xjf">
-                    <rect key="frame" x="20" y="106" width="353" height="712"/>
+                    <rect key="frame" x="20" y="101" width="353" height="717"/>
                     <color key="backgroundColor" name="BackgroundColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4qO-3u-liE">
                         <size key="itemSize" width="128" height="128"/>
@@ -32,7 +32,7 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scriptLogo" translatesAutoresizingMaskIntoConstraints="NO" id="8vc-mK-ShB">
-                    <rect key="frame" x="58" y="64" width="77" height="42"/>
+                    <rect key="frame" x="58" y="59" width="77" height="42"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="77" id="D6r-Vr-bxI"/>
                         <constraint firstAttribute="height" constant="42" id="boa-6S-KhA"/>
@@ -46,13 +46,13 @@
                     </constraints>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="ic_setting"/>
+                    <state key="normal" image="ic_ham_menu"/>
                     <connections>
                         <action selector="settingsBtnClicked:" destination="-1" eventType="touchUpInside" id="oeY-QK-DNv"/>
                     </connections>
                 </button>
                 <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_back" translatesAutoresizingMaskIntoConstraints="NO" id="ooD-4W-uM7">
-                    <rect key="frame" x="20" y="64" width="28" height="23"/>
+                    <rect key="frame" x="20" y="68.666666666666671" width="28" height="23"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="28" id="k4R-pP-bgl"/>
@@ -64,23 +64,23 @@
             <color key="backgroundColor" name="BackgroundColor"/>
             <constraints>
                 <constraint firstItem="8vc-mK-ShB" firstAttribute="leading" secondItem="ooD-4W-uM7" secondAttribute="trailing" constant="10" id="3G5-EJ-wSr"/>
-                <constraint firstItem="8vc-mK-ShB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="Mzg-pB-tHL"/>
+                <constraint firstItem="8vc-mK-ShB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Mzg-pB-tHL"/>
                 <constraint firstItem="eyH-T8-yDI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="NVR-dU-bod"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="5xo-pH-xjf" secondAttribute="trailing" constant="20" id="OgB-fs-Q0D"/>
                 <constraint firstItem="5xo-pH-xjf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="VqX-I0-NYS"/>
                 <constraint firstItem="5xo-pH-xjf" firstAttribute="top" secondItem="8vc-mK-ShB" secondAttribute="bottom" id="VxD-zt-Sp4"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="5xo-pH-xjf" secondAttribute="bottom" id="eka-pj-vjM"/>
-                <constraint firstItem="ooD-4W-uM7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="khW-eN-TqC"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="eyH-T8-yDI" secondAttribute="trailing" constant="20" id="mVt-WW-mda"/>
                 <constraint firstItem="ooD-4W-uM7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="naK-0e-tCH"/>
+                <constraint firstItem="ooD-4W-uM7" firstAttribute="centerY" secondItem="8vc-mK-ShB" secondAttribute="centerY" id="zhZ-mf-YtH"/>
             </constraints>
             <point key="canvasLocation" x="119.84732824427481" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
         <image name="ic_back" width="97" height="48"/>
-        <image name="ic_setting" width="82" height="80"/>
-        <image name="scriptLogo" width="512" height="255"/>
+        <image name="ic_ham_menu" width="5" height="19"/>
+        <image name="scriptLogo" width="444" height="172"/>
         <namedColor name="BackgroundColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

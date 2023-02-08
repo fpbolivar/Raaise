@@ -1,5 +1,6 @@
 package com.raaise.android.ApiManager.ApiModels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GetGlobalVideoModel {
@@ -67,6 +68,25 @@ public class GetGlobalVideoModel {
         this.data = data;
     }
 
+    public class DonationUsers{
+        public String id;
+        public String name;
+
+        public String getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getProfileImage() {
+            return profileImage;
+        }
+
+        public String profileImage;
+    }
+
     public class Data {
         public String _id;
         public UserId userId;
@@ -88,6 +108,11 @@ public class GetGlobalVideoModel {
         public int __v;
         public boolean isLiked;
         public boolean isFollow;
+        public ArrayList<DonationUsers> donationUsers;
+
+        public ArrayList<DonationUsers> getDonationUsers() {
+            return donationUsers;
+        }
 
         public int getVideoReportCount() {
             return videoReportCount;

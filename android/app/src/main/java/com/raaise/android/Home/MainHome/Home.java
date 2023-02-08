@@ -2,6 +2,7 @@ package com.raaise.android.Home.MainHome;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -12,18 +13,17 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -53,6 +53,7 @@ public class Home extends AppCompatActivity {
     public String musicTitle = "";
     public String videoUri = "";
     public boolean shouldMergeAudio = false;
+    public boolean fromGallery = false;
     LinearLayout Home, Search, Plus, Inbox, Profile;
 
     ImageView HomeImageView,
@@ -63,14 +64,29 @@ public class Home extends AppCompatActivity {
     FragmentManager fragmentManager = getSupportFragmentManager();
     TextView textViewCountMessage;
 
+    int PERMISSION_ALL = 1;
+    String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO,
+            android.Manifest.permission.CAMERA
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().getAttributes().windowAnimations = R.anim.zoom_enter;
         setContentView(R.layout.activity_home);
+
         Initialization();
         clickListeners();
-        CheckNotificationCount();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                CheckNotificationCount();
+            }
+        }).start();
+        Log.i("token", "onCreate: " + Prefs.GetBearerToken(this));
         Prefs.SetExtra(getApplicationContext(), "", "OverSelectedMusicData");
     }
 
@@ -97,8 +113,13 @@ public class Home extends AppCompatActivity {
         SearchImageView.setImageResource(R.drawable.svg_unselect_search);
         InboxImageView.setImageResource(R.drawable.svg_unselect_inbox);
         ProfileImageView.setImageResource(R.drawable.svg_unselect_profile);
-        SelectFragment(1);
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SelectFragment(1);
+            }
+        }).start();
+        Log.i("videoSent", "SelectHomeScreen: Home");
     }
 
     private void SelectFragment(int position) {
@@ -132,12 +153,17 @@ public class Home extends AppCompatActivity {
     }
 
     private void SelectSearchScreen() {
-        HomeImageView.setImageResource(R.drawable.svg_unselect_home);
-        SearchImageView.setImageResource(R.drawable.svg_select_search);
-        InboxImageView.setImageResource(R.drawable.svg_unselect_inbox);
-        ProfileImageView.setImageResource(R.drawable.svg_unselect_profile);
-        SelectFragment(2);
-
+                HomeImageView.setImageResource(R.drawable.svg_unselect_home);
+                SearchImageView.setImageResource(R.drawable.svg_select_search);
+                InboxImageView.setImageResource(R.drawable.svg_unselect_inbox);
+                ProfileImageView.setImageResource(R.drawable.svg_unselect_profile);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SelectFragment(2);
+                    }
+                }).start();
+//                SelectFragment(2);
     }
 
     private void SelectPlusScreen() {
@@ -146,8 +172,12 @@ public class Home extends AppCompatActivity {
         InboxImageView.setImageResource(R.drawable.svg_unselect_inbox);
         ProfileImageView.setImageResource(R.drawable.svg_unselect_profile);
 
-
-        SelectFragment(3);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SelectFragment(3);
+            }
+        }).start();
 
     }
 
@@ -181,7 +211,12 @@ public class Home extends AppCompatActivity {
         SearchImageView.setImageResource(R.drawable.svg_unselect_search);
         InboxImageView.setImageResource(R.drawable.svg_select_inbox);
         ProfileImageView.setImageResource(R.drawable.svg_unselect_profile);
-        SelectFragment(4);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SelectFragment(4);
+            }
+        }).start();
 
     }
 
@@ -190,7 +225,12 @@ public class Home extends AppCompatActivity {
         SearchImageView.setImageResource(R.drawable.svg_unselect_search);
         InboxImageView.setImageResource(R.drawable.svg_unselect_inbox);
         ProfileImageView.setImageResource(R.drawable.svg_select_profile);
-        SelectFragment(5);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SelectFragment(5);
+            }
+        }).start();
 
     }
 
@@ -209,14 +249,21 @@ public class Home extends AppCompatActivity {
         InboxImageView = findViewById(R.id.InboxImageView);
         ProfileImageView = findViewById(R.id.ProfileImageView);
         fragmentManagerHelper = new FragmentManagerHelper(fragmentManager);
+
         SelectHomeScreen();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        checkPermissions();
-        CheckNotificationCount();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                checkPermissions();
+            }
+        }).start();
+//        checkPermissions();
+//        CheckNotificationCount();
     }
 
     public void CheckNotificationCount() {
@@ -237,38 +284,50 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     private void checkPermissions() {
+        if (!hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (!Environment.isExternalStorageManager()) {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
                 Uri uri = Uri.fromParts("package", getPackageName(), null);
                 intent.setData(uri);
                 startActivity(intent);
-                Toast.makeText(this, "Please Allow Permissions", Toast.LENGTH_SHORT).show();
             }
 
         }
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1001);
-        }
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1002);
-        }
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1003);
-        }
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.RECORD_AUDIO},
-                    1004);
-
-        }
+//        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
+//                == PackageManager.PERMISSION_DENIED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1001);
+//        }
+//        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                == PackageManager.PERMISSION_DENIED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1002);
+//        }
+//        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+//                == PackageManager.PERMISSION_DENIED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1003);
+//        }
+//        if (ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+//
+//            ActivityCompat.requestPermissions(this,
+//                    new String[]{Manifest.permission.RECORD_AUDIO},
+//                    1004);
+//
+//        }
 
     }
 
@@ -336,4 +395,6 @@ public class Home extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
 }

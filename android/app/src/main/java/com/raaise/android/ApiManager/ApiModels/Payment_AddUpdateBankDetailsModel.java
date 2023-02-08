@@ -2,6 +2,8 @@ package com.raaise.android.ApiManager.ApiModels;
 
 public class Payment_AddUpdateBankDetailsModel {
     public String accountHolderName;
+    public String accountHolderLastName;
+    public String dob;
     public String accountId;
     public long routingNumber;
     public long bankPhone;
@@ -9,11 +11,16 @@ public class Payment_AddUpdateBankDetailsModel {
     public String state;
     public long postalCode;
     public String address;
+    public String ssn_last_4;
     public int status;
     public String message;
     public Errors errors;
-    public Payment_AddUpdateBankDetailsModel(String accountHolderName, String accountId, long routingNumber, long bankPhone, String city, String state, long postalCode, String address) {
+    public Payment_AddUpdateBankDetailsModel(String accountHolderName, String accountHolderLastName,
+                                             String dob, String accountId, long routingNumber, long bankPhone, String city, String state, long postalCode, String address,
+                                             String ssn_last_4) {
         this.accountHolderName = accountHolderName;
+        this.accountHolderLastName = accountHolderLastName;
+        this.dob = dob;
         this.accountId = accountId;
         this.routingNumber = routingNumber;
         this.bankPhone = bankPhone;
@@ -21,6 +28,7 @@ public class Payment_AddUpdateBankDetailsModel {
         this.state = state;
         this.postalCode = postalCode;
         this.address = address;
+        this.ssn_last_4 = ssn_last_4;
     }
 
     public int getStatus() {

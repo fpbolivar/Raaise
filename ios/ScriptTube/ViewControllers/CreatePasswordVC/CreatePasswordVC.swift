@@ -27,6 +27,7 @@ class CreatePasswordVC: BaseControllerVC {
     @IBAction func updateBtnClicked(_ sender: Any) {
         checkValidations()
     }
+    //MARK: - Setup
     @objc func showPassword(sender: UITapGestureRecognizer){
         if sender == newTap{
             newTf.isSecureTextEntry = !newTf.isSecureTextEntry
@@ -64,11 +65,8 @@ class CreatePasswordVC: BaseControllerVC {
         newTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         oldTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         updateLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
-        
-//        newTf.placeholder = "New Password"
-//        oldTf.placeholder = "Confirm Password"
     }
-    
+    //MARK: - Validation
     func checkValidations(){
         if (newTf.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyPassword)
@@ -99,11 +97,11 @@ class CreatePasswordVC: BaseControllerVC {
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
+    //MARK: - Api Method
     func resetPasswordApi(){
         let param = ["newpassword":newTf.text ?? "","token":self.token]
         AuthManager.resetPasswordApi(delegate: self, param: param) {
             DispatchQueue.main.async {
-                //ToastManager.successToast(delegate: self, msg: "Password Changed Successfully")
                 self.gotoLogin()
             }
         }

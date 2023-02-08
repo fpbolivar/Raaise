@@ -21,4 +21,6 @@ class LocalStrings{
     static var emptyNewPassword = "Please enter New Password"
     static var emptyOldPassword = "Please enter Old Password"
     static var emptyConfirmPassword = "Please enter Confirm Password"
+    static var termsandService = "You must agree to our policies to continue"
+    static var APP_URL = ""
 }

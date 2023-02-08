@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ij9-uq-bYV" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                        <rect key="frame" x="20" y="0.0" width="344" height="59"/>
+                        <rect key="frame" x="10" y="0.0" width="354" height="59"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_user" translatesAutoresizingMaskIntoConstraints="NO" id="w5o-RR-pkL">
                                 <rect key="frame" x="10" y="10" width="40" height="40"/>
@@ -30,7 +30,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="top" text="Travis Barker" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W4D-Is-Vvt">
-                                <rect key="frame" x="57" y="9.9999999999999982" width="188" height="20.333333333333329"/>
+                                <rect key="frame" x="57" y="9.9999999999999982" width="198" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -42,7 +42,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cm7-Cl-DY7">
-                                <rect key="frame" x="314" y="10" width="20" height="20"/>
+                                <rect key="frame" x="324" y="10" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Kww-O1-RL1"/>
                                     <constraint firstAttribute="width" constant="20" id="uY1-ME-0RA"/>
@@ -55,13 +55,13 @@
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tuesday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lD9-Ji-f8j">
-                                <rect key="frame" x="260" y="9.6666666666666643" width="64" height="21"/>
+                                <rect key="frame" x="270" y="9.6666666666666643" width="64" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" name="lightGray"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KKP-ck-0dY" customClass="CircleProgress" customModule="ScriptTube" customModuleProvider="target">
-                                <rect key="frame" x="296" y="12.666666666666664" width="15" height="15"/>
+                                <rect key="frame" x="306" y="12.666666666666664" width="15" height="15"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="15" id="Oid-zb-lOw"/>
@@ -69,7 +69,7 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kct-vZ-sYe" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                <rect key="frame" x="305" y="35" width="19" height="15"/>
+                                <rect key="frame" x="315" y="35" width="19" height="15"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L0T-pg-sG0">
                                         <rect key="frame" x="2" y="0.0" width="15" height="15"/>
@@ -126,7 +126,7 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="ij9-uq-bYV" secondAttribute="trailing" constant="20" id="Sz8-mC-i6z"/>
                     <constraint firstItem="ij9-uq-bYV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="TTo-Wa-qqr"/>
-                    <constraint firstItem="ij9-uq-bYV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="r2P-ob-6yi"/>
+                    <constraint firstItem="ij9-uq-bYV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="r2P-ob-6yi"/>
                     <constraint firstAttribute="bottom" secondItem="ij9-uq-bYV" secondAttribute="bottom" constant="10" id="uEx-KU-Vux"/>
                 </constraints>
             </tableViewCellContentView>

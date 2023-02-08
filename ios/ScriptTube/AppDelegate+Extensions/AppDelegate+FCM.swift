@@ -10,6 +10,8 @@ import FirebaseMessaging
 import UserNotifications
 import FirebaseCore
 
+//MARK: - FIREBASE FCM TOKEN METHODS
+
 extension AppDelegate:UNUserNotificationCenterDelegate{
     func fcmMessagingSetup(application:UIApplication){
         FirebaseApp.configure()
@@ -44,10 +46,6 @@ extension AppDelegate:UNUserNotificationCenterDelegate{
             
         }
     }
-//    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-//        print("Registered for Apple Remote Notifications")
-//        Messaging.messaging().setAPNSToken(deviceToken, type: .unknown)
-//    }
 }
 extension AppDelegate: MessagingDelegate{
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
@@ -78,14 +76,6 @@ extension AppDelegate{
         let userInfo = notification.request.content.userInfo
         
         print(userInfo)
-        //        if let notificationType = userInfo["notificationType"] as? String{
-        //            if notificationType == "chat"{
-        //                let channelID = userInfo["channelID"] as? String ?? ""
-        //                if NotificationManager.instance.channelID == channelID{
-        //                    return [[.badge]]
-        //                }
-        //            }}
-        
         return [[.alert, .sound]]
     }
     
@@ -100,7 +90,7 @@ extension AppDelegate{
                      didReceiveRemoteNotification userInfo: [AnyHashable : Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        // Perform background operation
+        
         print(userInfo)
         completionHandler(.newData)
     }

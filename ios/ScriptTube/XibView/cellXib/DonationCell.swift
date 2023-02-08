@@ -25,6 +25,7 @@ class DonationCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    // MARK: - Setup
     func config(){
         titleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
         dateLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX13)

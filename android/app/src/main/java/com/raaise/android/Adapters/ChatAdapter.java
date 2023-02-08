@@ -62,7 +62,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         holder.chatSenderIV.setVisibility(!chatModel.getSenderId().getUserName().equalsIgnoreCase(Prefs.getUserName(mContext)) ? View.VISIBLE : View.GONE);
         if (!chatModel.getSenderId().getUserName().equalsIgnoreCase(Prefs.getUserName(mContext))) {
             Glide.with(holder.chatSenderIV)
-                    .load(chatModel.getSenderId().getProfileImage())
+                    .load(Prefs.GetBaseUrl(mContext) + chatModel.getSenderId().getProfileImage())
                     .circleCrop()
                     .placeholder(R.drawable.placeholder)
                     .into(holder.chatSenderIV);
@@ -80,7 +80,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         }
         if (chatModel.getMessageType().equalsIgnoreCase("link") && chatModel.getVideoId() != null) {
             Glide.with(holder.chatImage)
-                    .load(chatModel.getVideoId().getVideoImage())
+                    .load(Prefs.GetBaseUrl(mContext) + chatModel.getVideoId().getVideoImage())
                     .override(500, 500)
                     .placeholder(R.drawable.placeholder)
                     .into(holder.chatImage);

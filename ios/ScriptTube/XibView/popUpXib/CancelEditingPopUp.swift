@@ -14,7 +14,6 @@ class CancelEditingPopUp: UIViewController {
     var delegate:CancelEditDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
-
         discardLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX12)
         backToEditLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX12)
         // Do any additional setup after loading the view.
@@ -24,9 +23,7 @@ class CancelEditingPopUp: UIViewController {
     }
     
     @IBAction func discardChanges(_ sender: Any) {
-        weak var pvc = self.presentingViewController
         self.dismiss(animated: false){
-            //pvc?.tabBarController?.selectedIndex = 0
             self.delegate?.didDismissPopUp()
         }
     }

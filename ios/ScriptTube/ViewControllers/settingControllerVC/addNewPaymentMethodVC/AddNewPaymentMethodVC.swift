@@ -21,13 +21,11 @@ class AddNewPaymentMethodVC: BaseControllerVC {
     var newCardAdded : (()->Void)? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
-        //addNavBar(headingText:"Payment Methods",redText:"Methods")
         setfonts()
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: CardCell.identifier, bundle: nil), forCellReuseIdentifier: CardCell.identifier)
         executeTblDelegate()
         payBtn.addTarget(self, action: #selector(checkValidations), for: .touchUpInside)
-        // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -37,12 +35,13 @@ class AddNewPaymentMethodVC: BaseControllerVC {
         super.viewWillDisappear(animated)
         
     }
+    //MARK: - Api Method
     @objc func pay(){
         let str = monthTF.text?.split(separator: "/").map({String($0)})
         guard let month = str?[0], let year = str?[1] else{return}
         print("MONTHYEARS",month,year)
         let cardNo = cardTF.text!.replacingOccurrences(of: " ", with: "")
-        let param = ["name":nameTf.text!,"number":cardNo,"exp_month":month,"exp_year":year,"cvc":cvvTF.text!] //as! [String:String]
+        let param = ["name":nameTf.text!,"number":cardNo,"exp_month":month,"exp_year":year,"cvc":cvvTF.text!]
         self.pleaseWait()
         print("PARAMMMMM",param)
         AuthManager.addCardApi(delegate: self, param: param) {
@@ -53,6 +52,7 @@ class AddNewPaymentMethodVC: BaseControllerVC {
             }
         }
     }
+    //MARK: - Validation
     @objc func checkValidations(){
         if cardTF.text!.isEmpty{
             ToastManager.errorToast(delegate: self, msg: "Enter Card Number")
@@ -73,11 +73,11 @@ class AddNewPaymentMethodVC: BaseControllerVC {
     @IBAction func dismissBtn(_ sender: Any) {
         self.dismiss(animated: true)
     }
+    //MARK: - Setup
     func setfonts(){
         saveLbl.font = AppFont.FontName.light.getFont(size: AppFont.pX18)
         bottomInfoLbl.font = AppFont.FontName.light.getFont(size: AppFont.pX12)
         topInfoLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX14)
-        //cardTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
         nameTf.font = AppFont.FontName.bold.getFont(size: AppFont.pX14)
         cardTF.font = AppFont.FontName.bold.getFont(size: AppFont.pX14)
         monthTF.font = AppFont.FontName.bold.getFont(size: AppFont.pX14)
@@ -85,7 +85,6 @@ class AddNewPaymentMethodVC: BaseControllerVC {
         nameTf.placeholderColor(color: UIColor.darkGray, placeholderText: "Name on Card")
         cardTF.placeholderColor(color: UIColor.darkGray, placeholderText: "Card Number")
         monthTF.placeholderColor(color: UIColor.darkGray, placeholderText: "Valid thru")
-        //monthTF.placeholderColor(color: UIColor.darkGray, placeholderText: "MM / YYYY")
         monthTF.delegate = self
         cardTF.delegate = self
         cvvTF.delegate = self
@@ -97,6 +96,7 @@ class AddNewPaymentMethodVC: BaseControllerVC {
         tableView.reloadData()
     }
 }
+//MARK: - Table View Delegate
 extension AddNewPaymentMethodVC:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         1
@@ -124,7 +124,7 @@ extension AddNewPaymentMethodVC:UITextFieldDelegate{
     func format(with mask: String, phone: String) -> String {
         let numbers = phone.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
         var result = ""
-        var index = numbers.startIndex // numbers iterator
+        var index = numbers.startIndex
 
         // iterate over the mask characters until the iterator of numbers ends
         for ch in mask where index < numbers.endIndex {
@@ -146,14 +146,13 @@ extension AddNewPaymentMethodVC:UITextFieldDelegate{
             let newString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
             textField.text = format(with: "XXXX XXXX XXXX XXXX", phone: newString)
             return false
-            //return textField.text!.count + (string.count - range.length) <= 16
         }else if textField == cvvTF{
             return textField.text!.count + (string.count - range.length) <= 4
         }else{
             var newStr = ""
             print(string)
             if string != "0" && string != "1" && string != "" && textField.text!.count == 0{
-                newStr = "0"//"0\(string)"
+                newStr = "0"
                 textField.text = newStr
             }
             if textField.text!.count == 2 && string != ""{

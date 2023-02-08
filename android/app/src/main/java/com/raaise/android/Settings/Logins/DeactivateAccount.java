@@ -70,13 +70,13 @@ public class DeactivateAccount extends AppCompatActivity {
     void GetUserProfile() {
         NameInDeactivate.setText(Prefs.getUserName(getApplicationContext()));
         Glide.with(DeactivateAccount.this)
-                .load(Prefs.getUserImage(getApplicationContext()))
+                .load(Prefs.GetBaseUrl(getApplicationContext()) + Prefs.getUserImage(getApplicationContext()))
                 .circleCrop()
                 .placeholder(R.drawable.placeholder)
                 .into(ImageInDeactivateAccount);
         NameInDeactivateDelete.setText(Prefs.getUserName(getApplicationContext()));
         Glide.with(DeactivateAccount.this)
-                .load(Prefs.getUserImage(getApplicationContext()))
+                .load(Prefs.GetBaseUrl(getApplicationContext()) + Prefs.getUserImage(getApplicationContext()))
                 .circleCrop()
                 .placeholder(R.drawable.placeholder)
                 .into(ImageInDeleteAccount);
@@ -171,6 +171,7 @@ public class DeactivateAccount extends AppCompatActivity {
                 Prompt.SnackBar(findViewById(android.R.id.content), deleteAccountModel.getMessage());
                 Toast.makeText(DeactivateAccount.this, deleteAccountModel.getMessage(), Toast.LENGTH_SHORT).show();
                 Prefs.ClearBearerToken(DeactivateAccount.this);
+                Prefs.ClearBaseUrl(DeactivateAccount.this);
                 Prefs.ClearForgetPasswordEmail(DeactivateAccount.this);
                 Prefs.ClearFORGETPASSWORDTOKEN(DeactivateAccount.this);
                 Prefs.ClearForgetPasswordVerifyOtp(DeactivateAccount.this);
@@ -196,6 +197,7 @@ public class DeactivateAccount extends AppCompatActivity {
                 Prompt.SnackBar(findViewById(android.R.id.content), deactivateAccountModel.getMessage());
                 Toast.makeText(DeactivateAccount.this, deactivateAccountModel.getMessage(), Toast.LENGTH_SHORT).show();
                 Prefs.ClearBearerToken(DeactivateAccount.this);
+                Prefs.ClearBaseUrl(DeactivateAccount.this);
                 Prefs.ClearForgetPasswordEmail(DeactivateAccount.this);
                 Prefs.ClearFORGETPASSWORDTOKEN(DeactivateAccount.this);
                 Prefs.ClearForgetPasswordVerifyOtp(DeactivateAccount.this);

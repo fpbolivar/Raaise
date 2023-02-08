@@ -60,6 +60,9 @@ import com.raaise.android.model.MusicData;
 import com.raaise.android.model.MusicResponse;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.VideoDonationModal;
+import com.raaise.android.model.VideoDonationPojo;
+import com.raaise.android.model.WithdrawalsPojo;
 
 import java.util.ArrayList;
 
@@ -1068,6 +1071,7 @@ public class ApiManagerImplementation implements ApiManager {
             public void onResponse(Call<GetVideosBasedOnAudioIdModel> call, Response<GetVideosBasedOnAudioIdModel> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     if (response.body().getStatus() == 200) {
+                        if (response.body() != null)
                         Callback.onSuccess(response.body());
                     } else Callback.onError(new ServerError(response.body().getMessage()));
                 } else Callback.onError(new ServerError(response.message()));
@@ -1546,6 +1550,54 @@ public class ApiManagerImplementation implements ApiManager {
             @Override
             public void onFailure(Call<UserVideoDonationHistoryModel> call, Throwable t) {
                 Callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void getVideoDonationHistory(String token, VideoDonationModal videoDonationModal, DataCallback<VideoDonationPojo> callback) {
+        if (!HelperClass.haveNetworkConnection()){
+            callback.onError(new ServerError(StringHelper.EnableInternetConnection));
+            return;
+        }
+        ApiUtilities.getApiInterface().getVideoDonationHistory(token, videoDonationModal).enqueue(new Callback<VideoDonationPojo>() {
+            @Override
+            public void onResponse(Call<VideoDonationPojo> call, Response<VideoDonationPojo> response) {
+                if (response.isSuccessful()){
+                    if (response.body().getStatus() == 200){
+                        if (response.body().getMessage().equalsIgnoreCase("Success")){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError(response.body().getMessage()));
+                    } else callback.onError(new ServerError(response.body().getMessage()));
+                } else callback.onError(new ServerError(response.message()));
+            }
+
+            @Override
+            public void onFailure(Call<VideoDonationPojo> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void getUSerWithdrawals(String token, DataCallback<WithdrawalsPojo> callback) {
+        ApiUtilities.getApiInterface().getUserWithdrawal(token).enqueue(new Callback<WithdrawalsPojo>() {
+            @Override
+            public void onResponse(Call<WithdrawalsPojo> call, Response<WithdrawalsPojo> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            if (response.body().message.equalsIgnoreCase("Success")){
+                                callback.onSuccess(response.body());
+                            } else callback.onError(new ServerError(response.message()));
+                        } else callback.onError(new ServerError(response.message()));
+                    } else callback.onError(new ServerError(response.message()));
+                } else callback.onError(new ServerError(response.message()));
+            }
+
+            @Override
+            public void onFailure(Call<WithdrawalsPojo> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
             }
         });
     }

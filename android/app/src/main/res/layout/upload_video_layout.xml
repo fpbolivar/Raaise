@@ -18,7 +18,7 @@
             android:id="@+id/heading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/bottomdialog_bg"
+            android:background="@drawable/bottom_dialog_dark"
             android:backgroundTint="@color/black"
             android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -156,7 +156,7 @@
             app:layout_constraintBottom_toBottomOf="@id/donationHeading"
             app:layout_constraintRight_toRightOf="@id/desc_edit_text"
             app:layout_constraintTop_toTopOf="@id/donationHeading"
-            app:track="@drawable/upload_video_track" />
+            app:track="@drawable/track" />
 
 
         <!--        by default bottom = 20 dp-->

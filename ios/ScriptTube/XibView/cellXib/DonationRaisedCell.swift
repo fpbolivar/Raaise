@@ -31,6 +31,7 @@ class DonationRaisedCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    //MARK: - Update Data
     func updateCell(data:DonationRaisedVideoList){
         self.data = data
         let dateFormatter = DateFormatter()
@@ -54,6 +55,7 @@ class DonationRaisedCell: UITableViewCell {
         }
         self.dateLbl.text =  date.MMMddyyyy.uppercased() + " " + date.hh_mm_AM_PM
     }
+    //MARK: - Action
     @IBAction func statusBtnClicked(_ sender: Any) {
         delegate?.statusBtnClicked(status: self.data.status, videoId: self.data.id)
     }

@@ -30,6 +30,7 @@ class NotificationCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    // MARK: - Update Data
     func updateCell(data:NotificationDataModel){
         onlineBtnView.isHidden = data.isRead
         profileImg.loadImgForProfile(url: data.profileImage)
@@ -37,14 +38,13 @@ class NotificationCell: UITableViewCell {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let date = dateFormatter.date(from: data.time)
-        print("date: \(date)")
         let currentDate = Date()
         dateLbl.text = currentDate.offsetFrom(date: date!)
         setMessage(name: data.name, message: data.message)
     }
     func setMessage(name:String,message:String){
-        var attrName = NSAttributedString(string: name,attributes: [.font: AppFont.FontName.bold.getFont(size: AppFont.pX14)])
-        var attrMsg = NSAttributedString(string: message,attributes: [.font: AppFont.FontName.regular.getFont(size: AppFont.pX14)])
+        let attrName = NSAttributedString(string: name,attributes: [.font: AppFont.FontName.bold.getFont(size: AppFont.pX14)])
+        let attrMsg = NSAttributedString(string: message,attributes: [.font: AppFont.FontName.regular.getFont(size: AppFont.pX14)])
         let text = NSMutableAttributedString()
         text.append(attrName)
         text.append(NSMutableAttributedString(string: " "))

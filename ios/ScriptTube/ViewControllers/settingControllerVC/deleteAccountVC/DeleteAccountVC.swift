@@ -21,6 +21,7 @@ class DeleteAccountVC: BaseControllerVC {
         setfonts()
         // Do any additional setup after loading the view.
     }
+    //MARK: -Setup
     func setfonts(){
         questionLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX22)
         nameLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX22)
@@ -30,7 +31,6 @@ class DeleteAccountVC: BaseControllerVC {
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
         nameLbl.text = AuthManager.currentUser.name
         profileImage.loadImgForProfile(url: AuthManager.currentUser.profileImage)
-        //loadImg(url: AuthManager.currentUser.profileImage)
     }
     func gotoLogin(){
         let vc  = LoginVC()
@@ -38,8 +38,9 @@ class DeleteAccountVC: BaseControllerVC {
         UIApplication.keyWin!.rootViewController = navVC
         UIApplication.keyWin!.makeKeyAndVisible()
     }
+    //MARK: -Api method
     func createDeleteAlert(){
-        let alert = UIAlertController(title: "ScripTube", message: "Are you sure you want to Delete Your Account?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Raaise App", message: "Are you sure you want to Delete Your Account?", preferredStyle: .alert)
         let logOutAction = UIAlertAction(title: "Delete Account", style: .destructive){action in
             if(!(Constant.check_Internet?.isReachable)!){
                 AlertView().showInternetErrorAlert(delegate: self)

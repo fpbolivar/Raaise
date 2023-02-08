@@ -14,6 +14,7 @@ class NotificationVC: BaseControllerVC {
     var customView: CustomRefreshControl!
     var page = 1
     var refreshControl = UIRefreshControl()
+    var markedRead = false
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
@@ -57,7 +58,7 @@ class NotificationVC: BaseControllerVC {
         refreshControl.beginRefreshing()
         self.customView.spinner.startAnimating()
         self.notificationData = []
-        let param = ["limit":"10","page":"\(page)"]
+        let param = ["limit":"15","page":"1"]
         getNotificationApi(param: param) {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -71,14 +72,17 @@ class NotificationVC: BaseControllerVC {
         self.tabBarController?.tabBar.isHidden = true
     }
     @objc func markAllRead(){
-        
-        self.notificationData = []
-        let param = ["limit":"10","page":"\(page)","isAllRead":"true"]
-        getNotificationApi(param: param) {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+        if !markedRead{
+            self.notificationData = []
+            markedRead = true
+            let param = ["limit":"10","page":"1","isAllRead":"true"]
+            getNotificationApi(param: param) {
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         }
+
     }
     func setTable(){
         DispatchQueue.main.async {
@@ -88,7 +92,8 @@ class NotificationVC: BaseControllerVC {
             self.addRefreshControl()
         }
     }
-    func getNotificationApi(param:[String:String],completion:@escaping()->Void){
+    //MARK: - Api Methods
+    func getNotificationApiPagination(param:[String:String],completion:@escaping()->Void){
         DataManager.getNotifications(delegate: self, param: param) { json in
             json["notificationMessage"].forEach { (message,data) in
                 self.notificationData.append(NotificationDataModel(data: data))
@@ -96,6 +101,17 @@ class NotificationVC: BaseControllerVC {
             completion()
         }
     }
+    func getNotificationApi(param:[String:String],completion:@escaping()->Void){
+        var newdata = [NotificationDataModel]()
+        DataManager.getNotifications(delegate: self, param: param) { json in
+            json["notificationMessage"].forEach { (message,data) in
+                newdata.append(NotificationDataModel(data: data))
+            }
+            self.notificationData = newdata
+            completion()
+        }
+    }
+    //MARK: - Pagination
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let height = scrollView.frame.size.height
         let contentYOffset = scrollView.contentOffset.y
@@ -103,7 +119,7 @@ class NotificationVC: BaseControllerVC {
         if distanceFromBottom == height{
             page = page + 1
             let param = ["limit":"10","page":"\(page)"]
-            getNotificationApi(param: param){
+            getNotificationApiPagination(param: param){
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -111,6 +127,7 @@ class NotificationVC: BaseControllerVC {
         }
     }
 }
+//MARK: - Table View Delegate
 extension NotificationVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("COUNTTT",notificationData.count)
@@ -147,6 +164,7 @@ extension NotificationVC: UITableViewDelegate, UITableViewDataSource{
             }else{
                 DispatchQueue.main.async {
                     let vc = ViewVideoVC()
+                    vc.errorDelegate = self
                     if self.notificationData[indexPath.row].type == .userVideo{
                         vc.visitingProfile = false
                     }
@@ -155,5 +173,10 @@ extension NotificationVC: UITableViewDelegate, UITableViewDataSource{
                 }
             }
         }
+    }
+}
+extension NotificationVC:ViewVideoErrorDelegate{
+    func popAndShowError(error: String) {
+        AlertView().showAlert(message: error, delegate: self, pop: false)
     }
 }

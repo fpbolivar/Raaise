@@ -15,14 +15,9 @@ class ProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
-        
-        //getProfileApi(needLoader: true)
-        
-        // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("VIEWAPPERAD")
         if(!(Constant.check_Internet?.isReachable)!){
             AlertView().showInternetErrorAlert(delegate: self)
             return
@@ -31,6 +26,7 @@ class ProfileVC: UIViewController {
         needLoader = false
         self.tabBarController?.tabBar.isHidden = false
     }
+    //MARK: - Api Methods
     func getProfileVideos(needloader:Bool,completion:@escaping()->Void){
         needloader ? self.pleaseWait() : print("NOLOADER")
         DataManager.getUserVideos(delegate: self) { jsonData in
@@ -40,7 +36,6 @@ class ProfileVC: UIViewController {
                 self.userVideoData.append(data["videoImage"].stringValue)
                 self.userVideos.append(Post(data: data))
             }
-            print("nUMBEROFVIDEOS",self.userVideos)
             needloader ? self.clearAllNotice() : print("NOLOADER")
             completion()
         }
@@ -55,6 +50,7 @@ class ProfileVC: UIViewController {
             }
         }
     }
+    //MARK: - Setup
     func setupCollectioView(){
         collectionView.register(UINib(nibName:ProfileSliderView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProfileSliderView.identifier)
         collectionView.register(UINib(nibName:UserHeaderReusableView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserHeaderReusableView.identifier)
@@ -70,6 +66,7 @@ class ProfileVC: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+//MARK: - Collection View Delegate
 extension ProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
@@ -107,19 +104,17 @@ extension ProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UIColle
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return userVideos.count
-        //userVideoData.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileVideoItemCell.identifier, for: indexPath) as!  ProfileVideoItemCell
-        //cell.updateCell(withImg: userVideos[indexPath.row].videoImage)
         cell.updateCellData(data: userVideos[indexPath.row])
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let wFrame = collectionView.frame.width
-        let itemWidth = (wFrame/3) - 2//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
+        let itemWidth = (wFrame/3) - 2
         let itemHeight =  itemWidth * 1.3
         return CGSize.init(width: itemWidth, height: itemHeight)
     }

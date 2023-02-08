@@ -32,9 +32,9 @@ class PersonalInfoFormVC: BaseControllerVC {
         let vc = UserNameFormVC()
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    //MARK: -Setup
     func setfonts(){
         cameraImage.image = UIImage(systemName: "camera")
-        //?.addPadding(-50)
         cameraImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(photoOptions)))
         emailTF.overrideUserInterfaceStyle = .light
         mobileTF.overrideUserInterfaceStyle = .light
@@ -50,6 +50,7 @@ class PersonalInfoFormVC: BaseControllerVC {
         paddingTF(tf:nameTF);
         setPlaceholder()
     }
+    //MARK: -Actions
     @objc func photoOptions(){
         print("jhfhsjhdb")
         AlertView().alertCameraGallery(msg: "Select Option", delegate: self) { action in
@@ -74,7 +75,6 @@ class PersonalInfoFormVC: BaseControllerVC {
     }
     func openGallery(){
         if #available(iOS 14, *) {
-                    // using PHPickerViewController
                     var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
                     config.selectionLimit = 1
                     config.filter = .images
@@ -99,21 +99,16 @@ class PersonalInfoFormVC: BaseControllerVC {
     func paddingTF(tf:UITextField,value:Int=20){
         tf.paddingLeftRightTextField(left: CGFloat(value), right: CGFloat(value))
     }
+    //MARK: -Api method
     func updateProfileApi(){
         let param = ["name":nameTF.text ?? "","phoneNumber":mobileTF.text ?? ""]
         AuthManager.updateUserProfileApi(delegate: self, param: param,imageChanged:self.imageChanged,image: ["image":self.profileImage.image ?? UIImage()]) {
             DispatchQueue.main.async {
-                //self.gotoUsernameForm()
                 ToastManager.successToast(delegate: self, msg: "Profile Updated Successfully")
-                //self.navigationController?.popViewController(animated: true)
             }
         }
     }
     func setPlaceholder(){
-//        mobileTF.placeholder = "Phone Number"
-//        nameTF.placeholder = "Name"
-//        emailTF.placeholder = "Email"
-//        
         nameTF.attributedPlaceholder = NSAttributedString(string: "Name",attributes: [.foregroundColor: UIColor.lightGray])
         mobileTF.attributedPlaceholder = NSAttributedString(string: "Phone Number",attributes: [.foregroundColor: UIColor.lightGray])
         emailTF.attributedPlaceholder = NSAttributedString(string: "Email Address",attributes: [.foregroundColor: UIColor.lightGray])
@@ -127,25 +122,18 @@ class PersonalInfoFormVC: BaseControllerVC {
         emailTF.text = AuthManager.currentUser.email
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
         profileImage.loadImgForProfile(url: AuthManager.currentUser.profileImage)
-        //loadImg(url: AuthManager.currentUser.profileImage)
     }
+    //MARK: -Validations
     func checkValidations(){
         if (nameTF.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyName)
             return
         }
-//        else if(emailTF.text!.isEmpty){
-//            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyEmail)
-//            return
-//        }
-        else if (!Validator.isValidEmail(email: emailTF.text ?? "" ) && AuthManager.currentUser.email.isEmpty){
+        else if (!Validator.isValidEmail(email: emailTF.text ?? "" ) && !emailTF.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.validEmail)
             return
         }
-        else if (mobileTF.text!.isEmpty){
-            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyMobile)
-            return
-        }else if (mobileTF.text!.count < 8 || mobileTF.text!.count > 10){
+        else if ((mobileTF.text!.count < 8 || mobileTF.text!.count > 10) && !mobileTF.text!.isEmpty ){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.validMobile)
             return
         }else{
@@ -162,6 +150,7 @@ class PersonalInfoFormVC: BaseControllerVC {
     }
 
 }
+//MARK: -Image Picker Delegate
 extension PersonalInfoFormVC: UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
@@ -177,8 +166,6 @@ extension PersonalInfoFormVC: UIImagePickerControllerDelegate,UINavigationContro
         picker.dismiss(animated: true)
         self.profileImage.image = image
         imageChanged = true
-      //  let data =  image.jpegData(compressionQuality: 0.8)
-       // self.imageUpload(data: data!)
     }
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
@@ -197,7 +184,7 @@ extension PersonalInfoFormVC:PHPickerViewControllerDelegate{
         // request image urls
         let identifier = results.compactMap(\.assetIdentifier)
         let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifier, options: nil)
-        let count = fetchResult.count
+        let _ = fetchResult.count
         fetchResult.enumerateObjects {(asset, index, stop) in
            
             PHAsset.getURL(ofPhotoWith: asset) { (url) in

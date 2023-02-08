@@ -29,11 +29,11 @@ class CustomizeVideoVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     deinit{
-        //videoPlayer.removeObserver(self, forKeyPath: "status", context: nil)
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }
+    //MARK: - Setup
     func setSelectedAudioTitle(){
         guard let name = audioTitle else{return}
         self.audioNameLbl.text = name
@@ -47,18 +47,7 @@ class CustomizeVideoVC: UIViewController {
             print("outputUrl",outputUrl)
             self.selectedAudioId = id
             self.audioNameLbl.text = title
-            //DispatchQueue.main.async {
-                //self.removeallLayers()
                 self.finalVideo = outputUrl
-               // self.playVideo(withUrl: self.finalVideo)
-           // }
-//            AudioVideoMerger().downloadAudio(audioUrl: audioUrl){ downloadedAudio in
-//
-//            }
-//            AudioVideoMerger().editVideo(videoURL: self.url,audioUrl: audioUrl){ outputUrl in
-//
-//            }
-            
         }
         vc.isForSelectAudio = true
         self.navigationController?.pushViewController(vc, animated: true)
@@ -73,16 +62,8 @@ class CustomizeVideoVC: UIViewController {
         self.videoPlayer = AVPlayer(playerItem: avPlayerItem)
         self.playerLayer = AVPlayerLayer(player: videoPlayer)
         self.playerLayer.videoGravity = .resizeAspect
-        //resizeAspectFill //
-//        let avPlayer = AVPlayer(url: video)
         let castLayer = videoContainer.layer as! AVPlayerLayer
         castLayer.player = videoPlayer
-//        avPlayer.play()
-
-//        self.playerLayer.needsDisplayOnBoundsChange = true //
-//        self.playerLayer.frame = self.videoContainer.bounds
-//        self.playerLayer.frame.origin = self.videoContainer.frame.origin
-//        self.videoContainer.layer.addSublayer(playerLayer)
         videoPlayer.play()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.playerItemDidReachEnd(notification:)),
@@ -100,7 +81,6 @@ class CustomizeVideoVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         playVideo(withUrl: self.finalVideo)
-        //videoPlayer.play()
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -122,6 +102,7 @@ class CustomizeVideoVC: UIViewController {
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    //MARK: - Actions
     @IBAction func cancelBtnClicked(_ sender: Any) {
         print("CANCELLLL")
         DispatchQueue.main.async {
@@ -142,15 +123,9 @@ class CustomizeVideoVC: UIViewController {
                 let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
                 let uiImage = UIImage(cgImage: cgImage)
                 self.gotoAddPost(withImage: uiImage)
-                //let imageView = UIImageView(image: uiImage)
             }catch{
                 print(error)
             }
-//            let vc = SharePopUpVC()
-//            vc.delegate = self
-//            vc.modalTransitionStyle = .crossDissolve
-//            vc.modalPresentationStyle = .overCurrentContext
-//            self.present(vc, animated: true)
         }
     }
     @objc func playerItemDidReachEnd(notification: Notification) {
@@ -174,14 +149,13 @@ extension CustomizeVideoVC:ShareActionDelegate{
             let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
             let uiImage = UIImage(cgImage: cgImage)
             gotoAddPost(withImage: uiImage)
-            //let imageView = UIImageView(image: uiImage)
         }catch{
             print(error)
         }
     }
     
     func shareVideo() {
-        //
+        
     }
 }
 class AVPlayerView: UIView {
@@ -196,6 +170,7 @@ extension CustomizeVideoVC:AddPostFinishDelegate{
         delegate?.videoPosted()
     }
 }
+//MARK: - Protocols
 protocol CustomVideoPostedDelegate{
     func videoPosted()
 }

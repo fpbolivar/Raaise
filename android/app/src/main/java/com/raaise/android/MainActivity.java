@@ -6,7 +6,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.raaise.android.Activity.Introduction.WelcomeActivity;
+import com.raaise.android.Activity.Credentials.Login;
 import com.raaise.android.Home.MainHome.Home;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), Home.class));
                     finish();
                 } else {
-                    startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+                    startActivity(new Intent(getApplicationContext(), Login.class));
                     finish();
                 }
 

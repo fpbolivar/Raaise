@@ -34,13 +34,7 @@ class LoginVC: BaseControllerVC {
         setfonts()
         setPlaceholder()
         redColorUnderline()
-        emailTF.text = "test101@gmail.com"
-        passTF.text = "Green@1212"
-//        let authorizationButton = ASAuthorizationAppleIDButton()
-//        authorizationButton.frame.size = self.appleLoginBtnView.frame.size
-//        //authorizationButton.center = self.appleLoginBtnView.center
         aplleLoginBtn.addTarget(self, action: #selector(handleAppleIdRequest), for: .touchUpInside)
-        //self.appleLoginBtnView.addSubview(authorizationButton)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -68,6 +62,7 @@ class LoginVC: BaseControllerVC {
         }
         fbLogin()
     }
+    //MARK: - APi Methods
     func googleLoginApi(withToken token:String){
         let param = ["token":token,"deviceType":"ios","deviceToken":UserDefaultHelper.getDevice_Token()]
         AuthManager.googleLoginApi(delegate: self, param: param) {
@@ -127,7 +122,6 @@ class LoginVC: BaseControllerVC {
                   print("FACEBOOKTOKEN",fbToken)
                   self.fbLoginApi(withToken: fbToken)
               }
-            //print(result)
           }
         })
       }
@@ -145,23 +139,16 @@ class LoginVC: BaseControllerVC {
             }
         }
     }
+    //MARK: -Validation
     func checkValidations(){
         if (emailTF.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyEmail+" or Username")
             return
         }
-//        else if (!Validator.isValidEmail(email: emailTF.text ?? "")){
-//            ToastManager.errorToast(delegate: self, msg: LocalStrings.validEmail)
-//            return
-//        }
         else if(passTF.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyPassword)
             return
         }
-//        else if (!Validator.isValidPassword(value: passTF.text ?? "")){
-//            ToastManager.errorToast(delegate: self, msg: LocalStrings.validPassword)
-//            return
-//        }
         else{
             if(!(Constant.check_Internet?.isReachable)!){
                 AlertView().showInternetErrorAlert(delegate: self)
@@ -170,6 +157,7 @@ class LoginVC: BaseControllerVC {
             loginApi()
         }
     }
+    //MARK: - Setup
     func setfonts(){
         donthaveLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
         eyeImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showPassword)))
@@ -202,8 +190,6 @@ class LoginVC: BaseControllerVC {
     func setPlaceholder(){
         emailTF.attributedPlaceholder = NSAttributedString(string: "Email Address or Username",attributes: [.foregroundColor: UIColor.lightGray])
         passTF.attributedPlaceholder = NSAttributedString(string: "Password",attributes: [.foregroundColor: UIColor.lightGray])
-//        passTF.placeholder = "********"
-//        emailTF.placeholder = "abc@ymail.uk"
     }
     func redColorUnderline(){
 
@@ -231,6 +217,7 @@ class LoginVC: BaseControllerVC {
         
     }
 }
+//MARK: - Apple Sign In Delegate
 extension LoginVC:ASAuthorizationControllerDelegate{
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
     // Handle error.
@@ -261,7 +248,6 @@ extension LoginVC:ASAuthorizationControllerDelegate{
                         break
                  }
             }
-           print(userIdentifier,fullName,email)
         }
     }
 }

@@ -4,7 +4,7 @@
 //
 //  Created by Code Optimal Solutions Ios on 28/12/22.
 //
-
+//MARK: - Data Model of Single Chat Channel 
 import Foundation
 class ChatChannelModel{
     var id = ""
@@ -54,41 +54,28 @@ enum ChatChannelKeys:String{
 extension Int64 {
     func getDateStringFromMillisecond2() -> String {
        let millisecond =  Double(self)
-        /// 1000.0
         let date = Date(timeIntervalSince1970: TimeInterval(millisecond))
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.timeZone = TimeZone.current
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-       // dateFormatter.dateStyle = .medium
-
         return dateFormatter.string(from: date)
     }
     func getDateStringFromMillisecond() -> String {
        let millisecond =  Double(self)
-        /// 1000.0
         let date = Date(timeIntervalSince1970: TimeInterval(millisecond))
         let dateFormatter = DateFormatter()
-       // dateFormatter.locale = Locale(identifier: "en_US")
         dateFormatter.timeZone = TimeZone.current
         dateFormatter.dateFormat = "MMM dd,yyyy h:mm a"
-       // dateFormatter.dateStyle = .medium
-
         return dateFormatter.string(from: date)
     }
     func getTime()->String{
         let millisecond =  Double(self)
-        /// 1000.0
          let date = Date(timeIntervalSince1970: TimeInterval(millisecond))
          let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US")
          dateFormatter.timeZone = TimeZone.current
         dateFormatter.dateFormat = "h:mm a"
-         //dateFormatter.dateFormat = "hh:mm a"
-         //dateFormatter.dateStyle = .short
-        
-        
-
          return dateFormatter.string(from: date)
     }
 }

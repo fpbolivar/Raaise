@@ -4,6 +4,7 @@
 //
 //  Created by Code Optimal Solutions Ios on 09/12/22.
 //
+//MARK: - Data Model for a Single Comment
 
 import Foundation
 class CommentDataModel{

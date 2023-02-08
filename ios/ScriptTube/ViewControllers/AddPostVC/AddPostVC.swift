@@ -37,12 +37,18 @@ class AddPostVC: BaseControllerVC {
     var delegate:AddPostFinishDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideNavbar()
+        setup()
+        // Do any additional setup after loading the view.
+    }
+    //MARK: - Setup
+    func setup(){
         otherAmtLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         donationLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
         submitLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
         donationTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         captionTv.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
-        hideNavbar()
+       
         if editPost{
             setupForEditPost()
         }else{
@@ -68,7 +74,6 @@ class AddPostVC: BaseControllerVC {
                 self.setupChooseArticleDropDown()
             }
         }
-        // Do any additional setup after loading the view.
     }
     func setupChooseArticleDropDown() {
         chooseArticleDropDown.anchorView = categoryTf
@@ -77,21 +82,11 @@ class AddPostVC: BaseControllerVC {
         chooseArticleDropDown.textColor = .white
         chooseArticleDropDown.selectionBackgroundColor = .darkGray
         chooseArticleDropDown.dataSource = category.map{$0.name}
-
-        // Action triggered on selection
         chooseArticleDropDown.selectionAction = { [weak self] (index, item) in
             print("SELECTEDVAL",item)
             self?.categoryTf.text = item
             self?.selectedCategory = self?.category[index].id ?? ""
         }
-
-//        chooseArticleDropDown.multiSelectionAction = { [weak self] (indices, items) in
-//            print("Muti selection action called with: \(items)")
-//            if items.isEmpty {
-//                self?.chooseArticleButton.setTitle("", for: .normal)
-//            }
-//        }
-
     }
     func setupForEditPost(){
         categoryStack.isHidden = true
@@ -102,6 +97,7 @@ class AddPostVC: BaseControllerVC {
         print(thumbnailImageString)
         thumbnailImgView.loadImg(url: thumbnailImageString ?? "")
     }
+    //MARK: - Api Methods
     func editPostApi(){
         let param = ["slug":slug,"videoCaption":captionTv.text.trimmingCharacters(in: .whitespaces)] as! [String:String]
         DataManager.editPostApi(delegate: self, param: param) {
@@ -119,8 +115,8 @@ class AddPostVC: BaseControllerVC {
             completion()
         }
     }
+    //MARK: - Actions
     @IBAction func categoryBtn(_ sender: Any) {
-        //categoryTableView.isHidden = !categoryTableView.isHidden
         chooseArticleDropDown.show()
     }
     @IBAction func submitBtnClicked(_ sender: Any) {
@@ -148,6 +144,7 @@ class AddPostVC: BaseControllerVC {
     @IBAction func donationSwitchChanged(_ sender: UISwitch) {
         stack.isHidden = !sender.isOn
     }
+    //MARK: - Add Post Api
     func addpostApi(){
         self.pleaseWait()
         do{
@@ -164,11 +161,11 @@ class AddPostVC: BaseControllerVC {
             DispatchQueue.main.async {
                 self.navigationController?.popToRootViewController(animated: true)
                 self.delegate?.postAdded()
-                //self.tabBarController?.dismiss(animated: true)
             }
         }
     }
 }
+//MARK: - Collection View Delegate
 extension AddPostVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return amounts.count
@@ -190,6 +187,7 @@ extension AddPostVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollec
         cell.unselectedCell()
     }
 }
+//MARK: - Table View Delegate
 extension AddPostVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
@@ -203,7 +201,7 @@ extension AddPostVC:UITableViewDelegate,UITableViewDataSource{
     }
 }
 
-
+//MARK: - Protocol
 protocol AddPostFinishDelegate{
     func postAdded()
 }

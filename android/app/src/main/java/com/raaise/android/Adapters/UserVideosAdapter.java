@@ -3,7 +3,6 @@ package com.raaise.android.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.raaise.android.ApiManager.ApiModels.GetAllUserVideoModel;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.mainHomeData;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public class UserVideosAdapter extends RecyclerView.Adapter<UserVideosAdapter.Vi
 
         GetAllUserVideoModel.Data obj = list.get(position);
 
-        ViewHolder.VideoViewInHomeReels.setVideoURI(Uri.parse(obj.getVideoLink()));
+        ViewHolder.VideoViewInHomeReels.setVideoPath(Prefs.GetBaseUrl(context) + obj.getVideoLink());
         ViewHolder.VideoViewInHomeReels.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
@@ -150,6 +150,7 @@ public class UserVideosAdapter extends RecyclerView.Adapter<UserVideosAdapter.Vi
         });
         holder.ShareVideo.setOnClickListener(view -> homeReelsListener.ShowShareVideoDialog(obj.getVideoLink(), obj.getUserId().get_id(), obj.getUserId().getProfileImage(), obj.getUserId().getShortBio(), obj.getUserId().getUserName(), obj.get_id()));
 
+        holder.topRewardedTV.setVisibility(View.GONE);
     }
 
     @Override
@@ -174,6 +175,7 @@ public class UserVideosAdapter extends RecyclerView.Adapter<UserVideosAdapter.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView topRewardedTV;
         public static VideoView VideoViewInHomeReels;
         public static TextView NameInHomeVideoSingleItem, UserNameInHomeVideoSingleItem, DonationRaisedInHomeVideoSingleItem, SongNameInHomeVideoSingleItem, DonationAmount,
                 LikeCountInHomeVideoSingleItem, hashTagsTV, CommentCountInHomeVideoSingleItem, VideoShareCountInHomeVideoSingleItem, FollowTextInHomeVideoSingleItem;
@@ -190,6 +192,7 @@ public class UserVideosAdapter extends RecyclerView.Adapter<UserVideosAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            topRewardedTV = itemView.findViewById(R.id.top_rewarded_tv);
             DonationLayout = itemView.findViewById(R.id.DonationLayout);
             ShareVideo = itemView.findViewById(R.id.ShareVideo);
             more_options_btn_UP = itemView.findViewById(R.id.more_options_btn_UP);

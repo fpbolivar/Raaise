@@ -46,6 +46,7 @@ class VisitProfileVC: BaseControllerVC {
     @objc func popBack(){
         self.navigationController?.popViewController(animated: true)
     }
+    //MARK: - Api Methods
     func getUserProfile(completion:@escaping()->Void){
         let param = ["userIdentity":id]
         DataManager.getOtherUserProfile(delegate: self, param: param) { json in
@@ -69,6 +70,7 @@ class VisitProfileVC: BaseControllerVC {
             completion()
         }
     }
+    //MARK: - Setup
     func setupCollectioView(){
         collectionView.register(UINib(nibName:ProfileSliderView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProfileSliderView.identifier)
         collectionView.register(UINib(nibName:VisitVCHeader.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: VisitVCHeader.identifier)
@@ -81,11 +83,16 @@ class VisitProfileVC: BaseControllerVC {
     }
     
     @IBAction func settingsBtnClicked(_ sender: Any) {
-        let vc = SettingVC()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let popUp = ReportBtnPopUp()
+        popUp.blockDelegate = self
+        popUp.forBlock = true
+        popUp.modalTransitionStyle = .crossDissolve
+        popUp.modalPresentationStyle = .overCurrentContext
+        self.tabBarController?.present(popUp, animated: true)
     }
     
 }
+//MARK: - Collection View Delegate
 extension VisitProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
@@ -166,6 +173,7 @@ extension VisitProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UI
     }
 
 }
+//MARK: - Navigation Delegate
 extension VisitProfileVC:UserHeaderReusableViewProtocol{
     func gotoFollowersListVC(isForFollowing: Bool) {
         let vc = FollowListVC()
@@ -215,7 +223,18 @@ extension VisitProfileVC:ViewVideoFromProfile{
         }
     }
 }
-
+extension VisitProfileVC:BlockUserDelegate{
+    func blockUser() {
+        let vc = BlockUserPopUp()
+        guard let user = self.userDetails else{return}
+        vc.username = user.userName
+        vc.userId = user.id
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+}
+//MARK: - Protocol
 protocol VisitProfileDelegate{
     func followActionChanged(withId id:String,isFollowing:Bool)
 }

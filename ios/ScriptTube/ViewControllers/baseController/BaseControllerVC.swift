@@ -23,32 +23,26 @@ class BaseControllerVC:UIViewController{
             headingtitleSet()
         }
     }
-   // var rightBtnAction:(()->Void)!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideNavbar()
         navView =  NavigationBar.instanceFromNib() as? NavigationBar
         
     }
-    func addNavBar(headingText:String,redText:String,type:NavBarType = .largeNavBarOnlyBack,addNewCardSelector:Selector? = nil,addNewCardSelectorTitle:String = "Add New Card"){
+    func addNavBar(headingText:String,leftAction:Selector?=nil,redText:String,type:NavBarType = .largeNavBarOnlyBack,addNewCardSelector:Selector? = nil,addNewCardSelectorTitle:String = "Add New Card"){
 
         self.type = type
 
         self.headingText = headingText
         self.redText = redText
-        addNavBar(type:type,addNewCardSelector: addNewCardSelector,addNewCardSelectorTitle:addNewCardSelectorTitle)
+        addNavBar(type:type,leftAction: leftAction,addNewCardSelector: addNewCardSelector,addNewCardSelectorTitle:addNewCardSelectorTitle)
     }
     private func addNavBar(style:NavBarStyle?=nil,title:String="",type:NavBarType = .largeNavBarOnlyBack,leftAction:Selector?=nil,deleteSelector: Selector? = nil,addNewCardSelector:Selector? = nil,addNewCardSelectorTitle:String){
-       // navView.contactIcon.isUserInteractionEnabled = true
         navView.leftIcon.isUserInteractionEnabled = true
-       // navView.msgIcon.isUserInteractionEnabled = true
         titleSet()
         if let cardAction = addNewCardSelector{
             navView.addNewCardBtn.addTarget(self, action: cardAction, for: .touchUpInside)
         }
-        
-        // navView.contactIcon.image = UIImage(named: "ic_profile")!.addPadding(5)
-        // navView.msgIcon.image = UIImage(named: "ic_messages")!.addPadding(5)
         navView.translatesAutoresizingMaskIntoConstraints = false
         navView.leftIcon.image = UIImage(named: "ic_back")!.addPadding(0, 0, 20, 0)
         navView.rigthBtn.isHidden = true
@@ -67,7 +61,6 @@ class BaseControllerVC:UIViewController{
         if .largeNavBarOnlyBackWithRightBtn == type{
             navView.heightAnchor.constraint(equalToConstant: 80).isActive = true
             navView.rigthBtn.isHidden = false
-           // navView.rigthBtn.addTarget(self, action: #selector(rightAction), for: .touchUpInside)
         }
         if .smallNavBarOnlyBack == type{
             navView.heightAnchor.constraint(equalToConstant: 60).isActive = true
@@ -76,7 +69,6 @@ class BaseControllerVC:UIViewController{
             navView.heightAnchor.constraint(equalToConstant: 80).isActive = true
             navView.rigthBtn.isHidden = false
             navView.leftIcon.isHidden = true
-            //navView.title.textAlignment = .left
         }
         if type == .addNewCard{
             navView.heightAnchor.constraint(equalToConstant: 80).isActive = true
@@ -94,9 +86,7 @@ class BaseControllerVC:UIViewController{
     }
 
     private  func titleSet(){
-        //navView.title.text = titleText ?? ""
-        //navView.title.adjustsFontSizeToFitWidth = true
-        //navView.title.font =  AppFont.FontName.regular.getFont(size: AppFont.pX15)
+        
     }
     private  func headingtitleSet(){
         navView.title.text =  ""
@@ -128,15 +118,6 @@ class BaseControllerVC:UIViewController{
     func unhideCustomNavBar(navigationBar: NavigationBar){
         navigationBar.isHidden = false
     }
-//    @objc func addNewCard(){
-//        let vc = AddNewPaymentMethodVC()
-//        vc.modalPresentationStyle = .overFullScreen
-//        vc.newCardAdded = {
-//            print("ahbcsjahcb")
-//            
-//        }
-//        self.present(vc, animated: true)
-//    }
     @objc func gotoProfile(){
 
     }

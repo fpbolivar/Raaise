@@ -39,7 +39,6 @@ import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.model.MusicData;
 
-
 import java.util.ArrayList;
 
 public class Select_AudioActivity extends Fragment implements View.OnClickListener, MusicListAdapter.MusicListener {
@@ -263,7 +262,7 @@ public class Select_AudioActivity extends Fragment implements View.OnClickListen
 
         try {
             Dialogs.createProgressDialog(view.getContext());
-            DownloadManager.Request downloadRequest = new DownloadManager.Request(Uri.parse(data.audio));
+            DownloadManager.Request downloadRequest = new DownloadManager.Request(Uri.parse(Prefs.GetBaseUrl(getContext()) + data.audio));
 
 
             String title = URLUtil.guessFileName(data.audio, null, null);

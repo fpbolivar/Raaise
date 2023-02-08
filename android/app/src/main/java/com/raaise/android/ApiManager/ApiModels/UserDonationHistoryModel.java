@@ -32,17 +32,17 @@ public class UserDonationHistoryModel {
     }
 
     public class Data{
-        public String walletCreditAmount;
+        public String totalWithdraw;
         public String donatedAmount;
-        public String walletDebitAmount;
+        public String totalRaised;
         public List<UserVideo> userVideo;
 
-        public String getWalletCreditAmount() {
-            return walletCreditAmount;
+        public String getTotalWithdraw() {
+            return totalWithdraw;
         }
 
         public void setWalletCreditAmount(String walletCreditAmount) {
-            this.walletCreditAmount = walletCreditAmount;
+            this.totalWithdraw = walletCreditAmount;
         }
 
         public String getDonatedAmount() {
@@ -53,12 +53,12 @@ public class UserDonationHistoryModel {
             this.donatedAmount = donatedAmount;
         }
 
-        public String getWalletDebitAmount() {
-            return walletDebitAmount;
+        public String getTotalRaised() {
+            return totalRaised;
         }
 
         public void setWalletDebitAmount(String walletDebitAmount) {
-            this.walletDebitAmount = walletDebitAmount;
+            this.totalRaised = walletDebitAmount;
         }
 
         public List<UserVideo> getUserVideo() {

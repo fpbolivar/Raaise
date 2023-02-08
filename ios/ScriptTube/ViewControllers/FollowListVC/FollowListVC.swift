@@ -32,6 +32,26 @@ class FollowListVC: BaseControllerVC {
             }
         }// Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
+    }
+ 
+    //MARK: - Setup
+    func setup(){
+        searchTf.paddingLeftRightTextField(left: 35, right: 0)
+        searchTf.attributedPlaceholder = NSAttributedString(string: "Search Users",attributes: [.foregroundColor: UIColor.lightGray])
+        searchTf.layer.cornerRadius = 10
+        searchTf.delegate = self
+    }
+    func setTableView(){
+        tableSetup = true
+        tableView.register(UINib(nibName: SelectionCell.identifier, bundle: nil), forCellReuseIdentifier: SelectionCell.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.reloadData()
+    }
+    //MARK: - Api Methods
     func getData(searchText:String = "",needLoader:Bool = false,completion:@escaping()->Void){
         let param = ["limit":"30","page":"\(page)","search":"\(searchText)"]
         if isFollowingList{
@@ -86,23 +106,8 @@ class FollowListVC: BaseControllerVC {
             }
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = true
-    }
-    func setup(){
-        searchTf.paddingLeftRightTextField(left: 35, right: 0)
-        searchTf.attributedPlaceholder = NSAttributedString(string: "Search Users",attributes: [.foregroundColor: UIColor.lightGray])
-        searchTf.layer.cornerRadius = 10
-        searchTf.delegate = self
-    }
-    func setTableView(){
-        tableSetup = true
-        tableView.register(UINib(nibName: SelectionCell.identifier, bundle: nil), forCellReuseIdentifier: SelectionCell.identifier)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.reloadData()
-    }
+    
+    
     func getOtherUsersFollowerList(withParam param:[String:String],isForFollowing:Bool,needLoader:Bool,completion:@escaping()->Void){
         DataManager.getOtherUserFollowes(delegate: self, isForFollowing: isForFollowing, needLoader: needLoader, param: param) { errorMessage in
             print(errorMessage)
@@ -147,14 +152,13 @@ extension FollowListVC:UITableViewDelegate,UITableViewDataSource{
         vc.id = self.userList[indexPath.row].userId
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    //MARK: - Pagination
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let scroll = scrollView as? UITableView else{return}
         let height = scroll.frame.size.height
         let contentYOffset = scroll.contentOffset.y
         let distanceFromBottom = scroll.contentSize.height - contentYOffset
         if distanceFromBottom == height{
-            print("helloajsk")
-            print("You reached end of the table")
             page = page + 1
             getData(searchText: searchTf.text!){
                 
@@ -162,6 +166,7 @@ extension FollowListVC:UITableViewDelegate,UITableViewDataSource{
         }
     }
 }
+//MARK: - Search Delegates
 extension FollowListVC:UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
             NSObject.cancelPreviousPerformRequests(
@@ -175,7 +180,6 @@ extension FollowListVC:UITextFieldDelegate{
         return true
     }
     @objc func getHintsFromTextField(textField: UITextField) {
-        print("Hints for textField: \(textField.text)")
         userList = []
         if !textField.text!.isEmpty{
             getData(searchText: textField.text!){

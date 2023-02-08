@@ -2,6 +2,7 @@ package com.raaise.android.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.raaise.android.R;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.model.MusicData;
 
 import java.util.ArrayList;
@@ -41,11 +43,10 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull MusicListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         MusicData music = musicData.get(position);
-
+        Log.i("imgLink", "onBindViewHolder: " + Prefs.GetBaseUrl(mContext) + music.Thumbnail);
         Glide.with(holder.singerIV)
-                .load(music.Thumbnail)
+                .load(Prefs.GetBaseUrl(mContext) + music.Thumbnail)
                 .circleCrop()
-                .centerCrop()
                 .into(holder.singerIV);
         holder.singerName.setText(music.artistName);
         holder.songName.setText(music.songName);

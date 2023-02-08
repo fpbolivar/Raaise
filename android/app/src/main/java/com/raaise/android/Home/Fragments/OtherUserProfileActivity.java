@@ -28,7 +28,6 @@ import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.ApiManager.ServerError;
 import com.raaise.android.FollowersListFragment;
 import com.raaise.android.R;
-import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
 
@@ -106,17 +105,14 @@ public class OtherUserProfileActivity extends AppCompatActivity implements GetAl
 
     public void HitApiForGettingSlug() {
         ProfileChatModel model = new ProfileChatModel(Prefs.GetUserID(OtherUserProfileActivity.this), SenderId);
-        Dialogs.createProgressDialog(OtherUserProfileActivity.this);
         apiManager.ProfileChat(Prefs.GetBearerToken(OtherUserProfileActivity.this), model, new DataCallback<ProfileChatModel>() {
             @Override
             public void onSuccess(ProfileChatModel profileChatModel) {
-                Dialogs.HideProgressDialog();
                 getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new ChatFragment(profileChatModel.getChatSlug(), SenderId, Prefs.GetUserID(OtherUserProfileActivity.this), UserImageLink, Username, ShortBio, 2)).commit();
             }
 
             @Override
             public void onError(ServerError serverError) {
-                Dialogs.HideProgressDialog();
                 Prompt.SnackBar(findViewById(android.R.id.content), serverError.getErrorMsg());
             }
         });
@@ -168,7 +164,7 @@ public class OtherUserProfileActivity extends AppCompatActivity implements GetAl
                     CountOfVideos = getPublicUserProfileModel.getData().getVideoCount();
                     ReceiverId = getPublicUserProfileModel.getData().get_id();
                     SenderId = getPublicUserProfileModel.getData().get_id();
-                    UserImageLink = getPublicUserProfileModel.getData().getProfileImage();
+                    UserImageLink = Prefs.GetBaseUrl(OtherUserProfileActivity.this) + getPublicUserProfileModel.getData().getProfileImage();
                     ShortBio = getPublicUserProfileModel.getData().getShortBio();
 
                     total_donation_tvInOtherUserProfile.setText(String.format("Total Donated ($%s)", getPublicUserProfileModel.getData().getDonatedAmount() == null ? 00.00 : getPublicUserProfileModel.getData().getDonatedAmount()));
@@ -188,7 +184,7 @@ public class OtherUserProfileActivity extends AppCompatActivity implements GetAl
                         FollowersTextInOtherUserProfile.setText("Followers");
                     }
                     FollowingCountInOtherUserProfile.setText(String.valueOf(getPublicUserProfileModel.getData().getFollowingCount()));
-                    shortBioTVInOtherUserProfile.setText((getPublicUserProfileModel.data.shortBio == null || getPublicUserProfileModel.data.shortBio.equalsIgnoreCase("")) ? "" : getPublicUserProfileModel.data.shortBio);
+                    shortBioTVInOtherUserProfile.setText((getPublicUserProfileModel.data.shortBio == null || getPublicUserProfileModel.data.shortBio.equalsIgnoreCase("")) ? "" : getPublicUserProfileModel.data.shortBio.replace("\n", " "));
                     if (getPublicUserProfileModel.getData().isVerified()) {
                         Verification_BadgeInOtherUserProfile.setVisibility(View.VISIBLE);
                     }
@@ -198,10 +194,24 @@ public class OtherUserProfileActivity extends AppCompatActivity implements GetAl
                         FollowTextInOtherUserProfile.setText("Follow");
                     }
                     Glide.with(getApplicationContext())
-                            .load(getPublicUserProfileModel.getData().getProfileImage())
+                            .asBitmap()
+                            .load(UserImageLink)
+                            .override(1600, 1600)
                             .circleCrop()
                             .placeholder(R.drawable.placeholder)
                             .into(ProfileImageInOtherUserProfile);
+//                    Glide.with(getApplicationContext())
+//                            .asBitmap()
+//                            .load('url')
+//                            .apply(new RequestOptions().override(1600, 1600)) //This is important
+//                            .into(new BitmapImageViewTarget('imageview') {
+//                                @Override
+//                                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                                    super.onResourceReady(resource, transition);
+//                                    'imageview'.setImageBitmap(resource);
+//                                    'imageview'.setZoom(1); //This is important
+//                                }
+//                            });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

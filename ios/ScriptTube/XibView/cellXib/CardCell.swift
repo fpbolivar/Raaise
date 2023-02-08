@@ -38,6 +38,7 @@ class CardCell: UITableViewCell {
     func cellUnselected(){
         checkImage.isHidden = true
     }
+    // MARK: - Update Data
     func update(data:CardListModel){
         cardNumber.text = "**** **** **** \(data.last4)"
         switch data.brand{

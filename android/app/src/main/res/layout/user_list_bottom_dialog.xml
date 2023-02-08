@@ -132,11 +132,8 @@
             android:layout_weight="1"
             android:background="@null"
             android:fontFamily="@font/noto_sans"
-            android:hint="Search users"
-
+            android:theme="@style/SearchViewStyle"
             android:maxLines="1"
-            android:textColor="@color/white"
-            android:textColorHint="#949292"
             android:textSize="14sp"
             app:closeIcon="@drawable/icon_close"
             app:iconifiedByDefault="false"

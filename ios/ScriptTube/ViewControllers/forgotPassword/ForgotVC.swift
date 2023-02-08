@@ -25,9 +25,8 @@ class ForgotVC: BaseControllerVC {
     }
     @IBAction func submitAction(_ sender: AnyObject) {
         checkValidations()
-        //let vc = ChangePasswordVC()
-        //self.navigationController?.pushViewController(vc, animated: true)
     }
+    //MARK: -Validation
     func checkValidations(){
         if (nameTf.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyEmail)
@@ -56,6 +55,7 @@ class ForgotVC: BaseControllerVC {
         vc.email = nameTf.text ?? ""
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    //MARK: -Api method
     func forgetPasswordApi(){
         let param = ["email":nameTf.text ?? ""]
         AuthManager.forgetPasswordApi(delegate: self, param: param) { otp in

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+//MARK: - Auth Api Functions
 class AuthManager{
     static var currentUser = UserProfileData()
     class func invalidToken(){
@@ -62,10 +63,8 @@ class AuthManager{
         }
     }
     class func getProfileApi(delegate:UIViewController,needLoader:Bool = true,completion:@escaping()->Void){
-        //delegate.pleaseWait()
         needLoader ? delegate.pleaseWait() : print("NOLOADER")
         APIManager.getService(url: URLHelper.GET_PROFILE_URL) { json, error, status in
-            //delegate.clearAllNotice()
             needLoader ? delegate.clearAllNotice() : print("NOLOADER")
             if let error = error{
                 print("PROFILE",error)
@@ -128,13 +127,10 @@ class AuthManager{
                 }else{
                     if let jsonData = json{
                         print("UPDATEPROFILE",jsonData,status)
-                        if jsonData["status"].intValue == 200{
+                        if jsonData["statusCode"].intValue == 200{
                             completion()
-//                            AuthManager.getProfileApi(delegate: delegate,needLoader: false) {
-//                                completion()
-//                            }
                         }else{
-                            if jsonData["status"].intValue == 401{
+                            if jsonData["statusCode"].intValue == 401{
                                 AuthManager.invalidToken()
                             }
                             AlertView().showAlert(message: jsonData["message"].stringValue, delegate:delegate, pop: false)
@@ -152,13 +148,10 @@ class AuthManager{
                 }else{
                     if let jsonData = json{
                         print("UPDATEPROFILE",jsonData,status)
-                        if jsonData["status"].intValue == 200{
+                        if jsonData["statusCode"].intValue == 200{
                             completion()
-//                            AuthManager.getProfileApi(delegate: delegate,needLoader: false) {
-//                                completion()
-//                            }
                         }else{
-                            if jsonData["status"].intValue == 401{
+                            if jsonData["statusCode"].intValue == 401{
                                 AuthManager.invalidToken()
                             }
                             AlertView().showAlert(message: jsonData["message"].stringValue, delegate:delegate, pop: false)
@@ -224,8 +217,6 @@ class AuthManager{
                 if let jsonData = json{
                     print("FORGETPASSWORD",jsonData,status)
                     if jsonData["statusCode"].intValue == 200{
-                        //AlertView().showAlert(message: jsonData["otp"].stringValue, delegate:delegate, pop: false)
-                       // ToastManager.successToast(delegate: delegate, msg: jsonData["otp"].stringValue)
                         completion(jsonData["otp"].stringValue)
                     }else{
                         AlertView().showAlert(message: jsonData["message"].stringValue, delegate:delegate, pop: false)
@@ -302,24 +293,6 @@ class AuthManager{
     }
     class func deleteAccount(delegate:UIViewController, param: [String:String],completion:@escaping()->Void){
         delegate.pleaseWait()
-//        APIManager.postService(url: URLHelper.DELETE_ACCOUNT_URL, parameters: param) { json, error, status in
-//            delegate.clearAllNotice()
-//            if let error = error{
-//                print("DELETEACCOUNT",error)
-//                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
-//                return
-//            }else{
-//                print("DELETEACCOUNT",json,status)
-//                if let jsonData = json{
-//                    if jsonData["status"].intValue == 200{
-//                        UserDefaultHelper.removeAllData()
-//                        completion()
-//                    }else{
-//                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
-//                    }
-//                }
-//            }
-//        }
         APIManager.getService(url: URLHelper.DELETE_ACCOUNT_URL) { json, error, status in
             delegate.clearAllNotice()
             if let error = error{
@@ -366,7 +339,6 @@ class AuthManager{
         }
     }
     class func notificationsApi(delegate:UIViewController,param:[String:Bool],completion:@escaping()->Void){
-        //delegate.pleaseWait()
         APIManager.postServiceWithBoolParams(url: URLHelper.NOTIFICATIONS_URL, parameters: param) { json, error, status in
             //delegate.clearAllNotice()
             if let error = error{
@@ -567,7 +539,6 @@ class AuthManager{
     }
     class func deleteCardApi(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
         APIManager.postService(url: URLHelper.DELETE_CARD_URL, parameters: param) { json, error, statusCode in
-//            delegate.clearAllNotice()
             if let error = error{
                 print("DELETECARD",error)
                 AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
@@ -637,6 +608,28 @@ class AuthManager{
             delegate.clearAllNotice()
             if let error = error{
                 print("CLAIM",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+            }else{
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func blockUser(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        delegate.pleaseWait()
+        APIManager.postService(url: URLHelper.BLOCK_USER, parameters: param) {
+            json, error, statusCode in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("BLOCK",error)
                 AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
             }else{
                 if let jsonData = json{

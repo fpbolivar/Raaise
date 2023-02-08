@@ -7,29 +7,28 @@
 
 import Foundation
 import UIKit
+//MARK: - Cache Images
 extension SDImageFormat {
     public static let BPG: SDImageFormat = SDImageFormat(rawValue: 11)
 }
 extension UIImageView{
 
     func loadImg(url:String){
-//       let  url1 = URLHelper.BASE_URL + URLHelper.SEGMENTCLIENT + url
-        guard let imageUrL = URL(string: url) else {
+        let  url1 = UserDefaultHelper.getBaseUrl() + url
+        guard let imageUrL = URL(string: url1) else {
             self.image =  UIImage(named:"placeholder")!
             return
         }
         self.sd_setImage(with: imageUrL, placeholderImage: UIImage(named:"placeholder")!, options: [.highPriority], progress: nil) { image, error, s, sf in
-            print(image)
         }
     }
     func loadImgForProfile(url:String){
-//       let  url1 = URLHelper.BASE_URL + URLHelper.SEGMENTCLIENT + url
-        guard let imageUrL = URL(string: url) else {
+        let  url1 = UserDefaultHelper.getBaseUrl() + url
+        guard let imageUrL = URL(string: url1) else {
             self.image =  UIImage(named:"profile_placeholder")!
             return
         }
         self.sd_setImage(with: imageUrL, placeholderImage: UIImage(named:"profile_placeholder")!, options: [.highPriority], progress: nil) { image, error, s, sf in
-            print(image)
         }
     }
     func downloadloadImg(url:String,imageCompletion:@escaping(UIImage?)->Void){

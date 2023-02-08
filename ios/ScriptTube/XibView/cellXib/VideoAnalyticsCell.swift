@@ -28,9 +28,11 @@ class VideoAnalyticsCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    //MARK: - Update Data
     func updateCell(data:VideoAnalyticsData,statusType:StatusType){
         userNameLbl.text = "@"+data.userName
-        raisedAmtLLbl.text = "$\(data.amount)"
+        raisedAmtLLbl.text = "$\(data.raisedAmount)"
+        pendingAmtLbl.text = "$\(data.pendingAmount)"
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -39,14 +41,5 @@ class VideoAnalyticsCell: UITableViewCell {
             return
         }
         self.dateLbl.text =  date.MMMddyyyy.uppercased() + " " + date.hh_mm_AM_PM
-        if statusType == .claim && data.paymentStatus == .pending{
-            pendingAmtLbl.textColor = UIColor.green
-            pendingAmtLbl.text = "$\(data.amount)"
-        }else if statusType == .review && data.paymentStatus == .pending{
-            pendingAmtLbl.textColor = UIColor(named: "reviewBtnColor")
-            pendingAmtLbl.text = "$\(data.amount)"
-        }else{
-            pendingAmtLbl.text = "$00.00"
-        }
     }
 }

@@ -23,7 +23,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/noto_sans"
-                android:text="Confirmation"
+                android:text="Success"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />

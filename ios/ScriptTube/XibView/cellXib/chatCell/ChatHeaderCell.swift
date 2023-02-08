@@ -29,6 +29,7 @@ class ChatHeaderCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    //MARK: - Update Data
     func updateCell(data:UserProfileData){
         detailsLbl.text = data.shortBio
         profileImage.loadImgForProfile(url: data.profileImage)
@@ -47,7 +48,6 @@ class ChatHeaderCell: UITableViewCell {
         let range1 = (text as NSString).range(of: "($\(amt))")
              
              underlineAttriString.addAttribute(NSAttributedString.Key.font, value: AppFont.FontName.bold.getFont(size: AppFont.pX12), range: range1)
-//        underlineAttriString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.theme, range: range1)
         totalDonationLbl.attributedText = underlineAttriString
     }
 }

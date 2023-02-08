@@ -190,6 +190,7 @@ public class SettingsActivity extends AppCompatActivity {
                 Dialogs.HideProgressDialog();
                 Prompt.SnackBar(findViewById(android.R.id.content), logoutModel.getMessage());
                 Prefs.ClearBearerToken(SettingsActivity.this);
+                Prefs.ClearBaseUrl(SettingsActivity.this);
                 Prefs.ClearForgetPasswordEmail(SettingsActivity.this);
                 Prefs.ClearFORGETPASSWORDTOKEN(SettingsActivity.this);
                 Prefs.ClearUserID(SettingsActivity.this);

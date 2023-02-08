@@ -57,7 +57,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/noto_sans"
             android:gravity="bottom"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. "
+            android:text="The worlds first Personal Security tool powered by Artificial Intelligence"
             android:textColor="#C3C3C3"
             android:textSize="12sp"
             android:textStyle="bold" />

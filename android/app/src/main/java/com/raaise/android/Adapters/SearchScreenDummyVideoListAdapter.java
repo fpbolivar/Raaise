@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.raaise.android.ApiManager.ApiModels.GlobalSearchModel;
 import com.raaise.android.Home.Fragments.ViewSeeAllVideosFromSearchAcitivty;
 import com.raaise.android.R;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class SearchScreenDummyVideoListAdapter extends RecyclerView.Adapter<Sear
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GlobalSearchModel.Data.Posts obj = list.get(position);
-        Glide.with(context).load(obj.getVideoImage()).placeholder(R.drawable.placeholder).into(holder.postViewIV);
+        Glide.with(context).load(Prefs.GetBaseUrl(context) + obj.getVideoImage()).placeholder(R.drawable.placeholder).into(holder.postViewIV);
         holder.viewCountTV.setText(String.valueOf(obj.getVideoViewCount()));
         holder.postViewIV.setOnClickListener(view -> {
             context.startActivity(new Intent(context, ViewSeeAllVideosFromSearchAcitivty.class).putExtra("ListOfSeeAllVideosPlaying", new Gson().toJson(list)).putExtra("PositionListOfSeeAllVideosPlaying", String.valueOf(position)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

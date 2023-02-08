@@ -3,7 +3,7 @@
 //  ScriptTube
 //
 //  Created by Dilpreet Singh on 11/18/22.
-//
+//MARK: - Data Model for Settings Screen
 
 import Foundation
 import Foundation

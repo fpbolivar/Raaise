@@ -5,7 +5,7 @@
 //  Created by Dilpreet Singh on 11/18/22.
 //
 
-
+//MARK: - UNIMPLEMENTED NEW WORKING CODE IS --> MainTabBarVC
 import Foundation
 import UIKit
 
@@ -28,16 +28,14 @@ class TabBarController:  UITabBarController  {
         tabBar.barTintColor = .black
         tabBar.isTranslucent = true
         tabBar.unselectedItemTintColor = .gray
-//        self.extendedLayoutIncludesOpaqueBars = false
-//        self.edgesForExtendedLayout = .bottom
         tabBar.tintColor = .white
        
         homeViewController = HomeVC()
         homeNavigationController = UINavigationController(rootViewController: homeViewController)
-        discoverViewController = UINavigationController(rootViewController:SearchVC())//
+        discoverViewController = UINavigationController(rootViewController:SearchVC())
         mediaViewController = AddMediaVC()
-        inboxViewController = UINavigationController(rootViewController:InboxVC()) //
-        profileViewController = UINavigationController(rootViewController:ProfileVC())// 
+        inboxViewController = UINavigationController(rootViewController:InboxVC())
+        profileViewController = UINavigationController(rootViewController:ProfileVC())
      
         
         homeViewController.tabBarItem.image = UIImage(named: "ic_un_home")
@@ -73,24 +71,7 @@ class TabBarController:  UITabBarController  {
     }
     override func viewWillAppear(_ animated: Bool) {
         
-    }
-//    override var selectedViewController: UIViewController? { // Mark 2
-//        didSet {
-//            guard let viewControllers = viewControllers else { return }
-//        }
-//
-//
-//    }
-//    override var selectedIndex: Int { // Mark 1
-//
-//        didSet {
-//            print("SSELECTED INDEX")
-//            guard let selectedViewController = viewControllers?[selectedIndex] else { return }
-//            self.selectedViewController = selectedViewController
-//        }
-//    }
-
-    
+    }    
 }
 extension TabBarController : UITabBarControllerDelegate{
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {

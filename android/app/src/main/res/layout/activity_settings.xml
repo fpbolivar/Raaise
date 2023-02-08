@@ -387,7 +387,7 @@
                                 android:fontFamily="@font/noto_sans"
 
                                 android:gravity="center_vertical"
-                                android:text="Donation Raised"
+                                android:text="Support Raised"
                                 android:textColor="@color/DullWhite"
                                 android:textSize="12sp" />
 

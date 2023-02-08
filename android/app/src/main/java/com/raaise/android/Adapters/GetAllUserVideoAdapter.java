@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.raaise.android.ApiManager.ApiModels.GetAllUserVideoModel;
 import com.raaise.android.R;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class GetAllUserVideoAdapter extends RecyclerView.Adapter<GetAllUserVideo
     @Override
     public void onBindViewHolder(@NonNull GetAllUserVideoAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         GetAllUserVideoModel.Data obj = list.get(position);
-        Glide.with(context).load(list.get(position).getVideoImage()).into(holder.videoView);
+        Glide.with(context).load(Prefs.GetBaseUrl(context) + list.get(position).getVideoImage()).into(holder.videoView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

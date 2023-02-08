@@ -30,12 +30,3 @@ extension Locale {
     }
 }
 
-//Locale.isoCurrencyCodes.compactMap { (code) -> String? in
-//    guard let name = Locale.current.localizedString(forCurrencyCode: code),
-//          let symbol = Locale.current.localizedCurrencySymbol(forCurrencyCode: code)
-//    else {
-//        return nil
-//    }
-//
-//    return "\(name) - \(symbol) (\(code))"
-//}

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,7 +105,7 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
                 super.onPageSelected(position);
 
                 PageCounter++;
-                HitGlobalVideoApi("following", "1", String.valueOf(PageCounter));
+                HitGlobalVideoApi("following", "4", String.valueOf(PageCounter));
 
 
             }
@@ -153,22 +154,25 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
     }
 
     void HitGlobalVideoApi(String type, String limit, String page) {
-
+        Log.i("onErrorVdo", "onError: Hitting" );
         GetGlobalVideoModel model = new GetGlobalVideoModel(type, limit, page);
         apiManager.GetGlobalVideo(Prefs.GetBearerToken(context), model, new DataCallback<GetGlobalVideoModel>() {
             @Override
             public void onSuccess(GetGlobalVideoModel getGlobalVideoModel) {
-
+                Log.i("onErrorVdo", "onError: " + getGlobalVideoModel.getData().size());
 
                 list.addAll(getGlobalVideoModel.getData());
                 homeFollowingAdapter.notifyDataSetChanged();
+                dataNotFoundTV.setVisibility(View.GONE);
 
 
             }
 
             @Override
             public void onError(ServerError serverError) {
-
+                Log.i("onErrorVdo", "onError: " + serverError.getErrorMsg());
+                if (list.size() == 0)
+                dataNotFoundTV.setVisibility(View.VISIBLE);
 
             }
         });

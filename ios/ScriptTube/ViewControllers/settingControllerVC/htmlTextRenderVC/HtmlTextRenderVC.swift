@@ -12,16 +12,25 @@ class HtmlTextRenderVC: BaseControllerVC {
     var fullNavTitle = ""
     var redNavTitle = ""
     var viewType: ViewType!
+    var isPresented:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        addNavBar(headingText:fullNavTitle,redText:redNavTitle)
+        if isPresented{
+            addNavBar(headingText:fullNavTitle,leftAction: #selector(dismissPage),redText:redNavTitle)
+        }else{
+            addNavBar(headingText:fullNavTitle,redText:redNavTitle)
+        }
         setfonts()
         getData(type: viewType)
         // Do any additional setup after loading the view.
     }
+    @objc func dismissPage(){
+        self.dismiss(animated: true)
+    }
     func setfonts(){
         infoDescription.font = AppFont.FontName.regular.getFont(size: AppFont.pX15)
     }
+    //MARK: -Api method
     func getData(type:ViewType){
         var param: [String:String] = [:]
         switch type{

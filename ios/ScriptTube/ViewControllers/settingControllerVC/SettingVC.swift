@@ -27,6 +27,7 @@ class SettingVC: BaseControllerVC {
         getProfileApi()
         
     }
+    //MARK: -Api method
     func getProfileApi(){
         AuthManager.getProfileApi(delegate: self,needLoader: false) {
             
@@ -39,6 +40,7 @@ class SettingVC: BaseControllerVC {
         tableView.reloadData()
     }
 }
+//MARK: -Table View Delegate
 extension SettingVC:UITableViewDelegate,UITableViewDataSource{
     func notificationApi(param:[String:Bool]){
         AuthManager.notificationsApi(delegate: self, param: param) {
@@ -185,7 +187,6 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
                 break
           
             case "logout".lowercased():
-                //self.logoutAlert()
             createLogoutAlert()
                 break
             
@@ -195,7 +196,7 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
         }
     }
     func createLogoutAlert(){
-        let alert = UIAlertController(title: "ScripTube", message: "Are you sure you want to logout?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Raaise App", message: "Are you sure you want to logout?", preferredStyle: .alert)
         let logOutAction = UIAlertAction(title: "Logout", style: .destructive){action in
             if(!(Constant.check_Internet?.isReachable)!){
                 AlertView().showInternetErrorAlert(delegate: self)
@@ -221,20 +222,4 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
         UIApplication.keyWin!.rootViewController = navVC
         UIApplication.keyWin!.makeKeyAndVisible()
     }
-    func logoutAlert(){
-       
-//        let alert = UIAlertController(title:AlertView.self.title, message: NSLocalizedString(Localize.alert_Logout, comment: ""), preferredStyle: UIAlertController.Style.alert)
-//
-//        let disconnectAction =   UIAlertAction(title:"Logout", style: UIAlertAction.Style.default, handler: {(alert: UIAlertAction!) in
-//
-//        })
-//        disconnectAction.setValue(UIColor.red, forKey: "titleTextColor")
-//        let cancelAction =   UIAlertAction(title:"Cancel", style: UIAlertAction.Style.cancel, handler: {(alert: UIAlertAction!) in
-//
-//        })
-//        alert.addAction(disconnectAction)
-//        alert.addAction(cancelAction)
-//        self.present(alert, animated: true, completion: nil)
-    }
-
 }

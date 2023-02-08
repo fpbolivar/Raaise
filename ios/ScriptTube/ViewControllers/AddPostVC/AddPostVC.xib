@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddPostVC" customModule="ScriptTube" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddPostVC" customModule="Raaise_App" customModuleProvider="target">
             <connections>
                 <outlet property="captionTv" destination="od4-Sd-OO8" id="QL5-yZ-AZw"/>
                 <outlet property="categoryStack" destination="nTM-n8-tGu" id="wbH-53-M8a"/>
@@ -36,7 +36,7 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cMV-rV-36g">
                     <rect key="frame" x="0.0" y="48" width="414" height="749"/>
                     <subviews>
-                        <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="WdK-40-WoK" customClass="ContentSizedTableView" customModule="ScriptTube" customModuleProvider="target">
+                        <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="WdK-40-WoK" customClass="ContentSizedTableView" customModule="Raaise_App" customModuleProvider="target">
                             <rect key="frame" x="20" y="374" width="374" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -61,7 +61,7 @@
                                                 <constraint firstAttribute="height" constant="80" id="h9Q-Ch-ZJv"/>
                                             </constraints>
                                         </imageView>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="od4-Sd-OO8" customClass="CustomTextView" customModule="ScriptTube" customModuleProvider="target">
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="od4-Sd-OO8" customClass="CustomTextView" customModule="Raaise_App" customModuleProvider="target">
                                             <rect key="frame" x="97" y="0.0" width="277" height="80"/>
                                             <color key="backgroundColor" name="TFcolor"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -181,7 +181,7 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BN7-aX-dma" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BN7-aX-dma" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="10" width="374" height="40"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="81K-If-zzm">
@@ -235,7 +235,7 @@
                         <constraint firstItem="zfA-8Q-k2N" firstAttribute="centerX" secondItem="cMV-rV-36g" secondAttribute="centerX" id="wgC-Nb-kah"/>
                     </constraints>
                 </scrollView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Mv-UJ-n57" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Mv-UJ-n57" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
                     <rect key="frame" x="25" y="797" width="364" height="45"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mkb-be-TH2">

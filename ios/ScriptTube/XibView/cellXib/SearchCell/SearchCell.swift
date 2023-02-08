@@ -24,7 +24,6 @@ class SearchCell: UITableViewCell {
     @IBOutlet weak var nameLbl: UILabel!
     var cellType: ResultType!
     var delegate:SelectedSearchItemDelegate?
-//    var searchDetails:SearchResultModel?
     var audioResult:[AudioDataModel] = []
     var postResult:[Post] = []
     var userResult:[UserProfileData] = []
@@ -51,6 +50,7 @@ class SearchCell: UITableViewCell {
     @objc func seeAll(){
         delegate?.gotoResultPage(resultType: self.cellType)
     }
+    //MARK: - Setup
     func setupSearchCell(withType type :ResultType,data:[Any]){
         if data.isEmpty{
             headingStack.isHidden = true
@@ -87,6 +87,7 @@ class SearchCell: UITableViewCell {
     }
     
 }
+//MARK: - Collection View Delegates
 extension SearchCell:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -126,20 +127,20 @@ extension SearchCell:UICollectionViewDelegate,UICollectionViewDataSource,UIColle
         switch cellType{
         case .post:
             let wFrame = collectionView.frame.width
-            let itemWidth = (wFrame/3) - 2//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
+            let itemWidth = (wFrame/3) - 2
             let itemHeight =  itemWidth * 1.3
             print("SERCHCEKK",itemWidth,itemHeight)
             return CGSize.init(width: itemWidth, height: itemHeight)
         case .audio:
             let wFrame = collectionView.frame.width
-            let itemWidth = (wFrame/2) - 15//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
-            let itemHeight =  45.0//itemWidth * 1.3
+            let itemWidth = (wFrame/2) - 15
+            let itemHeight =  45.0
             print("SERCHCEKK",itemWidth,itemHeight)
             return CGSize.init(width: itemWidth, height: itemHeight)
         case .users:
             let wFrame = collectionView.frame.width
-            let itemWidth = (wFrame/4) - 15//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
-            let itemHeight =  itemWidth //* 1.3
+            let itemWidth = (wFrame/4) - 15
+            let itemHeight =  itemWidth
             print("SERCHCEKK",itemWidth,itemHeight + 15.0)
             return CGSize.init(width: itemWidth, height: itemHeight + 10.0)
         default:
@@ -189,6 +190,5 @@ extension SearchCell:UICollectionViewDelegate,UICollectionViewDataSource,UIColle
             print("aloo3")
             break
         }
-        //seeAll()
     }
 }

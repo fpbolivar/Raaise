@@ -24,15 +24,15 @@ class WithdrawalsCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    // MARK: - Setup
     func config(){
         titleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
         dateLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX13)
         priceLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX16)
         statusLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
     }
+    // MARK: - Update Data
     func updateCell(data:WithdrawListData){
-        
-        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"

@@ -15,7 +15,6 @@ class DonationPopUpViewController: UIViewController {
     @IBOutlet weak var donationTf: UITextField!
     @IBOutlet weak var messageLbl: UILabel!
     @IBOutlet weak var donationAmtLbl: UILabel!
-    //let amounts = ["","$10","","",""]
     let amounts = ["$10"]
     var post:Post!
     var delegate:DonationPopupDelegate?
@@ -24,17 +23,16 @@ class DonationPopUpViewController: UIViewController {
         hideNavbar()
         setup()
         dismissBackBigButton.addTarget(self, action: #selector(dismissPopup), for: .touchUpInside)
-        // Do any additional setup after loading the view.
     }
+    //MARK: - Setting Up
     func setup(){
         otherAmtLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX10)
         collectionView.contentMode = .center
         collectionView.register(UINib(nibName: AmountCell.identifier, bundle: nil), forCellWithReuseIdentifier: AmountCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
-        //self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissPopup)))
         donateLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX14)
-        donationTf.attributedPlaceholder = NSAttributedString(string: "Enter amount",attributes: [.foregroundColor: UIColor(named: "loginTFColor")])
+        donationTf.attributedPlaceholder = NSAttributedString(string: "Enter amount",attributes: [.foregroundColor: UIColor(named: "loginTFColor") as Any])
         donationTf.font = AppFont.FontName.bold.getFont(size: AppFont.pX14)
         messageLbl.font = AppFont.FontName.regular.getFont(size:AppFont.pX10)
         donationAmtLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX16)
@@ -45,41 +43,39 @@ class DonationPopUpViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(true)
     }
+    //MARK: - Donation Process
     @IBAction func donateBtnClicked(_ sender: Any) {
-        if self.donationTf.text!.isEmpty{
+        if self.donationTf.text!.trimmingCharacters(in: .whitespaces).isEmpty{
             ToastManager.errorToast(delegate: self, msg: "Enter Support Amount")
-            //AlertView().showAlert(message: "Enter Support Amount", delegate: self, pop: false)
             return
         }
         let amt = self.donationTf.text!
         let param = ["amount":amt,"donateTo":post.userDetails!.id,"videoId":post.id]
         let sender = sender as! UIButton
         sender.isEnabled = false
+        //Hit Donation Api when Default Card is Selected
         AuthManager.makePaymentWithCardId(delegate: self, param: param) {
             DispatchQueue.main.async {
                 self.clearAllNotice()
                 self.dismiss(animated: true) {
                     self.delegate?.donationSuccess()
                 }
-//                self.payBtnView.isHidden = true
-//                let vc = PaymentSuccessVC()
-//                vc.modalTransitionStyle = .coverVertical
-//                vc.modalPresentationStyle = .overCurrentContext
-//                self.present(vc, animated: true)
-                //self.navigationController?.popViewController(animated: true)
             }
         } onError: {
             self.dismiss(animated: true) {
+                //Create a new card when no default is available
                 self.delegate?.donateBtnClicked(post: self.post,amt: amt)
             }
         }
     }
     
 }
+//MARK: - Donation Protocols
 protocol DonationPopupDelegate{
     func donateBtnClicked(post:Post,amt:String)
     func donationSuccess()
 }
+//MARK: - Collection View Delegates
 extension DonationPopUpViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return amounts.count

@@ -153,7 +153,7 @@
                 android:layout_marginVertical="10dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:text=""
                 android:textColor="@color/DarkGrey"
                 android:textSize="12sp"

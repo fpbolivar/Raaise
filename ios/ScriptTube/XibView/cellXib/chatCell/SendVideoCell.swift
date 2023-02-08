@@ -29,6 +29,7 @@ class SendVideoCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    //MARK: - Update Data
     @objc func seeVideo(){
         guard let chatData = chatData else{return}
         delegate?.viewVideo(withSlug: chatData.videoSlug)
@@ -40,6 +41,7 @@ class SendVideoCell: UITableViewCell {
         self.timeLbl.text = data.chatHistoryTime.getTime()
     }
 }
+//MARK: - Contextual Menu Delegate
 extension SendVideoCell:UIContextMenuInteractionDelegate{
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in

@@ -114,41 +114,6 @@ class APIManager{
     }
     class func postService_Without_HeaderEncondJson(url:String,parameters:[String:[String]],completionHandler: @escaping (JSON?, Error?, statusCode) -> ()){
         print(url)
-        
-//        let manager = Session.default
-       
-      //  manager.session.configuration.timeoutIntervalForRequest = 30
-
-//        let deativate = ServerTrustManager(
-//            evaluators: ["macronodes.com:8443": DisabledTrustEvaluator()])
-//        let manager = Session(serverTrustManager: deativate)
-//
-//
-//
-//        let configuration = URLSessionConfiguration.default
-//
-//        manager.session.configuration.timeoutIntervalForRequest = 3000
-//        print(url)
-//         print(parameters)
-        
-       
-//        private static var Manager: Alamofire.SessionManager =
-//
-//                         // Create the server trust policies
-//                         let serverTrustPolicies: [String: ServerTrustPolicy] = [
-//
-//                              "devportal:8443": .disableEvaluation
-//                         ]
-//
-//                         // Create custom manager
-//                         let configuration = URLSessionConfiguration.default
-//                         configuration.httpAdditionalHeaders = Alamofire.SessionManager.defaultHTTPHeaders
-//                         let manager = Alamofire.SessionManager(
-//                              configuration: URLSessionConfiguration.default,
-//                              serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies)
-//                         )
-//
-//                         return manager
         let manager = Session.default
         
         manager.session.configuration.timeoutIntervalForRequest = 30

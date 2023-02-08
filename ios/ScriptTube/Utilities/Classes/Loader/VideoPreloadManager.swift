@@ -24,6 +24,7 @@ public class VideoPreloadManager: NSObject {
     
     public func set(waiting: [URL]) {
         downloader = nil
+        downloader?.delegate = self
         waitingQueue = waiting
         if isAutoStart { start() }
     }
@@ -74,16 +75,17 @@ public class VideoPreloadManager: NSObject {
 extension VideoPreloadManager: VideoDownloaderDelegate {
     
     public func downloader(_ downloader: VideoDownloader, didReceive response: URLResponse) {
-        
+        print("RESPOMSE",response)
     }
     
     public func downloader(_ downloader: VideoDownloader, didReceive data: Data) {
-        
+        print("RESPOMSE",data)
     }
     
     public func downloader(_ downloader: VideoDownloader, didFinished error: Error?) {
         self.downloader = nil
         start()
+        print("RESPOMSE",error)
         didFinish?(error)
     }
     

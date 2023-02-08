@@ -4,7 +4,7 @@
 //
 //  Created by Code Optimal Solutions Ios on 29/12/22.
 //
-
+//MARK: - Data Model for Single Chat Message
 import Foundation
 class ChatModel{
     var message = ""

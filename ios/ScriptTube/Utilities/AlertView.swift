@@ -52,21 +52,12 @@ extension AlertView {
         if #available(iOS 13.4, *) {
             datePicker.preferredDatePickerStyle = .wheels
         } else {
-            //datePicker.datePickerStyle = .wheels
-            // Fallback on earlier versions
+           
         }
         
         let calendar = Calendar.current
         var components = DateComponents()
         components.calendar = calendar
-
-        if startDateEnable{
-//        let maxDate = calendar.date(byAdding: components, to: dateLimit)!
-//        datePicker.maximumDate = maxDate
-        }else{
-//            let minDate = calendar.date(byAdding: components, to: dateLimit)!
-//            datePicker.minimumDate = minDate
-        }
         let alert = UIAlertController(title: message, message: "\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: .actionSheet)
         
         datePicker.frame = CGRect(x: 5, y: 20, width: delegate.view.frame.width - 20, height: 220)
@@ -105,20 +96,6 @@ extension AlertView {
             print(dateLimit)
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .time
-        
-        
-
-//        let calendar = Calendar.current
-//        var components = DateComponents()
-//        components.calendar = calendar
-//
-//        if startDateEnable{
-//        let maxDate = calendar.date(byAdding: components, to: dateLimit)!
-//        datePicker.maximumDate = maxDate
-//        }else{
-//            let minDate = calendar.date(byAdding: components, to: dateLimit)!
-//            datePicker.minimumDate = minDate
-//        }
         let alert = UIAlertController(title: message, message: "\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: .actionSheet)
         
         datePicker.frame = CGRect(x: 5, y: 20, width: delegate.view.frame.width - 20, height: 220)
@@ -151,11 +128,6 @@ extension AlertView {
                 print(timeLimit)
             let datePicker = UIDatePicker()
         datePicker.datePickerMode = .time
-          //  datePicker.minuteInterval = 30
-            //  datePicker.locale = Locale(identifier: "en_GB")
-
-         
-        
         let calendar = Calendar.current
         var dateComponents = calendar.dateComponents([.day, .month, .year], from: Date())
         
@@ -187,17 +159,9 @@ extension AlertView {
             
             let ok = UIAlertAction(title: "Confirm", style: .default) { (action) in
                 let dateFormatter = DateFormatter()
-              // dateFormatter.dateFormat =  "HH:mm"
+              
                 dateFormatter.dateFormat = "hh:mm a"
-//
-//                let min = dateFormatter.date(from: "9:00")      //createing min time
-//                let max = dateFormatter.date(from: "21:00") //creating max time
-//
-//                print(min)
-//
-//
-//                datePicker.minimumDate = min  //setting min time to picker
-//                datePicker.maximumDate = max
+
                 let dateString = dateFormatter.string(from: datePicker.date)
                 
                 print(dateString)
@@ -449,14 +413,12 @@ extension AlertView {
     func showErrorAlert(delegate: UIViewController) {
         
         let alert = UIAlertController(title: AlertView.self.title, message: NSLocalizedString("Something went wrong. Please try again later.", comment: ""), preferredStyle: UIAlertController.Style.alert)
-//         let alert = UIAlertController(title: NSLocalizedString("Veteranresurs.se", comment: ""), message: NSLocalizedString("Connection Lost. Please try again later.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         delegate.present(alert, animated: true, completion: nil)
     }
     func showInternetErrorAlert(delegate: UIViewController) {
             
             let alert = UIAlertController(title: AlertView.self.title, message: NSLocalizedString("Connection has been lost.Please check your internet connection.", comment: ""), preferredStyle: UIAlertController.Style.alert)
-    //         let alert = UIAlertController(title: NSLocalizedString("Veteranresurs.se", comment: ""), message: NSLocalizedString("Connection Lost. Please try again later.", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         DispatchQueue.main.async {
             delegate.present(alert, animated: true, completion: nil)
@@ -482,16 +444,6 @@ extension AlertView {
     }
     func getWindow()->UIWindow?{
         return UIApplication.keyWin
-        //AppDelegate.shared?.window
     }
 }
-//extension UIApplication {
-//    static var keyWin: UIWindow? {
-//        if #available(iOS 13, *) {
-//            return UIApplication.shared.windows.first { $0.isKeyWindow }
-//        } else {
-//            return UIApplication.shared.keyWindow
-//        }
-//    }
-//}
 

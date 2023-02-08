@@ -27,6 +27,15 @@ class PaymemtSavedCardListVC: BaseControllerVC {
     var deleteCardId = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
+        print("sdasdxsa")
+    }
+    //MARK: -Setup
+    func setup(){
         payBtn.addTarget(self, action: #selector(pay), for: .touchUpInside)
         addNavBar(headingText:"Payment Methods",redText:"Methods",type: .addNewCard,addNewCardSelector: #selector(addNewCard))
         setfonts()
@@ -47,45 +56,13 @@ class PaymemtSavedCardListVC: BaseControllerVC {
         }
         addNewLbl.isUserInteractionEnabled = true
         addNewLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addNewCardAction)))
-        // Do any additional setup after loading the view.
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = true
-        print("sdasdxsa")
     }
     func setDefaultCardApi(){
         let param = ["cardId":selectedCard]
         AuthManager.setDefaultCard(delegate: self, param: param) {
-            DispatchQueue.main.async {
-                //self.tableView.reloadData()
-            }
         }
     }
-    @objc func pay(){
-        if selectedCard == ""{
-            ToastManager.errorToast(delegate: self, msg: "Select a Card")
-            
-        }else{
-            let param = ["cardId":selectedCard,"amount":amount,"donateTo":donateTo,"videoId":videoId]
-            
-            self.pleaseWait()
-            print("PaymentParam",param)
-            AuthManager.makePaymentWithCardId(delegate: self, param: param) {
-                DispatchQueue.main.async {
-                    self.clearAllNotice()
-                    self.payBtnView.isHidden = true
-                    let vc = PaymentSuccessVC()
-                    vc.modalTransitionStyle = .coverVertical
-                    vc.modalPresentationStyle = .overCurrentContext
-                    self.present(vc, animated: true)
-                    //self.navigationController?.popViewController(animated: true)
-                }
-            } onError: {
-                
-            }
-        }
-    }
+
     @objc func addNewCard(){
         let vc = AddNewPaymentMethodVC()
         vc.modalPresentationStyle = .overFullScreen
@@ -101,24 +78,7 @@ class PaymemtSavedCardListVC: BaseControllerVC {
         self.present(vc, animated: true)
     }
    
-    func getCardsApi(completion:@escaping()->Void){
-        self.cardList = []
-        DataManager.getCardListApi(delegate: self) { json in
-            json["cards"].forEach { (message,data) in
-                self.cardList.append(CardListModel(data: data))
-            }
-            if self.cardList.count >= 1{
-                self.noCardLbl.isHidden = true
-                if self.forPayment{
-                    self.payBtnView.isHidden = false
-                }
-            }else{
-                self.noCardLbl.isHidden = false
-                self.payBtnView.isHidden = true
-            }
-            completion()
-        }
-    }
+ 
     @objc func addNewCardAction(){
         let vc =  AddNewPaymentMethodVC()
         self.navigationController?.pushViewController(vc, animated: true)
@@ -139,6 +99,32 @@ class PaymemtSavedCardListVC: BaseControllerVC {
             self.tableView.reloadData()
         }
     }
+    //MARK: -Api method
+    @objc func pay(){
+        if selectedCard == ""{
+            ToastManager.errorToast(delegate: self, msg: "Select a Card")
+            
+        }else{
+            let param = ["cardId":selectedCard,"amount":amount,"donateTo":donateTo,"videoId":videoId]
+            
+            self.pleaseWait()
+            print("PaymentParam",param)
+            AuthManager.makePaymentWithCardId(delegate: self, param: param) {
+                DispatchQueue.main.async {
+                    self.clearAllNotice()
+                    self.payBtnView.isHidden = true
+                    let vc = PaymentSuccessVC()
+                    vc.modalTransitionStyle = .coverVertical
+                    vc.modalPresentationStyle = .overCurrentContext
+                    self.present(vc, animated: true)
+                }
+            } onError: {
+                DispatchQueue.main.async {
+                    AlertView().showAlert(message: "There was an error in processing your payment", delegate: self, pop: false)
+                }
+            }
+        }
+    }
     func deleteCardApi(){
         let param = ["cardId":self.deleteCardId]
         AuthManager.deleteCardApi(delegate: self, param: param) {
@@ -150,7 +136,26 @@ class PaymemtSavedCardListVC: BaseControllerVC {
             }
         }
     }
+    func getCardsApi(completion:@escaping()->Void){
+        self.cardList = []
+        DataManager.getCardListApi(delegate: self) { json in
+            json["cards"].forEach { (message,data) in
+                self.cardList.append(CardListModel(data: data))
+            }
+            if self.cardList.count >= 1{
+                self.noCardLbl.isHidden = true
+                if self.forPayment{
+                    self.payBtnView.isHidden = false
+                }
+            }else{
+                self.noCardLbl.isHidden = false
+                self.payBtnView.isHidden = true
+            }
+            completion()
+        }
+    }
 }
+//MARK: - Table View Delegate
 extension PaymemtSavedCardListVC:UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
        1
@@ -176,7 +181,6 @@ extension PaymemtSavedCardListVC:UITableViewDelegate,UITableViewDataSource{
             self.deleteCardId = self.cardList[indexPath.row].id
             self.pleaseWait()
             self.deleteCardApi()
-//            self.cardList.remove(at: indexPath.row)
             self.cardList.count == 0 ? self.noCardLbl.isHidden = false : print("alsl")
         }
         return cell

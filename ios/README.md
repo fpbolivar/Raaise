@@ -1,9 +1,10 @@
-#  ScripTube App
+#  Raaise App
 Xcode version: 14.1
 Swift version: Swift 5
-ScripTube App is a social media app, where users can create and share fun videos with there friends and family.
-ScripTube provides the users with the ability to add audios from a variety of selection.
+Raaise App is a social media app, where users can create and share fun videos with there friends and family.
+Raaise provides the users with the ability to add audios from a variety of selection.
 User can create a maximum of 30 sec length of video and share it within app and also to other apps.
+Users can raise support on their content as well as support other creators on their content.
 
 #Steps For Installation
 1. Clone the repo on your local system.
@@ -36,9 +37,15 @@ Create Video with Audio -> Completed
 
 ##M5
 Show created videos under user profile -> Completed
-Donate on Video -> Completed
+Support on Video -> Completed
 Comments on Videos -> Completed
 Reply on comments -> Completed
 Like Video -> Completed
 Follow Users and see the list of following and followers -> Completed
 Share video to other apps using the share fucntion -> Completed
+
+##M6
+Claim Supported Amount On Video By Sending a Request to Admin -> Completed
+
+##M7
+Testing

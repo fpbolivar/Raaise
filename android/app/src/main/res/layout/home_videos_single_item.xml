@@ -23,6 +23,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/home_screen_shadow"
+            android:backgroundTint="@null"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,156 +87,7 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/top_rewarded_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/top_rewarded_rv"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginBottom="20dp"
-            android:textStyle="bold"
-            android:layout_marginEnd="8dp"
-            android:visibility="gone"
-            android:text="Top Rewarded"
-            android:textColor="@color/white"
-            android:textSize="11sp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/top_rewarded_rv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            app:layout_constraintLeft_toLeftOf="@id/top_rewarded_tv"
-            app:layout_constraintRight_toRightOf="@id/top_rewarded_tv"
-            app:layout_constraintBottom_toTopOf="@id/SidePanel"/>
-
-        <LinearLayout
-            android:id="@+id/SidePanel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="5dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/DonationLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/DollarDonation"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/donation_in_single" />
-
-                <TextView
-                    android:id="@+id/DonationAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Donate"
-                    android:textColor="@color/white"
-                    android:textFontWeight="300"
-                    android:textSize="12dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/LikeInHomeVideoSingleItem"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/heart_in_single" />
-
-                <TextView
-                    android:id="@+id/LikeCountInHomeVideoSingleItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textFontWeight="300"
-                    android:textSize="12dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/CommentsInAdapter"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-
-                    android:src="@drawable/comment_in_single" />
-
-                <TextView
-                    android:id="@+id/CommentCountInHomeVideoSingleItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textFontWeight="300"
-                    android:textSize="12dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/ShareVideo"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/send_in_single" />
-
-                <TextView
-                    android:id="@+id/VideoShareCountInHomeVideoSingleItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textFontWeight="300"
-                    android:textSize="12dp" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/try_audio_btn"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:src="@drawable/camera_in_singel"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/more_options_btn"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:src="@drawable/more_options_btns" />
-
-        </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -241,8 +102,8 @@
             android:id="@+id/profileContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toTopOf="@+id/hashTagsTV"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -251,12 +112,12 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="100dp">
+                app:cardCornerRadius="@dimen/_100sdp">
 
                 <ImageView
                     android:id="@+id/ImageProfileInAdapter"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:background="@drawable/circular_shape"
                     android:scaleType="centerCrop"
                      />
@@ -282,12 +143,12 @@
                             android:id="@+id/NameInHomeVideoSingleItem"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/_10sdp"
                             android:fontFamily="@font/noto_sans"
-                            android:maxWidth="180dp"
+                            android:maxWidth="@dimen/_180sdp"
                             android:textColor="@color/white"
                             android:textFontWeight="400"
-                            android:textSize="16sp" />
+                            android:textSize="@dimen/_13ssp" />
 
                         <TextView
                             android:id="@+id/UserNameInHomeVideoSingleItem"
@@ -296,21 +157,21 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/noto_sans"
-                            android:maxWidth="180dp"
+                            android:maxWidth="@dimen/_180sdp"
                             android:textColor="@color/white"
                             android:textFontWeight="300"
-                            android:textSize="10sp" />
+                            android:textSize="@dimen/_8ssp" />
 
                     </LinearLayout>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/FollowButtonInHomeVideoSingleItem"
                         android:layout_width="wrap_content"
-                        android:layout_height="18dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:backgroundTint="@color/LogoGreyColor"
-                        app:cardCornerRadius="4dp">
+                        app:cardCornerRadius="@dimen/_40sdp">
 
                         <TextView
                             android:id="@+id/FollowTextInHomeVideoSingleItem"
@@ -322,7 +183,7 @@
                             android:gravity="center"
                             android:textColor="@color/white"
                             android:textFontWeight="300"
-                            android:textSize="10sp" />
+                            android:textSize="@dimen/_10ssp" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -331,14 +192,14 @@
                     android:id="@+id/DonationRaisedInHomeVideoSingleItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/noto_sans"
                     android:maxWidth="180dp"
                     android:text="Total raised: $"
                     android:textColor="@color/white"
                     android:textFontWeight="300"
-                    android:textSize="10sp" />
+                    android:textSize="@dimen/_8ssp" />
 
             </LinearLayout>
 
@@ -352,10 +213,10 @@
             android:layout_above="@id/SongLayout"
             android:layout_marginStart="15dp"
             android:layout_marginTop="7dp"
-            android:maxWidth="180dp"
+            android:maxWidth="@dimen/_180sdp"
             android:text="#insta ##reels...See more"
             android:textColor="@color/DullWhite"
-            android:textSize="12sp"
+            android:textSize="@dimen/_10ssp"
             app:layout_constraintBottom_toTopOf="@id/SongLayout"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -364,8 +225,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -373,18 +234,18 @@
 
             <RelativeLayout
                 android:id="@+id/AudioItem"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_width="@dimen/_23sdp"
+                android:layout_height="@dimen/_23sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@drawable/user_image_bg">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_centerInParent="true"
-                    app:cardCornerRadius="50dp">
+                    app:cardCornerRadius="@dimen/_50sdp">
 
                     <ImageView
                         android:id="@+id/SongImage"
@@ -397,9 +258,9 @@
 
             <ImageView
                 android:id="@+id/lottie_main"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginStart="10dp"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:src="@drawable/svg_music_sign_whitecolor" />
 
             <TextView
@@ -411,26 +272,187 @@
                 android:maxWidth="200dp"
                 android:text="Dummy"
                 android:textColor="@color/white"
-                android:textSize="10sp" />
+                android:textSize="@dimen/_10ssp" />
 
         </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+        android:id="@+id/SidePanel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/DonationLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/DollarDonation"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:src="@drawable/donation_in_single" />
+
+            <TextView
+                android:id="@+id/DonationAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Support"
+                android:textColor="@color/white"
+                android:textFontWeight="300"
+                android:textSize="@dimen/_9ssp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/LikeInHomeVideoSingleItem"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:src="@drawable/heart_in_single" />
+
+            <TextView
+                android:id="@+id/LikeCountInHomeVideoSingleItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textFontWeight="300"
+                android:textSize="@dimen/_9ssp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/CommentsInAdapter"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+
+                android:src="@drawable/comment_in_single" />
+
+            <TextView
+                android:id="@+id/CommentCountInHomeVideoSingleItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textFontWeight="300"
+                android:textSize="@dimen/_9ssp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ShareVideo"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:src="@drawable/send_in_single" />
+
+            <TextView
+                android:id="@+id/VideoShareCountInHomeVideoSingleItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textFontWeight="300"
+                android:textSize="@dimen/_9ssp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/try_audio_btn"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:gravity="center"
+            android:src="@drawable/camera_in_singel"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/more_options_btn"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:gravity="center"
+            android:src="@drawable/more_options_btns" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:id="@+id/top_rewarded_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/_65sdp"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="Top Rewarded"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11ssp"
+            android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/top_rewarded_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_180sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            app:layout_constraintLeft_toLeftOf="@id/top_rewarded_tv"
+            app:layout_constraintRight_toRightOf="@id/top_rewarded_tv"
+            app:layout_constraintTop_toBottomOf="@id/top_rewarded_tv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
     <ImageView
         android:id="@+id/more_options_btn_UP"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
         android:layout_alignParentEnd="true"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/_20sdp"
         android:rotation="90"
         android:src="@drawable/more_options_btns"
         android:visibility="gone" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/Lottie_Heart"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/_200sdp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
@@ -439,8 +461,8 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/Lottie_PausePlay"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
         android:visibility="gone"

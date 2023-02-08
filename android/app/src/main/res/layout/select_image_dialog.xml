@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="10dp"
-    android:background="@drawable/bottomdialog_bg"
+    android:background="@drawable/bottom_dialog_dark"
     android:backgroundTint="@color/LogoGreyColor"
     android:gravity="center_horizontal"
     android:orientation="vertical">

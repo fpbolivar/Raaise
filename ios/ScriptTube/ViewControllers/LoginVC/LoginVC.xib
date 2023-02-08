@@ -38,7 +38,7 @@
                     <rect key="frame" x="0.0" y="48" width="414" height="763.5"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="BGb-hO-SUx">
-                            <rect key="frame" x="20" y="0.0" width="374" height="426"/>
+                            <rect key="frame" x="20" y="0.0" width="374" height="633"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZQ-lK-cP2">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
@@ -168,8 +168,8 @@
                                         <constraint firstAttribute="height" constant="10" id="Kue-mS-adg"/>
                                     </constraints>
                                 </view>
-                                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eGJ-ud-J7q">
-                                    <rect key="frame" x="0.0" y="407" width="374" height="40"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eGJ-ud-J7q">
+                                    <rect key="frame" x="0.0" y="411" width="374" height="40"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uVq-ju-42y">
                                             <rect key="frame" x="0.0" y="0.0" width="125.5" height="40"/>
@@ -236,13 +236,13 @@
                                     </constraints>
                                 </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AD4-yU-BGH">
-                                    <rect key="frame" x="0.0" y="411" width="374" height="15"/>
+                                    <rect key="frame" x="0.0" y="459" width="374" height="15"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="15" id="LdW-gj-Bqs"/>
                                     </constraints>
                                 </view>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYM-qd-24X" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="426" width="374" height="45"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYM-qd-24X" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="482" width="374" height="45"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lxx-oc-Wne">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
@@ -290,8 +290,8 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m8Q-cz-Ht8" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="426" width="374" height="45"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m8Q-cz-Ht8" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="535" width="374" height="45"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cb1-jO-6Iz">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
@@ -339,8 +339,8 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ct5-ZR-u6P" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="426" width="374" height="45"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ct5-ZR-u6P" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="588" width="374" height="45"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CIp-hW-r1L">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
@@ -441,7 +441,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="Logo" width="512" height="255"/>
+        <image name="Logo" width="444" height="172"/>
         <image name="applelogo" catalog="system" width="105" height="128"/>
         <image name="eye" catalog="system" width="128" height="79"/>
         <image name="ic_facebook" width="22" height="22"/>

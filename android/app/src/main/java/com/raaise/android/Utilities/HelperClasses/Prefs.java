@@ -13,6 +13,7 @@ public class Prefs {
     private static final String USER_ID = "USER_ID";
     private static final String My_Prefference = "com.scripttube.android.ScriptTube";
     private static final String BearerToken = "User_Bearer_Token";
+    private static final String BASEURL = "User_Base_Url";
     private static final String ForgetPasswordEmail = "Forget_Password_Email";
     private static final String FORGETPASSWORDTOKEN = "FORGET_PASSWORD_TOKEN";
     private static final String ForgetPasswordVerifyOtp = "Forget_Password_Verify_Otp";
@@ -29,6 +30,25 @@ public class Prefs {
     public static String GetBearerToken(Context context) {
         SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
         return pref.getString(BearerToken, "");
+    }
+
+    public static void SetBaseUrl(Context context, String loggedInUserToken) {
+        SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(BASEURL, loggedInUserToken);
+        editor.apply();
+    }
+
+    public static String GetBaseUrl(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
+        return pref.getString(BASEURL, "");
+    }
+
+    public static void ClearBaseUrl(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(BASEURL, "");
+        editor.apply();
     }
 
     public static void ClearBearerToken(Context context) {

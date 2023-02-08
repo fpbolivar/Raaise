@@ -21,7 +21,8 @@
             android:textSize="15sp" />
 
 
-        <EditText
+        <TextView
+            android:id="@+id/from_date_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
@@ -30,7 +31,6 @@
             android:drawableEnd="@drawable/calender"
             android:hint="From"
             android:imeOptions="actionNext"
-            android:inputType="number"
             android:maxLength="19"
             android:padding="15dp"
             android:singleLine="true"
@@ -38,7 +38,8 @@
             android:textColorHint="#17212B"
             android:textSize="14sp" />
 
-        <EditText
+        <TextView
+            android:id="@+id/to_date_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
@@ -47,7 +48,6 @@
             android:drawableEnd="@drawable/calender"
             android:hint="To"
             android:imeOptions="actionNext"
-            android:inputType="number"
             android:maxLength="19"
             android:padding="15dp"
             android:singleLine="true"

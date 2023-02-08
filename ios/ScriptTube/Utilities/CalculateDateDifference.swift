@@ -7,7 +7,7 @@
 
 import Foundation
 extension Date {
-
+    //MARK: - Calculate Difference between dates
     func offsetFrom(date: Date) -> String {
 
         let dayHourMinuteSecond: Set<Calendar.Component> = [.day, .hour, .minute, .second]
@@ -15,12 +15,11 @@ extension Date {
 
         let seconds = "\(difference.second ?? 0) seocnds"
         let minutes = "\(difference.minute ?? 0) mins"
-        //+ " " + seconds
+        
         let hours = "\(difference.hour ?? 0) hrs"
-        //+ " " + minutes
+        
         let days = "\(difference.day ?? 0) days"
-        //+ " " + hours
-
+       
         if let day = difference.day, day          > 0 { return days }
         if let hour = difference.hour, hour       > 0 { return hours }
         if let minute = difference.minute, minute > 0 { return minutes }
@@ -34,12 +33,11 @@ extension Date {
 
         let seconds = "\(difference.second ?? 0) s"
         let minutes = "\(difference.minute ?? 0) m"
-        //+ " " + seconds
+        
         let hours = "\(difference.hour ?? 0) h"
-        //+ " " + minutes
+        
         let days = "\(difference.day ?? 0) d"
-        //+ " " + hours
-
+        
         if let day = difference.day, day          > 0 { return days }
         if let hour = difference.hour, hour       > 0 { return hours }
         if let minute = difference.minute, minute > 0 { return minutes }

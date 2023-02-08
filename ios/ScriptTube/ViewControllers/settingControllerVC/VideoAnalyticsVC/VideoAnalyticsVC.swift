@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol VideoAnalyticsDelegate{
+    func amountClaimed(withId id:String)
+}
+
 class VideoAnalyticsVC: BaseControllerVC {
     var statusType:StatusType!
     var videoId = ""
@@ -14,6 +18,9 @@ class VideoAnalyticsVC: BaseControllerVC {
     var totaWithdraw = ""
     var totalClaim = ""
     var data = [VideoAnalyticsData]()
+    var canClaim = false
+    var delegate:VideoAnalyticsDelegate?
+    @IBOutlet weak var messageView: CardView!
     @IBOutlet weak var claimNowLbl: UILabel!
     @IBOutlet weak var claimBtnView: CardView!
     @IBOutlet weak var pendingLbl: UILabel!
@@ -33,23 +40,7 @@ class VideoAnalyticsVC: BaseControllerVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
-        if statusType == .review{
-            addNavBar(headingText:"Video Analytics",redText:"Analytics",type: .filter,addNewCardSelector: #selector(openFilter),addNewCardSelectorTitle: "")
-            claimedAmtLbl.textColor = UIColor(named: "reviewBtnColor")
-                
-        }else if statusType == .claim{
-            addNavBar(headingText: "Video Analytics", redText: "Analytics")
-            claimedAmtLbl.textColor = UIColor.green
-            claimBtnView.isHidden = false
-        }else{
-            addNavBar(headingText: "Video Analytics", redText: "Analytics")
-        }
-        noOfPostsLbl.text = AuthManager.currentUser.videoCount
-        setupTable()
-        getVideoData{
-            self.setData()
-            self.executeDelegates()
-        }
+        setup()
         setFonts()
         // Do any additional setup after loading the view.
     }
@@ -60,11 +51,13 @@ class VideoAnalyticsVC: BaseControllerVC {
             self.claimedAmtLbl.text = "$\(self.totalClaim)"
         }
     }
+    //MARK: - Api Methods
     func claimApi(){
         AuthManager.claimDonationApi(delegate: self, param: ["videoId":videoId]) {
             DispatchQueue.main.async {
                 ToastManager.successToast(delegate: self, msg: "Request sent successfully")
                 self.claimBtnView.isHidden = true
+                self.delegate?.amountClaimed(withId: self.videoId)
             }
         }
     }
@@ -72,11 +65,36 @@ class VideoAnalyticsVC: BaseControllerVC {
         DataManager.videoAnalyticsData(delegate: self, param: ["videoId":videoId]) { data in
             self.totaRaised = data["raisedDonationAmount"].stringValue
             self.totaWithdraw = data["completedDonationAmount"].stringValue
-            self.totalClaim = data["totalDanotionAmount"].stringValue
+            self.totalClaim = data["claimedAmount"].stringValue
             data["data"].forEach { (_,json) in
                 self.data.append(VideoAnalyticsData(data: json))
             }
             completion()
+        }
+    }
+    //MARK: - Setup
+    func setup(){
+        if statusType == .review{
+            addNavBar(headingText:"Video Analytics",redText:"Analytics",type: .filter,addNewCardSelector: #selector(openFilter),addNewCardSelectorTitle: "")
+            claimedAmtLbl.textColor = UIColor(named: "reviewBtnColor")
+                
+        }else if statusType == .claim && !canClaim{
+            addNavBar(headingText: "Video Analytics", redText: "Analytics")
+            claimedAmtLbl.textColor = UIColor.green
+            claimBtnView.isHidden = false
+        }else if statusType == .claim && canClaim{
+            addNavBar(headingText: "Video Analytics", redText: "Analytics")
+            claimedAmtLbl.textColor = UIColor.green
+            claimBtnView.isHidden = true
+            messageView.isHidden = false
+        }else{
+            addNavBar(headingText: "Video Analytics", redText: "Analytics")
+        }
+        noOfPostsLbl.text = AuthManager.currentUser.videoCount
+        setupTable()
+        getVideoData{
+            self.setData()
+            self.executeDelegates()
         }
     }
     func setFonts(){
@@ -109,14 +127,17 @@ class VideoAnalyticsVC: BaseControllerVC {
     }
     @objc func openFilter(){
         let vc = FilterPopUpVC()
+        vc.delegate = self
         vc.modalTransitionStyle = .crossDissolve
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: true)
     }
     
     @IBAction func claimNowBtnClicked(_ sender: Any) {
+        claimApi()
     }
 }
+//MARK: -Table View Delegate
 extension VideoAnalyticsVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
@@ -124,29 +145,42 @@ extension VideoAnalyticsVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:  VideoAnalyticsCell.identifier, for: indexPath) as!  VideoAnalyticsCell
         cell.selectionStyle = .none
+        if self.statusType == .claim{
+            cell.pendingAmtLbl.textColor = UIColor.green
+        }else if self.statusType == .review{
+            cell.pendingAmtLbl.textColor = UIColor(named: "reviewBtnColor")
+        }
         cell.updateCell(data: data[indexPath.row], statusType: self.statusType)
         return cell
     }
 }
-
+extension VideoAnalyticsVC:FilterPopUpDelegate{
+    func filterwithdata(fromDate: String, toDate: String) {
+        DataManager.videoAnalyticsData(delegate: self, param: ["videoId":videoId,"startDate":fromDate,"endDate":toDate]) { data in
+            var newData = [VideoAnalyticsData]()
+            data["data"].forEach { (_,json) in
+                newData.append(VideoAnalyticsData(data: json))
+            }
+            self.data = newData
+            self.tableView.reloadData()
+        }
+    }
+}
 
 class VideoAnalyticsData{
     var userName = ""
-    var amount = ""
+    var raisedAmount = ""
+    var pendingAmount = ""
     var date = ""
     var paymentStatus:PaymentStatus = .pending
     init(){
         
     }
     init(data:JSON){
-        self.userName = data["donatedBy"]["userName"].stringValue
-        self.amount = data["amount"].stringValue
-        self.date = data["createdAt"].stringValue
-        if data["paymentRequestStatus"].stringValue == "raised"{
-            paymentStatus = .raised
-        }else{
-            paymentStatus = .pending
-        }
+        self.userName = data["name"].stringValue
+        self.raisedAmount = data["raisedAmount"].stringValue
+        self.pendingAmount = data["pendingAmount"].stringValue
+        self.date = data["date"].stringValue
     }
 }
 enum PaymentStatus{

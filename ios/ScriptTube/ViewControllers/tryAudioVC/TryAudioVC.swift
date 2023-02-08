@@ -52,10 +52,7 @@ class TryAudioVC: BaseControllerVC {
             self.player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)), queue: DispatchQueue.main, using: { [weak self] (time) in
                 guard self?.slider.isTracking == false else { return }
                 self?.slider.value = Float(CMTimeGetSeconds(time))
-                
-                /// Float(self?.asset.duration.seconds ?? 1)
             })
-            //AVPlayer(playerItem: playerItem)
             self.player?.automaticallyWaitsToMinimizeStalling = false
             
         }
@@ -82,15 +79,7 @@ class TryAudioVC: BaseControllerVC {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
     }
-    
-    
-//    func setValues(){
-//        DispatchQueue.main.async {
-//            self.audioNameLbl.text = self.audioData.songName.localizedCapitalized
-//            self.userNameLbl.text = self.audioData.artistName.localizedCapitalized
-//            self.profileImg.loadImg(url: self.audioData.thumbnail)
-//        }
-//    }
+    //MARK: - Setup
     func setTime(){
         let duration = asset.duration.seconds
         var time: String
@@ -135,7 +124,7 @@ class TryAudioVC: BaseControllerVC {
             self.collectionView.reloadData()
         }
     }
-    
+    //MARK: - Actions
     @IBAction func sliderMoved(_ sender: CustomSlider) {
         print(sender.value)
         
@@ -143,23 +132,18 @@ class TryAudioVC: BaseControllerVC {
         }
     }
     @IBAction func tryAudioBtnClicked(_ sender: Any) {
-//        let vc = SearchWithListVC()
-//        vc.selectedAudioUrl = { url, title, id in
-//            print("url")
-//        }
-//        vc.isForSelectAudio = true
-        //self.navigationController?.pushViewController(vc, animated: true)
+
     }
     
     @IBAction func saveAudioBtnClicked(_ sender: Any) {
         let vc =  AddMediaVC()
         vc.selectedAudio = self.audioData
         let navigationController = UINavigationController(rootViewController: vc)
-        //BaseNavigationController.init(rootViewController: vc)
         navigationController.modalPresentationStyle = .overFullScreen
-        //thisDelegate?.cameraOpened()
         self.present(navigationController, animated: true, completion: nil)
-        managePlayPauseAudio()
+        player?.pause()
+        isPlaying = false
+        playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
     }
     @IBAction func playBtnClicked(_ sender: Any) {
         managePlayPauseAudio()
@@ -176,11 +160,10 @@ class TryAudioVC: BaseControllerVC {
             loopVideo(videoPlayer: self.player ?? AVPlayer())
         }
     }
+    //MARK: - Api Methods
     func getAudioDetails(completion:@escaping()->Void){
         let param = ["audioId":self.audioData.id]
         DataManager.getVideoByAudio(delegate: self, param: param) { json in
-//            let audioDetail = AudioDataModel(data: json["audio"])
-//            self.audioData = audioDetail
             json["videos"].forEach { (message,data) in
                 print("VIDEOIMAHGE",data["videoImage"].stringValue)
                 self.userVideoData.append(data["videoImage"].stringValue)
@@ -191,7 +174,7 @@ class TryAudioVC: BaseControllerVC {
         }
     }
 }
-
+//MARK: - Collection View Delegate
 extension TryAudioVC:UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.userVideoData.count
@@ -199,7 +182,6 @@ extension TryAudioVC:UICollectionViewDelegateFlowLayout,UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileVideoItemCell.identifier, for: indexPath) as! ProfileVideoItemCell
         cell.updateCellData(data: self.userVideos[indexPath.row])
-        //cell.updateCell(withImg: self.userVideoData[indexPath.row])
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -212,7 +194,7 @@ extension TryAudioVC:UICollectionViewDelegateFlowLayout,UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         let wFrame = collectionView.frame.width
-        let itemWidth = (wFrame/3) - 2//( wFrame - CGFloat(Int(wFrame) % 3)) / 3.0 - 1.0
+        let itemWidth = (wFrame/3) - 2
         let itemHeight =  itemWidth * 1.3
         return CGSize.init(width: itemWidth, height: itemHeight)
     }

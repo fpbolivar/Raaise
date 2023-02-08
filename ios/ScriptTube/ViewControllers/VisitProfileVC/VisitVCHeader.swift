@@ -68,11 +68,9 @@ static var identifier = "VisitVCHeader"
         }
         self.profileImg.layer.cornerRadius = self.profileImg.frame.height / 2
         self.profileImg.loadImgForProfile(url: data.profileImage)
-        //loadImg(url:data.profileImage)
         if data.userName != ""{
             self.userNameLbl.text = "@\(data.userName)"
         }
-        //self.amountLbl.text = "$123"
         self.shortBioLbl.text = data.shortBio
         self.verifiedUserIcon.isHidden = !data.isVerified
         self.folllowerCount.text = data.followersCount
@@ -86,7 +84,6 @@ static var identifier = "VisitVCHeader"
         let range1 = (text as NSString).range(of: "($\(amt))")
              
              underlineAttriString.addAttribute(NSAttributedString.Key.font, value: AppFont.FontName.bold.getFont(size: AppFont.pX12), range: range1)
-//        underlineAttriString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.theme, range: range1)
         totalDonatedLbl.attributedText = underlineAttriString
     }
     @objc func gotoFollowing(){

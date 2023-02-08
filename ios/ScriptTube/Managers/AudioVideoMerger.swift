@@ -10,13 +10,13 @@ import AVFoundation
 import AVKit
 import AssetsLibrary
 import Photos
-
+//MARK: - Merging Video and Audio
 class AudioVideoMerger{
     private var observation : NSKeyValueObservation?
     var onprogress: ((Double)->Void)!
-
+    //Function to add watermark to video and share to other apps
     func downloadVideoToCameraRoll(videoUrl:String,completion:@escaping(URL)->Void){
-        if let audioUrl = URL(string: videoUrl) {
+        if let audioUrl = URL(string: UserDefaultHelper.getBaseUrl()+videoUrl) {
             DispatchQueue.global(qos: .background).async {
                 if let url = URL(string: videoUrl),
                     let urlData = NSData(contentsOf: url) {
@@ -27,43 +27,14 @@ class AudioVideoMerger{
                         self.addWatermarkOnly(videoURL: URL(fileURLWithPath: filePath)) { output in
                             completion(output)
                         }
-                       // completion(URL(fileURLWithPath: filePath))
-//                        PHPhotoLibrary.shared().performChanges({
-//                            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
-//                        }) { completed, error in
-//                            if completed {
-//                                print("Video is saved!")
-//                                completion(URL(fileURLWithPath: filePath))
-//                            }
-//                        }
                     }
                 }
             }
-            
-            
-//            let manager = Session.default
-//            let destination: DownloadRequest.Destination = { a,c   in
-//
-//                       var destinationPath = FileManager.default.urls(for:.documentDirectory, in: .userDomainMask)[0]
-//
-//                var url = destinationPath.appendingPathComponent("ScripTube/Videos")
-//                url.appendPathComponent("\(Date().millisecondsSince1970)")
-//
-//                        return (url, [.removePreviousFile,.createIntermediateDirectories])
-//                    }
-//            manager.session.configuration.timeoutIntervalForRequest = 30
-//            manager.download(audioUrl,to: destination).downloadProgress { progress in
-//                print(progress.fractionCompleted)
-//            }.response { response in
-//                completion(response.fileURL!)
-//                print("ALOO",response.response)
-//                print("ALOO1",response.fileURL)
-//                print("ALOO2",response)
-//            }
         }
     }
+    //Method to download and cache audio files from api response
     func downloadAudio(audioUrl:String,completion:@escaping(URL)->Void){
-        if let audioUrl = URL(string: audioUrl) {
+        if let audioUrl = URL(string: UserDefaultHelper.getBaseUrl()+audioUrl) {
             let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             
             // lets create your destination file url
@@ -74,13 +45,8 @@ class AudioVideoMerger{
             if FileManager.default.fileExists(atPath: destinationUrl.path) {
                 print("The file already exists at path")
                 completion(destinationUrl)
-                
-
-                
-                
                 // if the file doesn't exist
             } else {
-
                 let manager = Session.default
                 let destination = DownloadRequest.suggestedDownloadDestination()
                 manager.session.configuration.timeoutIntervalForRequest = 30
@@ -88,7 +54,6 @@ class AudioVideoMerger{
                     print("Progress",progress.fractionCompleted)
                     self.onprogress(progress.fractionCompleted)
                 }.response { downloadUrl in
-                    print("audiodonwloadurl",downloadUrl)
                     completion(downloadUrl.fileURL!)
                 }
             }
@@ -109,34 +74,17 @@ class AudioVideoMerger{
         videoEditor.export(exportURL: exportUrl) { [weak self] (session) in
             print("donenne",session.outputFileType)
             if session.status == .completed {
-//                print("donenne",session.outputURL?.appendingPathExtension("mp4"))
-//                do{
-//                    let ans = try session.outputURL?.resourceValues(forKeys:[.fileSizeKey]).fileSize
-//                    print("VIDEOSIZE",ans)
-//                    let bcf = ByteCountFormatter()
-//                         bcf.allowedUnits = [.useMB] // optional: restricts the units to MB only
-//                         bcf.countStyle = .file
-//                    let string = bcf.string(fromByteCount: Int64(ans!))
-//                    print("VIDEOSIZE",string)
-//                }catch{
-//
-//                }
-                
                 completion(session.outputURL!)
-
             }
         }
     }
+    //Merge Audio and Video together
     func editVideo(videoURL: URL,audioUrl:URL,pickedVideo:Bool = false,completion:@escaping(URL)->Void) -> Void {
         let date = Date().millisecondsSince1970
         let filePath:String = NSHomeDirectory() + "/Documents/output.mp4"
         let exportUrl = URL(fileURLWithPath: filePath)
        
         let audioUrl = audioUrl
-        
-//        guard let audioUrl = Bundle.main.url(forResource: "applause-01", withExtension: "mp3") else {
-//            return
-//        }
         removeAudioFromVideo(videoURL.path){ url in
             let audioAsset = AVURLAsset(url: audioUrl)
             let videoAsset = AVURLAsset(url: videoURL)
@@ -147,30 +95,19 @@ class AudioVideoMerger{
             let layer = self.createVideoLayer(forWatermark: false)
             let videoEditor = YiVideoEditor(videoURL: url!)
             videoEditor.rotate(rotateDegree: .rotateDegree90)
-            //pickedVideo ? videoEditor.rotate(rotateDegree: .rotateDegree360) : videoEditor.rotate(rotateDegree: .rotateDegree90)
-            
-            print("VIDEOURLAFTERAUDIOREMOVE",url)
-            
-                 
-                //   videoEditor.crop(cropFrame: CGRect(x: 10, y: 10, width: 300, height: 200))
             videoEditor.addLayer(layer: layer)
             videoEditor.addAudio(asset: audioAsset, startingAt: 0, trackDuration: vdtime)
-            print("VIDEOSIZE2",videoEditor.videoData.videoComposition?.renderSize.height,videoEditor.videoData.videoComposition?.renderSize.width)
             videoEditor.export(exportURL: exportUrl) { [weak self] (session) in
-//                guard let `self` = self else {
-//                    return
-//                }
-                print("donenne",session.outputFileType)
+                print("FINAL URL",session.outputFileType)
                 if session.status == .completed {
                     //print("donenne",session.outputURL?.appendingPathExtension("mp4"))
                     do{
                         let ans = try session.outputURL?.resourceValues(forKeys:[.fileSizeKey]).fileSize
-                        print("VIDEOSIZE",ans)
                         let bcf = ByteCountFormatter()
                              bcf.allowedUnits = [.useMB] // optional: restricts the units to MB only
                              bcf.countStyle = .file
                         let string = bcf.string(fromByteCount: Int64(ans!))
-                        print("VIDEOSIZE",string)
+                        print("FINAL VIDEO SIZE",string)
                     }catch{
                         
                     }
@@ -207,7 +144,6 @@ class AudioVideoMerger{
         let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality)
         exporter?.outputURL = url
         exporter?.outputFileType = .mp4
-//        completion(exporter!.outputURL!)
         exporter?.exportAsynchronously(completionHandler: {() -> Void in
             completion(exporter!.outputURL!)
         })

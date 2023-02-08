@@ -22,7 +22,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/noto_sans"
-                android:text="Donation Amount"
+                android:text="Support Amount"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -93,6 +93,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/noto_sans"
                 android:text="Other Amount"
+                android:visibility="gone"
                 android:textColor="#343434"
                 android:textSize="11sp"
                 android:textStyle="bold" />
@@ -110,7 +111,7 @@
                 android:drawableTint="@color/black"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center_vertical"
-                android:hint="Enter your donation amount"
+                android:hint="Enter your support amount"
                 android:inputType="number"
                 android:paddingStart="16dp"
                 android:textColor="@color/black"
@@ -135,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/noto_sans"
-                    android:text="Donate"
+                    android:text="Support"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 

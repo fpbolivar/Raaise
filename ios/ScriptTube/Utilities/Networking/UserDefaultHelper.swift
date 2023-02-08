@@ -13,6 +13,7 @@ class UserDefaultHelper{
     static let UD_API_Token  : String = "UD_API_Token"
     static let UD_UserEmail  : String = "UD_UserEmail"
     static let UD_InstallationID : String = "UD_InstallationID"
+    static let UD_BaseUrl : String = "UD_BaseUrl"
     //MARK:SET METHOD OF USERDEFAULTS DATA
     static func setDeviceToken(value:String){
         getUserDefault().set(value, forKey: UserDefaultHelper.UD_Device_Token)
@@ -20,6 +21,13 @@ class UserDefaultHelper{
 
     static func setAccessToken(value:String){
         getUserDefault().set(value, forKey: UserDefaultHelper.UD_API_Token)
+    }
+    static func setBaseUrl(value:String){
+        getUserDefault().set(value, forKey: UserDefaultHelper.UD_BaseUrl)
+    }
+    static func getBaseUrl()->String{
+        let UD_BaseUrl =   getUserDefault().string(forKey: UserDefaultHelper.UD_BaseUrl) ?? ""
+        return UD_BaseUrl
     }
 
     static func getAccessToken()->String{
@@ -35,7 +43,6 @@ class UserDefaultHelper{
     }
     static func removeAllData(){
         getUserDefault().removeObject(forKey: UserDefaultHelper.UD_API_Token)
-        //getUserDefault().removeObject(forKey: UserDefaultHelper.UD_UserEmail)
 
     }
     static func installationID()->String{

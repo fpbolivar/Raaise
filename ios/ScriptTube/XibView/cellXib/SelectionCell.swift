@@ -43,14 +43,8 @@ class SelectionCell: UITableViewCell {
     func play(){
         vid.downloadAudio(audioUrl: audioData.audioUrl) { audioUrl in
             self.asset = AVURLAsset(url: audioUrl)
-            
-            //let playerItem = AVPlayerItem(url: audioUrl as URL)
             self.player = AVPlayer(asset: self.asset)
             self.player?.play()
-//                self.player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)), queue: DispatchQueue.main, using: { [weak self] (time) in
-//                    /// Float(self?.asset.duration.seconds ?? 1)
-//                })
-            //AVPlayer(playerItem: playerItem)
             self.player?.automaticallyWaitsToMinimizeStalling = false
             
         }
@@ -69,7 +63,8 @@ class SelectionCell: UITableViewCell {
     @IBAction func playBtnClicked(_ sender: UIButton) {
         playAudio!(audioData.audioUrl)
     }
-    
+    // MARK: - Update Data
+    //For Audio Details
     func updateCellForAudio(data:AudioDataModel){
         self.audioData = data
         self.nameLbl.text = data.songName.localizedCapitalized
@@ -78,14 +73,15 @@ class SelectionCell: UITableViewCell {
         self.detailLbl.text = "\(data.songName) | \(data.genre)".localizedCapitalized
         self.profileImg.loadImg(url: data.thumbnail)
     }
+    //For Followers List
     func followerList(data:UserListDataModel){
         self.timeLbl.isHidden = true
         self.playBtn.isHidden = true
         self.detailLbl.text = (Int(data.count)?.shorten() ?? "0") + " Followers"
         self.nameLbl.text = data.name.localizedCapitalized
         self.profileImg.loadImgForProfile(url: data.image)
-        //loadImg(url: data.thumbnail)
     }
+    //For Users List
     func userList(data:UserProfileData){
         self.timeLbl.isHidden = true
         self.playBtn.isHidden = true
@@ -93,6 +89,7 @@ class SelectionCell: UITableViewCell {
         self.nameLbl.text = data.name.localizedCapitalized
         self.profileImg.loadImgForProfile(url: data.profileImage)
     }
+    //For Chat List
     func chatList(data:ChatChannelModel){
         self.timeLbl.isHidden = false
         self.playBtn.isHidden = true
@@ -102,15 +99,12 @@ class SelectionCell: UITableViewCell {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let date = dateFormatter.date(from: data.chatTime.getDateStringFromMillisecond2())
-        print("date: \(date)")
         let currentDate = Date()
-        print("kkksksksksk",currentDate.offsetFrom(date: date!))
         if currentDate.offsetFrom(date: date!) == ""{
             self.timeLbl.text = "Just Now"
         }else{
             self.timeLbl.text = currentDate.shortOffsetFrom(date: date!)
         }
-        //self.timeLbl.text = "\(data.chatTime.getDateStringFromMillisecond())"
         profileImg.loadImgForProfile(url: data.otherUser.profileImage)
         nameLbl.text = data.otherUser.name.localizedCapitalized
         self.nameLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)

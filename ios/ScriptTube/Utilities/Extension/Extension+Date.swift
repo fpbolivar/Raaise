@@ -87,10 +87,9 @@ extension String{
     var date :Date {
 
         let formatter = DateFormatter()
-        // formatter.calendar = Calendar(identifier: .iso8601)
-        //formatter.locale = .init(identifier: "en_US_POSIX")
+        
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        //   formatter.locale = Locale(identifier: "en_US_POSIX")
+        
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
 
         let someDateTime = formatter.date(from: self)
@@ -99,10 +98,9 @@ extension String{
     var dateTZZ :Date? {
 
         let formatter = DateFormatter()
-        // formatter.calendar = Calendar(identifier: .iso8601)
-        //formatter.locale = .init(identifier: "en_US_POSIX")
+        
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        //   formatter.locale = Locale(identifier: "en_US_POSIX")
+        
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
 
         let someDateTime = formatter.date(from: self)
@@ -111,10 +109,9 @@ extension String{
     var timeAMPM :Date? {
 
         let formatter = DateFormatter()
-        // formatter.calendar = Calendar(identifier: .iso8601)
-        //formatter.locale = .init(identifier: "en_US_POSIX")
+       
         formatter.dateFormat = "h:mm a"
-        //   formatter.locale = Locale(identifier: "en_US_POSIX")
+        
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
 
         let someDateTime = formatter.date(from: self)
@@ -123,10 +120,9 @@ extension String{
     var dateWithoutT :Date? {
 
         let formatter = DateFormatter()
-        // formatter.calendar = Calendar(identifier: .iso8601)
-        //formatter.locale = .init(identifier: "en_US_POSIX")
+        
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSSSSZ"
-        //   formatter.locale = Locale(identifier: "en_US_POSIX")
+        
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
 
         let someDateTime = formatter.date(from: self)
@@ -136,10 +132,9 @@ extension String{
     var dateTZ :Date {
 
         let formatter = DateFormatter()
-        // formatter.calendar = Calendar(identifier: .iso8601)
-        //formatter.locale = .init(identifier: "en_US_POSIX")
+        
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        //formatter.locale = Locale(identifier: "en_US_POSIX")
+        
         formatter.timeZone = .current
         let someDateTime = formatter.date(from: self)
         return someDateTime!
@@ -167,17 +162,7 @@ extension Date {
         }else{
             return srDt
         }
-        //        if let date = dateFormatterGet.date(from: srDt) {
-        //            let calendar = Calendar.current
-        //            let dtCmp =  calendar.dateComponents([.year, .month, .day], from: date)
-        //            let month = Int(dtCmp.month ?? 0)
-        //            let timeSlot = "\(dtCmp.year ?? 1995)-\(month)-\(dtCmp.day ?? 01)"
-        //return timeSlot
-        //        } else {
-        //
-        //return srDt
-        //
-        //    }
+        
     }
     var ddMMMyyyy: String { Formatter.ddMMMyyyy.string(from: self) }
     var HHMM: String { Formatter.HHMM.string(from: self) }
@@ -342,8 +327,7 @@ extension String {
     }
     func toShortDateMMMddyyyy() -> String {
         let formatter = DateFormatter()
-        //        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
-        // formatter.locale = Locale(identifier: "en_US_POSIX")
+        
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let date = formatter.date(from: self) ?? Date()
         formatter.dateFormat = "MMM dd, yyyy"

@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.raaise.android.ApiManager.ApiModels.UserFollowersModel;
 import com.raaise.android.Home.Fragments.OtherUserProfileActivity;
 import com.raaise.android.R;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class FollowerFolowingAdapter extends RecyclerView.Adapter<FollowerFolowi
         try {
 
             Glide.with(context)
-                    .load(mo.getFollowedBy().getProfileImage())
+                    .load(Prefs.GetBaseUrl(context) + mo.getFollowedBy().getProfileImage())
                     .circleCrop()
                     .placeholder(R.drawable.placeholder)
                     .into(holder.imageViewInFF);

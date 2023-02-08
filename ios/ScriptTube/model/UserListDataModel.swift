@@ -4,7 +4,7 @@
 //
 //  Created by Code Optimal Solutions Ios on 14/12/22.
 //
-
+//MARK: - Data Model for User List
 import Foundation
 class UserListDataModel{
     var id = ""

@@ -1,9 +1,3 @@
-//
-//  YiAddAudioCommand.swift
-//  YiVideoEditor
-//
-//  Created by coderyi on 2021/10/4.
-//
 
 import Foundation
 import AVFoundation

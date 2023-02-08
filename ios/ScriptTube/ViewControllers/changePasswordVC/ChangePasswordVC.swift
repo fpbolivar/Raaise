@@ -24,9 +24,8 @@ class ChangePasswordVC: BaseControllerVC {
         setfonts()
         setPlaceholder()
         addNavBar(headingText:"Change Password",redText:"Password")
-
-        // Do any additional setup after loading the view.
     }
+    //MARK: -Setup
     @objc func showPassword(sender: UITapGestureRecognizer){
         if sender == currentTap{
             currentPassTF.isSecureTextEntry = !currentPassTF.isSecureTextEntry
@@ -77,16 +76,11 @@ class ChangePasswordVC: BaseControllerVC {
         tf.paddingLeftRightTextField(left: CGFloat(value), right: CGFloat(value))
     }
     func setPlaceholder(){
-//        currentPassTF.placeholder = "Old Password"
-//        newPassTF.placeholder = "New Password"
-//        cnfPassTF.placeholder = "Confirm Password"
-//
         currentPassTF.attributedPlaceholder = NSAttributedString(string: "Old Password",attributes: [.foregroundColor: UIColor.lightGray])
         newPassTF.attributedPlaceholder = NSAttributedString(string: "New Password",attributes: [.foregroundColor: UIColor.lightGray])
         cnfPassTF.attributedPlaceholder = NSAttributedString(string: "Confirm Password",attributes: [.foregroundColor: UIColor.lightGray])
-        
-        
     }
+    //MARK: -Api method
     func changePasswordApi(){
         let param = ["oldpassword":currentPassTF.text ?? "","newpassword":newPassTF.text ?? "","confirmpassword":cnfPassTF.text ?? ""]
         AuthManager.changePasswordApi(delegate: self, param: param) {
@@ -95,6 +89,7 @@ class ChangePasswordVC: BaseControllerVC {
             }
         }
     }
+    //MARK: -Validation
     func checkValidations(){
         if (currentPassTF.text!.isEmpty){
             ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyOldPassword)

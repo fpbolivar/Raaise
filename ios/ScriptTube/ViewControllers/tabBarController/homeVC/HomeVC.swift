@@ -3,7 +3,7 @@
 //  ScriptTube
 //
 //  Created by Dilpreet Singh on 11/21/22.
-//
+//MARK: - Unimplemented Screen, Screen Used in This place is HomeVC2
 
 import UIKit
 import Photos
@@ -317,15 +317,8 @@ extension HomeVC: HomeCellNavigationDelegate {
     func viewCountError(error: String) {
         AlertView().showAlert(message: error, delegate: self, pop: false)
     }
-    
-   
-    
-//    func downloadVideo(url:Str){
-//        
-//    }
     func goTiTryAudio(withId audio :AudioDataModel) {
         let vc = TryAudioVC()
-        //vc.audioId = id
         vc.audioData = audio
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -341,6 +334,12 @@ extension HomeVC: HomeCellNavigationDelegate {
         popup.numberOfComments = num
         popup.modalPresentationStyle = .popover
         self.tabBarController?.present(popup, animated: true)
+    }
+    func gotoUserProfileOfSupporter(withUser user: DonationUserModel) {
+        let vc = VisitProfileVC()
+        vc.id = user.id
+       // vc.delegate = self
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     func gotoUserProfile(withUser user:UserProfileData,isFollowing:Bool) {
         let vc = VisitProfileVC()
@@ -369,46 +368,12 @@ extension HomeVC: HomeCellNavigationDelegate {
                 // show alert for not available
                 AlertView().showAlert(message: "ERROR in sharing", delegate: self, pop: false)
             }
-            //            DispatchQueue.main.async {
-            //                PHPhotoLibrary.shared().performChanges({
-            //                   PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
-            //                }) { saved, error in
-            //                if saved {
-            //                    print("Saved")
-            //                }
-            //                }
-            //            }
-            //        }
-            //        var videoPath:URL? = nil
-            //        let videoImageUrl = url
-            //
-            //        DispatchQueue.global(qos: .background).async {
-            //            if let url = URL(string: videoImageUrl),
-            //                let urlData = NSData(contentsOf: url) {
-            //                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
-            //                let date =  Date().millisecondsSince1970
-            //                let filePath="\(documentsPath)/\(date).mp4"
-            //                videoPath = URL(fileURLWithPath: filePath)
-            //                DispatchQueue.main.async {
-            //                    urlData.write(toFile: filePath, atomically: true)
-            //                    PHPhotoLibrary.shared().performChanges({
-            //                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
-            //                    }) { completed, error in
-            //                        if completed {
-            //                            print("Video is saved!")
             
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
         }
         
     }
     func reportVideo(withId id:String,isReported:Bool) {
-        //AlertView().showAlert(message: "Report is not implemented yet", delegate: self, pop: false)
         let popUp = ReportBtnPopUp()
-        //ReportVideoVC()
         popUp.videoId = id
         popUp.modalTransitionStyle = .crossDissolve
         popUp.modalPresentationStyle = .overCurrentContext

@@ -3,7 +3,6 @@ package com.raaise.android.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import com.raaise.android.ApiManager.ApiModels.GetVideosBasedOnAudioIdModel;
 import com.raaise.android.ApiManager.ApiModels.PublicUserVideoListModel;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.mainHomeData;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class TryAudioAllVideosRells extends RecyclerView.Adapter<TryAudioAllVide
         GetVideosBasedOnAudioIdModel.Videos obj = list.get(position);
 
 
-        holder.VideoViewInHomeReels.setVideoURI(Uri.parse(obj.getVideoLink()));
+        holder.VideoViewInHomeReels.setVideoPath(Prefs.GetBaseUrl(context) + obj.getVideoLink());
         holder.VideoViewInHomeReels.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
@@ -106,7 +106,7 @@ public class TryAudioAllVideosRells extends RecyclerView.Adapter<TryAudioAllVide
         holder.CommentCountInHomeVideoSingleItem.setText(String.valueOf(obj.getVideoCommentCount()));
         holder.VideoShareCountInHomeVideoSingleItem.setText(String.valueOf(obj.getVideoShareCount()));
         if (obj.getUserId().getProfileImage() != null) {
-            Glide.with(context).load(obj.getUserId().getProfileImage()).placeholder(R.drawable.placeholder).into(holder.ImageProfileInAdapter);
+            Glide.with(context).load(Prefs.GetBaseUrl(context) + obj.getUserId().getProfileImage()).placeholder(R.drawable.placeholder).into(holder.ImageProfileInAdapter);
         }
         if (obj.isLiked()) {
             holder.LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(context, R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
@@ -152,7 +152,7 @@ public class TryAudioAllVideosRells extends RecyclerView.Adapter<TryAudioAllVide
             holder.lottie_main.setVisibility(View.VISIBLE);
             holder.SongNameInHomeVideoSingleItem.setVisibility(View.VISIBLE);
             holder.SongNameInHomeVideoSingleItem.setText(obj.getAudioId().getSongName());
-            Glide.with(context).load(obj.getAudioId().getThumbnail()).placeholder(R.drawable.placeholder).into(holder.SongImage);
+            Glide.with(context).load(Prefs.GetBaseUrl(context) + obj.getAudioId().getThumbnail()).placeholder(R.drawable.placeholder).into(holder.SongImage);
         }
         holder.SongNameInHomeVideoSingleItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,8 +160,9 @@ public class TryAudioAllVideosRells extends RecyclerView.Adapter<TryAudioAllVide
                 homeReelsListener.tryAudio(obj.getAudioId().get_id());
             }
         });
-        
 
+        // Top Rewarded
+        holder.topRewardedHeading.setVisibility(View.GONE);
 
 
         
@@ -212,6 +213,7 @@ public class TryAudioAllVideosRells extends RecyclerView.Adapter<TryAudioAllVide
         LinearLayout profileContainer, DonationLayout;
         ImageView moreOptions, lottie_main;
         ImageView CommentsInAdapter;
+        TextView topRewardedHeading;
         LinearLayout Layout_Donation;
         VideoView VideoViewInHomeReels;
         ImageView LikeInHomeVideoSingleItem, ImageProfileInAdapter, DollarDonation, SongImage;
@@ -223,6 +225,7 @@ public class TryAudioAllVideosRells extends RecyclerView.Adapter<TryAudioAllVide
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            topRewardedHeading = itemView.findViewById(R.id.top_rewarded_tv);
             DonationLayout = itemView.findViewById(R.id.DonationLayout);
 
             ShareVideo = itemView.findViewById(R.id.ShareVideo);

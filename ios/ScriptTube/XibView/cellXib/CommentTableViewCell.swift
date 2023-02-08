@@ -42,7 +42,6 @@ class CommentTableViewCell: UITableViewCell {
         super.prepareForReuse()
         self.viewReplyIcon.isHidden = false
         self.viewReplyView.isHidden = false
-        //self.replyTableView.separatorStyle = .singleLine
     }
 
     @objc func gotoProfileTap(){
@@ -52,18 +51,15 @@ class CommentTableViewCell: UITableViewCell {
         showReplyView!()
         delegate?.replyToComment(withId: self.commentData.id, name: self.commentData.username)
     }
+    //MARK: - Setup & Update Data
     func setup(data:CommentDataModel){
-        
         self.commentData = data
-        print("KKKSKSKSKSK",self.commentData.viewReply)
         self.commentLbl.text = data.comment
         self.nameLbl.text = data.username
         self.profileImg.loadImgForProfile(url: data.commentprofileImage)
         if commentData.replies.count == 0{
-//            self.viewReplyLbl.isHidden = true
             self.viewReplyIcon.isHidden = true
             self.viewReplyView.isHidden = true
-            //self.replyTableView.separatorStyle = .none
         }
         if commentData.replies.count > 1{
             self.viewReplyLbl.text = "View Replies(\(commentData.replies.count))"
@@ -74,19 +70,13 @@ class CommentTableViewCell: UITableViewCell {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let date = dateFormatter.date(from: data.commentTime)
-        print("date: \(date)")
         let currentDate = Date()
-        print("kkksksksksk",currentDate.offsetFrom(date: date!))
         if currentDate.offsetFrom(date: date!) == ""{
             self.timeLbl.text = "Just Now"
         }else{
             self.timeLbl.text = currentDate.offsetFrom(date: date!)
         }
         viewReplyLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showReplies)))
-//        replyTableView.delegate = self
-//        replyTableView.dataSource = self
-//        self.replyTableView.isHidden = true
-//        replyTableView.reloadData()
         if !self.commentData.viewReply{
             if self.commentData.replies.count > 1{
                 self.viewReplyLbl.text = "View Replies(\(self.commentData.replies.count))"
@@ -94,23 +84,18 @@ class CommentTableViewCell: UITableViewCell {
                 self.viewReplyLbl.text = "View Reply(\(self.commentData.replies.count))"
             }
         }else{
-            //replyTableView.reloadData()
             if self.commentData.replies.count > 1{
                 self.viewReplyLbl.text = "Hide Replies(\(self.commentData.replies.count))"
             }else{
                 self.viewReplyLbl.text = "Hide Reply(\(self.commentData.replies.count))"
             }
         }
-        //loadImg(url: data.commentprofileImage)
     }
     @objc func showReplies(){
-        //self.replyTableView.isHidden = !self.replyTableView.isHidden
-        
-        //self.replyTableView.reloadData()
         showReplyTable!()
-       
     }
 }
+//MARK: - Table View Delegates
 extension CommentTableViewCell:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.commentData.replies.count
@@ -125,10 +110,9 @@ extension CommentTableViewCell:UITableViewDelegate,UITableViewDataSource{
         return cell
     }
 }
+//MARK: - Reply Delegate
 extension CommentTableViewCell:ReplyDelegate{
     func gotoProfile(withId id: String) {
         delegate?.openProfile(withId: id)
     }
-    
-    
 }

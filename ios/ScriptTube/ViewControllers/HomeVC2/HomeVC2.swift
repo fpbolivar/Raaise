@@ -8,6 +8,7 @@
 import UIKit
 
 class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
+    //MARK: - Vairables
     var xPage = 0
     var page = 1
     var page2 = 1
@@ -21,6 +22,7 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
     var visibleCell: HomeTableViewCell?
     var shareVideoLink:String = ""
     var viewIsVisisble = false
+    //MARK: - UI Components
     @IBOutlet weak var noVidLbl1: UILabel!
     @IBOutlet weak var noVidLbl: UILabel!
     @IBOutlet weak var spinner1: UIActivityIndicatorView!
@@ -38,17 +40,8 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
-        let tbc = self.tabBarController as! MainTabBarVC
-        tbc.thisDelegate = self
-        //makeUnderLine(forFollowing: true)
-        forYouTap = UITapGestureRecognizer(target: self, action: #selector(scrollToFollowing))
-        followingTap = UITapGestureRecognizer(target: self, action: #selector(scrollToFollowing))
-        bellIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(gotoNotification)))
-        notificationCountView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(gotoNotification)))
-        followingLbl.addGestureRecognizer(followingTap)
-        forYouLbl.addGestureRecognizer(forYouTap)
-        followingLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        forYouLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX16)
+        setup()
+        
         let param = ["limit":"10","page":"\(page)"]
         getHomePageVideosApi(withParams: param){
             if self.data.isEmpty{
@@ -73,6 +66,7 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
         viewIsVisisble = false
         xPage == 1 ? checkPause(table2: true) : checkPause()
     }
+    //MARK: - Api Methods
     func getNotificationCount(){
         DataManager.getUnreadNotificationCount(delegate: self) {
             DispatchQueue.main.async {
@@ -95,22 +89,20 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
             json["data"].forEach { (message,data) in
                 print("HOMEDATA",data)
                 if table2{
-                    guard let url = URL(string:data["videoLink"].stringValue) else{return}
+                    guard let url = URL(string:UserDefaultHelper.getBaseUrl()+data["videoLink"].stringValue) else{return}
                     self.data2.append(Post(data: data))
+                    print("DOwnlaod URl",url)
                     self.items2.append(url)
                     self.spinner2.stopAnimating()
                 }else{
-                    guard let url = URL(string:data["videoLink"].stringValue) else{return}
+                    guard let url = URL(string:UserDefaultHelper.getBaseUrl()+data["videoLink"].stringValue) else{return}
                     self.data.append(Post(data: data))
+                    print("DOwnlaod URl",url)
                     self.items.append(url)
                     self.spinner1.stopAnimating()
                 }
             }
             completion()
-            print("POSTS",self.data.count,self.data2.count)
-//            DispatchQueue.main.async {
-//                self.tableView.reloadData()
-//            }
         }
     }
     @objc func scrollToFollowing(sender:UITapGestureRecognizer){
@@ -126,9 +118,21 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
         }
     }
     @objc func gotoNotification(){
-        print("ahsghjasgdhja")
         let vc = NotificationVC()
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    //MARK: - Setup
+    func setup(){
+        let tbc = self.tabBarController as! MainTabBarVC
+        tbc.thisDelegate = self
+        forYouTap = UITapGestureRecognizer(target: self, action: #selector(scrollToFollowing))
+        followingTap = UITapGestureRecognizer(target: self, action: #selector(scrollToFollowing))
+        bellIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(gotoNotification)))
+        notificationCountView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(gotoNotification)))
+        followingLbl.addGestureRecognizer(followingTap)
+        forYouLbl.addGestureRecognizer(forYouTap)
+        followingLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
+        forYouLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX16)
     }
     func setUpTable(){
         DispatchQueue.main.async {
@@ -142,7 +146,7 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
             self.tableView.dataSource = self
             self.tableView.prefetchDataSource = self
             self.tableView.reloadData()
-            self.viewIsVisisble ? self.check() : print("POQPQOSOQAMKMX")
+            self.viewIsVisisble ? self.check() : print("")
             
         }
     }
@@ -158,19 +162,19 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
             self.tableView2.dataSource = self
             self.tableView2.prefetchDataSource = self
             self.tableView2.reloadData()
-            self.viewIsVisisble ? self.check(table2: true) : print("POQPQOSOQAMKMX")
+            self.viewIsVisisble ? self.check(table2: true) : print("")
         }
     }
+    //MARK: - Scrolling Managing Methods
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("sjhcjasncjks3")
-        guard let scroll = scrollView as? UITableView else{
-            var page = scrollView.contentOffset.x / scrollView.frame.size.width
+        guard let _ = scrollView as? UITableView else{
+            let page = scrollView.contentOffset.x / scrollView.frame.size.width
             xPage = Int(page)
             if xPage == 1{
                 if table2Setup{
                     check(table2: true)
                 }else{
-                    var param = ["type":"following","limit":"10","page":"\(page2)"]
+                    let param = ["type":"following","limit":"10","page":"\(page2)"]
                     getHomePageVideosApi(withParams: param,table2: true) {
                         if !self.data2.isEmpty{
                             self.setupTable2()
@@ -183,11 +187,11 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
                     }
                 }
             }
-            print(page)
+            
             return
         }
-        var page = scrollView.contentOffset.y / scrollView.frame.size.height
-        print(page)
+        let page = scrollView.contentOffset.y / scrollView.frame.size.height
+        
      }
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
@@ -218,7 +222,6 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
         }
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        xPage == 1 ? check(table2: true) : check()
         print("sjhcjasncjks1")
         if xPage == 1{
             forYouunderline.isHidden = true
@@ -235,7 +238,7 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
             followingLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
             forYouLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX16)
         }
-        guard let scroll = scrollView as? UITableView else{return}
+        guard let _ = scrollView as? UITableView else{return}
         let height = scrollView.frame.size.height
         let contentYOffset = scrollView.contentOffset.y
         let distanceFromBottom = scrollView.contentSize.height - contentYOffset
@@ -264,8 +267,8 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
                 }
             }
         }
-        //check()
     }
+    //MARK: - Video Playing/Downloading Methods
     func check(table2:Bool = false) {
         print("forpage",xPage)
         checkPreload(table2: table2)
@@ -275,7 +278,7 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
         if table2{
             guard let lastRow = tableView2.indexPathsForVisibleRows?.last?.row else { return }
             
-            let urls = items
+            let urls = items2
                 .suffix(from: min(lastRow + 1, items2.count))
                 .prefix(2)
             
@@ -319,7 +322,7 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
             self.visibleCell = visibleCell
         }
        
-        //self.visibleCell = visibleCell
+        
     }
     func checkPause(table2:Bool = false){
         print("forpage",xPage)
@@ -344,6 +347,7 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
         
     }
 }
+//MARK: -Table View Delegates
 extension HomeVC2: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.tableView{
@@ -397,29 +401,34 @@ extension HomeVC2: UITableViewDelegate, UITableViewDataSource, UITableViewDataSo
         print("thisVideois",indexPath.row)
     }
 }
+//MARK: - Delegate for camera opening
 extension HomeVC2:MainTabbarVCDelegate{
     func cameraOpened() {
         xPage == 1 ? checkPause(table2: true) : checkPause()
     }
 }
+//MARK: - Navigation from Home page Delegates
 extension HomeVC2:HomeCellNavigationDelegate{
-    
+    func gotoUserProfileOfSupporter(withUser user: DonationUserModel) {
+        let vc = VisitProfileVC()
+        vc.id = user.id
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     func clickedFollowBtn(forUser id: String, isFollowing: Bool) {
-            let sameUser = self.data.filter { post in
-                return post.userDetails?.id == id
-            }
-            print("SAMEUSERVUEI",sameUser.count)
-            sameUser.forEach { post in
-                post.isFollow = isFollowing
-            }
-            let sameUser2 = self.data2.filter { post in
-                return post.userDetails?.id == id
-            }
-            print("SAMEUSERVUEI2",sameUser2.count)
-            sameUser2.forEach { post in
-                post.isFollow = isFollowing
-            }
-        
+        let sameUser = self.data.filter { post in
+            return post.userDetails?.id == id
+        }
+        print("SAMEUSERVUEI",sameUser.count)
+        sameUser.forEach { post in
+            post.isFollow = isFollowing
+        }
+        let sameUser2 = self.data2.filter { post in
+            return post.userDetails?.id == id
+        }
+        print("SAMEUSERVUEI2",sameUser2.count,isFollowing)
+        sameUser2.forEach { post in
+            post.isFollow = isFollowing
+        }
     }
     
     func viewCountError(error: String) {
@@ -458,9 +467,7 @@ extension HomeVC2:HomeCellNavigationDelegate{
         self.tabBarController?.present(vc, animated: true)
     }
     func reportVideo(withId id:String,isReported: Bool) {
-        //AlertView().showAlert(message: "Report is not implemented yet", delegate: self, pop: false)
         let popUp = ReportBtnPopUp()
-        //ReportVideoVC()
         popUp.btnDelegate = self
         popUp.isvideoReported = isReported
         popUp.videoId = id
@@ -483,6 +490,7 @@ extension HomeVC2:HomeCellNavigationDelegate{
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+//MARK: - Donation Delegate
 extension HomeVC2:DonationPopupDelegate{
     func donationSuccess() {
         let vc = PaymentSuccessVC()
@@ -500,6 +508,7 @@ extension HomeVC2:DonationPopupDelegate{
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+//MARK: - Comment Delegate
 extension HomeVC2:CommentPopUpDelegate{
     func dismissAfterComment(numberOfComments num: String) {
         guard let cell = visibleCell else{
@@ -515,19 +524,27 @@ extension HomeVC2:CommentPopUpDelegate{
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+//MARK: - Navigation Delegates
 extension HomeVC2:VisitProfileDelegate{
     func followActionChanged(withId id: String, isFollowing: Bool) {
         let sameUser = self.data.filter { post in
             return post.userDetails?.id == id
         }
-        print("SAMEUSERVUEI",sameUser.count)
+        
         sameUser.forEach { post in
+            post.isFollow = isFollowing
+        }
+        let sameUser2 = self.data2.filter { post in
+            return post.userDetails?.id == id
+        }
+        
+        sameUser2.forEach { post in
             post.isFollow = isFollowing
         }
     }
 }
 
-
+//MARK: - Sharing Video Delegates
 extension HomeVC2:SharePopUpDelegate{
     func newShareCount(count: String,otherUser:UserProfileData,slug:String) {
         guard let cell = visibleCell else{
@@ -545,11 +562,10 @@ extension HomeVC2:SharePopUpDelegate{
         DispatchQueue.main.async {
             self.pleaseWait()
         }
-        
         let vid  = AudioVideoMerger()
         vid.downloadVideoToCameraRoll(videoUrl: self.shareVideoLink) { url in
-            print("URLLLLL",url)
-            if let name = URL(string: "https://itunes.apple.com/us/app/myapp/idxxxxxxxx?ls=1&mt=8"), !name.absoluteString.isEmpty {
+            //MARK: - Insert App Url from App Store
+            if let name = URL(string: LocalStrings.APP_URL), !name.absoluteString.isEmpty {
                 let objectsToShare = [url]
                 let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
                 DispatchQueue.main.async {
@@ -560,42 +576,10 @@ extension HomeVC2:SharePopUpDelegate{
             } else {
                 AlertView().showAlert(message: "ERROR in sharing", delegate: self, pop: false)
             }
-            //            DispatchQueue.main.async {
-            //                PHPhotoLibrary.shared().performChanges({
-            //                   PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
-            //                }) { saved, error in
-            //                if saved {
-            //                    print("Saved")
-            //                }
-            //                }
-            //            }
-            //        }
-            //        var videoPath:URL? = nil
-            //        let videoImageUrl = url
-            //
-            //        DispatchQueue.global(qos: .background).async {
-            //            if let url = URL(string: videoImageUrl),
-            //                let urlData = NSData(contentsOf: url) {
-            //                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
-            //                let date =  Date().millisecondsSince1970
-            //                let filePath="\(documentsPath)/\(date).mp4"
-            //                videoPath = URL(fileURLWithPath: filePath)
-            //                DispatchQueue.main.async {
-            //                    urlData.write(toFile: filePath, atomically: true)
-            //                    PHPhotoLibrary.shared().performChanges({
-            //                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
-            //                    }) { completed, error in
-            //                        if completed {
-            //                            print("Video is saved!")
-            
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
         }
     }
 }
+//MARK: - Report Video Delegate
 extension HomeVC2:ReportVideoDelegate{
     func videoReported() {
         ToastManager.successToast(delegate: self, msg: "Report Submit Succesfully")
@@ -603,7 +587,6 @@ extension HomeVC2:ReportVideoDelegate{
             return
         }
         cell.post?.isReported = true
-        //cell.reportBtn.isHidden = true
     }
 }
 extension HomeVC2:ReportBtnDelegate{

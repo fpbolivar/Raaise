@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.raaise.android.ApiManager.ApiModels.GlobalSearchModel;
 import com.raaise.android.Home.Fragments.ViewSeeAllVideosFromSearchAcitivty;
 import com.raaise.android.R;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class SeeAllPostsOfSearchAdapter extends RecyclerView.Adapter<SeeAllPosts
 
     @Override
     public void onBindViewHolder(@NonNull SeeAllPostsOfSearchAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Glide.with(context).load(list.get(position).getVideoImage()).into(holder.videoView);
+        Glide.with(context).load(Prefs.GetBaseUrl(context) + list.get(position).getVideoImage()).into(holder.videoView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

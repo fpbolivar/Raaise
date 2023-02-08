@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
-                android:text="Donation "
+                android:text="Support "
                 android:textColor="@color/TextColor"
                 android:textSize="18sp" />
 
@@ -106,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:fontFamily="@font/noto_sans"
-                    android:text="Total Donated"
+                    android:text="Total Supported"
                     android:textColor="@color/white"
                     android:textFontWeight="300"
                     android:textSize="16dp" />

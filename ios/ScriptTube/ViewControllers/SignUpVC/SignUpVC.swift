@@ -10,6 +10,8 @@ import FacebookLogin
 import GoogleSignIn
 import AuthenticationServices
 class SignUpVC: BaseControllerVC {
+    @IBOutlet weak var checkBox: UIButton!
+    @IBOutlet weak var  termsandConditionsLbl:ActiveLabel!
     @IBOutlet weak var appleSignInLbl: UILabel!
     @IBOutlet weak var signUpLbl: UILabel!
     @IBOutlet weak var cnfPassTfEyeImg: UIImageView!
@@ -25,18 +27,33 @@ class SignUpVC: BaseControllerVC {
     @IBOutlet weak var  usernameTF:UITextField!
     @IBOutlet weak var  googleLbl:UILabel!
     @IBOutlet weak var  fbLbl:UILabel!
-
+    var checkBoxSelected:Bool = false
     var passTap : UITapGestureRecognizer!
     var cnfPassTap : UITapGestureRecognizer!
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkBox.layer.borderWidth = 1
+        checkBox.layer.borderColor = UIColor.white.cgColor
         setfonts()
         redColorUnderline()
         setPlaceholder()
-        addNavBar(headingText:"Sign Up for Scriptube",redText:"Scriptube")
+        addNavBar(headingText:"Sign Up for Raaise",redText:"Raaise")
         // Do any additional setup after loading the view.
     }
+    //MARK: - Actions
+    @IBAction func checkBoxClicked(_ sender: Any) {
+        checkBoxSelected = !checkBoxSelected
+        if checkBoxSelected{
+            checkBox.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        }else{
+            checkBox.setImage(nil, for: .normal)
+        }
+    }
     @IBAction func appleSignInBtnClicked(_ sender: Any) {
+        if !checkBoxSelected{
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.termsandService)
+            return
+        }
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -45,6 +62,10 @@ class SignUpVC: BaseControllerVC {
         authorizationController.performRequests()
     }
     @IBAction func fbLoginBtnClicked(_ sender: Any) {
+        if !checkBoxSelected{
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.termsandService)
+            return
+        }
         if(!(Constant.check_Internet?.isReachable)!){
             AlertView().showInternetErrorAlert(delegate: self)
             return
@@ -52,12 +73,17 @@ class SignUpVC: BaseControllerVC {
         fbLogin()
     }
     @IBAction func googleLoginBtnClicked(_ sender: Any) {
+        if !checkBoxSelected{
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.termsandService)
+            return
+        }
         if(!(Constant.check_Internet?.isReachable)!){
             AlertView().showInternetErrorAlert(delegate: self)
             return
         }
         googleLogin()
     }
+    //MARK: - Api Methods
     func googleLoginApi(withToken token:String){
         let param = ["token":token,"deviceType":"ios","deviceToken":UserDefaultHelper.getDevice_Token()]
         AuthManager.googleLoginApi(delegate: self, param: param) {
@@ -70,18 +96,17 @@ class SignUpVC: BaseControllerVC {
     func googleLogin() {
         GIDSignIn.sharedInstance.signOut()
         GIDSignIn.sharedInstance.signIn(with: AppDelegate.signInConfig, presenting: self){user,error in
-            print("GOOGLETOKEN",user?.authentication.idToken,user?.authentication.accessToken)
+            print("GOOGLETOKEN",user?.authentication.idToken as Any,user?.authentication.accessToken as Any)
             guard let googleToken = user?.authentication.accessToken else{return}
             self.googleLoginApi(withToken: googleToken)
         }
     }
     func fbLogin(){
         let fbLoginManager : LoginManager = LoginManager()
-        //fbLoginManager.logOut()
+        fbLoginManager.logOut()
         fbLoginManager.logIn(permissions: ["email","public_profile"], from: self) { (result, error) -> Void in
             if (error == nil){
                 let fbloginresult : LoginManagerLoginResult = result!
-                // if user cancel the login
                 if (result?.isCancelled)!{
                     return
                 }
@@ -114,20 +139,28 @@ class SignUpVC: BaseControllerVC {
                   print("FACEBOOKTOKEN",fbToken)
                   self.fbLoginApi(withToken: fbToken)
               }
-            //print(result)
           }
         })
       }
+    }
+    func appleLoginApi(param:[String:String]){
+        self.pleaseWait()
+        AuthManager.appleSignIn(delegate: self, param: param) {
+            DispatchQueue.main.async {
+                self.clearAllNotice()
+                self.goToTabBar()
+            }
+        }
     }
     func signUpApi(){
         let param = ["name":nameTF.text ?? "","userName":usernameTF.text ?? "","email":emailTF.text ?? "","password":passTF.text ?? "","phoneNumber":mobileTF.text ?? "","deviceType":"ios","deviceToken":UserDefaultHelper.getDevice_Token()]
         AuthManager.signInApi(delegate: self, param: param) {
             DispatchQueue.main.async {
-                //self.gotoPersonalInfoVC()
                 self.navigationController?.popViewController(animated: true)
             }
         }
     }
+    //MARK: - Setup
     @objc func showPassword(sender: UITapGestureRecognizer){
         if sender == passTap{
             passTF.isSecureTextEntry = !passTF.isSecureTextEntry
@@ -159,8 +192,6 @@ class SignUpVC: BaseControllerVC {
 
         signUpBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX18)
         signUpLbl.font = AppFont.FontName.medium.getFont(size: AppFont.pX18)
-        //passTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
-        //emailTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
         emailTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         passTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         nameTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
@@ -195,65 +226,15 @@ class SignUpVC: BaseControllerVC {
         let vc = PersonalInfoFormVC()
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    func appleLoginApi(param:[String:String]){
-        self.pleaseWait()
-        AuthManager.appleSignIn(delegate: self, param: param) {
-            DispatchQueue.main.async {
-                self.clearAllNotice()
-                self.goToTabBar()
-            }
-        }
-    }
-    func checkValidations(){
-        if (nameTF.text!.isEmpty){
-            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyName)
-            return
-        }else if(usernameTF.text!.isEmpty){
-            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyUsername)
-            return
-        }
-//        else if (!Validator.isValidEmail(email: usernameTF.text ?? "")){
-//            ToastManager.errorToast(delegate: self, msg: LocalStrings.validUsername)
-//            return
-//        }
-        else if (emailTF.text!.isEmpty){
-            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyEmail)
-            return
-        }else if (!Validator.isValidEmail(email: emailTF.text ?? "")){
-            ToastManager.errorToast(delegate: self, msg: LocalStrings.validEmail)
-            return
-        }else if (mobileTF.text!.isEmpty){
-            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyMobile)
-            return
-        }else if (mobileTF.text!.count < 8 || mobileTF.text!.count > 10){
-            ToastManager.errorToast(delegate: self, msg: LocalStrings.validMobile)
-            return
-        }else if (passTF.text!.isEmpty){
-            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyPassword)
-            return
-        }else if (!Validator.isValidPassword(value: passTF.text ?? "")){
-            ToastManager.errorToast(delegate: self, msg: LocalStrings.validPassword)
-            return
-        }else if (passTF.text != cnfPassTF.text){
-            ToastManager.errorToast(delegate: self, msg: LocalStrings.passwordNotSame)
-            return
-        }else{
-            if(!(Constant.check_Internet?.isReachable)!){
-                AlertView().showInternetErrorAlert(delegate: self)
-                return
-            }
-            signUpApi()
-        }
-    }
+
+
     func setPlaceholder(){
         emailTF.attributedPlaceholder = NSAttributedString(string: "Email Address",attributes: [.foregroundColor: UIColor.lightGray])
         passTF.attributedPlaceholder = NSAttributedString(string: "Password",attributes: [.foregroundColor: UIColor.lightGray])
         cnfPassTF.attributedPlaceholder = NSAttributedString(string: "Confirm Password",attributes: [.foregroundColor: UIColor.lightGray])
-        mobileTF.attributedPlaceholder = NSAttributedString(string: "Phone Number",attributes: [.foregroundColor: UIColor.lightGray])
+        mobileTF.attributedPlaceholder = NSAttributedString(string: "Phone Number(Optional)",attributes: [.foregroundColor: UIColor.lightGray])
         nameTF.attributedPlaceholder = NSAttributedString(string: "Name",attributes: [.foregroundColor: UIColor.lightGray])
         usernameTF.attributedPlaceholder = NSAttributedString(string: "Username",attributes: [.foregroundColor: UIColor.lightGray])
-//        mobileTF.placeholder = "9876543210"
-//        emailTF.placeholder = "abc@ymail.uk"
     }
     func redColorUnderline(){
 
@@ -268,11 +249,90 @@ class SignUpVC: BaseControllerVC {
         alreadyhaveLbl.handleCustomTap(for: customType) { element in
             self.navigationController?.popViewController(animated: true)
         }
+        
+        let customType2 = ActiveType.custom(pattern:  "Terms of Service")
+        let customType3 = ActiveType.custom(pattern:  "Privacy Policy")
+        termsandConditionsLbl.enabledTypes.append(customType2)
+        termsandConditionsLbl.enabledTypes.append(customType3)
+        termsandConditionsLbl.textColor = UIColor.white
+        termsandConditionsLbl.underLineEnable = true
+        termsandConditionsLbl.text = "I have read and agree with Terms of Service & Privacy Policy"
+        termsandConditionsLbl.customColor[customType2] = UIColor.theme
+        termsandConditionsLbl.customColor[customType3] = UIColor.theme
+        termsandConditionsLbl.customSelectedColor[customType2] = UIColor.gray
+        termsandConditionsLbl.customSelectedColor[customType3] = UIColor.gray
+        termsandConditionsLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        termsandConditionsLbl.handleCustomTap(for: customType2) { element in
+            self.viewPolicies(viewType: .service)
+        }
+        termsandConditionsLbl.handleCustomTap(for: customType3) { element in
+            self.viewPolicies(viewType: .privacy)
+        }
+    }
+    //MARK: -Validation
+    func checkValidations(){
+        if (nameTF.text!.isEmpty){
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyName)
+            return
+        }else if(usernameTF.text!.isEmpty){
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyUsername)
+            return
+        }
+        else if (emailTF.text!.isEmpty){
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyEmail)
+            return
+        }else if (!Validator.isValidEmail(email: emailTF.text ?? "")){
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.validEmail)
+            return
+        }
+        else if ((mobileTF.text!.count < 8 || mobileTF.text!.count > 10) && !mobileTF.text!.isEmpty){
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.validMobile)
+            return
+        }else if (passTF.text!.isEmpty){
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.emptyPassword)
+            return
+        }else if (!Validator.isValidPassword(value: passTF.text ?? "")){
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.validPassword)
+            return
+        }else if (passTF.text != cnfPassTF.text){
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.passwordNotSame)
+            return
+        }
+        else if !checkBoxSelected{
+            ToastManager.errorToast(delegate: self, msg: LocalStrings.termsandService)
+            return
+        }else{
+            if(!(Constant.check_Internet?.isReachable)!){
+                AlertView().showInternetErrorAlert(delegate: self)
+                return
+            }
+            signUpApi()
+        }
+    }
+    func viewPolicies(viewType:ViewType){
+        let vc = HtmlTextRenderVC()
+        vc.isPresented = true
+        switch viewType {
+        case .privacy:
+            vc.fullNavTitle = "Privacy Policy"
+            vc.redNavTitle = "Policy"
+            vc.viewType = .privacy
+        case .service:
+            vc.fullNavTitle = "Terms of Service"
+            vc.redNavTitle = "Service"
+            vc.viewType = .service
+        case .copyright:
+            print("Nothing")
+        }
+        vc.modalTransitionStyle = .coverVertical
+        vc.modalPresentationStyle = .automatic
+        self.present(vc, animated: true)
     }
     @IBAction func signUpAction(_ sender: AnyObject) {
         checkValidations()
     }
 }
+//MARK: -Apple Sign In Delegate
 extension SignUpVC:ASAuthorizationControllerDelegate{
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
     // Handle error.
@@ -303,7 +363,6 @@ extension SignUpVC:ASAuthorizationControllerDelegate{
                         break
                  }
             }
-           print(userIdentifier,fullName,email)
         }
     }
 }

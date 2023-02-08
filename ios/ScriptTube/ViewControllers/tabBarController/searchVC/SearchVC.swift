@@ -20,7 +20,7 @@ class SearchVC: UIViewController {
         setup()
         self.setuptable()
         searchTf.delegate = self
-        searchTf.addTarget(self, action: #selector(handleTextFieldDidChange), for: .editingChanged)
+        
         tableView.register(UINib(nibName: SearchCell.identifier, bundle: nil), forCellReuseIdentifier: SearchCell.identifier)
         // Do any additional setup after loading the view.
     }
@@ -28,26 +28,7 @@ class SearchVC: UIViewController {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
-    @objc func handleTextFieldDidChange(_ textField: UITextField) {
-        print("PPPPPPPPP")
-//        if !textField.text!.isEmpty{
-//            print(textField.text)
-//            let param = ["search":textField.text!,"limit":"10","page":"1"]
-//            searchParam = param
-//            searchApi(withText: param){
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                    if textField.text!.isEmpty{
-//                        self.tableView.isHidden = true
-//                    }else{
-//                        self.tableView.isHidden = false
-//                    }
-//                }
-//            }
-//        }else{
-//            self.tableView.isHidden = true
-//        }
-    }
+    //MARK: - Api method
     func searchApi(withText text:[String:String],completion:@escaping()->Void){
         DataManager.globalSearchApi(delegate: self, param: text) { json in
             print("JSon",text,json)
@@ -56,6 +37,7 @@ class SearchVC: UIViewController {
             completion()
         }
     }
+    //MARK: - Setup
     func setup(){
         searchTf.layer.cornerRadius = 10
         searchTf.overrideUserInterfaceStyle = .light
@@ -77,6 +59,7 @@ class SearchVC: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
 }
+//MARK: - Table View Delegate
 extension SearchVC: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
@@ -84,7 +67,6 @@ extension SearchVC: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.identifier, for: indexPath) as! SearchCell
         cell.delegate = self
-        print("COllectionviewheight",cell.collectionView.collectionViewLayout.collectionViewContentSize.height)
         switch indexPath.row{
         case 0:
             cell.setupSearchCell(withType: .users, data: result.userResult)
@@ -105,9 +87,9 @@ extension SearchVC: UITableViewDelegate,UITableViewDataSource{
         return cell
     }
     @objc func getHintsFromTextField(textField: UITextField) {
-        print("Hints for textField: \(textField.text)")
+        
         if !textField.text!.isEmpty{
-            print(textField.text)
+           
             let param = ["search":textField.text!,"limit":"5","page":"1"]
             searchParam = param
             searchApi(withText: param){
@@ -128,10 +110,9 @@ extension SearchVC: UITableViewDelegate,UITableViewDataSource{
     }
 }
 
-
+//MARK: - Search Delegate
 extension SearchVC:UITextFieldDelegate{
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        //print(textField.text)
         NSObject.cancelPreviousPerformRequests(
             withTarget: self,
             selector: #selector(getHintsFromTextField),
@@ -141,9 +122,9 @@ extension SearchVC:UITextFieldDelegate{
             with: textField,
             afterDelay: 0.5)
         return true
-//        return true
     }
 }
+//MARK: - Navigation Delegate
 extension SearchVC:SelectedSearchItemDelegate{
     func openProfileWithId(id: String) {
         let vc = VisitProfileVC()
@@ -172,15 +153,15 @@ extension SearchVC:SelectedSearchItemDelegate{
         
         switch resultType{
         case .post:
-            print("aaaa")
+            
             vc.searchParam = ["search":searchTf.text!,"limit":"10","page":"1","type":"post"]
             break
         case .users:
-            print("aaaa1")
+           
             vc.searchParam = ["search":searchTf.text!,"limit":"10","page":"1","type":"user"]
             break
         case .audio:
-            print("aaaa2")
+            
             vc.searchParam = ["search":searchTf.text!,"limit":"10","page":"1","type":"audio"]
             break
         }

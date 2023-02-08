@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<!--    <key>BGTaskSchedulerPermittedIdentifiers</key>-->
-<!--    <array>-->
-<!--        <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>-->
-<!--    </array>-->
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -21,7 +17,7 @@
 	<key>FacebookClientToken</key>
 	<string>10a63b795e1635a7fa155f6f61f5aa96</string>
 	<key>FacebookDisplayName</key>
-	<string>ScripTube</string>
+	<string>Raaise App</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

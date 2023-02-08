@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Donation_Raised extends AppCompatActivity {
-    //    LinearLayout InReview, Claim, ViewDonation;
     TextView TotalDonatedAmountText, TotalRaisedAmountText, TotalWithdrawalAmountText;
     ApiManager apiManager = App.getApiManager();
     DonationRaisedAdapter adapter;
@@ -43,9 +42,10 @@ public class Donation_Raised extends AppCompatActivity {
         apiManager.DonationHistory(Prefs.GetBearerToken(Donation_Raised.this), new DataCallback<UserDonationHistoryModel>() {
             @Override
             public void onSuccess(UserDonationHistoryModel userDonationHistoryModel) {
+
                 TotalDonatedAmountText.setText("$" + userDonationHistoryModel.getData().getDonatedAmount());
-                TotalRaisedAmountText.setText("$" + userDonationHistoryModel.getData().getWalletDebitAmount());
-                TotalWithdrawalAmountText.setText("$" + userDonationHistoryModel.getData().getWalletCreditAmount());
+                TotalRaisedAmountText.setText("$" + userDonationHistoryModel.getData().getTotalRaised());
+                TotalWithdrawalAmountText.setText("$" + userDonationHistoryModel.getData().getTotalWithdraw());
                 list.addAll(userDonationHistoryModel.getData().getUserVideo());
                 adapter.notifyDataSetChanged();
             }

@@ -8,16 +8,6 @@
 import Foundation
 import UIKit
 
-//extension UIWindow{
-//    static var keyWin: UIWindow? {
-//        if #available(iOSApplicationExtension 13.0, *) {
-//            return SceneDelegate.shared?.window
-//        } else {
-//            return nil
-//            // Fallback on earlier versions
-//        }
-//    }
-//}
 extension UIApplication {
     static var keyWin: UIWindow? {
         if #available(iOS 13, *) {

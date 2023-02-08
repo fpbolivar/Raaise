@@ -19,6 +19,7 @@ class AmountCell: UICollectionViewCell {
         containerView.layer.cornerRadius = 10
         // Initialization code
     }
+    //MARK: - Update Data
     func updateCell(withAmt:String,forPopup:Bool=false){
         self.amountLbl.text = withAmt
         if forPopup{
@@ -34,7 +35,6 @@ class AmountCell: UICollectionViewCell {
         if forPopup{
             self.containerView.layer.borderColor = UIColor.green.cgColor
             self.containerView.layer.borderWidth = 1
-            //amountLbl.textColor = UIColor.green
         }else{
             self.containerView.layer.borderColor = UIColor.white.cgColor
             self.containerView.layer.borderWidth = 1

@@ -9,32 +9,6 @@ import Foundation
 import UIKit
 
 extension UIImageView{
-
-//    func loadImg(url:String){
-//        guard let imageUrL = URL(string: url) else {
-//            self.image =  UIImage(named:"placeholder")!
-//            return
-//        }
-//        self.sd_setImage(with: imageUrL, placeholderImage: UIImage(named:"placeholder")!, options: [.highPriority], progress: nil) { image, error, _, _ in
-//
-//        }
-//    }
-//    func downloadloadImg(url:String,imageCompletion:@escaping(UIImage?)->Void){
-//
-//        guard let imageUrL = URL(string: url) else {
-//            self.image =  UIImage(named:"placeholder")!
-//            imageCompletion(nil)
-//            return
-//        }
-//        self.sd_setImage(with: imageUrL, placeholderImage: UIImage(named:"placeholder")!, options: [.highPriority], progress: nil) { image, error, _, _ in
-//
-//            if let image = image{
-//                imageCompletion(image)
-//            }else{
-//                imageCompletion(nil)
-//            }
-//        }
-//    }
 }
 extension UIImage {
     func addPadding(_ padding: CGFloat) -> UIImage {

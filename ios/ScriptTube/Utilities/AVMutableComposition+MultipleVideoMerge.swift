@@ -7,6 +7,7 @@
 
 import Foundation
 import AVFoundation
+//MARK: - Merge Multiple Video To one
 extension AVMutableComposition {
     
     func mergeVideo(_ urls: [URL], completion: @escaping (_ url: URL?, _ error: Error?) -> Void) {
@@ -15,7 +16,7 @@ extension AVMutableComposition {
             return
         }
         
-        let outputURL = documentDirectory.appendingPathComponent("mergedVideo_\(Date()).mp4")
+        let outputURL = documentDirectory.appendingPathComponent("mergedVideo_\(Date().millisecondsSince1970).mp4")
         
         // If there is only one video, we dont to touch it to save export time.
         if let url = urls.first, urls.count == 1 {
@@ -36,7 +37,7 @@ extension AVMutableComposition {
 
         urls.enumerated().forEach { index, url in
             let asset = AVAsset(url: url)
-            print("ajajaj",asset.tracks.first?.mediaType,asset.tracks.count)
+            
             let assetTrack = asset.tracks.first!
             
             // Create instruction for a video and append it to array.
@@ -45,10 +46,10 @@ extension AVMutableComposition {
             
             // Set render size (orientation) according first video.
             if index == 0 {
-                print("Instruction",instruction.isPortrait)
+               
                 renderSize = instruction.isPortrait ? CGSize(width: maxRenderSize.height, height: maxRenderSize.width) : CGSize(width: maxRenderSize.height, height: maxRenderSize.width)
                 
-//                renderSize = instruction.isPortrait ? CGSize(width: maxRenderSize.height, height: maxRenderSize.width) : CGSize(width: maxRenderSize.width, height: maxRenderSize.height)
+
             }
             
             do {

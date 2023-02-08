@@ -2,6 +2,7 @@ package com.raaise.android.Home.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -303,11 +304,21 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Chat
         backBtn.setOnClickListener(this);
         chatPersonName.setText("@" + Username);
         chatPersonNameName.setText(Username);
-        Glide.with(chatPersonIV)
-                .load(UserImageLink)
-                .placeholder(R.drawable.placeholder)
-                .circleCrop()
-                .into(chatPersonIV);
+        Log.i("baseUrl", "inItWidgets: " + Prefs.GetBaseUrl(requireContext()) + UserImageLink);
+        if (UserImageLink.contains("https://")){
+            Glide.with(chatPersonIV)
+                    .load(UserImageLink)
+                    .placeholder(R.drawable.placeholder)
+                    .circleCrop()
+                    .into(chatPersonIV);
+        } else {
+            Glide.with(chatPersonIV)
+                    .load(Prefs.GetBaseUrl(requireContext()) + UserImageLink)
+                    .placeholder(R.drawable.placeholder)
+                    .circleCrop()
+                    .into(chatPersonIV);
+        }
+
 
     }
 

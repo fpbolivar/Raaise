@@ -18,7 +18,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/noto_sans"
-            android:text="ScripTube"
+            android:text="Raaise"
             android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold" />

@@ -3,7 +3,6 @@ package com.raaise.android.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.raaise.android.ApiManager.ApiModels.GlobalSearchModel;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.mainHomeData;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
     public void onBindViewHolder(@NonNull ViewSeeAllVideosFromSearchAcitivtyAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         GlobalSearchModel.Data.Posts obj = list.get(position);
 
-        holder.VideoViewInHomeReels.setVideoURI(Uri.parse(obj.getVideoLink()));
+        holder.VideoViewInHomeReels.setVideoPath(Prefs.GetBaseUrl(context) + obj.getVideoLink());
         holder.VideoViewInHomeReels.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
@@ -97,7 +97,7 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
         holder.CommentCountInHomeVideoSingleItem.setText(String.valueOf(obj.getVideoCommentCount()));
         holder.VideoShareCountInHomeVideoSingleItem.setText(String.valueOf(obj.getVideoShareCount()));
         if (obj.getUserId().getProfileImage() != null) {
-            Glide.with(context).load(obj.getUserId().getProfileImage()).placeholder(R.drawable.placeholder).into(holder.ImageProfileInAdapter);
+            Glide.with(context).load(Prefs.GetBaseUrl(context) + obj.getUserId().getProfileImage()).placeholder(R.drawable.placeholder).into(holder.ImageProfileInAdapter);
         }
         if (obj.isLiked()) {
             holder.LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(context, R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
@@ -139,7 +139,7 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
             holder.lottie_main.setVisibility(View.VISIBLE);
             holder.SongNameInHomeVideoSingleItem.setVisibility(View.VISIBLE);
             holder.SongNameInHomeVideoSingleItem.setText(obj.getAudioId().getSongName());
-            Glide.with(context).load(obj.getAudioId().getThumbnail()).placeholder(R.drawable.placeholder).into(holder.SongImage);
+            Glide.with(context).load(Prefs.GetBaseUrl(context) + obj.getAudioId().getThumbnail()).placeholder(R.drawable.placeholder).into(holder.SongImage);
         }
         holder.SongNameInHomeVideoSingleItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +149,7 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
         });
 
         holder.ShareVideo.setOnClickListener(view -> homeReelsListener.ShowShareVideoDialog(obj.getVideoLink(), obj.getUserId().get_id(), obj.getUserId().getProfileImage(), obj.getUserId().getShortBio(), obj.getUserId().getUserName(), obj.get_id()));
+        holder.topRewardedHeading.setVisibility(View.GONE);
     }
 
     @Override
@@ -184,6 +185,7 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView topRewardedHeading;
         ImageView tryAudioBtn, more_options_btn_UP, ShareVideo;
         LinearLayout songInfoContainer;
         LinearLayout profileContainer, DonationLayout;
@@ -200,6 +202,7 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            topRewardedHeading = itemView.findViewById(R.id.top_rewarded_tv);
             DonationLayout = itemView.findViewById(R.id.DonationLayout);
             ShareVideo = itemView.findViewById(R.id.ShareVideo);
             more_options_btn_UP = itemView.findViewById(R.id.more_options_btn_UP);
