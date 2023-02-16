@@ -125,10 +125,11 @@ class AudioVideoMerger{
             layer.contents = myImage
         }
         layer.backgroundColor = UIColor.clear.cgColor
-        layer.frame = CGRect(x: 10, y: 10, width: 100, height: 50)
+        layer.frame = CGRect(x: 30, y: 10, width: 100, height: 50)
         return layer
     }
     func removeAudioFromVideo(_ videoPath: String,completion: @escaping (URL?)->Void){
+        
         let initPath1: String = videoPath
         let composition = AVMutableComposition()
         let inputVideoPath: String = initPath1
@@ -148,6 +149,58 @@ class AudioVideoMerger{
             completion(exporter!.outputURL!)
         })
     }
+    func mergeAudioWithVideo(videoURL: URL, audioURL: URL) -> URL? {
+        let mixComposition = AVMutableComposition()
+        
+        guard let audioAsset = AVAsset(url: audioURL) as AVAsset?,
+            let videoAsset = AVAsset(url: videoURL) as AVAsset? else {
+                return nil
+        }
+        
+        let videoDuration = videoAsset.duration
+        let audioDuration = audioAsset.duration
+        
+        let videoTrack = mixComposition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid)
+        let audioTrack = mixComposition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid)
+        
+        do {
+            try videoTrack?.insertTimeRange(CMTimeRangeMake(start: CMTime.zero, duration: videoDuration), of: videoAsset.tracks(withMediaType: .video)[0], at: CMTime.zero)
+            
+            let loops = Int(ceil(CMTimeGetSeconds(videoDuration) / CMTimeGetSeconds(audioDuration)))
+            let audioDurationPerLoop = audioDuration
+            var audioDurationAdded: CMTime = CMTime.zero
+            for i in 0..<loops {
+                let startTime = CMTimeAdd(audioDurationAdded, CMTime.zero)
+                let audioDurationRemaining = CMTimeSubtract(videoDuration, audioDurationAdded)
+                let audioDurationToBeAdded = audioDurationRemaining > audioDuration ? audioDuration : audioDurationRemaining
+                try audioTrack?.insertTimeRange(CMTimeRangeMake(start: CMTime.zero, duration: audioDurationToBeAdded), of: audioAsset.tracks(withMediaType: .audio)[0], at: startTime)
+                audioDurationAdded = CMTimeAdd(audioDurationAdded, audioDurationToBeAdded)
+            }
+            
+            let exporter = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality)
+            let tempDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+            let outputURL = tempDirectoryURL.appendingPathComponent("mergedVideoWithAudio.mp4")
+            try? FileManager.default.removeItem(at: outputURL)
+
+            exporter?.outputURL = outputURL
+            exporter?.outputFileType = .mp4
+            exporter?.exportAsynchronously(completionHandler: {
+                if exporter?.status == .completed {
+                    print("Exported merged video with audio to: \(outputURL)")
+                } else {
+                    print("Failed to export merged video with audio: \(exporter?.error.debugDescription ?? "unknown error")")
+                }
+            })
+            
+            return outputURL
+            
+        } catch {
+            print("Failed to merge video with audio: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+        
 }
 extension Date {
     var millisecondsSince1970:Int64 {

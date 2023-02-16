@@ -55,6 +55,7 @@ import com.raaise.android.Utilities.HelperClasses.HelperClass;
 import com.raaise.android.Utilities.HelperClasses.StringHelper;
 import com.raaise.android.model.ChatListModel;
 import com.raaise.android.model.ChatModel;
+import com.raaise.android.model.ClaimedAmountPojo;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicData;
 import com.raaise.android.model.MusicResponse;
@@ -1597,6 +1598,27 @@ public class ApiManagerImplementation implements ApiManager {
 
             @Override
             public void onFailure(Call<WithdrawalsPojo> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void claimVideoAmount(String token, VideoDonationModal videoDonationModal, DataCallback<ClaimedAmountPojo> callback) {
+        ApiUtilities.getApiInterface().claimVideoAmount(token, videoDonationModal).enqueue(new Callback<ClaimedAmountPojo>() {
+            @Override
+            public void onResponse(Call<ClaimedAmountPojo> call, Response<ClaimedAmountPojo> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200 && response.body().getMessage().equalsIgnoreCase("success")){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError(response.message()));
+                    } else callback.onError(new ServerError(response.message()));
+                } else callback.onError(new ServerError(response.message()));
+            }
+
+            @Override
+            public void onFailure(Call<ClaimedAmountPojo> call, Throwable t) {
                 callback.onError(new ServerError(t.getMessage()));
             }
         });

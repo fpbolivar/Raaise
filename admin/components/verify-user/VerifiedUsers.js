@@ -5,7 +5,6 @@ import {Container,Wrapper} from "/components/users/Users.styled";
 import { USERS } from "../../ApiConstant";
 import axios from "../../utils/axios";
 import styled from "styled-components";
-
 import { TableHeader} from "../CustomTable/Table.styled"
 const Button = styled.button`
   cursor: pointer;
@@ -103,35 +102,37 @@ class VerifiedUsers extends React.Component {
     };
   }
 
-    //getVerifiedUser() fucntion is called .
-    componentDidMount = () => {
-        const { userPageNo, userlimit } = this.state;
-        this.getVerifiedUser({
-          pageNo: userPageNo,
-          limit: userlimit,
-        });
-    };
+  //getVerifiedUser() fucntion is called .
+  componentDidMount = () => {
+    const { userPageNo, userlimit } = this.state;
+    this.getVerifiedUser({
+      pageNo: userPageNo,
+      limit: userlimit,
+    });
+  };
 
-    // in this function,API is called
-    verifyUnVerifyUser = async (id, status,index) => {
-        const {users} = this.state
-        try {
-          const { data } = await axios.post(USERS.verifyUnVerifyUser, {   // API calling
-            userId: id,
-            isVerified: status,
-          });
-          if (data.status === 200) {
-            this.setState({
-              status: status,
-              users:users.filter(item=>item._id!==id)
-            })
-          }
-        }catch (e) {
-          console.log("error", e);
-        }
-    };
+  // in this function,API is called
+  verifyUnVerifyUser = async (id, status,index) => {
+    const {users} = this.state
+    try {
+      const { data } = await axios.post(USERS.verifyUnVerifyUser, {   // API calling
+        userId: id,
+        isVerified: status,
+      });
+      if (data.status == 200) {
+        this.setState({
+          status: status,
+          users:users.filter(item=>item._id!==id)
+        })
+      }
+      document.getElementById("custom-loader").style.display = "none";
+    }catch (e) {
+      document.getElementById("custom-loader").style.display = "none";
+      console.log("error", e);
+    }
+  };
       
-    //In this, function API is called
+  //In this, function API is called
     getVerifiedUser = async (obj) => {
       try {
         this.setState((prevState) => ({
@@ -148,7 +149,7 @@ class VerifiedUsers extends React.Component {
           columnsFilters[obj.column] = obj.value;
           userPageNo = 1;
         }
-        const { data } = await axios.post(`${USERS.getVerifiedUser}`, {   //API calling
+        const { data } = await axios.post(`${USERS.getVerifiedUser}`, {
           page: userPageNo,
           limit: userlimit,
           ...columnsFilters,
@@ -169,6 +170,7 @@ class VerifiedUsers extends React.Component {
             },
           });
         }
+        document.getElementById("custom-loader").style.display = "none";
       }catch (e) {
         document.getElementById("custom-loader").style.display = "none";
         console.log("error", e);

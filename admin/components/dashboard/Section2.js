@@ -82,7 +82,7 @@ class Section2 extends React.Component {
                                             <span className="title-section">Active Users</span>
                                             <span className="count-section tooltip cursor-pointer">
                                                 <span className="tooltiptext">
-                                                    Total number of users as Active Users :{user.ActiveUser || 0}
+                                                    Total number of Active Users :{user.ActiveUser || 0}
                                                 </span>
                                             {user.ActiveUser || 0}
                                             </span>
@@ -93,7 +93,7 @@ class Section2 extends React.Component {
                                             <span className="title-section">Blocked Users</span>
                                             <span className="count-section tooltip ">
                                                 <span className="tooltiptext">
-                                                    Total number of users as Blocked Users :{user.blockUser || 0}
+                                                    Total number of Blocked Users :{user.blockUser || 0}
                                                 </span>
                                             {user.blockUser || 0}
                                             </span>
@@ -109,7 +109,7 @@ class Section2 extends React.Component {
                                 </BoxHeader>
                                 <BoxBody>
                                     <ul>
-                                        <li className="">
+                                        <li className="tooltip">
                                             <span className="title-section ">
                                               Admin Comission
                                             </span>
@@ -135,7 +135,7 @@ class Section2 extends React.Component {
                                     <ul>
                                         <li className="tooltip ">
                                             <span className="tooltiptext">
-                                                Total number of users as Android Users :{user.andriodUser || 0}
+                                                Total number of Android Users :{user.andriodUser || 0}
                                             </span>
                                             <span className="title-section">Android Users</span>
                                             <span className="count-section">{user.andriodUser || 0}</span>
@@ -143,7 +143,7 @@ class Section2 extends React.Component {
                                         <div className="partition-block" />
                                         <li className="tooltip ">
                                             <span className="tooltiptext">
-                                                Total number of users as IOS Users :{user.iosUser || 0}
+                                                Total number of IOS Users :{user.iosUser || 0}
                                             </span>
                                             <span className="title-section">IOS Users</span>
                                             <span className="count-section">{user.iosUser || 0}</span>
@@ -161,7 +161,7 @@ class Section2 extends React.Component {
                                     <ul>
                                         <li className="tooltip ">
                                             <span className="tooltiptext">
-                                                Total number of Pending Withdrawal Transaction:{user.pendingWithdrawalTransaction || 0}
+                                                Total Pending Withdrawal Transaction:{user.pendingWithdrawalTransaction || 0}
                                             </span>
                                             <span className="title-section">Pending Transaction</span>
                                             <span className="count-section">{user.pendingWithdrawalTransaction || 0}</span>
@@ -181,7 +181,7 @@ class Section2 extends React.Component {
                                     <ul>
                                         <li className="tooltip ">
                                             <span className="tooltiptext">
-                                                Total number of users as Facebook Users:{user.facebookUser || 0}
+                                                Total number of Facebook Users:{user.facebookUser || 0}
                                             </span>
                                             <span className="title-section">Facebook Users</span>
                                             <span className="count-section">{user.facebookUser || 0}</span>
@@ -189,7 +189,7 @@ class Section2 extends React.Component {
                                         <div className="partition-block" />
                                         <li className="tooltip ">
                                             <span className="tooltiptext">
-                                                Total number of users as Google Users:{user.googleUser || 0}
+                                                Total number of Google Users:{user.googleUser || 0}
                                             </span>
                                             <span className="title-section">Google Users</span>
                                             <span className="count-section">{user.googleUser || 0}</span>
@@ -207,10 +207,10 @@ class Section2 extends React.Component {
                                     <ul>
                                         <li className="tooltip ">
                                             <span className="tooltiptext">
-                                                Total Deactivated Account: {user.deActiveUser || 0}
+                                                Total Deactivated Account: {user.deActiveUserLength || 0}
                                             </span>
                                             <span className="title-section">Deactivated Account</span>
-                                            <span className="count-section">{user.deActiveUser || 0}</span>
+                                            <span className="count-section">{user.deActiveUserLength || 0}</span>
                                         </li>
                                     </ul>
                                 </BoxBody>

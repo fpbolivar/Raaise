@@ -56,9 +56,10 @@ class LoginForm extends React.Component {
     try {
       const { form } = this.state;
       const { router } = this.props;
-      const { data } = await axios.post(AUTH.signIn, form);
+      const { data } = await axios.post(AUTH.signIn, form); //API calling
       if (data.status == 200) {
         localStorage.setItem("scriptube-admin-token", data.token);
+        localStorage.setItem("admin-details",JSON.stringify(data.details))
         router.push("/dashboard");
       } else if (data.status == 422) {
         this.setState({
@@ -88,20 +89,16 @@ class LoginForm extends React.Component {
     const { form, passwordVisible, errors } = this.state;
     return (
       <Container>
-          <ContentWrapper>
-            <img src="/assets/images/login.png" alt="logo" />
-          </ContentWrapper>
+        <ContentWrapper>
+          <img src="/assets/images/login.png" alt="logo" />
+        </ContentWrapper>
         <Wrapper>
           <Form method="post" onSubmit={this.onSubmit}>
             <h1>Admin Login</h1>
-            <InputField name="email" placeholder="Email" value={form.name} onChange={this.onChange} errmsg={errors.email || ""} focused={errors.email ? 1 : 0} />
+            <InputField name="email" placeholder="Email" value={form.email} onChange={this.onChange} errmsg={errors.email || ""} focused={errors.email ? 1 : 0} />
             <InputField name="password" placeholder="Password" value={form.password} onChange={this.onChange} errmsg={errors.password || ""} focused={errors.password ? 1 : 0} type={!passwordVisible ? "password" : "text"}
-              endAdornment={
-                passwordVisible ? (
-                  <PasswordVisibleIcon onClick={() => this.setState({passwordVisible: !passwordVisible,})}/>
-                ) : (
-                  <PasswordInVisibleIcon onClick={() => this.setState({passwordVisible: !passwordVisible,})} />
-                )
+              endAdornment={passwordVisible ? (<PasswordVisibleIcon onClick={() => this.setState({passwordVisible: !passwordVisible,})}/>) 
+              : (<PasswordInVisibleIcon onClick={() => this.setState({passwordVisible: !passwordVisible,})} />)
               }
             />
             <FormWrapper>

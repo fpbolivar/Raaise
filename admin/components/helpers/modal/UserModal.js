@@ -29,10 +29,12 @@ const Wrapper = styled.div`
      }
      table td:last-child {border-bottom: 0;}
      }
+     & .capitalize {
+      text-transform: capitalize;
+     }
 `;
 
 const Image = styled.div`
-  display: table-caption;
   text-align: center;
   & img{border-radius: 50%; width: 150px; height: 150px;}
 `;
@@ -47,60 +49,61 @@ class UserModal extends React.Component {
   render() {
     const {  modalAction,userData} =this.props;
     return (
-        <Modal>
-          <ModalContent width="60%" height="560px" top="60px">
-            <CloseButton>
-              <span className="title">User Details</span>
-              <svg className="btn" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ClearIcon" fill="red" onClick={() => modalAction(false)}> <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path> </svg>
-            </CloseButton>
-            <Wrapper>
-                <table>
-                    <Image>
-                      <img  src={userData.profileImage ? userData.profileImage : "/assets/images/profile.png"} />
-                    </Image>
-                    <caption>{userData.name}</caption>
-                    <tbody>
-                        <tr>
-                            <th scope="col">Username</th>
-                            <th scope="col">{userData.userName }</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Email Address</th>
-                            <th scope="col">{userData.email}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">{userData.phoneNumber}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Login Via</th>
-                            <th scope="col">{userData.loginType}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Android/IOS User</th>
-                            <th scope="col">{userData.deviceType}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Total Videos</th>
-                            <th scope="col">{userData.videoCount ? userData.videoCount : 0}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Total Followers</th>
-                            <th scope="col">{userData.followersCount ? userData.followersCount : 0}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Total Donation Received</th>
-                            <th scope="col">{userData.donationReceived ? userData.donationReceived : 0}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Total Donation Given</th>
-                            <th scope="col">{userData.donationGiven ? userData.donationGiven : 0}</th>
-                        </tr>
-                    </tbody>
-                </table>
-            </Wrapper>
-          </ModalContent>
-        </Modal>
+      <Modal>
+        <ModalContent width="60%" height="560px" top="60px">
+          <CloseButton>
+            <span className="title">User Details</span>
+            <svg className="btn" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ClearIcon" fill="red" onClick={() => modalAction(false)}> <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path> </svg>
+          </CloseButton>
+          
+          <Wrapper>
+            <Image>
+              <img  src={userData.profileImage ? userData.profileImage : "/assets/images/profile.png"} />
+            </Image>
+            <table>
+              <caption>{userData.name}</caption>
+              <tbody>
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col" className="capitalize">{userData.userName }</th>
+                </tr>
+                <tr>
+                  <th scope="col">Email Address</th>
+                  <th scope="col">{userData.email}</th>
+                </tr>
+                <tr>
+                  <th scope="col">Phone Number</th>
+                  <th scope="col">{userData.phoneNumber}</th>
+                </tr>
+                <tr>
+                  <th scope="col">Login Via</th>
+                  <th scope="col"  className="capitalize">{userData.loginType}</th>
+                </tr>
+                <tr>
+                  <th scope="col">Android/iOS User</th>
+                  <th scope="col" className="capitalize">{userData.deviceType}</th>
+                </tr>
+                <tr>
+                  <th scope="col">Total Videos</th>
+                  <th scope="col">{userData.videoCount ? userData.videoCount : 0}</th>
+                </tr>
+                <tr>
+                  <th scope="col">Total Followers</th>
+                  <th scope="col">{userData.followersCount ? userData.followersCount : 0}</th>
+                </tr>
+                <tr>
+                  <th scope="col">Total Donation Received</th>
+                  <th scope="col">{userData.walletCreditAmount ? "$" +userData.walletCreditAmount : "$" +0}</th>
+                </tr>
+                <tr>
+                  <th scope="col">Total Donation Given</th>
+                  <th scope="col">{userData.donatedAmount ? "$" +userData.donatedAmount : "$" +0}</th>
+                </tr>
+              </tbody>
+            </table>
+          </Wrapper>
+        </ModalContent>
+      </Modal>
     );
   }
 }

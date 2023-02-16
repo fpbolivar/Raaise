@@ -28,6 +28,7 @@ class SearchResultVC: BaseControllerVC {
     var oldSize = 0
     var tableSetup = false
     var collectionSetup = false
+    var selectedCell:SelectionCell!
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
@@ -43,6 +44,11 @@ class SearchResultVC: BaseControllerVC {
             
         }
         // Do any additional setup after loading the view.
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        guard let selectedCell = selectedCell else{return}
+        selectedCell.pause()
     }
     //MARK: - Api Methods
     func getAudioApi(param:[String:String],completion:@escaping()->Void){
@@ -171,48 +177,56 @@ extension SearchResultVC:UITableViewDelegate,UITableViewDataSource{
             return 0
         }
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if resultType == .audio{
+            let vc = TryAudioVC()
+            vc.audioData = audioListData[indexPath.row]
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else if resultType == .users{
+            let vc = VisitProfileVC()
+            vc.id = userList[indexPath.row].id
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if resultType == .audio{
             let cell =  tableView.dequeueReusableCell(withIdentifier: SelectionCell.identifier, for: indexPath) as! SelectionCell
-            
+            cell.profileImg.contentMode = .scaleAspectFit
             cell.selectionStyle = .none
-       
                 cell.playAudio = { url in
+                    self.selectedCell = cell
                     if self.selectedIndex == nil{
                         self.selectedIndex = indexPath
-                        
                         if self.isPlaying{
-                            cell.playBtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-                        }else{
+                            cell.pause()
                             cell.playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
+                        }else{
+                            cell.play()
+                            cell.playBtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
                         }
                     }else if self.selectedIndex == indexPath{
-                        
                         if self.isPlaying{
-                            cell.playBtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-                        }else{
+                            cell.pause()
                             cell.playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
+                        }else{
+                            
+                            cell.play()
+                            cell.playBtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
                         }
                         self.selectedIndex = nil
                     }else{
-                        let cell2 = tableView.cellForRow(at: self.selectedIndex!) as! SelectionCell
-                        self.isPlaying = !self.isPlaying
-                        if self.isPlaying{
-                            cell2.playBtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-                        }else{
-                            cell2.playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
-                        }
                         
-                        if self.isPlaying{
+                        let cell2 = tableView.cellForRow(at: self.selectedIndex!) as! SelectionCell
+                            cell2.pause()
+                            cell.play()
+                            cell2.playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
                             cell.playBtn.setImage(UIImage(systemName: "pause.fill"), for: .normal)
-                        }else{
-                            cell.playBtn.setImage(UIImage(systemName: "play.fill"), for: .normal)
-                        }
                         self.selectedIndex = indexPath
                     }
+                    self.isPlaying = !self.isPlaying
                 }
                 cell.updateCellForAudio(data: self.audioListData[indexPath.row])
                 return cell

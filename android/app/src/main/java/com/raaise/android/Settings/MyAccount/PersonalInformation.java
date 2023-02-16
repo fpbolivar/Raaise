@@ -89,7 +89,7 @@ public class PersonalInformation extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        checkPermissions();
+//        checkPermissions();
     }
 
     private void inItWidgets() {

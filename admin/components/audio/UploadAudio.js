@@ -51,7 +51,6 @@ class UploadAudio extends React.Component {
       document.getElementById("custom-loader").style.display = "none";
     } catch (e) {
       document.getElementById("custom-loader").style.display = "none";
-      console.log("error", e);
     }
   };
 
@@ -143,9 +142,7 @@ class UploadAudio extends React.Component {
         },
       }));
     }
-
     }
-    
   };
 
   onChange = (e) => {
@@ -231,7 +228,6 @@ class UploadAudio extends React.Component {
       document.getElementById("custom-loader").style.display = "none";
     } catch (e) {
       document.getElementById("custom-loader").style.display = "none";
-      console.log("error", e);
     }
   };
 
@@ -241,7 +237,7 @@ class UploadAudio extends React.Component {
       <Wrapper>
         <Form method="post" onSubmit={this.onSubmit}>
           <span className="heading"> Upload Audio</span>
-            <Picture className="img-section">
+            <Picture >
               <img src={ form.loadImage ? form.loadImage :  "/assets/images/audiosign.svg" } alt="Thumbnail" />
               <span className="has-cust-error err">{errors.Thumbnail || ""}</span>
             </Picture>

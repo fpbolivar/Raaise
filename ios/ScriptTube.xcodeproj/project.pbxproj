@@ -3045,8 +3045,8 @@
 				CODE_SIGN_ENTITLEMENTS = ScriptTube/ScriptTube.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = 7UC293X6F5;
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_TEAM = 72G5W4M267;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScriptTube/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Raaise App";
@@ -3065,7 +3065,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.raaise.ios;
 				PRODUCT_NAME = "Raaise App";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3085,8 +3085,8 @@
 				CODE_SIGN_ENTITLEMENTS = ScriptTube/ScriptTube.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_TEAM = 7UC293X6F5;
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_TEAM = 72G5W4M267;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScriptTube/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Raaise App";
@@ -3105,7 +3105,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.raaise.ios;
 				PRODUCT_NAME = "Raaise App";
 				PROVISIONING_PROFILE_SPECIFIER = "";

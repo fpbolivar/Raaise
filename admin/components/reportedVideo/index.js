@@ -64,12 +64,12 @@ class ReportedVideo extends React.Component {
           Cell: ({ cell: { row } }) => {
             return(
               // to show Date of Reported Video in the format "month/day/year"
-              <span>{getFormattedDate(row.original.createdAt)}</span> 
+              <span>{getFormattedDate(row && row.original.updatedAt ? row.original.updatedAt : row.original.createdAt)}</span> 
             )
           }
         },
         {
-          Header: "No: of Users Reported",
+          Header: "No. of Users Reported",
           accessor: "videoReportCount",
           disableFilters: true,
         },
@@ -79,7 +79,7 @@ class ReportedVideo extends React.Component {
           disableFilters: true,
           Cell: ({ cell: { row } }) => {
             return(
-              <span>{ row.original.donationAmount ? "$"+ row.original.donationAmount :"$"+0 }</span>
+              <span>{ row.original.totalDanotionAmount ? "$"+ row.original.totalDanotionAmount :"$"+0 }</span>
             )
           }
         },
@@ -297,7 +297,9 @@ class ReportedVideo extends React.Component {
 
         {/* to play the Reported video in Modal Popup */}
          {openMedia.open && (
-          <ReportedModal {...openMedia} type={openMedia.type} modalAction={(status) => this.modalActionMedia(status)}/>
+          <ReportedModal 
+          {...openMedia} type={openMedia.type} 
+          modalAction={(status) => this.modalActionMedia(status)}/>
          )}
         <Wrapper>
           <Header>

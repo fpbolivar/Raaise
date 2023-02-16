@@ -8,15 +8,9 @@ class MyApp extends App {
         const { Component, pageProps } = this.props;
         return (
             <>
-                <div
-                    id="custom-loader"
-                    style={{
-                        background: `url('/assets/images/loader.gif') no-repeat center center rgba(0, 0, 0, 1)`,
-                    }}
-                ></div>
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1"
+                <div id="custom-loader" style={{background: `url('/assets/images/loader.gif') no-repeat center center rgba(0, 0, 0, 1)`,}}>
+                </div>
+                <meta name="viewport" content="width=device-width, initial-scale=1"
                 />
                 <ClientOnly>
                     <Component {...pageProps} />

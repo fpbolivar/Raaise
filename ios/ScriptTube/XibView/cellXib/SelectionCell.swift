@@ -70,7 +70,7 @@ class SelectionCell: UITableViewCell {
         self.nameLbl.text = data.songName.localizedCapitalized
         self.nameLbl.numberOfLines = 1
         print("GENRE",data.genre)
-        self.detailLbl.text = "\(data.songName) | \(data.genre)".localizedCapitalized
+        self.detailLbl.text = "\(data.artistName) | \(data.genre)".localizedCapitalized
         self.profileImg.loadImg(url: data.thumbnail)
     }
     //For Followers List

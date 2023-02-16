@@ -120,7 +120,7 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
             sessionQueue.async {
                 if let session = self.captureSession {
                     session.beginConfiguration()
-                    session.sessionPreset = .high
+                    session.sessionPreset = .hd1280x720
                     
                     // Add video
                     

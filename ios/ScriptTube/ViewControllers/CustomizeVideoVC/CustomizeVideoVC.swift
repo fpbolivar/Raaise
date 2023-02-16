@@ -166,11 +166,11 @@ class AVPlayerView: UIView {
 
 
 extension CustomizeVideoVC:AddPostFinishDelegate{
-    func postAdded() {
-        delegate?.videoPosted()
+    func postAdded(status:UploadStatus) {
+        delegate?.videoPosted(status: status)
     }
 }
 //MARK: - Protocols
 protocol CustomVideoPostedDelegate{
-    func videoPosted()
+    func videoPosted(status:UploadStatus)
 }

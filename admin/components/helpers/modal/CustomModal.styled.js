@@ -23,7 +23,7 @@ export const ModalContent = styled.div`
   overflow-y:auto;
   position: absolute;
   top: ${(props) => props.top || "120px"};
-  left: 0;
+  left: ${(props) => props.left || "0px"};
   right: 0;
   border-radius: 6px;
   .title {justify-content: center;display: flex;font-size: 24px;font-weight: 700;margin-bottom: 10px;}

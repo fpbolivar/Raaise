@@ -14,27 +14,41 @@ const getCards = async (req, res) => {
             "user",
             { _id: userId }
         );
+
         let cards = [];
-        let cardData = await stripe.customers.listSources(
-            user.customerId,
-            { 'object': 'card' }
-        );
-        for (let i = 0; i < cardData.data.length; i++) {
-            cards.push({
-                id: cardData.data[i]['id'],
-                object: cardData.data[i]['object'],
-                brand: cardData.data[i]['brand'],
-                country: cardData.data[i]['country'],
-                funding: cardData.data[i]['funding'],
-                last4: cardData.data[i]['last4'],
+        if (user.customerId) {
+            let cardData = await stripe.customers.listSources(
+                user.customerId,
+                { 'object': 'card' }
+            );
+            const customer = await stripe.customers.retrieve(
+                user.customerId
+            );
+            const defaultCard = customer.default_source
+            for (let i = 0; i < cardData.data.length; i++) {
+                cards.push({
+                    id: cardData.data[i]['id'],
+                    object: cardData.data[i]['object'],
+                    brand: cardData.data[i]['brand'],
+                    country: cardData.data[i]['country'],
+                    funding: cardData.data[i]['funding'],
+                    last4: cardData.data[i]['last4'],
+                    name: cardData.data[i]['name'],
+                    defaultCard: defaultCard === cardData.data[i]['id'] ? true : false
+                });
+            }
+            return res.status(200).send({
+                status: 200,
+                message: "success",
+                user: user.customerId,
+                cards: cards
+            });
+        } else {
+            return res.status(200).send({
+                status: 404,
+                message: "No card found",
             });
         }
-        return res.status(200).send({
-            status: 200,
-            message: "success",
-            user: user.customerId,
-            cards: cards
-        });
     } catch (error) {
         if (error) {
             sendError(error, res);
@@ -86,13 +100,41 @@ const deleteCards = async (req, res) => {
 const makePayment = async (req, res) => {
     try {
         const { userId } = req.user;
-        const { token, amount, donateTo, videoId } = req.body;
+        const { number, exp_month, exp_year, cvc, amount, donateTo, videoId } = req.body;
         // handle validation
-        if (!token) {
+        if (!number) {
             return validatorErrorResponse(
                 res,
-                "required",
-                "token"
+                "Required",
+                "number"
+            );
+        }
+        if (!exp_month) {
+            return validatorErrorResponse(
+                res,
+                "Required",
+                "exp_month"
+            );
+        }
+        if (!exp_year) {
+            return validatorErrorResponse(
+                res,
+                "Required",
+                "exp_year"
+            );
+        }
+        if (!cvc) {
+            return validatorErrorResponse(
+                res,
+                "Required",
+                "cvc"
+            );
+        }
+        if (!amount) {
+            return validatorErrorResponse(
+                res,
+                "Required",
+                "amount"
             );
         }
         // get user for check customer id
@@ -126,6 +168,20 @@ const makePayment = async (req, res) => {
             );
         }
 
+        const token = await stripe.tokens.create({
+            card: {
+                number: number,
+                exp_month: exp_month,
+                exp_year: exp_year,
+                cvc: cvc,
+            },
+        });
+        if (!token.id) {
+            return res.status(400).send({
+                status: 422,
+                message: "Invalid card details",
+            });
+        }
         // get cards data
         let cardData = await stripe.customers.listSources(
             customerId,
@@ -134,7 +190,7 @@ const makePayment = async (req, res) => {
 
         // get token
         const tokens = await stripe.tokens.retrieve(
-            token
+            token.id
         );
 
         let card = null;
@@ -186,6 +242,13 @@ const makePayment = async (req, res) => {
                     });
                     // update donate to wallet to user
                     await wallet.updateUserWallet(donateTo);
+                    const users = await services.getoneData("user", { _id: userId }, {}, { lean: true });
+                    let donateAmount = parseFloat(parseInt(users.donatedAmount) + amount)
+                    console.log(donateAmount);
+                    await services.updateData("user", { _id: userId },
+                        { donatedAmount: donateAmount.toFixed(2) },
+                        { new: true }
+                    );
                     return res.status(200).send({
                         status: 200,
                         message: "payment success."
@@ -205,9 +268,122 @@ const makePayment = async (req, res) => {
     }
 };
 
+/**
+ *  PAYMENT BY VIEWER TO ADMIN
+ */
+const makePaymentByCardId = async (req, res) => {
+    try {
+        const { userId } = req.user;
+        const { cardId, amount, donateTo, videoId } = req.body;
+        // handle validation
+        if (!amount) {
+            return validatorErrorResponse(
+                res,
+                "Required",
+                "amount"
+            );
+        }
+        // get user for check customer id
+        const user = await services.getoneData(
+            "user",
+            { _id: userId }
+        );
+        // get payment setting
+        const paymentSettings = await services.getoneData(
+            "paymentSetting"
+        );
+        // calculate admin amount
+        const adminAmount = (amount * paymentSettings.adminCommision) / 100;
+        // calculate user amount
+        const userAmount = amount - adminAmount;
+        let customerId = user.customerId;
+        console.log('user', user);
+        if (!customerId) {
+            // create stripe customer
+            const customer = await stripe.customers.create({
+                description: user.userName ? user.userName : "customer created",
+            });
+            customerId = customer.id
+            await services.updateData(
+                "user",
+                {
+                    _id: userId,
+                },
+                {
+                    customerId: customerId,
+                }
+            );
+        }
+        let customer;
+        if (cardId) {
+            customer = await stripe.customers.update(customerId, { 'default_source': cardId });
+        } else {
+            customer = await stripe.customers.retrieve(
+                user.customerId
+            );
+        }
+        if (customer.default_source) {
+            // update create charge
+            const charge = await stripe.charges.create({
+                amount: amount * 100,
+                currency: 'usd',
+                customer: customerId,
+                description: ''
+            });
+            if (charge.id) {
+                // create txn
+                await services.InsertData("transaction", {
+                    userId: donateTo,
+                    donatedBy: userId,
+                    status: charge.status,
+                    transactionId: charge.id,
+                    amount: amount,
+                    videoId: videoId
+                });
+                if (charge.status == "succeeded") {
+                    // add to wallet
+                    await services.InsertData("wallet", {
+                        userId: donateTo,
+                        donatedBy: userId,
+                        status: "credit",
+                        adminAmount: adminAmount,
+                        userAmount: userAmount,
+                        amount: amount,
+                        videoId: videoId
+                    });
+                    // update donate to wallet to user
+                    await wallet.updateUserWallet(donateTo);
+                    const users = await services.getoneData("user", { _id: userId }, {}, { lean: true });
+                    let donateAmount = parseFloat(parseInt(users.donatedAmount) + amount)
+                    console.log(donateAmount);
+                    await services.updateData("user", { _id: userId },
+                        { donatedAmount: donateAmount.toFixed(2) },
+                        { new: true }
+                    );
+                    return res.status(200).send({
+                        status: 200,
+                        message: "payment success."
+                    });
+                }
+            }
+        }
+        return res.status(200).send({
+            status: 422,
+            message: "Please add default card",
+        });
+    } catch (error) {
+        if (error) {
+            sripeErrorHandling(error, res);
+        }
+    }
+};
+
 // add update bank account
 const addUpdateBankDetails = async (req, res) => {
-    const { accountId, routingNumber, bankPhone, address, city, state, postalCode } = req.body;
+    const { accountHolderName, accountId, routingNumber, bankPhone, address, city, state, postalCode } = req.body;
+    if (!accountHolderName) {
+        return await validatorErrorResponse(res, "Account Holder Name is Required", "accountHolderName");
+    }
     if (!accountId) {
         return await validatorErrorResponse(res, "accountId required", "accountId");
     }
@@ -278,15 +454,15 @@ const addUpdateBankDetails = async (req, res) => {
                         ),
                     },
                     email: user.email,
-                    first_name: user.name,
-                    last_name: user.name,
+                    first_name: accountHolderName,
+                    last_name: accountHolderName,
                     phone: bankPhone,
                     political_exposure: "none",
                     ssn_last_4: "0000",
                     id_number: "000000000",
                 },
                 business_profile: {
-                    name: user.name,
+                    name: accountHolderName,
                     support_email: user.email,
                     support_phone: bankPhone,
                     url: "https://net-vest.com/",
@@ -322,15 +498,15 @@ const addUpdateBankDetails = async (req, res) => {
                         ),
                     },
                     email: user.email,
-                    first_name: user.name,
-                    last_name: user.name,
+                    first_name: accountHolderName,
+                    last_name: accountHolderName,
                     phone: bankPhone,
                     political_exposure: "none",
                     ssn_last_4: "0000",
                     id_number: "000000000",
                 },
                 business_profile: {
-                    name: user.name,
+                    name: accountHolderName,
                     support_email: user.email,
                     support_phone: bankPhone,
                     url: "https://scriptube.com/",
@@ -345,6 +521,7 @@ const addUpdateBankDetails = async (req, res) => {
         }
         if (account.id) {
             const updateData = {
+                accountHolderName: accountHolderName,
                 stripeAccountId: account.id,
                 accountId: accountId,
                 routingNumber: routingNumber,
@@ -410,10 +587,162 @@ const sendRequestToPayment = async (req, res) => {
     }
 }
 
+
+/**
+ *  ADD CARD FOR PAYMENT
+ */
+const addCard = async (req, res) => {
+    try {
+        const { userId } = req.user;
+        const { number, exp_month, exp_year, cvc, name } = req.body;
+        // handle validation
+        if (!name) {
+            return validatorErrorResponse(
+                res,
+                "Required",
+                "name"
+            );
+        }
+        if (!number) {
+            return validatorErrorResponse(
+                res,
+                "Required",
+                "number"
+            );
+        }
+        if (!exp_month) {
+            return validatorErrorResponse(
+                res,
+                "Required",
+                "exp_month"
+            );
+        }
+        if (!exp_year) {
+            return validatorErrorResponse(
+                res,
+                "Required",
+                "exp_year"
+            );
+        }
+        if (!cvc) {
+            return validatorErrorResponse(
+                res,
+                "Required",
+                "cvc"
+            );
+        }
+
+        // get user for check customer id
+        const user = await services.getoneData(
+            "user",
+            { _id: userId }
+        );
+        let customerId = user.customerId;
+        if (!customerId) {
+            // create stripe customer
+            const customer = await stripe.customers.create({
+                description: user.userName || "customer created",
+            });
+            customerId = customer.id
+            await services.updateData(
+                "user",
+                {
+                    _id: userId,
+                },
+                {
+                    customerId: customerId,
+                }
+            );
+        }
+
+        const token = await stripe.tokens.create({
+            card: {
+                number: number,
+                exp_month: exp_month,
+                exp_year: exp_year,
+                cvc: cvc,
+                name: name
+            },
+        });
+        if (!token.id) {
+            return res.status(400).send({
+                status: 422,
+                message: "Invalid card details",
+            });
+        }
+        const tokens = await stripe.tokens.retrieve(
+            token.id
+        );
+        // create source
+        card = await stripe.customers.createSource(customerId, { 'source': tokens.id });
+        // bank added
+        return res.status(200).send({
+            status: 200,
+            message: "Card added successfully"
+        });
+    } catch (error) {
+        if (error) {
+            sripeErrorHandling(error, res);
+        }
+    }
+};
+
+/**
+ *  ADD CARD FOR PAYMENT
+ */
+const selectDefaultCard = async (req, res) => {
+    try {
+        const { userId } = req.user;
+        const { cardId } = req.body;
+        // handle validation
+        if (!cardId) {
+            return validatorErrorResponse(
+                res,
+                "Required",
+                "cardId");
+        }
+        // get user for check customer id
+        const user = await services.getoneData(
+            "user",
+            { _id: userId }
+        );
+        let customerId = user.customerId;
+        if (!customerId) {
+            // create stripe customer
+            const customer = await stripe.customers.create({
+                description: user.userName || "customer created",
+            });
+            customerId = customer.id
+            await services.updateData(
+                "user",
+                {
+                    _id: userId,
+                },
+                {
+                    customerId: customerId,
+                }
+            );
+        }
+        await stripe.customers.update(customerId, { 'default_source': cardId });
+        // bank added
+        return res.status(200).send({
+            status: 200,
+            message: "Set default card"
+        });
+    } catch (error) {
+        if (error) {
+            sripeErrorHandling(error, res);
+        }
+    }
+};
+
 module.exports = {
     makePayment,
     addUpdateBankDetails,
     sendRequestToPayment,
     getCards,
-    deleteCards
+    makePaymentByCardId,
+    deleteCards,
+    addCard,
+    selectDefaultCard
 }

@@ -129,11 +129,17 @@ class AdminProfile extends React.Component {
       formData.append("email",form.email);
       formData.append("image",form.image);
       const { data } = await axios.post(AUTH.editAdmin, formData); //API calling
+      const resData = data.data;
       if (data.status === 200) {
-        this.setState({
+      localStorage.setItem("admin-details",JSON.stringify({
+            name: resData.name ? resData.name : "",
+            image: resData.image ? resData.image : null,
+      })
+      );
+      this.setState({
           submitting: false,
         });
-        router.push("/dashboard");
+      router.push("/dashboard");
       } else if (data.status === 422) {
         this.setState({
           errors: { [data.param]: data.message },

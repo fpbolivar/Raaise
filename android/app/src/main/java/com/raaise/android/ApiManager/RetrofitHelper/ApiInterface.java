@@ -52,6 +52,7 @@ import com.raaise.android.ApiManager.ApiModels.VideoLikeDislikeModel;
 import com.raaise.android.Utilities.HelperClasses.StringHelper;
 import com.raaise.android.model.ChatListModel;
 import com.raaise.android.model.ChatModel;
+import com.raaise.android.model.ClaimedAmountPojo;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicResponse;
 import com.raaise.android.model.ReportVideoPojo;
@@ -287,4 +288,7 @@ public interface ApiInterface {
 
     @POST(StringHelper.GET_USER_WITHDRAWAL)
     Call<WithdrawalsPojo> getUserWithdrawal(@Header(StringHelper.AUTHORIZATION) String token);
+
+    @POST(StringHelper.CLAIM_AMOUNT)
+    Call<ClaimedAmountPojo> claimVideoAmount(@Header(StringHelper.AUTHORIZATION) String token, @Body VideoDonationModal videoDonationModal);
 }

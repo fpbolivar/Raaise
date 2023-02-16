@@ -50,6 +50,7 @@ import com.raaise.android.ApiManager.ApiModels.VideoCommentsReplyModel;
 import com.raaise.android.ApiManager.ApiModels.VideoLikeDislikeModel;
 import com.raaise.android.model.ChatListModel;
 import com.raaise.android.model.ChatModel;
+import com.raaise.android.model.ClaimedAmountPojo;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicData;
 import com.raaise.android.model.ReportVideoPojo;
@@ -168,4 +169,6 @@ public interface ApiManager {
     void getVideoDonationHistory(String token, VideoDonationModal videoDonationPojo, DataCallback<VideoDonationPojo> callback);
 
     void getUSerWithdrawals(String token, DataCallback<WithdrawalsPojo> callback);
+
+    void claimVideoAmount(String token, VideoDonationModal videoDonationModal, DataCallback<ClaimedAmountPojo> callback);
 }

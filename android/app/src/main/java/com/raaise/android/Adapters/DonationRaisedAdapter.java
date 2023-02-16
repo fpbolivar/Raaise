@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.raaise.android.ApiManager.ApiModels.UserDonationHistoryModel;
+import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.R;
 import com.raaise.android.Settings.Payments.DonationRaisedFolder.InReview_Donation_Video_Analytics;
 
@@ -55,7 +56,8 @@ public class DonationRaisedAdapter extends RecyclerView.Adapter<DonationRaisedAd
             if (obj.getStatus().equalsIgnoreCase("In Review")) {
                 context.startActivity(new Intent(context, InReview_Donation_Video_Analytics.class).putExtra("HistoryVideoId", obj.get_id()));
             } else if (obj.getStatus().equalsIgnoreCase("Claim")) {
-                Log.i("claimReward", "onBindViewHolder: Gone");
+                Log.i("claimReward", "onBindViewHolder: Gone claim");
+                App.claim = true;
                 context.startActivity(new Intent(context, InReview_Donation_Video_Analytics.class).putExtra("HistoryVideoId", obj.get_id()));
             } else if (obj.getStatus().equalsIgnoreCase("view")) {
                 Log.i("objectID", "onBindViewHolder: " + obj.get_id());

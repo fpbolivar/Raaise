@@ -130,14 +130,14 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
         HitGlobalVideoApi("following", "1", String.valueOf(PageCounter));
         if (((Home) requireActivity()).adapterVideoVIew != null && ((Home) requireActivity()).adapterVideoVIew.isPlaying())
             ((Home) requireActivity()).adapterVideoVIew.stopPlayback();
-        if (homeFollowingAdapter != null) {
-            homeFollowingAdapter.clearList();
-        }
+//        if (homeFollowingAdapter != null) {
+//            homeFollowingAdapter.clearList();
+//        }
 
-        if (this.videoView != null) {
-            this.videoView.pause();
-            this.videoView.stopPlayback();
-        }
+//        if (this.videoView != null) {
+//            this.videoView.pause();
+//            this.videoView.stopPlayback();
+//        }
 
 
         super.onResume();

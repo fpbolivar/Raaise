@@ -17,6 +17,8 @@ export const Form = styled.form`
 export const Picture = styled.div`
 width: 100%;
 display: flex;
+flex-direction:column;
+align-items: center;
 justify-content: center;
 & img {width: 120px;height: 120px;object-fit: cover;border-radius: 50%;}
 `;

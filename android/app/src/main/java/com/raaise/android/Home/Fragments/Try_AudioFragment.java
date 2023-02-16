@@ -12,6 +12,7 @@ import android.media.AudioManager;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -46,6 +47,7 @@ import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Try_AudioFragment extends Fragment {
@@ -55,6 +57,7 @@ public class Try_AudioFragment extends Fragment {
     public String AudioLink = "";
     public String AudioID = "";
     public String AudioName = "";
+    public String songName = "";
     String AudioId;
     RelativeLayout layout_try_audioBtn;
     ImageView BackButton, AudioThumbnail, iv_play_btn;
@@ -110,30 +113,39 @@ public class Try_AudioFragment extends Fragment {
         apiManager.GetVideoBaseOnAudio(Prefs.GetBearerToken(v.getContext()), model, new DataCallback<GetVideosBasedOnAudioIdModel>() {
             @Override
             public void onSuccess(GetVideosBasedOnAudioIdModel getVideosBasedOnAudioIdModel) {
-
-                Glide.with(v).load(getVideosBasedOnAudioIdModel.getAudio().getThumbnail()).placeholder(R.drawable.placeholder).into(AudioThumbnail);
-                music_duration.setText(getVideosBasedOnAudioIdModel.getAudio().getAudioTime());
-                AudioNameTextView.setText(getVideosBasedOnAudioIdModel.getAudio().getSongName());
-                use_music_Username.setText(getVideosBasedOnAudioIdModel.getAudio().getArtistName());
-                AudioName = getVideosBasedOnAudioIdModel.getAudio().getSongName();
-                AudioLink = getVideosBasedOnAudioIdModel.getAudio().getAudio();
-
-                AudioID = getVideosBasedOnAudioIdModel.getAudio().get_id();
-                list.addAll(getVideosBasedOnAudioIdModel.getVideos());
-                adapter.notifyDataSetChanged();
-                MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-                Log.i("audioLink", "onSuccess: " + (retriever == null) + AudioLink);
-                String link = Prefs.GetBaseUrl(getContext()) + AudioLink;
-                retriever.setDataSource(link);
-                String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-                long timeInmillisec = Long.parseLong(time);
-                long duration = timeInmillisec / 1000;
-                long hours = duration / 3600;
-                long minutes = (duration - hours * 3600) / 60;
-                long l = duration - (hours * 3600 + minutes * 60);
-                music_duration.setText(String.format("0:%d", l));
-                MusicSeekBar.setMax((int) l);
                 Dialogs.HideProgressDialog();
+                try {
+                    Glide.with(v).load(Prefs.GetBaseUrl(getContext()) + getVideosBasedOnAudioIdModel.getAudio().getThumbnail()).placeholder(R.drawable.placeholder).into(AudioThumbnail);
+                    music_duration.setText(getVideosBasedOnAudioIdModel.getAudio().getAudioTime());
+                    AudioNameTextView.setText(getVideosBasedOnAudioIdModel.getAudio().getSongName());
+                    use_music_Username.setText(getVideosBasedOnAudioIdModel.getAudio().getArtistName());
+                    AudioName = getVideosBasedOnAudioIdModel.getAudio().getSongName();
+                    AudioLink = getVideosBasedOnAudioIdModel.getAudio().getAudio();
+                    songName = getVideosBasedOnAudioIdModel.getAudio().getSongName();
+
+                    AudioID = getVideosBasedOnAudioIdModel.getAudio().get_id();
+                    list.addAll(getVideosBasedOnAudioIdModel.getVideos());
+                    adapter.notifyDataSetChanged();
+                    MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                    Log.i("audioLink", "onSuccess: " + (retriever == null) + AudioLink);
+                    String link = Prefs.GetBaseUrl(getContext()) + AudioLink;
+                    if (Build.VERSION.SDK_INT >= 14)
+                        retriever.setDataSource(link, new HashMap<String, String>());
+                    else
+                        retriever.setDataSource(link);
+                    String time = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                    long timeInmillisec = Long.parseLong(time);
+                    long duration = timeInmillisec / 1000;
+                    long hours = duration / 3600;
+                    long minutes = (duration - hours * 3600) / 60;
+                    long l = duration - (hours * 3600 + minutes * 60);
+                    music_duration.setText(String.format("0:%d", l));
+                    MusicSeekBar.setMax((int) l);
+                } catch (Exception e){
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+
 
             }
 
@@ -218,11 +230,7 @@ public class Try_AudioFragment extends Fragment {
                 mMediaPlayer.stop();
                 mMediaPlayer.reset();
             }
-//            getActivity().getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .setReorderingAllowed(true)
-//                    .replace(R.id.try_audio_container, new TryAudioCameraFragment(AudioLink, AudioID, AudioName, 1), null)
-//                    .commit();
+
             beginDownload(AudioLink);
 
 
@@ -274,8 +282,7 @@ public class Try_AudioFragment extends Fragment {
 
 
             String title = URLUtil.guessFileName(audioLink, null, null);
-            App.musicTitle = title;
-//            ((Home) requireActivity()).musicData = new Gson().toJson(data);
+            App.musicTitle = songName;
             App.fromTryAudio = true;
 
             downloadRequest.setTitle(title);
@@ -295,7 +302,6 @@ public class Try_AudioFragment extends Fragment {
             DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
             downloadID = downloadManager.enqueue(downloadRequest);
         } catch (Exception e) {
-            Log.i("downloadException", "beginDownload: " + e.getMessage());
             Dialogs.HideProgressDialog();
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }

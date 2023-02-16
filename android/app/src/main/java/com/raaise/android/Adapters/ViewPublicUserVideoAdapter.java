@@ -3,7 +3,6 @@ package com.raaise.android.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.raaise.android.ApiManager.ApiModels.PublicUserVideoListModel;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.mainHomeData;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
 
 
 
-        holder.VideoViewInHomeReels.setVideoURI(Uri.parse(obj.getVideoLink()));
+        holder.VideoViewInHomeReels.setVideoPath(Prefs.GetBaseUrl(context) + obj.getVideoLink());
         holder.VideoViewInHomeReels.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
@@ -164,7 +164,7 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
         });
         
 
-
+        holder.topRewardedHead.setVisibility(View.GONE);
 
         
 
@@ -205,6 +205,7 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView topRewardedHead;
         ImageView tryAudioBtn, more_options_btn_UP, ShareVideo;
         LinearLayout songInfoContainer;
         LinearLayout profileContainer, DonationLayout;
@@ -221,6 +222,7 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            topRewardedHead = itemView.findViewById(R.id.top_rewarded_tv);
             DonationLayout = itemView.findViewById(R.id.DonationLayout);
             ShareVideo = itemView.findViewById(R.id.ShareVideo);
             more_options_btn_UP = itemView.findViewById(R.id.more_options_btn_UP);

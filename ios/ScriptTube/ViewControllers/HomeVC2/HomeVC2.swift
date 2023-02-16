@@ -574,6 +574,7 @@ extension HomeVC2:SharePopUpDelegate{
                 }
                 
             } else {
+                self.clearAllNotice()
                 AlertView().showAlert(message: "ERROR in sharing", delegate: self, pop: false)
             }
         }

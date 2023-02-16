@@ -33,6 +33,7 @@ class TextEditor extends React.Component {
 }
 TextEditor.modules = {
     toolbar: [
+        [{ header: '1' }, { header: '2' }],
         [{ size: [] }],
         ["bold", "italic", "underline", "strike"],
         [{ list: "ordered" }, { list: "bullet" }],

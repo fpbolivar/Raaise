@@ -6,12 +6,14 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileVC" customModule="ScriptTube" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileVC" customModule="Raaise_App" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="Nhe-t1-1lG" id="MFB-yM-imN"/>
+                <outlet property="uploadView" destination="tdM-gY-iPT" id="if7-u6-0xQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -59,6 +61,29 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdM-gY-iPT" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                    <rect key="frame" x="20" y="808.5" width="374" height="53.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your video is getting ready to be live for other users. Do not close the app until its done." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LCa-eo-0Rd">
+                            <rect key="frame" x="10" y="10" width="354" height="33.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                    <constraints>
+                        <constraint firstItem="LCa-eo-0Rd" firstAttribute="leading" secondItem="tdM-gY-iPT" secondAttribute="leading" constant="10" id="KeU-my-ZNG"/>
+                        <constraint firstAttribute="bottom" secondItem="LCa-eo-0Rd" secondAttribute="bottom" constant="10" id="RDN-ur-y9z"/>
+                        <constraint firstAttribute="trailing" secondItem="LCa-eo-0Rd" secondAttribute="trailing" constant="10" id="W0G-BT-kwl"/>
+                        <constraint firstItem="LCa-eo-0Rd" firstAttribute="top" secondItem="tdM-gY-iPT" secondAttribute="top" constant="10" id="wcI-ZA-ZVC"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="BackgroundColor"/>
@@ -67,10 +92,13 @@
                 <constraint firstItem="wIH-mO-pXL" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="9KA-Tz-je9"/>
                 <constraint firstItem="8Ih-sU-Zvw" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="Af1-XB-eDm"/>
                 <constraint firstItem="2aX-26-kXn" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="AhI-sA-bNU"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="tdM-gY-iPT" secondAttribute="bottom" id="B39-nK-paE"/>
                 <constraint firstItem="Nhe-t1-1lG" firstAttribute="top" secondItem="wIH-mO-pXL" secondAttribute="bottom" id="B62-wP-ptG"/>
                 <constraint firstItem="8Ih-sU-Zvw" firstAttribute="leading" secondItem="2aX-26-kXn" secondAttribute="trailing" constant="8" symbolic="YES" id="Cyj-14-hIq"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tdM-gY-iPT" secondAttribute="trailing" constant="20" id="RWY-fz-FFa"/>
                 <constraint firstItem="Nhe-t1-1lG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="TAF-jS-HWG"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Nhe-t1-1lG" secondAttribute="trailing" constant="20" id="ZuQ-Co-6Ld"/>
+                <constraint firstItem="tdM-gY-iPT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="h3L-al-lpE"/>
                 <constraint firstItem="wIH-mO-pXL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="tEu-yT-HfY"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8Ih-sU-Zvw" secondAttribute="trailing" constant="20" id="tsU-1V-sKQ"/>
             </constraints>
@@ -80,9 +108,12 @@
     <resources>
         <image name="ic_setting" width="82" height="80"/>
         <image name="ic_video" width="88" height="88"/>
-        <image name="scriptLogo" width="512" height="255"/>
+        <image name="scriptLogo" width="444" height="172"/>
         <namedColor name="BackgroundColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

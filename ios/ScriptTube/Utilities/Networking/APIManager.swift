@@ -564,13 +564,10 @@ class APIManager{
       ]
         let manager = Session.default
         
-        manager.session.configuration.timeoutIntervalForRequest = 30
-    
+//        manager.session.configuration.timeoutIntervalForRequest = 30
+//        manager.session.configuration.timeoutIntervalForResource = 70000
         manager.upload(multipartFormData: { (multipartFormData) in
             print(image_is_Selected)
-                       
-          
-            
                         if(image_is_Selected){
             
                             for (key, value) in images! {

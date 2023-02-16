@@ -101,7 +101,7 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
     @Override
     public void onResume() {
         super.onResume();
-        ((Home) requireActivity()).CheckNotificationCount();
+//        ((Home) requireActivity()).CheckNotificationCount();
     }
 
     @Override

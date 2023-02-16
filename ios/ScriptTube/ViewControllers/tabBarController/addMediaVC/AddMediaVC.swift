@@ -83,8 +83,14 @@ class AddMediaVC: UIViewController {
     func setTimeLabelValue(withValue seconds:Int){
         if seconds < 10{
             self.timeLbl.text = "00:00:0\(seconds)"
-        }else{
+        }else if seconds < 60{
             self.timeLbl.text = "00:00:\(seconds)"
+        }else if seconds < 120{
+            self.timeLbl.text = "00:01:\(seconds - 60)"
+        }else if seconds < 180{
+            self.timeLbl.text = "00:02:\(seconds - 120)"
+        }else if seconds == 180{
+            self.timeLbl.text = "00:03:00"
         }
         
     }
@@ -135,13 +141,12 @@ class AddMediaVC: UIViewController {
     
     @objc func calculateSeconds() {
 
-        let maxDuration = CGFloat(30) // Max duration of the recordButton
-        
+        let maxDuration = CGFloat(30) // Max duration of the recordButtons
         second = second + (CGFloat(0.05) / maxDuration)
-        progress.setProgress(second)
+        progress.setProgress(second/6)
         print("SECONDS",second * 30)
         setTimeLabelValue(withValue: Int(second * 30))
-        if second >= 1 {
+        if second >= 6 {
             cameraManager.stopRecording()
             timer.invalidate()
         }
@@ -267,9 +272,9 @@ extension AddMediaVC: UIImagePickerControllerDelegate,UINavigationControllerDele
         guard let selectedVideo:URL = (info[UIImagePickerController.InfoKey.mediaURL] as? URL) else{return}
         picker.dismiss(animated: true) {
             let asset = AVURLAsset(url: selectedVideo)
-            if asset.duration.seconds > 30.0{
+            if asset.duration.seconds > 180.0{
                 DispatchQueue.main.async {
-                    AlertView().showAlert(message: "Video must be under 30 seconds", delegate: self, pop: false)
+                    AlertView().showAlert(message: "Video must be under 3 minutes", delegate: self, pop: false)
                 }
                 return
             }
@@ -329,9 +334,9 @@ extension AddMediaVC:RecordingDelegate{
 }
 
 extension AddMediaVC:CustomVideoPostedDelegate{
-    func videoPosted() {
+    func videoPosted(status: UploadStatus) {
         self.dismiss(animated: true){
-            self.delegate?.videoPosted()
+            self.delegate?.videoPosted(status: status)
         }
     }
 }

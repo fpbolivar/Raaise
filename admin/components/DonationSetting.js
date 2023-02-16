@@ -4,6 +4,7 @@ import axios from "../utils/axios";
 import InputField from "./helpers/InputField";
 import styled from "styled-components";
 import colors from "../colors";
+import MessageModal from "./helpers/modal/MessageModal";
 
 const Container = styled.div`
   display: flex;
@@ -25,10 +26,34 @@ class DonationSetting extends React.Component {
       form: {
         adminCommision: "",
       },
+      openMessageModal: {
+        open: false,
+        msgtitle: "",
+        message: "",
+        action: "",
+      },
       errors: [],
       submitting: false,
     };
   }
+
+ // to open donation setting modal
+ modalAction = (status) => {
+  const { openMessageModal } = this.state;
+  if (status) {    
+    this.setState({
+      openMessageModal: {
+      open: false,
+      },
+    });
+  } else {
+    this.setState({
+      openMessageModal: {
+      open: status,
+      },
+    });
+  }
+};
 
   //to get the previous Admin Comission in the Donation Setting form
   getData = async () => {
@@ -63,6 +88,11 @@ class DonationSetting extends React.Component {
       const { data } = await axios.post(AUTH.donationSetting, form); //API calling
       if (data.status == 200) {
         this.setState({
+          openMessageModal: {
+            open: true,
+            msgtitle: "Donation Setting",
+            message: "Your donation is set successfully ",
+          },
           submitting: false,
         });
       } else if (data.status == 422) {
@@ -91,16 +121,24 @@ class DonationSetting extends React.Component {
       }
   };
 
+
   validate = () => {
-    const newError = {}
-    this.setState({
-      errors: newError,
-    });
-    if (Object.keys(newError).length > 0) {
-      return false;
+    const { form } = this.state;
+    const newError = {};
+    let positionFocus = "";
+    if (!form.adminCommision || !form.adminCommision.trim()) {
+        newError["adminCommision"] = "Required";
+        positionFocus = positionFocus || "adminCommision";
     }
-    return true;
-  };
+    this.setState({
+        errors: newError,
+    });
+    if (positionFocus) {
+        return false;
+    } else {
+        return true;
+    }
+};
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -115,9 +153,15 @@ class DonationSetting extends React.Component {
   };
 
   render() {
-    const { errors, form } = this.state
+    const { errors, form,openMessageModal } = this.state
     return (
         <Container>
+          {openMessageModal.open && (
+          <MessageModal
+            {...openMessageModal}
+            modalAction={(status) => this.modalAction(status)}
+          />
+        )}
           <Wrapper>
           <span className="heading">Donation Setting</span>
             <form method="post" onSubmit={this.onSubmit} >

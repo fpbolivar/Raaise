@@ -6,22 +6,22 @@ class Graph extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name:this.props.name,
+      series: [
+        {
+          name: "",           //name of the series
+          data: [],
+        },
+      ],
+      name:"",
       options: {
         chart: {id: "basic-bar"},  // to show the bar graph
         xaxis: {                   // to show the Months on x-axis
           categories:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",]
         },
       },
-      series: [
-        {
-          name: this.props.name,           //name of the series
-          data: this.props.data.map(item=>{return item.value}),
-        },
-      ],
     };
   }
-  componentDidUpdate(prevProps) {  //to update the data of graph 
+  componentDidUpdate(prevProps) {  //to update the data of graph
     if (this.props.data !== prevProps.data) {
       this.setState({series: [
         {
@@ -33,10 +33,10 @@ class Graph extends Component {
     }
   }
   render() {
-    const {series,name,options}=this.state
+    const {series,options}=this.state
     return (
       <div className="app graph-section">
-        <h3 style={{marginLeft: "15px"}}> {name} </h3>
+        <h3 style={{marginLeft: "15px"}}> {this.props.name} </h3>
         <div className="row">
           <div className="mixed-chart">
             <Chart options={options} series={series} type="bar" width="100%"/>

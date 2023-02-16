@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +30,8 @@ import com.raaise.android.ApiManager.ServerError;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
+import com.raaise.android.Utilities.HelperClasses.Prompt;
+import com.raaise.android.model.ClaimedAmountPojo;
 import com.raaise.android.model.VideoDonationModal;
 import com.raaise.android.model.VideoDonationPojo;
 
@@ -43,6 +46,7 @@ public class InReview_Donation_Video_Analytics extends AppCompatActivity {
     TextView totalRaisedTV;
     TextView claimedAmtTV;
     TextView toBeClaimedTV;
+    TextView claimNowBtn;
     RecyclerView videoHistoryRV;
     VideoHistoryAdapter adapter;
     String videoID;
@@ -55,11 +59,43 @@ public class InReview_Donation_Video_Analytics extends AppCompatActivity {
         ClickListeners();
         Intent intent = getIntent();
         videoID = intent.getStringExtra("HistoryVideoId");
-        Log.i("videoIDS", "onCreate: " + videoID);
-        Log.i("videoIDS", "onCreate: " + Prefs.GetBearerToken(this));
 
         VideoDonationModal modal = new VideoDonationModal(videoID);
         getData(modal);
+        
+        claimNowBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                claimNow(videoID);
+            }
+        });
+
+    }
+
+    private void claimNow(String videoID) {
+        try {
+            Dialogs.createProgressDialog(InReview_Donation_Video_Analytics.this);
+            View parentLayout = findViewById(android.R.id.content);
+            VideoDonationModal modal = new VideoDonationModal(videoID);
+            apiManager.claimVideoAmount(Prefs.GetBearerToken(InReview_Donation_Video_Analytics.this), modal, new DataCallback<ClaimedAmountPojo>() {
+                @Override
+                public void onSuccess(ClaimedAmountPojo claimedAmountPojo) {
+                    Dialogs.HideProgressDialog();
+                    claimNowBtn.setVisibility(View.GONE);
+                    App.claim = false;
+                    Prompt.SnackBar(parentLayout, "Request sent successfully");
+                }
+
+                @Override
+                public void onError(ServerError serverError) {
+                    Dialogs.HideProgressDialog();
+                    Toast.makeText(InReview_Donation_Video_Analytics.this, serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e){
+            Dialogs.HideProgressDialog();
+            Toast.makeText(InReview_Donation_Video_Analytics.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -78,9 +114,13 @@ public class InReview_Donation_Video_Analytics extends AppCompatActivity {
                 if (videoDonationPojo.getData() != null){
                     totalPostsTV.setText("" + videoDonationPojo.getData().size());
                 }
-                totalRaisedTV.setText(videoDonationPojo.getRaisedDonationAmount());
-                claimedAmtTV.setText(videoDonationPojo.getCompletedDonationAmount());
-                toBeClaimedTV.setText(videoDonationPojo.getClaimedAmount());
+                totalRaisedTV.setText("$" + videoDonationPojo.getRaisedDonationAmount());
+                claimedAmtTV.setText("$" + videoDonationPojo.getCompletedDonationAmount());
+                toBeClaimedTV.setText("$" + videoDonationPojo.getClaimedAmount());
+                if (App.claim){
+                    toBeClaimedTV.setTextColor(ContextCompat.getColor(InReview_Donation_Video_Analytics.this, R.color.Green));
+                    claimNowBtn.setVisibility(View.VISIBLE);
+                } 
 
                 if (videoDonationPojo.getData() != null)
                     adapter.setList(videoDonationPojo.getData());
@@ -103,6 +143,7 @@ public class InReview_Donation_Video_Analytics extends AppCompatActivity {
         claimedAmtTV = findViewById(R.id.claimed_amt_tv);
         toBeClaimedTV = findViewById(R.id.to_be_claimed);
         videoHistoryRV = findViewById(R.id.video_history_rv);
+        claimNowBtn = findViewById(R.id.claim_now_btn);
         adapter = new VideoHistoryAdapter(InReview_Donation_Video_Analytics.this);
 
         videoHistoryRV.setLayoutManager(new LinearLayoutManager(InReview_Donation_Video_Analytics.this));
@@ -150,7 +191,7 @@ public class InReview_Donation_Video_Analytics extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // on below line we are setting date to our edit text.
-                                fromDateTV.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                fromDateTV.setText((monthOfYear + 1) + "-" + dayOfMonth + "-" + year);
                                 Log.i("onDateSet", "onDateSet: " + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth );
 
                             }
@@ -184,7 +225,7 @@ public class InReview_Donation_Video_Analytics extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // on below line we are setting date to our edit text.
-                                toDateTV.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                toDateTV.setText((monthOfYear + 1) + "-" + dayOfMonth + "-" + year);
                                 Log.i("onDateSet", "onDateSet: " + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth );
 
                             }

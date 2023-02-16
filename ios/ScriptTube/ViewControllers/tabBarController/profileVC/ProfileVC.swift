@@ -8,6 +8,7 @@
 import UIKit
 
 class ProfileVC: UIViewController {
+    @IBOutlet weak var uploadView: CardView!
     @IBOutlet weak var  collectionView:UICollectionView!
     var userVideoData: [String] = []
     var userVideos = [Post]()
@@ -18,6 +19,10 @@ class ProfileVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.uploadView.isHidden = !VideoUploadStatus.isUploadingVar
+        VideoUploadStatus.isUploading = { isUploading in
+            self.uploadView.isHidden = !isUploading
+        }
         if(!(Constant.check_Internet?.isReachable)!){
             AlertView().showInternetErrorAlert(delegate: self)
             return

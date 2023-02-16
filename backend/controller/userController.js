@@ -68,6 +68,7 @@ const userLogin = async (req, res) => {
         }
     } catch (error) {
         if (error) {
+            console.log("=======error==========",error)
             sendError(error, res);
         }
     }
@@ -381,41 +382,35 @@ const updateUserProfile = async (req, res) => {
         }
         if (req.body.userName) {
             // check userName
-            const userName = await services.getoneData(modelName, {
-                userName: req.body.userName,
-            });
+            const userName = await services.getoneData(modelName, {userName: req.body.userName,});
             if (userName) {
-                return await validatorErrorResponse(
-                    res,
-                    "This Username already exists",
-                    "UserName"
-                );
+                return await validatorErrorResponse(res,"This Username already exists","UserName");
             } else {
                 userProfileUpdate.userName = req.body.userName;
             }
         }
+
         if (req.body.shortBio) {
             userProfileUpdate.shortBio = req.body.shortBio;
         }
+
         if (req.body.phoneNumber) {
             userProfileUpdate.phoneNumber = req.body.phoneNumber;
         }
 
         // upadte user profile  image
-
         if (req.files && req.files.image) {
             const file = req.files.image
             const uploadImage = await uploadFileToAws(file);
             userProfileUpdate.profileImage = uploadImage.fileUrl
         }
 
-
-        const user = await services.updateData(
-            modelName,
-            { _id: userId },
-            userProfileUpdate,
-            { new: true }
-        );
+        //update email
+        if(req.body.email){
+            userProfileUpdate.email= req.body.email;
+        }
+        
+        const user = await services.updateData(modelName,{ _id: userId },userProfileUpdate,{ new: true });
 
         successResponse(res, user);
     } catch (error) {
@@ -724,11 +719,8 @@ const decativeUserAccount = async (req, res) => {
     try {
         const { userId } = req.user
         const modelName = "user"
-        await services.updateData(modelName, { _id: userId }, { isActive: false })
-        return res
-            .status(200)
-            .send({ status: 200, message: "User account is deactivated" });
-
+        const updateUser=await services.updateData(modelName, { _id: userId }, { isActive: false },{new:true})
+        return res.status(200).send({ status: 200, message: "User account is deactivated" ,updateUser:updateUser});
     } catch (error) {
         console.log(error)
         sendError(error, res)
@@ -741,12 +733,15 @@ const deleteUser = async (req, res) => {
     try {
         const { userId } = req.user;
         const modelName = "user";
-        const user = await services.updateData(modelName, { _id: userId }, { isDeleted: true })
+        console.log("req",req.user)
+        const dataToSet = {
+            isDeleted: true,
+            userName:"deleted-user",
+            email: "deleted-" + userId +"@deleted.com"
+        }
+        await services.updateData(modelName, { _id: userId }, dataToSet,{new:true})
         await services.updateMany("userVideo", { userId: userId }, { isDeleted: true })
-        return res.status(200).send({
-            status: 200,
-            message: "Account deleted",
-        });
+        return res.status(200).send({status: 200,message: "Account deleted",});
     } catch (error) {
         console.log(error);
         sendError(error, res);
@@ -992,12 +987,12 @@ const videoComment = async (req, res) => {
         dataObj.videoId = videoId;
         dataObj.comment = comment;
         dataObj.commentBy = userId;
-        let notificationData = { to: dataObj.videoOwnerId, fromUserName: userName, from: userId, token: "", }
+        // let notificationData = { to: dataObj.videoOwnerId, fromUserName: userName, from: userId, token: "", }
         /**
          * Get logged user details like =>userName, and profile image 
          */
         const commentUserDetails = await services.getoneData("user", { _id: userId }, { userName: true, profileImage: true }, {})
-        notificationHelper("comment", notificationData)
+        // notificationHelper("comment", notificationData)
         /** insert comment details in model*/
         const insetComment = await services.InsertData(modelName, dataObj);
 
@@ -1212,7 +1207,7 @@ const getVideosComment = async (req, res) => {
                 select: "reply",
                 populate: {
                     path: "replyBy",
-                    select: ["userName", "profileImage", "isDeleted"],
+                    select: ["userName", "profileImage", "isDeleted","createdAt"],
                 },
             },
             {
@@ -1391,7 +1386,7 @@ const getUserProfileById = async (req, res) => {
             });
             return;
         }
-        const isFollow = await services.getoneData("userFollowersModel", { followedBy: userId }, {}, {})
+        const isFollow = await services.getoneData("userFollowersModel", { followedBy: userId, followTo: userIdentity }, {}, {})
         if (isFollow) {
             user.follow = true
         } else {

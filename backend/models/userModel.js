@@ -89,11 +89,19 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    accountHolderName: {
+        type: String,
+        default: ""
+    },
     stripeAccountId: {
         type: String,
         default: ""
     },
     walletCreditAmount: {
+        type: String,
+        default: 0
+    },
+    donatedAmount: {
         type: String,
         default: 0
     },

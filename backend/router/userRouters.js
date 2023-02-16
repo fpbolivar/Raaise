@@ -78,8 +78,11 @@ router.get("/get-user-notifications", userAuthJWT, notificationController.getNot
 
 // payments routes
 router.post("/make-payment", userAuthJWT, paymentController.makePayment)
+router.post("/make-payment-by-card-id", userAuthJWT, paymentController.makePaymentByCardId)
 router.post("/add-update-bank-details", userAuthJWT, paymentController.addUpdateBankDetails)
 router.post("/send-request-to-payment", userAuthJWT, paymentController.sendRequestToPayment)
+router.post("/add-card", userAuthJWT, paymentController.addCard)
+router.post("/select-default-card", userAuthJWT, paymentController.selectDefaultCard)
 router.get("/get-cards", userAuthJWT, paymentController.getCards)
 router.post("/delete-cards", userAuthJWT, paymentController.deleteCards)
 

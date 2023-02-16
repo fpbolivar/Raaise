@@ -3,10 +3,12 @@ import axios from "../../utils/axios";
 import { withRouter } from "next/router";
 import {TableHeader} from "../CustomTable/Table.styled";
 import FilteringTable from "../CustomTable/FilteringTable";
-import { Container, Wrapper} from "../../components/users/Users.styled";
+import { ActionSection, Container, Wrapper} from "../../components/users/Users.styled";
 import { AUDIO } from "../../ApiConstant";
 import CustomModal from "../helpers/modal/CustomModal";
 import ViewMedia from "../helpers/modal/ViewMedia";
+import colors from "../../colors";
+
 
 class AudioList extends React.Component {
   constructor(props) {
@@ -81,7 +83,7 @@ class AudioList extends React.Component {
           accessor: "Thumbnail",
           disableFilters: true,
           Cell: ({ cell: { value } }) => {
-            return value ? <img src={value} alt="" width={50} height={50} onClick={() => this.modalActionMedia(true, value, 'image')} style={{ cursor: "pointer" }} /> 
+            return value ? <img src={value} alt="" width={40} height={40} onClick={() => this.modalActionMedia(true, value, 'image')} style={{ cursor: "pointer" }} /> 
             : "";
           },
         },
@@ -90,8 +92,24 @@ class AudioList extends React.Component {
           accessor: "audio",
           disableFilters: true,
           Cell: ({ cell: { value } }) => {
-            return value ? <img src={"/assets/images/music.svg"} alt="" width={50} height={50} onClick={() => this.modalActionMedia(true, value, 'audio')} style={{ cursor: "pointer" }} />
+            return value ? <img src={"/assets/images/music.svg"} alt="" width={40} height={40} onClick={() => this.modalActionMedia(true, value, 'audio')} style={{ cursor: "pointer" }} />
             : "";
+          },
+        },
+
+        {
+          Header: "Actions",
+          accessor: "_id",
+          disableFilters: true,
+          disableSorting: true,
+          Cell: ({ cell: { row } }) => {
+            return (
+              <ActionSection>
+                <div className="cursor-pointer" title="Delete" onClick={() => this.handleDelete(row.original._id, true)} >
+                <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiBox-root css-1om0hkc"  width={30} fill={colors.red} focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="DeleteIcon"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>          
+                </div>                
+              </ActionSection>
+            );
           },
         },
       ],
@@ -99,14 +117,66 @@ class AudioList extends React.Component {
   }
 
   //getAudioList() function is called
-  componentDidMount = async () => {
+  componentDidMount =  () => {
     const { audioPageNo, audiolimit } = this.state;
-    await this.getAudioList({    
+    this.getAudioList({    
       pageNo: audioPageNo,
       limit: audiolimit,
     });
   };
 
+    //the content to ask from Admin to delete the Audio
+    handleDelete = (id, status) => {
+      this.setState({
+        openModal: {
+          open: true,
+          title: "Delete Audio",
+          description: "Are you sure you want to DELETE this Audio?",
+          id: id,
+          action: "delete",
+          buttontitle:"DELETE",
+        },
+      });
+    };
+
+    // to open Delete Audio Modal
+  modalAction = (status) => {
+    const { openModal } = this.state;
+    if (status) {
+      if (openModal.id && openModal.action === "delete") { //to Delete the Audio
+        this.deleteAudio(openModal.id);
+      }
+      this.setState({
+        openModal: {
+        open: false,
+        },
+      });
+    } else {
+      this.setState({
+      openModal: {
+      open: status,
+      },
+      });
+    }
+  };
+
+  //to delete the Audio from the list.
+  deleteAudio = async (id, status) => {
+    const { audioPageNo, audiolimit } = this.state;
+    try {
+      const { data } = await axios.post(AUDIO.deleteAudio, {
+        audioId: id,
+      });
+      if (data.status == 200) {
+        this.getAudioList({    
+          pageNo: audioPageNo,
+          limit: audiolimit,
+        });
+      }
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
   //to show the Thumbnail of song and to play audio in the Modal popup 
   modalActionMedia = (status, value = '', type = "") => {
     const { audioList } = this.state;
@@ -178,7 +248,7 @@ class AudioList extends React.Component {
   };
 
   render() {
-    const {columns,audioList,pagination,openMedia} = this.state;
+    const {columns,audioList,pagination,openMedia,openModal} = this.state;
     return (
       <Container>
         {/* to show the thumbnail of song and to play audio in modal popup */}
@@ -189,6 +259,14 @@ class AudioList extends React.Component {
             modalAction={(status) => this.modalActionMedia(status)}
           />
         )}
+
+        {openModal.open && (
+          <CustomModal                      //Modal Popup to Delete Video Category
+            {...openModal}
+            modalAction={(status) => this.modalAction(status)}
+          />
+        )}
+
         <Wrapper>
           <TableHeader>
               <span className="title">Audio List</span>

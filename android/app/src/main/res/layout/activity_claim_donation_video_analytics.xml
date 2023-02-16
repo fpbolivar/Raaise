@@ -599,11 +599,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="60dp"
             android:background="@drawable/claim_now_button_shape"
             android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="60dp"
             android:text="Claim Now"
             android:textColor="@color/white" />
     </RelativeLayout>

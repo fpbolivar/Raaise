@@ -25,6 +25,7 @@ intance.interceptors.response.use(
         if (error.response.data.status === 401) {
             localStorage.removeItem("scriptube-admin-token");
             localStorage.removeItem("scriptube-admin-details");
+            localStorage.removeItem("admin-details");
             if (window.location.pathname !== "/") {
                 window.location.href = "/";
             } else {

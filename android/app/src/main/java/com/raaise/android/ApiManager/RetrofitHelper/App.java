@@ -15,6 +15,7 @@ public class App extends Application {
     public static ApiManagerImplementation apiManager;
     public static boolean fromTryAudio = false;
     public static String musicTitle = "";
+    public static boolean claim = false;
     private static Context context;
     private final Socket mSocket;
 

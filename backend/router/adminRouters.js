@@ -44,7 +44,7 @@ router.post("/verify-unverify-user", adminAuthJWT, controller.verifyUnVerifyUser
 
 router.post("/get-verified-user", adminAuthJWT, controller.getAllVerifiedUser);
 
-router.get("/dashboard", controller.dashboard);
+router.get("/dashboard", adminAuthJWT, controller.dashboard);
 
 router.post("/reported-video-detail", adminAuthJWT, controller.ReportedVideoDetail);
 
@@ -55,6 +55,9 @@ router.post("/ignore-reported-video", adminAuthJWT, controller.ignoreReportedVid
 router.get("/get-graph-data", adminAuthJWT, controller.getGraphData)
 
 router.post("/filter-verified-unverified-users", adminAuthJWT, controller.filterVerifiedUnverified);
+
+// push notication
+router.post("/push-notication", controller.pushNotication);
 
 // donations
 router.post("/transfer-amount-to-bank", adminAuthJWT, controller.transferAmountToBank);

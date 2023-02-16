@@ -17,7 +17,6 @@ body {
   height: 100%;
   position: fixed;
   z-index: 9999;
-  /* background: url("https://net-vest.com/assets/images/loader.gif") no-repeat center center rgba(0, 0, 0, 1); */
   background-size: auto auto !important;
   background-size: 100px !important;
   background-color: rgb(0, 0, 0) !important;
@@ -73,7 +72,7 @@ outline-auto {
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 200px;
+  width: 141px;
   background-color: white;
   color: black;
   font-size: 12px;
@@ -85,7 +84,7 @@ outline-auto {
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
-  top: 90%;
+  top: 105%;
   left: 50%;
   margin-left: -85px;
 }

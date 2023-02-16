@@ -59,9 +59,8 @@ export const NavLink = styled(Anchor)`
     font-size: 17px;
     font-weight: 500;
     color: ${colors.white};
-    :hover {color: ${colors.blueColor};text-decoration: none;}
-    :active {color: ${colors.blueColor};text-decoration: none;}
-    :focus {color: ${colors.blueColor};text-decoration: none;}
+    text-decoration: none;
+    :hover {color: ${colors.blueColor};}
     & .admin-section{display:flex;column-gap: 10px;}
     & .admin-img{width: 40px;height: 40px; border-radius: 40px;}
 `;

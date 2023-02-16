@@ -2,16 +2,18 @@
  * global filter component with useAsyncDebounce
  */
 
-import React, { useState } from "react";
+import React, { useEffect, useState, } from "react";
 import "regenerator-runtime/runtime";
 import { useAsyncDebounce } from "react-table";
 
-const GlobalFilter = ({ filter, setFilter }) => {
+const GlobalFilter = ({ filter, setFilter, search }) => {
     const [value, setValue] = useState(filter);
-
     const onChange = useAsyncDebounce((value1) => {
-        setFilter(value1 || undefined);
+        setFilter(value1 || "");
     }, 1000);
+    useEffect(() => {
+        if (!search) setValue('')
+    }, [search])
 
     return (
         <div>

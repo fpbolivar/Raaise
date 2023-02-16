@@ -22,5 +22,5 @@ class LocalStrings{
     static var emptyOldPassword = "Please enter Old Password"
     static var emptyConfirmPassword = "Please enter Confirm Password"
     static var termsandService = "You must agree to our policies to continue"
-    static var APP_URL = ""
+    static var APP_URL = "https://onelink.to/n2hfdj"
 }

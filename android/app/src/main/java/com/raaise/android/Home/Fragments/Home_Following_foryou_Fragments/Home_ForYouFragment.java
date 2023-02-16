@@ -191,9 +191,13 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
 
     @Override
     public void onResume() {
+        try {
+            if (((Home) requireActivity()).adapterVideoVIew != null && ((Home) requireActivity()).adapterVideoVIew.isPlaying())
+                ((Home) requireActivity()).adapterVideoVIew.stopPlayback();
+        } catch (Exception e){
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
 
-        if (((Home) requireActivity()).adapterVideoVIew != null && ((Home) requireActivity()).adapterVideoVIew.isPlaying())
-            ((Home) requireActivity()).adapterVideoVIew.stopPlayback();
 
         super.onResume();
     }

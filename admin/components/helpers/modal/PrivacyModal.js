@@ -14,8 +14,10 @@ class PrivacyModal extends React.Component {
         type:""
        },
        errors: [],
+       submitting:""
     }
   }
+
   onSubmit = (e) => {
     e.preventDefault();
     if (this.state.submitting) {
@@ -26,30 +28,29 @@ class PrivacyModal extends React.Component {
     }
     document.getElementById("custom-loader").style.display = "block";
     this.setState({ submitting: true }, this.handleSubmit);
-};
+  };
 
 //In this function, editGeneralSetting API is called.
-handleSubmit = async () => {
-  const { modalAction,getGeneralListing} = this.props
-  try {
+  handleSubmit = async () => {
+    const { modalAction,getGeneralListing} = this.props
+    try{
       const { data } = await axios.post(GENERALSETTING.editGeneralSetting,this.state.form);
-      if (data.status === 200) {
+      if (data.status == 200) {
         getGeneralListing();
         modalAction(false)
       }
-       else if (data.status === 422) {
-          this.setState({
-              errors: { [data.errors.param]: data.errors.message },
-              submitting: false,
-          });
+      else if (data.status == 422) {
+        this.setState({
+          errors: { [data.errors.param]: data.errors.message },
+          submitting: false,
+        });
       }
       document.getElementById("custom-loader").style.display = "none";
-  }
-  catch (e) {
+    }
+    catch (e) {
       document.getElementById("custom-loader").style.display = "none";
-      console.log("error", e);
-  }
-};
+    }
+  };
 
 //to check all the validations
   validate = () => {
@@ -72,7 +73,7 @@ handleSubmit = async () => {
     } else {
         return true;
     }
-};
+  };
 
   // getSettingByType() function is called
   componentDidMount =()=>{
@@ -102,12 +103,14 @@ handleSubmit = async () => {
       console.log("error",e)
      }
   }
+
   //to get the value of Description of General Settings
   handleCustom = (value,name) => {
     this.setState((prevState) => ({
         form: { ...prevState.form, [name]: value },
     }));
   };
+
   onChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -115,8 +118,9 @@ handleSubmit = async () => {
         form: { ...prevState.form, [name]: value },
     }));
   }
+
   render() {
-    const {  modalAction,  closeButton, } =this.props;
+    const {  modalAction} =this.props;
     const { form,errors} = this.state
     return (
         <Modal>
@@ -134,7 +138,7 @@ handleSubmit = async () => {
                   </div>
                 </form>
                 <ModalFooter>
-                  {!closeButton && (<button className="btn-blue" onClick={() => modalAction(false)}>Cancel</button>)}
+                  <button className="btn-blue" onClick={() => modalAction(false)}>Cancel</button>
                   <button className="btn-blue" onClick={this.onSubmit}>Save</button>
                 </ModalFooter>
           </ModalContent>
@@ -142,5 +146,4 @@ handleSubmit = async () => {
     );
   }
 }
-
 export default PrivacyModal;

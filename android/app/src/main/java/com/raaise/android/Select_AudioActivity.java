@@ -193,7 +193,7 @@ public class Select_AudioActivity extends Fragment implements View.OnClickListen
             public void run() {
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    mMediaPlayer = MediaPlayer.create(getActivity(), Uri.parse(songUrl));
+                    MediaPlayer mMediaPlayer = MediaPlayer.create(getActivity(), Uri.parse(Prefs.GetBaseUrl(getContext()) +songUrl));
                     mMediaPlayer.start();
                     mMediaPlayer.setOnCompletionListener(mCompletionListener);
                 }

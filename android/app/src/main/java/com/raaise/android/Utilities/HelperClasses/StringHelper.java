@@ -63,4 +63,5 @@ public class StringHelper {
     public static final String DONATION_HISTORY = "donation-history";
     public static final String VIDEO_DONATION_HISTORY = "get-video-donation-history";
     public static final String GET_USER_WITHDRAWAL = "get-user-withdrawal-request";
+    public static final String CLAIM_AMOUNT = "send-request-to-payment";
 }

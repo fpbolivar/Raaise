@@ -106,7 +106,12 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
 }
 
 extension MainTabBarVC:CustomVideoPostedDelegate{
-    func videoPosted() {
-        ToastManager.successToast(delegate: self, msg: "Video Posted Successfully.")
+    func videoPosted(status:UploadStatus) {
+        if status == .start{
+            ToastManager.successToast(delegate: self, msg: "Your Video is uploading, DO NOT close the App")
+        }else{
+            ToastManager.successToast(delegate: self, msg: "Video Posted Successfully.")
+        }
+        
     }
 }

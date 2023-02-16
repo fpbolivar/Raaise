@@ -1,7 +1,6 @@
 import React from "react";
 import {Modal,ModalContent,ModalFooter} from "./CustomModal.styled";
 import InputField from "../InputField";
-import { FileDiv,Picture } from "../../admin-profile/AdminProfile.styled";
 import axios from "../../../utils/axios"
 import { VIDEO } from "../../../ApiConstant";
 class CategoryModal extends React.Component {
@@ -41,25 +40,21 @@ class CategoryModal extends React.Component {
 
 //In this function,addVideoCategory and editVideoCategory API is called
 handleSubmit = async () => {
-  console.log("category handle")
-  const {type,getVideoCategories} = this.props;
-  console.log(type,"typeeeeeuui")
+  const {modalAction,getVideoCategories,type} = this.props;
+  const {form} = this.state;
+  let formData = new FormData();
   if(type == "add"){
     try {
-      const { router,modalAction,getVideoCategories} = this.props;
-      const {form} = this.state;
-      let formData = new FormData();
       formData.append("name",form.name);
       formData.append("image",form.image);
       const { data } = await axios.post(VIDEO.addVideoCategory, formData); //API calling
-      if (data.status === 200) {
+      if (data.status == 200) {
         getVideoCategories(1,10)
         modalAction(false)
         this.setState({
           submitting: false,
         });
-        router.push("/video-categories");
-      } else if (data.status === 422) {
+      } else if (data.status == 422) {
         this.setState({
           errors: { [data.param]: data.message },
           submitting: false,
@@ -68,26 +63,21 @@ handleSubmit = async () => {
       document.getElementById("custom-loader").style.display = "none";
     } catch (e) {
       document.getElementById("custom-loader").style.display = "none";
-      console.log("error", e);
     }
   }
   else{
     try {
-      const { router,modalAction,getVideoCategories } = this.props;
-      const {form} = this.state;
-      let formData = new FormData();
       formData.append("categoryId",form.categoryId);
       formData.append("name",form.name);
       formData.append("image",form.image);
       const { data } = await axios.post(VIDEO.editVideoCategory, formData); //API calling
-      if (data.status === 200) {
+      if (data.status == 200) {
         getVideoCategories(1)
         modalAction(false)
-        router.push("/video-categories");
         this.setState({
           submitting: false,
         });
-      } else if (data.status === 422) {
+      } else if (data.status == 422) {
         this.setState({
           errors: { [data.param]: data.message },
           submitting: false,
@@ -149,9 +139,11 @@ handleSubmit = async () => {
         errors: {
           ...prevState.errors,
           image: "",
+  
         },
       }));
     } else {
+      e.target.value = null
       this.setState((prevState) => ({
         form: {
           ...prevState.form,
@@ -168,7 +160,7 @@ handleSubmit = async () => {
   };
   
   render() {
-    const {  modalAction, closeButton,type} =this.props;
+    const {  modalAction,type} =this.props;
     const { form,errors} = this.state
     return (
       <Modal>
@@ -185,18 +177,14 @@ handleSubmit = async () => {
               </div>
               {form.image &&
               <div className="form-group">
-                  <img alt="Profile Picture" className="img-round"
-                    src={
-                      form.loadImage ? form.loadImage
-                      : 
-                      form.image ? form.image : ""
-                    }
-                  />
+                <img alt="Profile Picture" className="img-round"
+                  src={form.loadImage ? form.loadImage : form.image && form.image }
+                />
               </div>
               }
             </form>
             <ModalFooter>
-              {!closeButton && (<button className="btn-blue" onClick={() => modalAction(false)}>Cancel</button>)}
+              <button className="btn-blue" onClick={() => modalAction(false)}>Cancel</button>
               <button className="btn-blue" onClick={this.onSubmit}>Save</button>
             </ModalFooter>
         </ModalContent>

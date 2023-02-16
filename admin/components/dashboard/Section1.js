@@ -94,25 +94,25 @@ class Section1 extends React.Component {
                             </div>
 
                             <div className="col-md-2 col-sm-12 p-10 br-10 tooltip">
-                                <span className="tooltiptext">Total number of Audio:{user.TotalAudios || 0}</span>
+                                <span className="tooltiptext">Total number of Audios:{user.TotalAudios || 0}</span>
                                 <h3 className="label">Total Audios</h3>
                                 <h1 className="count-text">{user.TotalAudios || 0}</h1>
                             </div>
 
                             <div className="col-md-2 col-sm-12 p-10 br-10 tooltip">
-                                <span className="tooltiptext">Total number of Transferred Donation:{user.TranferredDonation || 0}</span>
+                                <span className="tooltiptext">Total Transferred Donation:{user.TranferredDonation || 0}</span>
                                 <h3 className="label">Transferred Donation</h3>
                                 <h1 className="count-text">{user.TranferredDonation || 0}</h1>
                             </div>
 
                             <div className="col-md-2 col-sm-12 p-10 br-10 tooltip">
-                                <span className="tooltiptext">Total number of Donation Received :{user.TotalDonationReceived || 0}</span>
+                                <span className="tooltiptext">Total Donation Received :{user.TotalDonationReceived || 0}</span>
                                 <h3 className="label">Total Donation Received</h3>
                                 <h1 className="count-text">{user.TotalDonationReceived || 0}</h1>
                             </div>
                         </Row>
                     </Wrapper>
-                    <Section2 {...this.state} />
+                    <Section2 user={user} />
                 </Container>
          );
     }

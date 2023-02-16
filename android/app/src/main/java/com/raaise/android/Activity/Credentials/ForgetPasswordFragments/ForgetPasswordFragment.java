@@ -62,8 +62,7 @@ public class ForgetPasswordFragment extends Fragment {
             @Override
             public void onSuccess(ForgetPasswordModel forgetPasswordModel) {
                 Dialogs.HideProgressDialog();
-                Prompt.SnackBar(v, forgetPasswordModel.getMessage());
-                Prompt.SnackBar(v, forgetPasswordModel.getOtp() + "  Enter This OTP");
+//                Prompt.SnackBar(v, forgetPasswordModel.getMessage());
                 Prefs.SetForgetPasswordEmail(getActivity().getApplicationContext(), forgetPasswordModel.getEmail());
                 ((ForgetPassword) requireActivity()).changeFragment(new VerifyOtpFragment());
             }

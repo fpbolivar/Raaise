@@ -3,19 +3,37 @@ import colors from "../../colors";
 export const Table = styled.table`
     { border-collapse: collapse; width: 100%; }
     th,td 
-    { border: 1px solid #ddd; padding: 8px; vertical-align: top; word-break: break-all; }
+    { border: 1px solid #ddd; padding: 8px; vertical-align: top;text-align:center;}
     tr:nth-child(even) { background-color: #e9ebec; }
-    th { padding-top: 12px; padding-bottom: 12px; text-align: left; background-color: #e9ebec; color: black; white-space: nowrap !important; }
+    th { padding-top: 12px; padding-bottom: 12px; text-align: center; background-color: #e9ebec; color: black; white-space: nowrap !important; }
     th:first-child, td:first-child, td:last-child {
         white-space: nowrap !important;
     }
     .coloum-search { padding: 6px 10px; outline: none; border-radius: 3px; border: 1px solid #b5bdc2;}
 `;
 
-export const TableFilter = styled.thead`
+export const TableFilter = styled.div`
     width: 100%;
+    display: flex;
+    justify-content: space-between;
     .show-page { text-align: left; }
     .global-search { text-align: right; float: right; }
+    .date-div{display: flex; gap:20px;
+        justify-content: space-between; 
+        .select-date{
+            display: flex; align-items: center;
+        }
+        & input{
+            // outline: none;
+            border-radius: 3px;
+            border: 1px solid #b5bdc2;
+            padding: 8px 12px;
+        }
+    }
+    & .btn-div{
+        width:10%;display:flex;align-items:end;
+        & .btn{ height:35px; padding:9px 12px; width:100%; background:${colors.blueColor};color:${colors.white}; cursor:pointer; border:none; border-radius: 3px; font-size: 15px; font-weight: bold;}
+      }
 `;
 
 export const TableContainer = styled.div`

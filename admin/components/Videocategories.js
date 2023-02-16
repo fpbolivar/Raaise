@@ -53,14 +53,14 @@ class Videocategories extends React.Component {
           disableFilters: true,
         },
         {
-            Header: "Image",
-            accessor: "image",
-            disableFilters: true,
-            Cell: ({ cell: { value } }) => {
-                return value ? <img src={value} alt="Category Image" width={50} height={50} onClick={() => this.modalImage(true, value, 'image')} style={{ cursor: "pointer" }} /> 
-                : "";
-              },
+          Header: "Image",
+          accessor: "image",
+          disableFilters: true,
+          Cell: ({ cell: { value } }) => {
+            return value ? <img src={value} alt="Category Image" width={50} height={50} onClick={() => this.modalImage(true, value, 'image')} style={{ cursor: "pointer" }} /> 
+            : "";
           },
+        },
         {
           Header: "Name",
           accessor: "name",
@@ -75,7 +75,7 @@ class Videocategories extends React.Component {
             return (
               <ActionSection>
                 <div className="cursor-pointer"   title="Edit"  onClick={() => this.modalActionMedia(true,"edit",row.original)}>
-                <svg viewBox="0 0 24 24" width={22} fill={colors.blueColor}><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path>                  </svg>
+                <svg viewBox="0 0 24 24" width={22} fill={colors.blueColor}><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
                 </div>
 
                 <div className="cursor-pointer" title="Delete" onClick={() => this.handleDelete(row.original._id, true)} >
@@ -123,11 +123,12 @@ class Videocategories extends React.Component {
         description: "Are you sure you want to DELETE this Video Category?",
         id: id,
         action: "delete",
+        buttontitle:"DELETE",
       },
     });
   };
 
-  //to open CategoryModal for edit and add
+  //to open CategoryModal to Add and Edit Category
   modalActionMedia = (status,type,data) => {
     if (status) {
       this.setState({
@@ -147,25 +148,25 @@ class Videocategories extends React.Component {
     }
   };
 
-  
+  // to open Delete Category Modal
   modalAction = (status) => {
     const { openModal } = this.state;
-      if (status) {
-        if (openModal.id && openModal.action === "delete") { //to Delete the Video Category
-          this.deleteVideo(openModal.id);
-        }
-          this.setState({
-            openModal: {
-            open: false,
-            },
-          });
-      } else {
-          this.setState({
-            openModal: {
-            open: status,
-          },
-        });
+    if (status) {
+      if (openModal.id && openModal.action === "delete") { //to Delete the Video Category
+        this.deleteVideo(openModal.id);
       }
+      this.setState({
+        openModal: {
+        open: false,
+        },
+      });
+    } else {
+      this.setState({
+      openModal: {
+      open: status,
+      },
+      });
+    }
   };
 
   //to delete the Video Category from the list.
@@ -175,7 +176,7 @@ class Videocategories extends React.Component {
       const { data } = await axios.post(VIDEO.deleteVideoCategory, {
         categoryId: id,
       });
-      if (data.status === 200) {
+      if (data.status == 200) {
         this.getVideoCategories({
           pageNo: videoPageNo,
           limit: videolimit,
@@ -198,40 +199,40 @@ class Videocategories extends React.Component {
   // API call for video category listing
   getVideoCategories = async (obj) => {
     try {
-        this.setState((prevState) => ({
+      this.setState((prevState) => ({
+        pagination: {
+        ...prevState.pagination,
+        isLoading: true,
+        },
+      }));
+      let { videoPageNo, videolimit,  columnsFilters } = this.state;
+      videoPageNo = obj.pageNo ? obj.pageNo : videoPageNo;
+      videolimit = obj.limit ? obj.limit : videolimit;
+      if (obj.column) {
+        columnsFilters[obj.column] = obj.value;
+        videoPageNo = 1;
+      }
+      const { data } = await axios.post(`${VIDEO.getVideoCategories}`, {   //API calling
+        page: videoPageNo,
+        limit: videolimit,
+        ...columnsFilters,
+      });
+      if (data.status == 200) {
+        this.setState({
+          videoList: data.data,
+          pageNo: videoPageNo,
+          videolimit: videolimit,
+          columnsFilters: columnsFilters,
           pagination: {
-          ...prevState.pagination,
-          isLoading: true,
+            current: data.current || 0,
+            next: data.next || 0,
+            totalData: data.totalData || 0,
+            totalPages: data.totalPages || 0,
+            previous: data.previous,
+            isLoading: false,
           },
-        }));
-        let { videoPageNo, videolimit, videoList, columnsFilters } = this.state;
-        videoPageNo = obj.pageNo ? obj.pageNo : videoPageNo;
-        videolimit = obj.limit ? obj.limit : videolimit;
-        if (obj.column) {
-            columnsFilters[obj.column] = obj.value;
-            videoPageNo = 1;
-        }
-        const { data } = await axios.post(`${VIDEO.getVideoCategories}`, {   //API calling
-            page: videoPageNo,
-            limit: videolimit,
-            ...columnsFilters,
         });
-        if (data.status == 200) {
-            this.setState({
-            videoList: data.data,
-            pageNo: videoPageNo,
-            videolimit: videolimit,
-            columnsFilters: columnsFilters,
-            pagination: {
-                current: data.current || 0,
-                next: data.next || 0,
-                totalData: data.totalData || 0,
-                totalPages: data.totalPages || 0,
-                previous: data.previous,
-                isLoading: false,
-            },
-            });
-        }
+      }
     }catch (e) {
       document.getElementById("custom-loader").style.display = "none";
       console.log("error", e);
@@ -243,20 +244,19 @@ class Videocategories extends React.Component {
     return (
       <Container>
         {openMedia.open && (
-          <ViewMedia 
+          <ViewMedia                        //Modal Popup to view Image of Video Category
             {...openMedia}
             modalAction={(status) => this.modalImage(status)}
           />
         )}
-           {openModal.open && (
-          <CustomModal
+        {openModal.open && (
+          <CustomModal                      //Modal Popup to Delete Video Category
             {...openModal}
             modalAction={(status) => this.modalAction(status)}
           />
         )}
-
         {openCategoryModal.open && (
-          <CategoryModal                     //Modal Popup to Add and Edit Video Category.
+          <CategoryModal                    //Modal Popup to Add and Edit Video Category.
             {...openCategoryModal}
             modalAction={(status) => this.modalActionMedia(status)}
             getVideoCategories={this.getVideoCategories}
@@ -266,12 +266,14 @@ class Videocategories extends React.Component {
         )}
         <Wrapper>
           <Header>
-             <span className="title">Video Categories</span>
-              <div className="push-notif-div"  onClick={() => this.modalActionMedia(true,"add")}>               
-                <button className="category-btn">+Add New Category</button>
-              </div>
+            <span className="title">Video Categories</span>
+            <div className="push-notif-div"  onClick={() => this.modalActionMedia(true,"add")}>               
+              <button className="category-btn">+Add New Category</button>
+            </div>
           </Header>
-          <FilteringTable data={videoList} columns={columns} pagination={pagination} handleTable={this.getVideoCategories}/>
+          <div  className="custom-table">
+            <FilteringTable data={videoList} columns={columns} pagination={pagination} handleTable={this.getVideoCategories}/>
+          </div>
         </Wrapper>
       </Container>
     );

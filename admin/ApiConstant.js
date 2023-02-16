@@ -27,6 +27,7 @@ module.exports = {
         getGenre: `${c.API_BASE_URL}/admin/get-genre`,
         uploadAudio: `${c.API_BASE_URL}/admin/add-video-audio`,
         getAudioList: `${c.API_BASE_URL}/admin/get-video-audio-list`,
+        deleteAudio: `${c.API_BASE_URL}/admin/delete-video-audio`,
     },
     GENERALSETTING:{
         getlisting: `${c.API_BASE_URL}/admin/get-general-settings`,
@@ -50,5 +51,14 @@ module.exports = {
         transferredTransaction:`${c.API_BASE_URL}/admin/transferred-transactions`,
         adminCommission:`${c.API_BASE_URL}/admin/admin-commission`,
         pendingTransaction:`${c.API_BASE_URL}/admin/pending-transactions`,
+        payWithdrawalAmount:`${c.API_BASE_URL}/admin/transfer-amount-to-bank`,
+        payPendingTransaction:`${c.API_BASE_URL}/admin/transfer-all-amount-to-user-bank`,
+
+    
+    },
+    NOTIFICATION:{
+        getNotification :`${c.API_BASE_URL}/admin/get-notifications`,
+        pushNotification:`${c.API_BASE_URL}/admin/push-notication`,
+        logNotification:`${c.API_BASE_URL}/admin/get-notifications-logs`,
     }
 };

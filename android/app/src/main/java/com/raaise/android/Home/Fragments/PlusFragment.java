@@ -123,6 +123,7 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
         Log.i("fromTryAudio", "onCreateView: without " + ((Home) requireActivity()).videoUri);
         Initialization(v);
         if (App.fromTryAudio){
+            selectAudioTV.setText(App.musicTitle);
             videoView.setVideoURI(Uri.parse(((Home) requireActivity()).videoPath));
             videoView.requestFocus();
             videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -172,18 +173,6 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                     Log.i("thumbFile", "onClick: fromGallery");
                     thumb = ThumbnailUtils.createVideoThumbnail(getRealPathFromUri(getContext(), Uri.parse(((Home) requireActivity()).videoUri)), MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
                 } else {
-
-//                    if (MERGED_VIDEO_PATH.equals("")){
-//                        Log.i("thumbFile", "onClick: from not merged");
-//                        Log.i("thumbFile", "onClick: from video path " + VideoPath);
-//                        Log.i("thumbFile", "onClick: from video full path " + getRealPathFromUri(getContext(), Uri.parse(VideoPath)));
-//
-//                        thumb = ThumbnailUtils.createVideoThumbnail(getRealPathFromUri(getContext(), Uri.parse(VideoPath)), MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
-//                        Log.i("thumbFile", "onClick: " + (thumb == null));
-//                    } else {
-//                        Log.i("thumbFile", "onClick: from merged ");
-//                        thumb = ThumbnailUtils.createVideoThumbnail(MERGED_VIDEO_PATH, MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
-//                    }
                     thumb = MERGED_VIDEO_PATH.equals("") ? ThumbnailUtils.createVideoThumbnail(getRealPathFromUri(getContext(), Uri.parse(VideoPath)), MediaStore.Images.Thumbnails.FULL_SCREEN_KIND) : ThumbnailUtils.createVideoThumbnail(MERGED_VIDEO_PATH, MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
                 }
 

@@ -161,7 +161,13 @@ extension SearchWithListVC: UITableViewDelegate, UITableViewDataSource{
             self.pleaseWait()
             let titleString = "\(audioListData[indexPath.row].artistName.localizedCapitalized) - \(audioListData[indexPath.row].songName.localizedCapitalized)"
             vid.downloadAudio(audioUrl:self.audioListData[indexPath.row].audioUrl){ downloadedAudio in
-                
+//                self.vid.mergeAudioWithVideo(videoURL: self.videoUrl, audioURL:  downloadedAudio) { outputVideoUrl in
+//                    self.selectedAudioUrl!(outputVideoUrl,titleString,self.audioListData[indexPath.row].id)
+//                                        DispatchQueue.main.async {
+//                                            self.clearAllNotice()
+//                                            self.navigationController?.popViewController(animated: true)
+//                                        }
+//                }
                 self.vid.editVideo(videoURL: self.videoUrl, audioUrl: downloadedAudio,pickedVideo: self.videoPicked) { outputVideoUrl in
                     self.selectedAudioUrl!(outputVideoUrl,titleString,self.audioListData[indexPath.row].id)
                     DispatchQueue.main.async {

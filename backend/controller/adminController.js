@@ -44,7 +44,12 @@ const adminLogin = async (req, res) => {
             );
             return res
                 .status(200)
-                .send({ status: 200, message: "login successful", token: token });
+                .send({
+                    status: 200, message: "login successful", token: token, details: {
+                        name: admin.name,
+                        image: admin.image
+                    }
+                });
         } else {
             return await validatorErrorResponse(res, "Invalid password", "password");
         }
@@ -302,7 +307,7 @@ const getSearchUsers = async (req, res) => {
     try {
         let { query, page } = req.query
         /** Condition =Active and unblocked user */
-        let criteria = { isActive: true, isBlock: false, isDeleted: true };
+        let criteria = { isActive: true, isBlock: false, isDeleted: false };
 
         if (query) {
             criteria.$and = [
@@ -457,17 +462,11 @@ const getVideoAudioList = async (req, res) => {
     try {
         const modelName = "videoAudio";
         let criteria = {};
-        if (req.body.query) {
-            criteria.$or = [
-                { songName: { $regex: req.body.query, $options: "i" } },
-                { artistName: { $regex: req.body.query, $options: "i" } },
-            ];
-        }
         let perPage = req.body.limit ? req.body.limit : "10";
         let page = Math.max(0, req.body.page);
+        let startIndex = (page * perPage) - perPage
+        let lastIndex = (page * perPage)
         let options = {
-            skip: parseInt(perPage * (page - 1)),
-            limit: parseInt(perPage),
             lean: true,
             sort: { createdAt: -1 },
         };
@@ -478,23 +477,20 @@ const getVideoAudioList = async (req, res) => {
                 match: req.body.query ? { name: { $regex: req.body.query, $options: "i" } } : {}
             },
         ];
-        const audioList = await services.findWithPopulate(
-            modelName,
-            criteria,
-            {},
-            options,
-            populateQuery
-        );
-        const audioListLenght = await services.getData(modelName, {});
-        let numPages = Math.ceil(parseInt(audioListLenght.length) / perPage);
+        let finalData = []
+        const audioList = await services.findWithPopulate(modelName, criteria, {}, options, populateQuery);
+        finalData = audioList
+        query = req.body.query && req.body.query.toLowerCase()
+        if (finalData.length > 0 && query) finalData = finalData.filter(item => item.artistName && (item.artistName.indexOf(query) === 0) || item.songName && (item.songName.indexOf(query) === 0) || item.genreId && (item.genreId.name.toLowerCase().indexOf(query) === 0))
+        let numPages = Math.ceil(parseInt(finalData.length) / perPage);
         return res.status(200).send({
             status: 200,
             message: "Success.",
-            data: audioList,
+            data: finalData.slice(startIndex, lastIndex),
             current: page,
             previous: page > 1 ? page - 1 : undefined,
             next: page < numPages ? parseInt(page) + parseInt(1) : undefined,
-            totalData: audioListLenght.length,
+            totalData: finalData.length,
             totalPages: numPages,
         });
     } catch (error) {
@@ -764,8 +760,8 @@ const dashboard = async (req, res) => {
         let modelName = "user"
         let dashboard = []
         const totalUser = await services.getData(modelName, { isDeleted: false }, {}, {});
-        const blockUser = await services.getData(modelName, { isBlock: true, isDeleted: false }, {}, {});
-        let ActiveUserCount = totalUser.length - blockUser.length
+        const blockUser = await services.getData(modelName, { isBlock: true, isDeleted: false, isActive: true }, {}, {});
+        let ActiveUserCount = await services.getData(modelName, { isBlock: false, isDeleted: false, isActive: true }, {}, {})
         const deActiveUser = await services.getData(modelName, { isActive: false, isDeleted: false }, {}, {});
         const facebookUser = await services.getData(modelName, { loginType: "facebook", isDeleted: false }, {}, {});
         const googleUser = await services.getData(modelName, { loginType: "google", isDeleted: false }, {}, {});
@@ -773,6 +769,7 @@ const dashboard = async (req, res) => {
         const iosUser = await services.getData(modelName, { deviceType: "ios", isDeleted: false }, {}, {});
         const blockedVideos = await services.getData("userVideo", { isBlock: true, isDeleted: false }, {}, {});
         const totalVideos = await services.getData("userVideo", { isDeleted: false }, {}, {});
+        console.log(totalVideos.length);
         const TotalAudios = await services.getData("videoAudio", {}, {}, {});
         const donationAmountData = await services.getData("transaction", { status: 'succeeded' }, {}, { lean: true });
         let donationAmount = 0
@@ -800,7 +797,7 @@ const dashboard = async (req, res) => {
             data: {
                 totalUser: totalUser.length > 0 ? totalUser.length : 0,
                 blockUser: blockUser.length > 0 ? blockUser.length : 0,
-                ActiveUser: ActiveUserCount,
+                ActiveUser: ActiveUserCount.length > 0 ? ActiveUserCount.length : 0,
                 deActiveUser: deActiveUser.length > 0 ? deActiveUser.length : 0,
                 facebookUser: facebookUser.length > 0 ? facebookUser.length : 0,
                 googleUser: googleUser.length > 0 ? googleUser.length : 0,
@@ -812,7 +809,8 @@ const dashboard = async (req, res) => {
                 pendingWithdrawalTransaction: pendingTransactions,
                 TranferredDonation: transferredAmount,
                 TotalDonationReceived: donationAmount,
-                TotalAdminComission: adminCommission
+                TotalAdminComission: adminCommission,
+                deActiveUserLength: deActiveUser.length
             }
         });
     }
@@ -993,7 +991,7 @@ const getGraphData = async (req, res) => {
             donationData: donationAmount
         });
     }
-    catch (e) {
+    catch (error) {
         if (error) {
             console.log(error);
             sendError(error, res);
@@ -1001,6 +999,60 @@ const getGraphData = async (req, res) => {
     }
 };
 
+/* push notification by admin*/
+const pushNotication = async (req, res) => {
+    try {
+        // fetch data from request
+        const { adminId } = req.admin
+        const { scheduleTime, type, title, desc, to, sendTo } = req.body
+        // validations
+        if (!type) {
+            return await validatorErrorResponse(res, "Required", "type");
+        }
+        if ((type && type === "schedule") && !scheduleTime) {
+            return await validatorErrorResponse(res, "Required", "scheduleTime");
+        }
+        if (!title) {
+            return await validatorErrorResponse(res, "Required", "title");
+        }
+        if (!desc) {
+            return await validatorErrorResponse(res, "Required", "desc");
+        }
+        if (!sendTo) {
+            return await validatorErrorResponse(res, "Required", "sendTo");
+        }
+        if ((sendTo && sendTo === "multiple") && !to) {
+            return await validatorErrorResponse(res, "Required", "to");
+        }
+
+        // create object to store value in database
+        const userIds = []
+        if (sendTo === "multiple") {
+            userIds = to
+        } else {
+            const user = await services.getData("user", { isDeleted: false }, { _id: true }, {});
+
+        }
+        const notificationObj = {
+            type: type,
+            title: title,
+            desc: desc,
+            from: adminId,
+            scheduleTime: type === "now" ? new Date() : scheduleTime,
+            to: userIds
+        }
+        return res.status(200).send({
+            status: 200,
+            message: 'hello',
+        });
+    }
+    catch (e) {
+        if (error) {
+            console.log(error);
+            sendError(error, res);
+        }
+    }
+}
 /**
  *  transfer to bank account 
  */
@@ -1102,7 +1154,7 @@ const donationReceived = async (req, res) => {
         let pageNo = Math.max(0, page);
         //for pagination
         let startIndex = (pageNo * perPage) - perPage
-        let lastIndex = (pageNo * perPage) - 1
+        let lastIndex = (pageNo * perPage)
         let options = {
             lean: true,
             sort: { createdAt: -1 },
@@ -1206,7 +1258,7 @@ const editCategory = async (req, res) => {
             categoryData.image = uploadImage.fileUrl;
         }
         //updade category
-        const category = services.updateData("category", criteria, categoryData, { new: true, });
+        await services.updateData("category", criteria, categoryData, { new: true, });
         return res
             .status(200)
             .send({ status: 200, message: "Category updated" });
@@ -1267,15 +1319,16 @@ const deleteCategory = async (req, res) => {
     try {
         // fetch data from request
         const { categoryId } = req.body;
+        const categoryModelName = "category"
         // validations
         if (!categoryId) {
             return validatorErrorResponse(res, "Required", "categoryId")
         }
+
         let criteria = { _id: categoryId }
-        //inialize object
 
         //delete category
-        const category = services.updateData("category", criteria, { isDeleted: true }, { new: true, });
+        await services.updateData(categoryModelName, criteria, { isDeleted: true }, { new: true, });
         return res
             .status(200)
             .send({ status: 200, message: "Category deleted" });
@@ -1297,7 +1350,7 @@ const withdrawalRequest = async (req, res) => {
         let pageNo = Math.max(0, page);
         //for pagination
         let startIndex = (pageNo * perPage) - perPage
-        let lastIndex = (pageNo * perPage) - 1
+        let lastIndex = (pageNo * perPage)
         let options = {
             lean: true,
             sort: { createdAt: -1 },
@@ -1399,7 +1452,7 @@ const adminCommission = async (req, res) => {
         let pageNo = Math.max(0, page);
         //for pagination
         let startIndex = (pageNo * perPage) - perPage
-        let lastIndex = (pageNo * perPage) - 1
+        let lastIndex = (pageNo * perPage)
         let options = {
             lean: true,
             sort: { createdAt: -1 },
@@ -1524,6 +1577,7 @@ module.exports = {
     getSearchUsers,
     getGraphData,
     filterVerifiedUnverified,
+    pushNotication,
     transferAmountToBank,
     donationReceived,
     addCategory,
@@ -1533,5 +1587,5 @@ module.exports = {
     withdrawalRequest,
     transferredTransactions,
     adminCommission,
-    pendingTransactions
-};
+    pendingTransactions,
+}

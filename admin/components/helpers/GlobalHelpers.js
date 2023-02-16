@@ -1,5 +1,5 @@
 export function getFormattedDate(str) {
-    let date = new Date(str);
+    let date = new Date(str);    
     let year = date.getFullYear();
     let month = (1 + date.getMonth()).toString();
     month = month.length > 1 ? month : "0" + month;

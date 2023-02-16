@@ -2,7 +2,6 @@ import styled from "styled-components";
 import colors from "../../colors";
 
 export const Container = styled.div`
-  // min-height: 90vh;
   padding: 20px;
   /* Tablet */
   @media only screen and (max-width: 768px) {
@@ -21,7 +20,7 @@ justify-content: space-between;
   .table-actions { margin-top: 16px; display: flex; justify-content: space-between; align-items: center;
     @media only screen and (max-width: 788px) {
       flex-direction: column;
-       gap: 16px;
+      gap: 16px;
     }
   }
   .show-page {outline: none; border-radius: 3px; border: 1px solid #b5bdc2; padding: 9px 0px; height: fit-content;}
@@ -45,6 +44,40 @@ export const Wrapper = styled.div`
   /* MOBILE */
   @media only screen and (max-width: 460px) {
     padding: 10px;
+  }
+  .custom-table{
+    td:first-child{
+      width : 120px;
+    }
+    td:nth-child(2){
+      width : 220px;
+    }
+    td:nth-child(3){
+      width : 450px;
+    }
+    td:last-child{
+      width : 120px;
+    }
+  }
+  .notification-table{
+    td:first-child{
+      width : 70px;
+    }
+    td:nth-child(2){
+      width : 250px;
+    }
+    td:nth-child(3){
+      width : 500px;
+    }
+    td:nth-child(4){
+      width : 250px;
+    }
+    td:nth-child(5){
+      width : 300px;
+    }
+    td:last-child{
+      width : 60px;
+    }
   }
 `;
 export const ExportButton = styled.button`

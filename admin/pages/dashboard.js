@@ -64,11 +64,11 @@ class Dashboard extends React.Component {
     return(
       <div>
         <Layout>
-          <Main />
+            <Main />
             <GraphsSection>
               <div className="graphs-div">
                 <Graph data={graph.userRegistrationGraph} name={"User Registration Graph"}/>
-                <Graph data={graph.withdrawGraph} name={"Withdraw Amount Graph"}/>
+                <Graph data={graph.withdrawGraph} name={"Withdrawal Amount Graph"}/>
               </div>
             </GraphsSection>
             <GraphsSection>

@@ -1,10 +1,8 @@
 package com.raaise.android.Home.MainHome;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -13,9 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -86,8 +82,8 @@ public class Home extends AppCompatActivity {
                 CheckNotificationCount();
             }
         }).start();
-        Log.i("token", "onCreate: " + Prefs.GetBearerToken(this));
         Prefs.SetExtra(getApplicationContext(), "", "OverSelectedMusicData");
+
     }
 
     private void clickListeners() {
@@ -119,7 +115,6 @@ public class Home extends AppCompatActivity {
                 SelectFragment(1);
             }
         }).start();
-        Log.i("videoSent", "SelectHomeScreen: Home");
     }
 
     private void SelectFragment(int position) {
@@ -163,7 +158,6 @@ public class Home extends AppCompatActivity {
                         SelectFragment(2);
                     }
                 }).start();
-//                SelectFragment(2);
     }
 
     private void SelectPlusScreen() {
@@ -179,31 +173,6 @@ public class Home extends AppCompatActivity {
             }
         }).start();
 
-    }
-
-    private void ShowGalleryCameraPrompt() {
-        final Dialog dialog = new Dialog(Home.this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.camera_gallery_dialog);
-
-        TextView closeBtn = dialog.findViewById(R.id.cancel_button);
-        TextView openCameraBtn = dialog.findViewById(R.id.open_camera_btn);
-        TextView openGalleryBtn = dialog.findViewById(R.id.open_gallery_btn);
-
-        closeBtn.setOnClickListener(view -> dialog.dismiss());
-        openCameraBtn.setOnClickListener(view -> {
-            dialog.dismiss();
-            startActivityForResult(new Intent(MediaStore.ACTION_VIDEO_CAPTURE).putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30).putExtra("aspectY", 1).putExtra("aspectX", 1).putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT), 100);
-        });
-
-        openGalleryBtn.setOnClickListener(view -> {
-            dialog.dismiss();
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, 101);
-        });
-
-        dialog.show();
     }
 
     private void SelectInboxScreen() {
@@ -256,14 +225,20 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                checkPermissions();
+        if (android.os.Build.VERSION.SDK_INT < 33){
+            checkPermissions();
+        } else {
+            String[] PERMISSIONS = {
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                    Manifest.permission.READ_MEDIA_AUDIO,
+                    android.Manifest.permission.CAMERA
+            };
+            if (!hasPermissions(this, PERMISSIONS)){
+                ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
             }
-        }).start();
-//        checkPermissions();
-//        CheckNotificationCount();
+        }
+        CheckNotificationCount();
     }
 
     public void CheckNotificationCount() {
@@ -308,26 +283,6 @@ public class Home extends AppCompatActivity {
             }
 
         }
-//        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
-//                == PackageManager.PERMISSION_DENIED) {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1001);
-//        }
-//        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                == PackageManager.PERMISSION_DENIED) {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1002);
-//        }
-//        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-//                == PackageManager.PERMISSION_DENIED) {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1003);
-//        }
-//        if (ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-//
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{Manifest.permission.RECORD_AUDIO},
-//                    1004);
-//
-//        }
 
     }
 

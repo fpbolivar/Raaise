@@ -144,9 +144,16 @@ class AddPostVC: BaseControllerVC {
     @IBAction func donationSwitchChanged(_ sender: UISwitch) {
         stack.isHidden = !sender.isOn
     }
+    @objc func updateCounter(){
+        self.clearAllNotice()
+        self.navigationController?.popToRootViewController(animated: true)
+        print("self.clearAllNotice()")
+    }
     //MARK: - Add Post Api
     func addpostApi(){
+        
         self.pleaseWait()
+        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: false)
         do{
              videoData = try Data(contentsOf: videoUrl)
             imageData = thumbnailimage.jpegData(compressionQuality: 0.8)!
@@ -156,11 +163,20 @@ class AddPostVC: BaseControllerVC {
         }
         
         let param = ["videoCaption":captionTv.text!.trimmingCharacters(in: .whitespaces),"isDonation":optionsSwitch.isOn,"donationAmount":donationTf.text ?? "0","audioId":selectedAudioId,"categoryId":selectedCategory] as [String : Any]
-        AuthManager.uploadVideoData(delegate: self, param: param, resourcesVideo: ["video" : videoUrl], resourcesImage: ["image":self.thumbnailimage]) {
-            self.clearAllNotice()
-            DispatchQueue.main.async {
-                self.navigationController?.popToRootViewController(animated: true)
-                self.delegate?.postAdded()
+//        self.navigationController?.popToRootViewController(animated: true)
+//        self.delegate?.postAdded(status: .start)
+        VideoUploadStatus.isUploading?(true)
+        VideoUploadStatus.isUploadingVar = true
+        DispatchQueue.global(qos: .background).async {
+            AuthManager.uploadVideoData(delegate: self, param: param, resourcesVideo: ["video" : self.videoUrl], resourcesImage: ["image":self.thumbnailimage]) {
+                print("videouploadedsuccess")
+                VideoUploadStatus.isUploading?(false)
+                VideoUploadStatus.isUploadingVar = false
+                self.clearAllNotice()
+                DispatchQueue.main.async {
+                    //self.navigationController?.popToRootViewController(animated: true)
+                    self.delegate?.postAdded(status: .finish)
+                }
             }
         }
     }
@@ -203,5 +219,13 @@ extension AddPostVC:UITableViewDelegate,UITableViewDataSource{
 
 //MARK: - Protocol
 protocol AddPostFinishDelegate{
-    func postAdded()
+    func postAdded(status:UploadStatus)
+}
+enum UploadStatus{
+    case start
+    case finish
+}
+class VideoUploadStatus{
+    static var isUploading:((Bool)->Void)?
+    static var isUploadingVar = false
 }

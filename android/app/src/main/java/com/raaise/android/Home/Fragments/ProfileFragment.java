@@ -51,7 +51,7 @@ public class ProfileFragment extends Fragment implements GetAllUserVideoAdapter.
         v = inflater.inflate(R.layout.fragment_profile, container, false);
         Initialization(v);
         ClickListeners();
-
+//
         GetUserProfile();
 
         return v;

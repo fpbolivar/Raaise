@@ -143,24 +143,17 @@ class ChangePassword extends React.Component {
                     <span className="label">New Password*</span>
                     <InputField name="newpassword" placeholder="New Password" type={!passwordVisible ? "password" : "text"} value={form.password} onChange={this.onChange}
                     errmsg={errors.newpassword || ""} focused={errors.newpassword ? 1 : 0}
-                    endAdornment={
-                    passwordVisible ? (
-                    <PasswordVisibleIcon onClick={() =>this.setState({passwordVisible:!passwordVisible})} />
-                    ) : (
-                   <PasswordInVisibleIcon onClick={() =>this.setState({passwordVisible:!passwordVisible})} />
-                    )}
+                    endAdornment={passwordVisible ? 
+                    (<PasswordVisibleIcon onClick={() =>this.setState({passwordVisible:!passwordVisible})} />) 
+                    :( <PasswordInVisibleIcon onClick={() =>this.setState({passwordVisible:!passwordVisible})} />)}
                     />
                 </div>
                 <div className="form-group">
                    <span className="label">Confirm Password*</span>
                     <InputField name="confirmpassword" placeholder="Confirm Password" type={!confirmPasswordVisible ? "password" : "text"} value={form.confirmpassword}
-                    onChange={this.onChange} errmsg={errors.confirmpassword || ""} focused={errors.confirmpassword ? 1 : 0}
-                    endAdornment={
-                    confirmPasswordVisible ? (
-                    <PasswordVisibleIcon onClick={() =>this.setState({confirmPasswordVisible:!confirmPasswordVisible})} />
-                     ) : (
-                    <PasswordInVisibleIcon onClick={() =>this.setState({confirmPasswordVisible:!confirmPasswordVisible})} />)
-                    }
+                     onChange={this.onChange} errmsg={errors.confirmpassword || ""} focused={errors.confirmpassword ? 1 : 0}
+                     endAdornment={confirmPasswordVisible ? (<PasswordVisibleIcon onClick={() =>this.setState({confirmPasswordVisible:!confirmPasswordVisible})} />
+                      ) : (<PasswordInVisibleIcon onClick={() =>this.setState({confirmPasswordVisible:!confirmPasswordVisible})} />)}
                     />
                 </div>
                 <div className="btn-section"><button className="submit-btn">Save</button></div>

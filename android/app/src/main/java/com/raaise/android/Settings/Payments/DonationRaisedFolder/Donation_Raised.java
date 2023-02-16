@@ -1,6 +1,7 @@
 package com.raaise.android.Settings.Payments.DonationRaisedFolder;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +47,9 @@ public class Donation_Raised extends AppCompatActivity {
                 TotalDonatedAmountText.setText("$" + userDonationHistoryModel.getData().getDonatedAmount());
                 TotalRaisedAmountText.setText("$" + userDonationHistoryModel.getData().getTotalRaised());
                 TotalWithdrawalAmountText.setText("$" + userDonationHistoryModel.getData().getTotalWithdraw());
+                if (list != null && list.size() > 0){
+                    list.clear();
+                }
                 list.addAll(userDonationHistoryModel.getData().getUserVideo());
                 adapter.notifyDataSetChanged();
             }
@@ -73,5 +77,12 @@ public class Donation_Raised extends AppCompatActivity {
         list = new ArrayList<>();
         adapter = new DonationRaisedAdapter(Donation_Raised.this, list);
         DonationHistoryRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        HitApi();
+        Log.i("claimAmount", "onRestart: Called");
     }
 }

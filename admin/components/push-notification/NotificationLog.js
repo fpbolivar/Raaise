@@ -8,7 +8,7 @@ import {getFormattedDate} from "../../components/helpers/GlobalHelpers"
 import NotificationModal from "../helpers/modal/NotificationModal";
 import moment from "moment";
 
-class ViewPushNotification extends React.Component {
+class NotificationLog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,14 +57,27 @@ class ViewPushNotification extends React.Component {
         },
         {
           Header: "Schedule",
-          accessor: "sendType",
+          accessor: "type",
           disableFilters: true,
           Cell: ({ cell: { row } }) => {
             return(
-              <span>{(row && row.original.sendType == "schedule" ? <span>Scheduled</span> :<span>Send Now</span> )}</span> 
+              <span>{(row && row.original.type=="send-now" ? <span>Send Now</span> :<span>Scheduled</span> )}</span> 
             )
           }
         },
+        // {
+        //     Header: "Status",
+        //     accessor: "",
+        //     disableFilters: true,
+        //     Cell: ({ cell: { row } }) => {   
+        //         console.log(row.original,"row.original")  
+        //         return (
+        //           <>
+        //             {row.original.isSend=="true" ? (<span>Sent</span>) : (<span>Pending</span>)}
+        //           </>
+        //         );
+        //       },
+        //   },
         {
           Header: "Date",
           accessor: "date",
@@ -72,6 +85,7 @@ class ViewPushNotification extends React.Component {
           Cell: ({ cell: { row } }) => {
             return(
               <span>{(row && row.original.scheduleTime && moment(row.original.scheduleTime).format('YYYY/MM/DD HH:mm'))}</span> 
+            //   <span>{getFormattedDate(row && row.original.scheduleTime)}</span> 
             )
           }
         },
@@ -79,6 +93,9 @@ class ViewPushNotification extends React.Component {
           Header: "Users",
           accessor: "totalUser",
           disableFilters: true,
+          // Cell: ({ cell: { row } }) => {
+          //   return row && row.original.userName[0].toUpperCase() + row.original.userName.substr(1) 
+          // },
         },
         {
           Header: "Action",
@@ -136,7 +153,7 @@ class ViewPushNotification extends React.Component {
         columnsFilters[obj.column] = obj.value;
         pageNumber = 1;
       }
-      const { data } = await axios.post(`${NOTIFICATION.getNotification}`,{ 
+      const { data } = await axios.post(`${NOTIFICATION.logNotification}`,{ 
         page: pageNumber,
         limit: dataLimit,
         ...columnsFilters,
@@ -175,17 +192,14 @@ class ViewPushNotification extends React.Component {
         )}
         <Wrapper>
           <Header>
-            <span className="title">View Push Notifications</span>
-            <div className="push-notif-div">               
-              <a href="/notification/push-notification">+Push Notification</a>
-            </div>
+            <span className="title">View Notification Logs</span>
           </Header>
-          <div className="notification-table">
-          <FilteringTable data={responseData} columns={columns} pagination={pagination} handleTable={this.getData}/>
+          <div className="notification-log">
+            <FilteringTable data={responseData} columns={columns} pagination={pagination} handleTable={this.getData}/>
           </div>
         </Wrapper>
       </Container>
     );
   }
 }
-export default withRouter(ViewPushNotification);
+export default withRouter(NotificationLog);

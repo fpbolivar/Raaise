@@ -1,25 +1,31 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const notificationSchema = new mongoose.Schema({
+const pushNotificationSchema = new mongoose.Schema({
     type: {
         type: String,
-        required: true // like,comment ,message,schedule
+        required: "" // now or schedule,
     },
     title: {
         type: String,
-        default: false // title of the notification
+        default: "" // title of the notification
     },
     desc: {
         type: String,
-        required: true // description  or body
+        required: "" // description  or body
     },
     to: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "user", // Receiver id
+        default: []
     },
     from: {
         type: Schema.Types.ObjectId,
+        required: true,
+        ref: "admin", // sender id
+    },
+    scheduleTime: {
+        type: Date,
         required: true,
     },
     isRead: {
@@ -37,13 +43,9 @@ const notificationSchema = new mongoose.Schema({
         default: false
 
     },
-    videoId: {
-        type: Schema.Types.ObjectId,
-        ref: "userVideo", // video id
-    }
 },
     { timestamps: true }
 )
 
-const notification = mongoose.model('notification', notificationSchema)
-module.exports = notification;
+const pushNotification = mongoose.model('pushNotification', pushNotificationSchema)
+module.exports = pushNotification;

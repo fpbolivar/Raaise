@@ -56,7 +56,7 @@ public class WithdrawalsAdapter extends RecyclerView.Adapter<WithdrawalsAdapter.
         }
 
         holder.withdrawAmountTV.setText("$ " + withdrawalData.amount);
-        holder.withdrawStatusTV.setText(withdrawalData.getWithdrawalStatus());
+        holder.withdrawStatusTV.setText(withdrawalData.getWithdrawalStatus().substring(0,1).toUpperCase() + withdrawalData.getWithdrawalStatus().substring(1).toLowerCase());
         holder.withdrawStatusTV.setTextColor(withdrawalData.withdrawalStatus.equalsIgnoreCase("Given") ?
                 ContextCompat.getColor(mContext, R.color.Green) :
                 ContextCompat.getColor(mContext, R.color.Red));

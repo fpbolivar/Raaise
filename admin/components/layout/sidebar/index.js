@@ -9,7 +9,8 @@ class SideBar extends React.PureComponent {
       toogleNav: {
         donation: false,
         audio: false,
-        video:false
+        video:false,
+        notification:false,
       },
     };
   }
@@ -19,6 +20,8 @@ class SideBar extends React.PureComponent {
     const donationArr = ["/donations/donation-received", "/donations/admin-commission","/donations/pending-transactions","/donations/transfer-transactions","/donations/withdraw-requests"];
     const audioArr = ["/audio/upload-audio", "/audio/audio-list"];
     const videoArr= ["/reported-video"];
+    const notificationArr= ["/notification/view-notification","/notification/notification-log"];
+
 
     if (donationArr.includes(router.pathname)) { //Donation Reports Menu to remain open
       this.setState((prevState) => ({
@@ -45,11 +48,21 @@ class SideBar extends React.PureComponent {
         },
       }));
     }
+    else if (notificationArr.includes(router.pathname)) {  //Video Menu to remain open
+      this.setState((prevState) => ({
+        ...prevState,
+        toogleNav: {
+          ...prevState.toogleNav,
+          notification: true,
+        },
+      }));
+    }
   };
 
   //to logout Admin
   handleLogout = () => {
     localStorage.removeItem("scriptube-admin-token");
+    localStorage.removeItem("admin-details");
     localStorage.removeItem("scriptube-admin-details");
     router.push("/");
   };
@@ -164,7 +177,7 @@ class SideBar extends React.PureComponent {
 
                 <NavLi>
                   <NavLinkActive onClick={() => router.push("/video-categories")} className="cursor-pointer" active={router.pathname == "/video-categories" ? true : false}>
-                  <svg width="20" height="18"  focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ViewListIcon"><path d="M3 14h4v-4H3v4zm0 5h4v-4H3v4zM3 9h4V5H3v4zm5 5h13v-4H8v4zm0 5h13v-4H8v4zM8 5v4h13V5H8z"></path></svg>
+                  <svg width="20" height="18"  focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ViewListIcon"><path fill={ router.pathname == "/video-categories"   ? "#ffffff"   : "#000000"} d="M3 14h4v-4H3v4zm0 5h4v-4H3v4zM3 9h4V5H3v4zm5 5h13v-4H8v4zm0 5h13v-4H8v4zM8 5v4h13V5H8z"></path></svg>
                     <span className="font-size-0-80rem">Categories</span>
                   </NavLinkActive>
                 </NavLi>
@@ -191,7 +204,20 @@ class SideBar extends React.PureComponent {
 
                 <NavLi>
                   <NavLinkActive onClick={() => {this.toogleBar("donation");}} className="cursor-pointer" active={router.pathname == "/donation-reports" ? true : false}>
-                    <svg viewBox="0 0 24 24" width="20" height="18"><path fill={ router.pathname == "/donation-reports"   ? "#ffffff"   : "#000000"} d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"></path></svg>
+                  <svg width="20" height="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 400 400"
+                    id="vector">
+                    <path
+                        id="path"
+                        d="M 124.25 168.9 C 120.55 172 116.25 173.2 110.15 173.8 L 110.15 140.8 C 117.45 143.2 122.35 145.7 125.45 148.1 C 127.85 150.5 129.75 154.2 129.75 158.5 C 129.151 162.8 127.351 166.4 124.25 168.9 Z M 97.951 82.6 C 92.451 83.2 88.151 85 85.051 87.5 C 81.951 90.6 80.151 94.2 80.151 97.9 C 80.151 102.2 81.351 105.2 83.851 107.7 C 86.251 110.1 91.151 112.6 97.951 115 L 97.951 82.6 Z M 385.55 152.4 L 385.55 355.6 C 385.55 380.7 365.351 400.901 340.251 400.901 L 60.651 400.901 C 35.551 400.901 15.351 380.7 15.351 355.6 L 15.351 45.3 C 15.351 20.2 35.551 0 60.651 0 L 235.651 0 C 253.35 0 261.95 4.9 272.95 16.5 L 368.45 113.2 C 381.251 125.4 385.55 133.4 385.55 152.4 Z M 184.25 107.1 L 251.549 107.1 C 259.549 107.1 265.651 101 265.651 93.6 L 265.651 83.2 C 265.651 75.9 259.549 69.7 251.549 69.7 L 184.25 69.7 L 184.25 107.1 Z M 97.951 137.7 L 97.951 173.8 C 86.951 172 76.551 167.1 66.151 157.9 L 52.651 173.8 C 66.151 185.4 81.451 192.2 97.951 194 L 97.951 207.4 L 109.551 207.4 L 109.551 193.9 C 122.451 193.3 132.151 189.6 140.151 182.9 C 147.451 176.2 151.751 167 151.751 156.6 C 151.751 145.6 148.651 137.6 141.951 132.1 C 135.251 126.6 124.851 121.7 110.751 118.6 L 110.151 118.6 L 110.151 83.7 C 119.951 84.9 128.551 89.2 136.451 94.7 L 148.651 77.6 C 136.451 69.6 123.551 64.7 110.051 64.1 L 110.051 53.7 L 98.451 53.7 L 98.451 62.9 C 86.851 63.5 77.051 67.2 69.651 73.9 C 62.351 80.6 58.051 89.8 58.051 100.2 C 58.051 110.6 61.751 118.6 67.851 124.7 C 74.051 129.7 83.851 134.6 97.951 137.7 Z M 349.45 336 C 349.45 328.699 343.35 322.5 335.35 322.5 L 64.25 322.5 C 56.25 322.5 50.75 328.6 50.75 336 L 50.75 346.4 C 50.75 353.699 56.85 359.9 64.25 359.9 L 335.35 359.9 C 342.651 359.9 349.45 353.8 349.45 346.4 L 349.45 336 Z M 349.45 251.5 C 349.45 244.199 343.35 238 335.35 238 L 64.25 238 C 56.25 238 50.75 244.1 50.75 251.5 L 50.75 261.9 C 50.75 269.199 56.85 275.4 64.25 275.4 L 335.35 275.4 C 342.651 275.4 349.45 269.3 349.45 261.9 L 349.45 251.5 Z M 349.45 167 C 349.45 159.7 343.35 153.5 335.35 153.5 L 184.25 153.5 L 184.25 190.8 L 335.45 190.8 C 342.751 190.8 349.55 184.7 349.55 177.3 L 349.55 167 L 349.45 167 Z"
+                        fill="#000000"
+                        stroke-width="1"/>
+                </svg>
+                    
+                    
+                    
+                    {/* <svg viewBox="0 0 24 24" width="20" height="18"><path fill={ router.pathname == "/donation-reports"   ? "#ffffff"   : "#000000"} d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"></path></svg> */}
                     <ToogleSubMenu>
                       <span className="font-size-0-80rem">Donation Reports</span>
                       {toogleNav.donation ? (
@@ -253,7 +279,7 @@ class SideBar extends React.PureComponent {
 
                 <NavLi>
                   <NavLinkActive onClick={() => {this.toogleBar("video")}} className="cursor-pointer">
-                   <svg width="20" height="18" viewBox="0 0 24 24"><path  fill={router.pathname == "/" ? "#ffffff" : "#000000"} d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.11-.9-2-2-2zm0 14H3V5h18v12zm-5-6-7 4V7z"></path></svg>
+                   <svg width="20" height="18" viewBox="0 0 24 24"><path  fill={"#000000"} d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.11-.9-2-2-2zm0 14H3V5h18v12zm-5-6-7 4V7z"></path></svg>
                     <ToogleSubMenu>
                       <span className="font-size-0-80rem">Reported Video</span>
                       {toogleNav.video ? (
@@ -271,12 +297,30 @@ class SideBar extends React.PureComponent {
                     </NavLinkActive>
                   </SubNav>
                 )}
+
                 <NavLi>
-                  <NavLinkActive onClick={() =>router.push("/notification/view-notification")} className="cursor-pointer" active={ router.pathname == "/notification/view-notification"   ? true   : false}>
-                    <svg width="20" height="18" viewBox="0 0 24 24"><path fill={router.pathname == "/notification/view-notification"? "#ffffff" : "#000000"} d="M10 20h4c0 1.1-.9 2-2 2s-2-.9-2-2zm4-11c0 2.61 1.67 4.83 4 5.66V17h2v2H4v-2h2v-7c0-2.79 1.91-5.14 4.5-5.8v-.7c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v.7c.71.18 1.36.49 1.95.9C14.54 6.14 14 7.51 14 9zm10-1h-3V5h-2v3h-3v2h3v3h2v-3h3V8z"></path></svg>
-                    <span className="font-size-0-80rem">Push Notifications</span>
+                  <NavLinkActive onClick={() => {this.toogleBar("notification")}} className="cursor-pointer">
+                  <svg width="20" height="18" class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiBox-root css-1om0hkc" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="NotificationsIcon"><path fill="#000000"  d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"></path></svg>
+                    <ToogleSubMenu>
+                      <span className="font-size-0-80rem">Notification</span>
+                      {toogleNav.notification ? (
+                        <svg viewBox="0 0 24 24" width="20" height="18"><path d="m7 10 5 5 5-5z"></path></svg>
+                      ) : (
+                        <svg viewBox="0 0 24 24" width="20" height="18"><path d="m10 17 5-5-5-5v10z"></path></svg>
+                      )}
+                    </ToogleSubMenu>
                   </NavLinkActive>
                 </NavLi>
+                {toogleNav.notification && (
+                  <SubNav>
+                    <NavLinkActive onClick={() => router.push("/notification/view-notification")} className="cursor-pointer" active={router.pathname == "/notification/view-notification" ? true : false}>
+                      <span className="font-size-0-80rem">Push Notification</span>
+                    </NavLinkActive>
+                    <NavLinkActive onClick={() => router.push("/notification/notification-log")} className="cursor-pointer" active={router.pathname == "/notification/notification-log" ? true : false}>
+                      <span className="font-size-0-80rem">Notification Logs</span>
+                    </NavLinkActive>
+                  </SubNav>
+                )}
 
                 <NavLi>
                   <NavLinkActive onClick={() => router.push("/verification/verified-users")} className="cursor-pointer" active={router.pathname == "/verification/verified-users"? true: false}>
