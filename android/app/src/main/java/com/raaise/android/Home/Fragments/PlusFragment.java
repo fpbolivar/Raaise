@@ -2,6 +2,7 @@ package com.raaise.android.Home.Fragments;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -54,7 +55,9 @@ import com.raaise.android.R;
 import com.raaise.android.Select_AudioActivity;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
+import com.raaise.android.VideoService;
 import com.raaise.android.model.MusicData;
+import com.raaise.android.model.VideoPojo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -80,7 +83,8 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
     VideoView videoView;
     ImageView Iv_Btn_Donation;
     LinearLayout SelectAudio;
-    ApiManager apiManager = App.getApiManager();
+    public static ApiManager apiManager = App.getApiManager();
+    public static VideoPojo pojo;
     String[] arrayOfCategories;
     String[] arrayOfCodes;
     Spinner selectCategorySpin;
@@ -120,10 +124,10 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
         if (VideoPath != null) {
             ((Home) requireActivity()).videoPath = VideoPath;
         }
-        Log.i("fromTryAudio", "onCreateView: without " + ((Home) requireActivity()).videoUri);
         Initialization(v);
         if (App.fromTryAudio){
-            selectAudioTV.setText(App.musicTitle);
+            Log.i("fromTryAudio", "onCreateView: without " + ((Home) requireActivity()).videoUri);
+            selectAudioTV.setText(App.songName);
             videoView.setVideoURI(Uri.parse(((Home) requireActivity()).videoPath));
             videoView.requestFocus();
             videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -487,50 +491,19 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
 
                 }
 
-                Log.i("videoRes", "onResponse: getting upload");
-                Dialogs.createProgressDialog(getContext());
                 dialog.dismiss();
-                ApiUtilities.getApiInterface().uploadVideo(Prefs.GetBearerToken(getActivity()), videoCaption, isDonation, donationAmt, finalAudioID, finalCategoryID, vdoBody, imageBody).enqueue(new Callback<JsonObject>() {
-                    @Override
-                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                        Log.i("videoRes", "onResponse: under res " + response.code());
+                pojo = new VideoPojo(((Home) requireActivity()), Prefs.GetBearerToken(getActivity()), videoCaption, isDonation, donationAmt, finalAudioID, finalCategoryID, vdoBody, imageBody);
+                Intent intent = new Intent(getContext(), VideoService.class);
+                getActivity().startService(intent);
 
-                        if (response.isSuccessful()) {
-                            Log.i("videoRes", "onResponse: Success");
-                            try {
+                Toast.makeText(getActivity(), "Post will be created", Toast.LENGTH_SHORT).show();
+                ((Home) requireActivity()).shouldMergeAudio = false;
+                ((Home) requireActivity()).fromGallery = false;
+                ((Home) requireActivity()).musicData = "";
+                ((Home) requireActivity()).musicTitle = "";
+                MERGED_VIDEO_PATH = "";
+                ((Home) requireActivity()).SelectHomeScreen();
 
-                                File audioFile = new File(Environment.getExternalStorageDirectory().getPath() + "/Download/" + ((Home) requireActivity()).musicTitle);
-
-                                if (audioFile.exists()) {
-                                    audioFile.delete();
-                                }
-
-
-                            } catch (Exception e) {
-                                Toast.makeText(getActivity(), "2" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                            ((Home) requireActivity()).shouldMergeAudio = false;
-                            ((Home) requireActivity()).fromGallery = false;
-                            ((Home) requireActivity()).musicData = "";
-                            ((Home) requireActivity()).musicTitle = "";
-                            MERGED_VIDEO_PATH = "";
-                            Toast.makeText(getContext(), "Post created successfully", Toast.LENGTH_SHORT).show();
-                            Dialogs.HideProgressDialog();
-                            Log.i("videoRes", "onResponse: under select home scr " );
-                            ((Home) requireActivity()).SelectHomeScreen();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<JsonObject> call, Throwable t) {
-                        Toast.makeText(getContext(), "" + t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        Log.i("videoRes", "onResponse: under failure " + t.getLocalizedMessage());
-                        Dialogs.HideProgressDialog();
-
-                    }
-
-
-                });
             }
         });
         dialog.show();
@@ -602,6 +575,7 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
         ((Home) requireActivity()).fromGallery = false;
         App.fromTryAudio = false;
         App.musicTitle = "";
+        App.songName = "";
         Log.i("onDetach", "onDetach: Called");
     }
 }

@@ -2,6 +2,7 @@ package com.raaise.android.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.raaise.android.ApiManager.ApiModels.ListOfVideoCommentsModel;
 import com.raaise.android.Home.Fragments.OtherUserProfileActivity;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,6 +27,7 @@ import java.util.Locale;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
     public static String time;
+    CommentsReplyAdapter adapter;
     private final RecyclerView.RecycledViewPool
             viewPool
             = new RecyclerView
@@ -33,11 +36,14 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     private final List<ListOfVideoCommentsModel.Data> comments;
     boolean visible = false;
     CommentReplyListener listener;
+    private CommentsReplyAdapter.VideoReplyListener mListener;
 
-    public CommentsAdapter(Context mContext, List<ListOfVideoCommentsModel.Data> comments, CommentReplyListener listener) {
+    public CommentsAdapter(Context mContext, List<ListOfVideoCommentsModel.Data> comments, CommentReplyListener listener, CommentsReplyAdapter.VideoReplyListener rplListener) {
         this.mContext = mContext;
         this.comments = comments;
         this.listener = listener;
+        this.mListener = rplListener;
+
     }
 
     @NonNull
@@ -50,6 +56,11 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull CommentsAdapter.ViewHolder holder, int position) {
         ListOfVideoCommentsModel.Data Model = comments.get(position);
+        if (Model.commentBy._id.equals(Prefs.GetUserID(mContext))){
+            holder.moreOptions.setVisibility(View.VISIBLE);
+        } else {
+            holder.moreOptions.setVisibility(View.INVISIBLE);
+        }
         Glide.with(holder.userIV)
                 .load(Model.getCommentBy().getProfileImage())
                 .placeholder(R.drawable.placeholder)
@@ -66,11 +77,12 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         if (comments.get(position).getReplyId().size() != 0) {
             holder.ViewRepliesInComments.setVisibility(View.VISIBLE);
             holder.ReplyInCommentsRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 1));
-            CommentsReplyAdapter adapter = new CommentsReplyAdapter(holder.ReplyInCommentsRecyclerView.getContext(), comments.get(position).getReplyId());
+            adapter = new CommentsReplyAdapter(holder.ReplyInCommentsRecyclerView.getContext(), comments.get(position).getReplyId(), mListener);
             holder.ReplyInCommentsRecyclerView.setAdapter(adapter);
             holder.ReplyInCommentsRecyclerView.setRecycledViewPool(viewPool);
         } else {
             holder.ViewRepliesInComments.setVisibility(View.GONE);
+            holder.ReplyInCommentsRecyclerView.setVisibility(View.GONE);
         }
         if (comments.get(position).getReplyId().size() != 0) {
             holder.ViewRepliesInComments.setOnClickListener(view -> {
@@ -88,6 +100,12 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         holder.ReplyComment.setOnClickListener(view -> listener.ShowReplySheet(Model.getCommentBy().getUserName(), comments.get(position).get_id()));
         holder.userIV.setOnClickListener(view -> DoOpenUserProfile(Model));
         holder.commentatorName.setOnClickListener(view -> DoOpenUserProfile(Model));
+        holder.moreOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.moreOptionsClicked(Model.get_id(), Model.getComment());
+            }
+        });
     }
 
     @Override
@@ -101,6 +119,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
 
     public interface CommentReplyListener {
         void ShowReplySheet(String Name, String CommentId);
+        void moreOptionsClicked(String commentID, String comment);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -108,9 +127,11 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         TextView commentatorName, Time, ReplyComment;
         TextView commentatorText, ViewRepliesInComments;
         RecyclerView ReplyInCommentsRecyclerView;
+        ImageView moreOptions;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            moreOptions = itemView.findViewById(R.id.more_options);
             Time = itemView.findViewById(R.id.Time);
             ReplyComment = itemView.findViewById(R.id.ReplyComment);
             ReplyInCommentsRecyclerView = itemView.findViewById(R.id.ReplyInCommentsRecyclerView);

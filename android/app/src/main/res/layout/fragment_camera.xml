@@ -33,11 +33,19 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp">
 
+<!--        <TextView-->
+<!--            android:id="@+id/btn_flip"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="flip"-->
+<!--            android:textSize="22sp"-->
+<!--            android:textColor="@color/white"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"/>-->
+
         <ImageView
             android:id="@+id/GallerySelected"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/CameraClickButton"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_centerVertical="true"
@@ -48,17 +56,20 @@
             android:layout_toStartOf="@id/CameraClickButton"
             android:padding="5dp"
             android:src="@drawable/gallery"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/CameraClickButton"
+            app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/white" />
 
         <RelativeLayout
             android:id="@+id/CameraClickButton"
             android:layout_width="90dp"
             android:layout_height="90dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_centerHorizontal="true">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/CameraButtonOuterShell"
@@ -78,15 +89,15 @@
 
         <ImageView
             android:id="@+id/flash_button"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/CameraClickButton"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="30dp"
             android:layout_toEndOf="@id/CameraClickButton"
-            android:src="@drawable/flash_off" />
+            android:src="@drawable/flash_off"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/CameraClickButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

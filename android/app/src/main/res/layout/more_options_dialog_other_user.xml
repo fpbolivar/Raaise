@@ -6,7 +6,7 @@
     android:background="@color/black">
 
     <LinearLayout
-        android:id="@+id/block_video_btn"
+        android:id="@+id/report_user_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -17,12 +17,13 @@
         app:layout_constraintRight_toRightOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/outer_shell1"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 app:tint="@color/Red"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -31,8 +32,8 @@
                 android:src="@drawable/camera_button_outer_shell"/>
 
             <ImageView
-                android:layout_width="8dp"
-                android:layout_height="8dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 app:tint="@color/Red"
                 android:src="@drawable/close_icon"
                 app:layout_constraintLeft_toLeftOf="@id/outer_shell1"
@@ -46,8 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="Block"
-            android:textColor="@color/Red_ReportDialog_Text_Color"
+            android:text="Report User"
+            android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>
 
@@ -58,24 +59,43 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@id/block_video_btn"
+        app:layout_constraintTop_toBottomOf="@id/report_user_btn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="1dp"
-            android:src="@drawable/report_img"
-            app:tint="@color/Red_ReportDialog_Text_Color" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/outer_shell"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:tint="@color/Red"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/camera_button_outer_shell"/>
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                app:tint="@color/Red"
+                android:src="@drawable/close_icon"
+                app:layout_constraintLeft_toLeftOf="@id/outer_shell"
+                app:layout_constraintTop_toTopOf="@id/outer_shell"
+                app:layout_constraintRight_toRightOf="@id/outer_shell"
+                app:layout_constraintBottom_toBottomOf="@id/outer_shell"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="Report"
-            android:textColor="@color/Red_ReportDialog_Text_Color"
+            android:text="Block User"
+            android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>
 

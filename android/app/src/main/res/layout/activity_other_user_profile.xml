@@ -10,17 +10,18 @@
     android:scrollbars="none"
     tools:context=".Home.Fragments.OtherUserProfileActivity">
     <!--*************   Top Bar    *************-->
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/BackInOtherUserProfile"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="35dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
-            android:adjustViewBounds="true"
             android:src="@drawable/backarrow"
             app:tint="@color/white" />
 
@@ -28,34 +29,23 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_toEndOf="@+id/BackInOtherUserProfile"
+            app:layout_constraintTop_toTopOf="@id/BackInOtherUserProfile"
+            app:layout_constraintLeft_toRightOf="@id/BackInOtherUserProfile"
             android:adjustViewBounds="true"
             android:src="@drawable/splash_logo" />
+        
+        <ImageView
+            android:id="@+id/more_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/BackInOtherUserProfile"
+            app:layout_constraintBottom_toBottomOf="@id/BackInOtherUserProfile"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/more_options_btns"
+            android:rotation="90"/>
 
-        <!--            <ImageView-->
-        <!--                android:id="@+id/Add_Video_In_Profile"-->
-        <!--                android:layout_width="30dp"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginTop="30dp"-->
-        <!--                android:layout_marginRight="20dp"-->
-        <!--                app:tint="@color/white"-->
-        <!--                android:layout_toStartOf="@+id/Settings_In_Profile"-->
-        <!--                android:adjustViewBounds="true"-->
-        <!--                android:src="@drawable/add_video_in_profile" />-->
-
-        <!--            <ImageView-->
-        <!--                android:id="@+id/Settings_In_Profile"-->
-        <!--                android:layout_width="30dp"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_alignParentEnd="true"-->
-        <!--                android:layout_marginTop="30dp"-->
-        <!--                android:layout_marginRight="30dp"-->
-        <!--                android:adjustViewBounds="true"-->
-        <!--                android:src="@drawable/setting_in_profile"-->
-        <!--                app:tint="@color/white" />-->
-
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"

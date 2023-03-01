@@ -1,4 +1,4 @@
-package com.raaise.android.Activity.Credentials.ForgetPasswordFragments;
+package com.raaise.android.Activity.credentials.ForgetPasswordFragments;
 
 import android.os.Bundle;
 import android.text.Html;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.raaise.android.Activity.Credentials.ForgetPassword;
+import com.raaise.android.Activity.credentials.ForgetPassword;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.VerifyOtpModel;
 import com.raaise.android.ApiManager.DataCallback;

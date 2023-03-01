@@ -146,7 +146,7 @@ profile. These details will be used to give enhanced engagement of  the applicat
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/curved_dark_grey_background"
-            android:hint="Phone Number"
+            android:hint="Phone Number (Optional)"
             android:inputType="phone"
             android:paddingHorizontal="20dp"
             android:textColor="@color/light_grey"

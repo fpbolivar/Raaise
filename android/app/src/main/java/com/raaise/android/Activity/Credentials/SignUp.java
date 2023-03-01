@@ -1,13 +1,24 @@
-package com.raaise.android.Activity.Credentials;
+package com.raaise.android.Activity.credentials;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.util.Base64;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +37,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.FacebookLoginModel;
 import com.raaise.android.ApiManager.ApiModels.GoogleLoginModel;
@@ -35,11 +47,14 @@ import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.ApiManager.ServerError;
 import com.raaise.android.Home.MainHome.Home;
 import com.raaise.android.R;
+import com.raaise.android.Settings.About.SingleAbout;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class SignUp extends AppCompatActivity {
@@ -56,6 +71,8 @@ public class SignUp extends AppCompatActivity {
     GoogleSignInOptions Gso;
     GoogleSignInClient Gsc;
     CallbackManager callbackManager;
+    TextView termsTextViewBtn;
+    CheckBox termsPolicyCheckBox;
     ApiManager apiManagerApi = App.getApiManager();
 
     @Override
@@ -64,6 +81,28 @@ public class SignUp extends AppCompatActivity {
         getWindow().getAttributes().windowAnimations = R.anim.zoom_enter;
         setContentView(R.layout.activity_sign_up);
         BackArrow = findViewById(R.id.BackInSignUp);
+        termsTextViewBtn = findViewById(R.id.termsTextView);
+        termsPolicyCheckBox = findViewById(R.id.termsCheckBox);
+
+        SpannableString string = new SpannableString("By signing in your agreeing to our Terms of Service and Privacy Policy");
+
+        string.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View view) {
+                startActivity(new Intent(SignUp.this, SingleAbout.class).putExtra("AboutFrom", "TermsOfServiceInSettings"));
+            }
+        }, 35, 52, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+
+        string.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View view) {
+                startActivity(new Intent(SignUp.this, SingleAbout.class).putExtra("AboutFrom", "PrivacyPolicyInSettings"));
+            }
+        }, 56, 70, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+
+        termsTextViewBtn.setText(string);
+        termsTextViewBtn.setMovementMethod(LinkMovementMethod.getInstance());
+
         BackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +114,7 @@ public class SignUp extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Log.i("fbToken", "onSuccess: fb " + new Gson().toJson(loginResult));
                 LoginWithFacebook(loginResult.getAccessToken().getToken());
             }
 
@@ -84,6 +124,19 @@ public class SignUp extends AppCompatActivity {
 
             @Override
             public void onError(@NonNull FacebookException e) {
+                try {
+                    PackageInfo info =     getPackageManager().getPackageInfo("com.raaise.android",     PackageManager.GET_SIGNATURES);
+                    for (Signature signature : info.signatures) {
+                        MessageDigest md = MessageDigest.getInstance("SHA");
+                        md.update(signature.toByteArray());
+                        String sign=Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                        Log.i("fbToken", "hash " + sign);
+                        Toast.makeText(getApplicationContext(),sign,     Toast.LENGTH_LONG).show();
+                    }
+                } catch (PackageManager.NameNotFoundException ex) {
+                } catch (NoSuchAlgorithmException ec) {
+                }
+                Log.i("fbToken", "onSuccess: fb " + e.getMessage());
                 Prompt.SnackBar(findViewById(android.R.id.content), e.getMessage());
             }
         });
@@ -224,8 +277,8 @@ public class SignUp extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         Gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER))
-                .requestServerAuthCode(getString(R.string.server_client_id))
-                .requestIdToken(getString(R.string.server_client_id))
+//                .requestServerAuthCode(getString(R.string.server_client_id))
+                .requestIdToken("386568747603-c49pj1hfk7l17cniqujqif7njbe33ir8.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
         Gsc = GoogleSignIn.getClient(this, Gso);
@@ -270,6 +323,8 @@ public class SignUp extends AppCompatActivity {
             showMessage("Password Must Contain 1 Uppercase,1 Lowercase,1 Special character with length 8");
         } else if (!ConfirmPassword.matches(pswrd)) {
             showMessage("New password and confirm password must match");
+        } else if (!termsPolicyCheckBox.isChecked()){
+            showMessage("Please agree to our Terms and Privacy Policies");
         } else {
 
             Dialogs.createProgressDialog(SignUp.this);

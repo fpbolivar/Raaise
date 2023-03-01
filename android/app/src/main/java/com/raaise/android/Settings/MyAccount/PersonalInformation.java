@@ -118,16 +118,16 @@ public class PersonalInformation extends AppCompatActivity {
     }
 
     private void checkPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (!Environment.isExternalStorageManager()) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                startActivity(intent);
-                Toast.makeText(this, "Please Allow Permissions", Toast.LENGTH_SHORT).show();
-            }
-
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            if (!Environment.isExternalStorageManager()) {
+//                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+//                Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                intent.setData(uri);
+//                startActivity(intent);
+//                Toast.makeText(this, "Please Allow Permissions", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1001);
@@ -182,10 +182,6 @@ public class PersonalInformation extends AppCompatActivity {
         PhnNo = PhoneNumberEditTextInPersonalInformation.getText().toString().trim();
         if (Name.isEmpty()) {
             Prompt.SnackBar(findViewById(android.R.id.content), "Enter Name");
-        } else if (PhnNo.isEmpty()) {
-            Prompt.SnackBar(findViewById(android.R.id.content), "Enter Phone Number");
-        } else if (PhnNo.length() < 8) {
-            Prompt.SnackBar(findViewById(android.R.id.content), "Phone Number Should Be Greater Than 8");
         } else {
             if (imageUri != null && imageFile != null) {
                 UpdateUserDataWithImage(imageFile, Name, PhnNo);
@@ -197,6 +193,9 @@ public class PersonalInformation extends AppCompatActivity {
     }
 
     private void UpdateUserDataWithImage(File file, String namee, String phoneNumberr) {
+        if (phoneNumberr == null || phoneNumberr.isEmpty()){
+            phoneNumberr = "";
+        }
         Dialogs.createProgressDialog(PersonalInformation.this);
         RequestBody requestFileImg = RequestBody.create(MediaType.parse("image/*"), file);
         MultipartBody.Part image = MultipartBody.Part.createFormData("image", file.getName(), requestFileImg);
@@ -323,6 +322,9 @@ public class PersonalInformation extends AppCompatActivity {
     }
 
     private void UpdateUserData(String Name, String PhnNo) {
+        if (PhnNo == null || PhnNo.isEmpty() ){
+            PhnNo = "";
+        }
         UpdateUserProfileModel update = new UpdateUserProfileModel(Name, PhnNo);
 
 

@@ -1,4 +1,4 @@
-package com.raaise.android.Activity.Credentials.ForgetPasswordFragments;
+package com.raaise.android.Activity.credentials.ForgetPasswordFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 
-import com.raaise.android.Activity.Credentials.ForgetPassword;
+import com.raaise.android.Activity.credentials.ForgetPassword;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.CreateNewPasswordModel;
 import com.raaise.android.ApiManager.DataCallback;

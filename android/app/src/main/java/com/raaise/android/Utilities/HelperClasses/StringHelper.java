@@ -64,4 +64,11 @@ public class StringHelper {
     public static final String VIDEO_DONATION_HISTORY = "get-video-donation-history";
     public static final String GET_USER_WITHDRAWAL = "get-user-withdrawal-request";
     public static final String CLAIM_AMOUNT = "send-request-to-payment";
+    public static final String DELETE_VIDEO_COMMENT = "video-comment-delete";
+    public static final String EDIT_VIDEO_COMMENT = "edit-video-comment";
+    public static final String DELETE_COMMENT_REPLY = "delete-comment-reply";
+    public static final String EDIT_COMMENT_REPLY = "edit-comment-reply";
+    public static final String BLOCK_USER = "block-user";
+    public static final String REPORT_USER = "report-user";
+    public static final String BLOCK_CONTENT = "block-content";
 }

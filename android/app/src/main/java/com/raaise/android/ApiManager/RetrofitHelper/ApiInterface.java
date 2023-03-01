@@ -50,13 +50,20 @@ import com.raaise.android.ApiManager.ApiModels.VideoCommentModel;
 import com.raaise.android.ApiManager.ApiModels.VideoCommentsReplyModel;
 import com.raaise.android.ApiManager.ApiModels.VideoLikeDislikeModel;
 import com.raaise.android.Utilities.HelperClasses.StringHelper;
+import com.raaise.android.model.BlockUserPojo;
+import com.raaise.android.model.BlockVideoPojo;
 import com.raaise.android.model.ChatListModel;
 import com.raaise.android.model.ChatModel;
 import com.raaise.android.model.ClaimedAmountPojo;
+import com.raaise.android.model.CommentReplyPojo;
+import com.raaise.android.model.DeleteCommentPojo;
+import com.raaise.android.model.DeleteCommentReply;
+import com.raaise.android.model.EditVideoCmntPojo;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicResponse;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.VideoCommentDelete;
 import com.raaise.android.model.VideoDonationModal;
 import com.raaise.android.model.VideoDonationPojo;
 import com.raaise.android.model.WithdrawalsPojo;
@@ -70,6 +77,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
 
@@ -291,4 +299,25 @@ public interface ApiInterface {
 
     @POST(StringHelper.CLAIM_AMOUNT)
     Call<ClaimedAmountPojo> claimVideoAmount(@Header(StringHelper.AUTHORIZATION) String token, @Body VideoDonationModal videoDonationModal);
+
+    @POST(StringHelper.DELETE_VIDEO_COMMENT)
+    Call<VideoCommentDelete> deleteVideoComment(@Header(StringHelper.AUTHORIZATION) String token, @Body DeleteCommentPojo pojo);
+
+    @POST(StringHelper.EDIT_VIDEO_COMMENT)
+    Call<VideoCommentDelete> editVideoComment(@Header(StringHelper.AUTHORIZATION) String token, @Body EditVideoCmntPojo pojo);
+
+    @POST(StringHelper.DELETE_COMMENT_REPLY)
+    Call<VideoCommentDelete> deleteCommentReply(@Header(StringHelper.AUTHORIZATION) String toke, @Body DeleteCommentReply pojo);
+
+    @POST(StringHelper.EDIT_COMMENT_REPLY)
+    Call<VideoCommentDelete> editCommentReply(@Header(StringHelper.AUTHORIZATION) String token, @Body CommentReplyPojo pojo);
+
+    @POST(StringHelper.BLOCK_USER)
+    Call<VideoCommentDelete> blockUser(@Header(StringHelper.AUTHORIZATION) String token, @Body BlockUserPojo pojo);
+
+    @POST(StringHelper.REPORT_USER)
+    Call<VideoCommentDelete> reportUser(@Header(StringHelper.AUTHORIZATION) String token, @Body BlockUserPojo pojo);
+
+    @POST(StringHelper.BLOCK_CONTENT)
+    Call<VideoCommentDelete> blockVideo(@Header(StringHelper.AUTHORIZATION) String token, @Body BlockVideoPojo pojo);
 }

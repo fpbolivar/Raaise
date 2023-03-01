@@ -6,7 +6,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.raaise.android.Activity.Credentials.Login;
+import com.raaise.android.Activity.credentials.Login;
 import com.raaise.android.Home.MainHome.Home;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 

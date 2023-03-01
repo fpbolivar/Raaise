@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".Activity.Credentials.SignUp">
+    tools:context=".Activity.credentials.SignUp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -194,38 +194,36 @@
 
                     />
 
-
             </com.google.android.material.textfield.TextInputLayout>
-            <!--            <EditText-->
-            <!--                android:textSize="16dp"-->
-            <!--                android:id="@+id/PasswordEditTextInSignUp"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="50dp"-->
-            <!--                android:layout_below="@+id/EmailEditText"-->
-            <!--                android:layout_marginHorizontal="40dp"-->
-            <!--                android:layout_marginTop="10dp"-->
-            <!--                android:background="@drawable/edit_text_shape"-->
-            <!--                android:hint="Password"-->
-            <!--                android:inputType="textPassword"-->
-            <!--                android:paddingHorizontal="20dp"-->
-            <!--                android:textColor="@color/black"-->
-            <!--                android:textColorHint="@color/hintGreyColor" />-->
-            <!--            <EditText-->
-            <!--                android:textSize="16dp"-->
-            <!--                android:id="@+id/ConfirmPasswordEditTextInSignUp"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="50dp"-->
-            <!--                android:layout_below="@+id/EmailEditText"-->
-            <!--                android:layout_marginHorizontal="40dp"-->
-            <!--                android:layout_marginTop="10dp"-->
-            <!--                android:layout_marginBottom="10dp"-->
-            <!--                android:background="@drawable/edit_text_shape"-->
-            <!--                android:hint="Password"-->
-            <!--                android:padding="10dp"-->
-            <!--                android:inputType="textPassword"-->
-            <!--                android:paddingHorizontal="20dp"-->
-            <!--                android:textColor="@color/black"-->
-            <!--                android:textColorHint="@color/hintGreyColor" />-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="10dp">
+
+                <CheckBox
+                    android:id="@+id/termsCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <TextView
+                    android:id="@+id/termsTextView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/termsCheckBox"
+                    android:layout_marginStart="4dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/light_grey"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

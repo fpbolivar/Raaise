@@ -1,7 +1,9 @@
 package com.raaise.android.ApiManager;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.raaise.android.ApiManager.ApiModels.ChangePasswordModel;
 import com.raaise.android.ApiManager.ApiModels.CreateNewPasswordModel;
 import com.raaise.android.ApiManager.ApiModels.DeactivateAccountModel;
@@ -52,15 +54,23 @@ import com.raaise.android.ApiManager.ApiModels.VideoCommentsReplyModel;
 import com.raaise.android.ApiManager.ApiModels.VideoLikeDislikeModel;
 import com.raaise.android.ApiManager.RetrofitHelper.ApiUtilities;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.StringHelper;
+import com.raaise.android.model.BlockUserPojo;
+import com.raaise.android.model.BlockVideoPojo;
 import com.raaise.android.model.ChatListModel;
 import com.raaise.android.model.ChatModel;
 import com.raaise.android.model.ClaimedAmountPojo;
+import com.raaise.android.model.CommentReplyPojo;
+import com.raaise.android.model.DeleteCommentPojo;
+import com.raaise.android.model.DeleteCommentReply;
+import com.raaise.android.model.EditVideoCmntPojo;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicData;
 import com.raaise.android.model.MusicResponse;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.VideoCommentDelete;
 import com.raaise.android.model.VideoDonationModal;
 import com.raaise.android.model.VideoDonationPojo;
 import com.raaise.android.model.WithdrawalsPojo;
@@ -116,8 +126,20 @@ public class ApiManagerImplementation implements ApiManager {
                 @Override
                 public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                     try {
+                        Log.i("loginLet", "onResponse: " + new Gson().toJson(response.isSuccessful()));
+                        if (response.isSuccessful()){
+                            Log.i("loginLet", "onResponse: " + new Gson().toJson(response.body() == null));
+                            if (response.body() != null){
+                                try {
+                                    Log.i("loginLet", "onResponse: " + new Gson().toJson(response.body()));
+                                } catch (Exception e){
+                                    Log.i("loginLet", "onResponse: " + e.getMessage());
+                                }
+                            }
+                        }
                         if (response.isSuccessful() && response.code() == 200) {
                             if (response.body().getStatus() == 200) {
+
                                 Callback.onSuccess(response.body());
                             } else if (response.body().getStatusCode() == 400) {
                                 Callback.onError(new ServerError(response.body().getMessage()));
@@ -290,16 +312,18 @@ public class ApiManagerImplementation implements ApiManager {
                 @Override
                 public void onResponse(Call<ForgetPasswordModel> call, Response<ForgetPasswordModel> response) {
                     if (response.isSuccessful()) {
-                        if (response.body().getStatusCode() == 200) {
+                        if (response.body() != null){
+                            if (response.body().getStatusCode() == 200) {
 
-                            Callback.onSuccess(response.body());
+                                Callback.onSuccess(response.body());
 
 
-                        } else if (response.body().getStatusCode() == 422) {
-                            Callback.onError(new ServerError(response.body().getErrors().getMessage()));
-                        } else {
-                            Callback.onError(new ServerError(response.body().getErrors().getMessage()));
-                        }
+                            } else if (response.body().getStatusCode() == 422) {
+                                Callback.onError(new ServerError(response.body().getErrors().getMessage()));
+                            } else {
+                                Callback.onError(new ServerError(response.body().message));
+                            }
+                        } else Callback.onError(new ServerError(response.message()));
 
                     } else {
                         Callback.onError(new ServerError(response.message()));
@@ -1620,6 +1644,153 @@ public class ApiManagerImplementation implements ApiManager {
             @Override
             public void onFailure(Call<ClaimedAmountPojo> call, Throwable t) {
                 callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void deleteVideoComment(String token, DeleteCommentPojo pojo, DataCallback<VideoCommentDelete> callback) {
+        ApiUtilities.getApiInterface().deleteVideoComment(token, pojo).enqueue(new Callback<VideoCommentDelete>() {
+            @Override
+            public void onResponse(Call<VideoCommentDelete> call, Response<VideoCommentDelete> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200 ){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError("Something went wrong"));
+                    } else callback.onError(new ServerError("Something went wrong"));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<VideoCommentDelete> call, Throwable t) {
+                    callback.onError(new ServerError("Something went wrong"));
+            }
+        });
+    }
+
+    @Override
+    public void editVideoComment(String token, EditVideoCmntPojo pojo, DataCallback<VideoCommentDelete> callback) {
+        ApiUtilities.getApiInterface().editVideoComment(token, pojo).enqueue(new Callback<VideoCommentDelete>() {
+            @Override
+            public void onResponse(Call<VideoCommentDelete> call, Response<VideoCommentDelete> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError("Something went wrong"));
+                    } else callback.onError(new ServerError("Something went wrong"));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<VideoCommentDelete> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void deleteCommentReply(String token, DeleteCommentReply model, DataCallback<VideoCommentDelete> callback) {
+        ApiUtilities.getApiInterface().deleteCommentReply(token, model).enqueue(new Callback<VideoCommentDelete>() {
+            @Override
+            public void onResponse(Call<VideoCommentDelete> call, Response<VideoCommentDelete> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError(response.message()));
+                    } else callback.onError(new ServerError(response.message()));
+                } else callback.onError(new ServerError(response.message()));
+            }
+
+            @Override
+            public void onFailure(Call<VideoCommentDelete> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void editCommentReply(String token, CommentReplyPojo model, DataCallback<VideoCommentDelete> callback) {
+        ApiUtilities.getApiInterface().editCommentReply(token, model).enqueue(new Callback<VideoCommentDelete>() {
+            @Override
+            public void onResponse(Call<VideoCommentDelete> call, Response<VideoCommentDelete> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError("Something went wrong"));
+                    } else callback.onError(new ServerError("Something went wrong"));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<VideoCommentDelete> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void blockUser(String token, BlockUserPojo model, DataCallback<VideoCommentDelete> callback) {
+        ApiUtilities.getApiInterface().blockUser(token, model).enqueue(new Callback<VideoCommentDelete>() {
+            @Override
+            public void onResponse(Call<VideoCommentDelete> call, Response<VideoCommentDelete> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError("Something went wrong"));
+                    } else callback.onError(new ServerError("Something went wrong"));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<VideoCommentDelete> call, Throwable t) {
+                    callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void reportUser(String token, BlockUserPojo model, DataCallback<VideoCommentDelete> callback) {
+        ApiUtilities.getUserApiInterface().reportUser(token, model).enqueue(new Callback<VideoCommentDelete>() {
+            @Override
+            public void onResponse(Call<VideoCommentDelete> call, Response<VideoCommentDelete> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError("Something went wrong"));
+                    } else callback.onError(new ServerError("Something went wrong"));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<VideoCommentDelete> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void blockVideo(String token, BlockVideoPojo model, DataCallback<VideoCommentDelete> callback) {
+        ApiUtilities.getUserApiInterface().blockVideo(token, model).enqueue(new Callback<VideoCommentDelete>() {
+            @Override
+            public void onResponse(Call<VideoCommentDelete> call, Response<VideoCommentDelete> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200 || response.body().status == 422){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError("Something went wrong"));
+                    } else callback.onError(new ServerError("Something went wrong"));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<VideoCommentDelete> call, Throwable t) {
+                    callback.onError(new ServerError(t.getMessage()));
             }
         });
     }

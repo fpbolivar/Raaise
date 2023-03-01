@@ -15,13 +15,14 @@ public class App extends Application {
     public static ApiManagerImplementation apiManager;
     public static boolean fromTryAudio = false;
     public static String musicTitle = "";
+    public static String songName = "";
     public static boolean claim = false;
     private static Context context;
     private final Socket mSocket;
 
     {
         try {
-            mSocket = IO.socket("http://82.180.161.7:5000");
+            mSocket = IO.socket("http://34.230.148.158:5000");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }

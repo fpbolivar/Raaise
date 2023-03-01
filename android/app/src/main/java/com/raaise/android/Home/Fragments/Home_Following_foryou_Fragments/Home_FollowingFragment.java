@@ -1,17 +1,27 @@
 package com.raaise.android.Home.Fragments.Home_Following_foryou_Fragments;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS;
+
 import android.app.Dialog;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.webkit.CookieManager;
+import android.webkit.URLUtil;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,12 +32,15 @@ import android.widget.VideoView;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.arthenica.mobileffmpeg.FFmpeg;
 import com.raaise.android.Adapters.CommentsAdapter;
+import com.raaise.android.Adapters.CommentsReplyAdapter;
 import com.raaise.android.Adapters.HomeFollowingAdapter;
 import com.raaise.android.Adapters.ShareVideoUserListAdapter;
 import com.raaise.android.ApiManager.ApiManager;
@@ -40,6 +53,7 @@ import com.raaise.android.ApiManager.ApiModels.VideoLikeDislikeModel;
 import com.raaise.android.ApiManager.DataCallback;
 import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.ApiManager.ServerError;
+import com.raaise.android.BuildConfig;
 import com.raaise.android.Home.Fragments.ChatFragment;
 import com.raaise.android.Home.MainHome.Home;
 import com.raaise.android.R;
@@ -50,15 +64,32 @@ import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
 import com.raaise.android.Utilities.HelperClasses.ResumePlayFollowing;
 import com.raaise.android.Utilities.HelperClasses.StopForYouVideo;
+import com.raaise.android.Utilities.HelperClasses.StringHelper;
+import com.raaise.android.model.BlockVideoPojo;
 import com.raaise.android.model.ChatListModel;
+import com.raaise.android.model.CommentReplyPojo;
+import com.raaise.android.model.DeleteCommentPojo;
+import com.raaise.android.model.DeleteCommentReply;
+import com.raaise.android.model.EditVideoCmntPojo;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.VideoCommentDelete;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
-public class Home_FollowingFragment extends Fragment implements HomeFollowingAdapter.HomeReelsListener, CommentsAdapter.CommentReplyListener, StopForYouVideo, ResumePlayFollowing, ShareVideoUserListAdapter.ChatListListener {
+public class Home_FollowingFragment extends Fragment implements HomeFollowingAdapter.HomeReelsListener, CommentsAdapter.CommentReplyListener, StopForYouVideo, ResumePlayFollowing, ShareVideoUserListAdapter.ChatListListener, CommentsReplyAdapter.VideoReplyListener {
+    private String COMMENT_REPLY_EDIT_ID = "";
+    private boolean EDITING_COMMENT_REPLY = false;
+    private boolean EDITING_COMMENT = false;
+    private String videoID = "";
+    private String videoTitle = "";
+    private String EDIT_COMMENT_ID = "";
+    private EditText EditTextInCommentsBottomDialog;
     public static HomeFollowingAdapter homeFollowingAdapter;
     private final boolean _hasLoadedOnce = false;
     public List<ChatListModel.Data> chatListModels;
@@ -80,6 +111,46 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
     int iZ = 0;
     Dialog UserListDialog;
     String VideoId;
+    private long downloadID;
+
+    private final BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+
+            if (downloadID == id) {
+                shareIntent();
+            }
+        }
+    };
+
+    private void shareIntent() {
+        File file = new File(Environment.getExternalStorageDirectory().getPath()
+                + "/Download/" + videoTitle);
+
+        String WaterMarkVideoName = "Scriptube_share" + new Date().getTime();
+        String command = "-i " + file.getPath() + " -i " + StringHelper.WaterMarkLogo + " -filter_complex \"[1]scale=iw/4:-1[wm];[0][wm]  overlay=20:main_h-overlay_h\" " + Environment.getExternalStorageDirectory().getPath() + "/Download/"  + WaterMarkVideoName + ".mp4";
+        FFmpeg.executeAsync(command, (executionId, returnCode) -> {
+            if (returnCode == RETURN_CODE_SUCCESS) {
+                try {
+                    File shareFile = new File(Environment.getExternalStorageDirectory().getPath() + "/Download/"  + WaterMarkVideoName + ".mp4");
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("video/mp4");
+                    intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(Objects.requireNonNull(App.getContext()), BuildConfig.APPLICATION_ID + ".provider", shareFile));
+                    App.getContext().startActivity(Intent.createChooser(intent, "share").setFlags(FLAG_ACTIVITY_NEW_TASK));
+                    if (file.exists()) {
+                        file.delete();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            Dialogs.HideProgressDialog();
+
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,7 +188,7 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
             }
         });
 
-
+        getActivity().registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         return v;
     }
 
@@ -126,20 +197,6 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
 
     @Override
     public void onResume() {
-        this.iZ = 0;
-        HitGlobalVideoApi("following", "1", String.valueOf(PageCounter));
-        if (((Home) requireActivity()).adapterVideoVIew != null && ((Home) requireActivity()).adapterVideoVIew.isPlaying())
-            ((Home) requireActivity()).adapterVideoVIew.stopPlayback();
-//        if (homeFollowingAdapter != null) {
-//            homeFollowingAdapter.clearList();
-//        }
-
-//        if (this.videoView != null) {
-//            this.videoView.pause();
-//            this.videoView.stopPlayback();
-//        }
-
-
         super.onResume();
     }
 
@@ -259,8 +316,7 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
         });
         ShareOnOtherApps.setOnClickListener(view -> {
             UserListDialog.dismiss();
-            Dialogs.showProgressDialog(getActivity());
-            new Home_ForYouFragment.BackgroundVideoDownload(videoLink).execute();
+                beginDownload(videoLink);
         });
         Dialogs.createProgressDialog(v.getContext());
         GetUserListApi("", adapter);
@@ -349,7 +405,9 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
 
 
     private void ShowSearchUserDialog(String VideoId, TextView textView) {
+        videoID = videoID;
         Dialog dialog = new Dialog(v.getContext());
+        EDITING_COMMENT = false;
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.comments_bottom_sheet);
@@ -373,11 +431,18 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
+                EDITING_COMMENT = false;
             }
         });
         TextView sendButtonInCommentSheet = dialog.findViewById(R.id.sendButtonInCommentSheet);
-        EditText EditTextInCommentsBottomDialog = dialog.findViewById(R.id.EditTextInCommentsBottomDialog);
+        EditTextInCommentsBottomDialog = dialog.findViewById(R.id.EditTextInCommentsBottomDialog);
         sendButtonInCommentSheet.setOnClickListener(view -> {
+            if (EDITING_COMMENT_REPLY){
+                hitCommentReplyEditApi(COMMENT_REPLY_EDIT_ID, EditTextInCommentsBottomDialog.getText().toString());
+            } else
+            if (EDITING_COMMENT){
+                hitEditVdoCommentApi(EDIT_COMMENT_ID, EditTextInCommentsBottomDialog.getText().toString());
+            } else
             if (!isReply) {
                 DoComment(VideoId,
                         EditTextInCommentsBottomDialog.getText().toString().trim(),
@@ -389,7 +454,7 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
             EditTextInCommentsBottomDialog.setText("");
 
         });
-        adapter = new CommentsAdapter(v.getContext(), comments, Home_FollowingFragment.this);
+        adapter = new CommentsAdapter(v.getContext(), comments, Home_FollowingFragment.this, Home_FollowingFragment.this);
         CommentsRecyclerView.setAdapter(adapter);
         ListOfVideoCommentsModel model = new ListOfVideoCommentsModel(VideoId, "1000", "1");
         HitCommentsAPi(CommentsRecyclerView, commentsCount, sendButtonInCommentSheet, VideoId, textView);
@@ -400,6 +465,43 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.setCancelable(true);
+    }
+
+    private void hitCommentReplyEditApi(String replyID, String reply) {
+        Dialogs.createProgressDialog(getContext());
+        CommentReplyPojo model = new CommentReplyPojo(replyID, reply);
+        apiManager.editCommentReply(Prefs.GetBearerToken(getContext()), model, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                EDITING_COMMENT_REPLY = false;
+                hitCommentApi();
+                Dialogs.HideProgressDialog();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Toast.makeText(getContext(), serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                Dialogs.HideProgressDialog();
+            }
+        });
+    }
+    private void hitEditVdoCommentApi(String edit_comment_id, String comment) {
+        Dialogs.createProgressDialog(getContext());
+        EditVideoCmntPojo pojo = new EditVideoCmntPojo(edit_comment_id, comment);
+        apiManager.editVideoComment(Prefs.GetBearerToken(getContext()), pojo, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                EDITING_COMMENT = false;
+                EditTextInCommentsBottomDialog.setText("");
+                Dialogs.HideProgressDialog();
+                hitCommentApi();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Dialogs.HideProgressDialog();
+            }
+        });
     }
 
     private void DoReplyOverComment(String CommentId, String Reply, EditText editText) {
@@ -534,6 +636,25 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
         dialog.setContentView(R.layout.more_options_dialog);
 
         LinearLayout reportVideoBtn = dialog.findViewById(R.id.report_video_btn);
+        LinearLayout blockVideoBtn = dialog.findViewById(R.id.block_video_btn);
+        blockVideoBtn.setOnClickListener(view -> {
+            dialog.dismiss();
+            Dialogs.createProgressDialog(getContext());
+            BlockVideoPojo model = new BlockVideoPojo(list.get(position)._id);
+            apiManager.blockVideo(Prefs.GetBearerToken(getContext()), model, new DataCallback<VideoCommentDelete>() {
+                @Override
+                public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                    Dialogs.HideProgressDialog();
+                    Prompt.SnackBar(v, videoCommentDelete.message);
+                }
+
+                @Override
+                public void onError(ServerError serverError) {
+                    Dialogs.HideProgressDialog();
+                    Prompt.SnackBar(v, serverError.getErrorMsg());
+                }
+            });
+        });
         reportVideoBtn.setOnClickListener(view -> {
             dialog.dismiss();
             if (isReported) {
@@ -554,8 +675,85 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
     public void ShowReplySheet(String Name, String CommentId) {
         replyCommentId = CommentId;
         isReply = true;
+        if (EDITING_COMMENT){
+            EDITING_COMMENT = false;
+        }
         CommentReply.setVisibility(View.VISIBLE);
         replyToText.setText(Name);
+    }
+
+    @Override
+    public void moreOptionsClicked(String commentID, String comment) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.comment_more_options);
+
+        LinearLayout editComment = dialog.findViewById(R.id.edit_comment);
+        TextView deleteVideoComment = dialog.findViewById(R.id.delete_comment);
+        deleteVideoComment.setOnClickListener(view -> deleteVdoComment(videoID, commentID, dialog));
+        editComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editCmnt(comment, dialog, commentID);
+            }
+        });
+
+
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+
+    private void editCmnt(String comment, Dialog dialog, String commentID) {
+        EDITING_COMMENT = true;
+        dialog.dismiss();
+        if (!EditTextInCommentsBottomDialog.getText().toString().equalsIgnoreCase("")){
+            EditTextInCommentsBottomDialog.setText("");
+        }
+        EditTextInCommentsBottomDialog.setText(comment);
+        EDIT_COMMENT_ID = commentID;
+    }
+
+    private void deleteVdoComment(String videoID, String commentID, Dialog dialog) {
+        Dialogs.createProgressDialog(getContext());
+        DeleteCommentPojo pojo = new DeleteCommentPojo(videoID, commentID);
+        apiManager.deleteVideoComment(Prefs.GetBearerToken(requireContext()), pojo, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                Dialogs.HideProgressDialog();
+                Toast.makeText(getContext(), videoCommentDelete.message, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                hitCommentApi();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Dialogs.HideProgressDialog();
+                Toast.makeText(getContext(), serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+
+    private void hitCommentApi() {
+        ListOfVideoCommentsModel model = new ListOfVideoCommentsModel(videoID, "1000", "1");
+        apiManager.ListOfVideoCommentsModel(Prefs.GetBearerToken(v.getContext()), model, new DataCallback<ListOfVideoCommentsModel>() {
+            @Override
+            public void onSuccess(ListOfVideoCommentsModel listOfVideoCommentsModel) {
+                comments.clear();
+                comments.addAll(listOfVideoCommentsModel.getData());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Prompt.SnackBar(v, serverError.getErrorMsg());
+            }
+        });
     }
 
     @Override
@@ -592,5 +790,97 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
             UserListDialog.dismiss();
         }
         ((Home) requireActivity()).fragmentManagerHelper.replace(new ChatFragment(Slug, ReceiverId, SenderId, UserImageLink, Username, ShortBio, 1, VideoId), true);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            this.iZ = 0;
+            Log.i("fragmentResume", "onResume: Following");
+            HitGlobalVideoApi("following", "1", String.valueOf(PageCounter));
+            if (((Home) requireActivity()).adapterVideoVIew != null && ((Home) requireActivity()).adapterVideoVIew.isPlaying())
+                ((Home) requireActivity()).adapterVideoVIew.stopPlayback();
+        }
+    }
+
+    @Override
+    public void VdoRplMoreOptions(String id, String reply) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.comment_more_options);
+
+        TextView deleteReply = dialog.findViewById(R.id.delete_comment);
+        deleteReply.setOnClickListener(view -> {
+            dialog.dismiss();
+            deleteCommentReply(id);
+        });
+        LinearLayout editReply = dialog.findViewById(R.id.edit_comment);
+        editReply.setOnClickListener(view -> {
+            dialog.dismiss();
+            editCommentReply(id, reply);
+        });
+
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+
+
+    private void editCommentReply(String rplId, String reply) {
+        EDITING_COMMENT_REPLY = true;
+        COMMENT_REPLY_EDIT_ID = rplId;
+        EditTextInCommentsBottomDialog.setText(reply);
+    }
+
+    private void deleteCommentReply(String id) {
+        DeleteCommentReply model = new DeleteCommentReply(id);
+        Dialogs.createProgressDialog(getContext());
+        apiManager.deleteCommentReply(Prefs.GetBearerToken(getContext()), model, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                hitCommentApi();
+                Dialogs.HideProgressDialog();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Dialogs.HideProgressDialog();
+                Toast.makeText(getContext(), serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void beginDownload(String audioLink) {
+        try {
+            Dialogs.createProgressDialog(getContext());
+            DownloadManager.Request downloadRequest = new DownloadManager.Request(Uri.parse(Prefs.GetBaseUrl(getContext()) + audioLink));
+
+
+            String title = URLUtil.guessFileName(audioLink, null, null);
+            videoTitle = title;
+
+            downloadRequest.setTitle(title);
+
+            downloadRequest.setDescription("Downloading, Please Wait...!!!");
+
+            String cookie = CookieManager.getInstance().getCookie(audioLink);
+
+            downloadRequest.addRequestHeader("cookie", cookie);
+
+            downloadRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
+            downloadRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
+
+            downloadRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
+
+
+            DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+            downloadID = downloadManager.enqueue(downloadRequest);
+        } catch (Exception e) {
+            Dialogs.HideProgressDialog();
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

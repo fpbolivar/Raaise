@@ -5,11 +5,14 @@ import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Html;
@@ -19,6 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.webkit.CookieManager;
+import android.webkit.URLUtil;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,21 +32,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.arthenica.mobileffmpeg.FFmpeg;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.raaise.android.Adapters.CommentsAdapter;
+import com.raaise.android.Adapters.CommentsReplyAdapter;
 import com.raaise.android.Adapters.HomeFollowingAdapter;
 import com.raaise.android.Adapters.ShareVideoUserListAdapter;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.GetGlobalVideoModel;
+import com.raaise.android.ApiManager.ApiModels.GetPolicyModel;
 import com.raaise.android.ApiManager.ApiModels.ListOfVideoCommentsModel;
 import com.raaise.android.ApiManager.ApiModels.UserFollowUnfollowModel;
 import com.raaise.android.ApiManager.ApiModels.VideoCommentModel;
@@ -57,30 +65,37 @@ import com.raaise.android.R;
 import com.raaise.android.Settings.Payments.PaymentMethods;
 import com.raaise.android.Try_AudioActivity;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
-import com.raaise.android.Utilities.HelperClasses.HelperClass;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
 import com.raaise.android.Utilities.HelperClasses.ResumePlayForYou;
 import com.raaise.android.Utilities.HelperClasses.StopFollowingVideo;
 import com.raaise.android.Utilities.HelperClasses.StringHelper;
+import com.raaise.android.model.BlockVideoPojo;
 import com.raaise.android.model.ChatListModel;
+import com.raaise.android.model.CommentReplyPojo;
+import com.raaise.android.model.DeleteCommentPojo;
+import com.raaise.android.model.DeleteCommentReply;
+import com.raaise.android.model.EditVideoCmntPojo;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.VideoCommentDelete;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 
-public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapter.HomeReelsListener, CommentsAdapter.CommentReplyListener, StopFollowingVideo, ResumePlayForYou, ShareVideoUserListAdapter.ChatListListener {
+public class
+Home_ForYouFragment extends Fragment implements HomeFollowingAdapter.HomeReelsListener, CommentsAdapter.CommentReplyListener, StopFollowingVideo, ResumePlayForYou, ShareVideoUserListAdapter.ChatListListener, CommentsReplyAdapter.VideoReplyListener {
+    private String COMMENT_REPLY_EDIT_ID = "";
+    private boolean EDITING_COMMENT_REPLY = false;
+    private String EDIT_COMMENT_ID = "";
+    private boolean EDITING_COMMENT = false;
+    private EditText EditTextInCommentsBottomDialog;
+    private String videoTitle = "";
+    private String videoID = "";
     public List<ChatListModel.Data> chatListModels;
     HomeFollowingAdapter homeFollowingAdapter;
     List<GetGlobalVideoModel.Data> list = new ArrayList<>();
@@ -99,12 +114,50 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
     boolean first = false;
     String VideoId;
     Dialog UserListDialog;
+    private long downloadID;
+
+    private final BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+
+            if (downloadID == id) {
+                shareIntent();
+            }
+        }
+    };
+
+    private void shareIntent() {
+        File file = new File(Environment.getExternalStorageDirectory().getPath()
+                + "/Download/" + videoTitle);
+
+        String WaterMarkVideoName = "Scriptube_share" + new Date().getTime();
+        String command = "-i " + file.getPath() + " -i " + StringHelper.WaterMarkLogo + " -filter_complex \"[1]scale=iw/4:-1[wm];[0][wm]  overlay=20:main_h-overlay_h\" " + Environment.getExternalStorageDirectory().getPath() + "/Download/"  + WaterMarkVideoName + ".mp4";
+        FFmpeg.executeAsync(command, (executionId, returnCode) -> {
+            if (returnCode == RETURN_CODE_SUCCESS) {
+                try {
+                    File shareFile = new File(Environment.getExternalStorageDirectory().getPath() + "/Download/"  + WaterMarkVideoName + ".mp4");
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("video/mp4");
+                    intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(Objects.requireNonNull(App.getContext()), BuildConfig.APPLICATION_ID + ".provider", shareFile));
+                    App.getContext().startActivity(Intent.createChooser(intent, "share").setFlags(FLAG_ACTIVITY_NEW_TASK));
+                    if (file.exists()) {
+                        file.delete();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            Dialogs.HideProgressDialog();
+
+        });
+    }
 
     private static void OpenIntent(String path) {
-
         try {
             File f = new File(path);
-
             String WaterMarkVideoName = "Scriptube_share" + new Date().getTime();
             String command = "-i " + f.getPath() + " -i " + StringHelper.WaterMarkLogo + " -filter_complex \"[1]scale=iw/4:-1[wm];[0][wm]  overlay=20:main_h-overlay_h\" " + Environment.getExternalStorageDirectory() + "/" + "Scriptube" + "/" + App.getContext().getPackageName() + "/" + "Shared_Videos" + "/" + WaterMarkVideoName + ".mp4";
             FFmpeg.executeAsync(command, (executionId, returnCode) -> {
@@ -140,7 +193,13 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
         v = inflater.inflate(R.layout.fragment_home__for_you, container, false);
         Initialization(v);
         clickListeners();
-        HitGlobalVideoApi("1", String.valueOf(PageCounter));
+        if (Prefs.GetBaseUrl(requireContext()).equals("")){
+            getToken();
+
+        } else {
+            HitGlobalVideoApi("1", String.valueOf(PageCounter));
+        }
+
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -153,29 +212,15 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-
+                Log.i("pageSelected", "onPageSelected: ");
                 PageCounter++;
                 HitGlobalVideoApi("2", String.valueOf(PageCounter));
 
-
-
-
             }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-                if (state == ViewPager.SCROLL_STATE_IDLE) {
-
-
-
-
-
-
-
-                }
-            }
         });
+        Log.i("prefKey", "onCreateView: " + Prefs.GetBearerToken(getContext()));
+        getActivity().registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         return v;
     }
 
@@ -282,8 +327,7 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
         });
         ShareOnOtherApps.setOnClickListener(view -> {
             UserListDialog.dismiss();
-            Dialogs.showProgressDialog(getActivity());
-            new BackgroundVideoDownload(Prefs.GetBaseUrl(requireContext()) + videoLink).execute();
+            beginDownload(videoLink);
         });
         Dialogs.createProgressDialog(v.getContext());
         GetUserListApi("", adapter);
@@ -294,6 +338,36 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
         UserListDialog.getWindow().setGravity(Gravity.BOTTOM);
         UserListDialog.setCancelable(true);
         UserListDialog.show();
+    }
+    private void beginDownload(String audioLink) {
+        try {
+            Dialogs.createProgressDialog(getContext());
+            DownloadManager.Request downloadRequest = new DownloadManager.Request(Uri.parse(Prefs.GetBaseUrl(getContext()) + audioLink));
+
+
+            String title = URLUtil.guessFileName(audioLink, null, null);
+            videoTitle = title;
+
+            downloadRequest.setTitle(title);
+
+            downloadRequest.setDescription("Downloading, Please Wait...!!!");
+
+            String cookie = CookieManager.getInstance().getCookie(audioLink);
+
+            downloadRequest.addRequestHeader("cookie", cookie);
+
+            downloadRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
+            downloadRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
+
+            downloadRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
+
+
+            DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+            downloadID = downloadManager.enqueue(downloadRequest);
+        } catch (Exception e) {
+            Dialogs.HideProgressDialog();
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void GetUserListApi(String search, ShareVideoUserListAdapter adapter) {
@@ -375,9 +449,11 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
     }
 
     private void ShowSearchUserDialog(String VideoId, TextView textView) {
+        videoID = VideoId;
         Dialog dialog = new Dialog(v.getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.comments_bottom_sheet);
+        EDITING_COMMENT = false;
 
         ImageView imageCloseInReply = dialog.findViewById(R.id.imageCloseInReply);
         imageCloseInReply.setOnClickListener(view -> {
@@ -396,12 +472,20 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
         imageClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EDITING_COMMENT = false;
+                EDITING_COMMENT_REPLY = false;
                 dialog.dismiss();
             }
         });
         TextView sendButtonInCommentSheet = dialog.findViewById(R.id.sendButtonInCommentSheet);
-        EditText EditTextInCommentsBottomDialog = dialog.findViewById(R.id.EditTextInCommentsBottomDialog);
+        EditTextInCommentsBottomDialog = dialog.findViewById(R.id.EditTextInCommentsBottomDialog);
         sendButtonInCommentSheet.setOnClickListener(view -> {
+            if (EDITING_COMMENT_REPLY){
+                hitCommentReplyEditApi(COMMENT_REPLY_EDIT_ID, EditTextInCommentsBottomDialog.getText().toString());
+            } else
+            if (EDITING_COMMENT){
+                hitEditVdoCommentApi(EDIT_COMMENT_ID, EditTextInCommentsBottomDialog.getText().toString());
+            } else
             if (!isReply) {
                 DoComment(VideoId,
                         EditTextInCommentsBottomDialog.getText().toString().trim(),
@@ -412,7 +496,7 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
             }
             EditTextInCommentsBottomDialog.setText("");
         });
-        adapter = new CommentsAdapter(v.getContext(), comments, Home_ForYouFragment.this);
+        adapter = new CommentsAdapter(v.getContext(), comments, Home_ForYouFragment.this, Home_ForYouFragment.this);
         CommentsRecyclerView.setAdapter(adapter);
         ListOfVideoCommentsModel model = new ListOfVideoCommentsModel(VideoId, "1000", "1");
         HitCommentsAPi(CommentsRecyclerView, commentsCount, sendButtonInCommentSheet, VideoId, textView);
@@ -423,6 +507,44 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.setCancelable(true);
         dialog.show();
+    }
+
+    private void hitCommentReplyEditApi(String replyID, String reply) {
+        Dialogs.createProgressDialog(getContext());
+        CommentReplyPojo model = new CommentReplyPojo(replyID, reply);
+        apiManager.editCommentReply(Prefs.GetBearerToken(getContext()), model, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                EDITING_COMMENT_REPLY = false;
+                hitCommentApi();
+                Dialogs.HideProgressDialog();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Toast.makeText(getContext(), serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                Dialogs.HideProgressDialog();
+            }
+        });
+    }
+
+    private void hitEditVdoCommentApi(String edit_comment_id, String comment) {
+        Dialogs.createProgressDialog(getContext());
+        EditVideoCmntPojo pojo = new EditVideoCmntPojo(edit_comment_id, comment);
+        apiManager.editVideoComment(Prefs.GetBearerToken(getContext()), pojo, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                EDITING_COMMENT = false;
+                EditTextInCommentsBottomDialog.setText("");
+                Dialogs.HideProgressDialog();
+                hitCommentApi();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Dialogs.HideProgressDialog();
+            }
+        });
     }
 
     private void DoReplyOverComment(String CommentId, String Reply, EditText editText, RecyclerView CommentsRecyclerView,
@@ -546,8 +668,88 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
     public void ShowReplySheet(String Name, String CommentId) {
         replyCommentId = CommentId;
         isReply = true;
+        if (EDITING_COMMENT){
+            EDITING_COMMENT = false;
+        }
+        if (EDITING_COMMENT_REPLY){
+            EDITING_COMMENT_REPLY = false;
+        }
         CommentReply.setVisibility(View.VISIBLE);
         replyToText.setText(Name);
+    }
+
+    @Override
+    public void moreOptionsClicked(String commentID, String comment) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.comment_more_options);
+
+        LinearLayout editComment = dialog.findViewById(R.id.edit_comment);
+        TextView deleteVideoComment = dialog.findViewById(R.id.delete_comment);
+        deleteVideoComment.setOnClickListener(view -> deleteVdoComment(videoID, commentID, dialog));
+        editComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editCmnt(comment, dialog, commentID);
+            }
+        });
+
+
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+
+    private void editCmnt(String comment, Dialog dialog, String commentID) {
+        EDITING_COMMENT = true;
+        EDITING_COMMENT_REPLY = false;
+        dialog.dismiss();
+        if (!EditTextInCommentsBottomDialog.getText().toString().equalsIgnoreCase("")){
+          EditTextInCommentsBottomDialog.setText("");
+        }
+        EditTextInCommentsBottomDialog.setText(comment);
+        EDIT_COMMENT_ID = commentID;
+    }
+
+    private void deleteVdoComment(String videoID, String commentID, Dialog dialog) {
+        Dialogs.createProgressDialog(getContext());
+        DeleteCommentPojo pojo = new DeleteCommentPojo(videoID, commentID);
+        apiManager.deleteVideoComment(Prefs.GetBearerToken(requireContext()), pojo, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                Dialogs.HideProgressDialog();
+                Toast.makeText(getContext(), videoCommentDelete.message, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                hitCommentApi();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Dialogs.HideProgressDialog();
+                Toast.makeText(getContext(), serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void hitCommentApi() {
+        ListOfVideoCommentsModel model = new ListOfVideoCommentsModel(videoID, "1000", "1");
+        apiManager.ListOfVideoCommentsModel(Prefs.GetBearerToken(v.getContext()), model, new DataCallback<ListOfVideoCommentsModel>() {
+            @Override
+            public void onSuccess(ListOfVideoCommentsModel listOfVideoCommentsModel) {
+                comments.clear();
+                comments.addAll(listOfVideoCommentsModel.getData());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Prompt.SnackBar(v, serverError.getErrorMsg());
+            }
+        });
     }
 
     @Override
@@ -573,6 +775,25 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
         dialog.setContentView(R.layout.more_options_dialog);
 
         LinearLayout reportVideoBtn = dialog.findViewById(R.id.report_video_btn);
+        LinearLayout blockVideoBtn = dialog.findViewById(R.id.block_video_btn);
+        blockVideoBtn.setOnClickListener(view -> {
+            dialog.dismiss();
+            Dialogs.createProgressDialog(getContext());
+            BlockVideoPojo model = new BlockVideoPojo(list.get(position)._id);
+            apiManager.blockVideo(Prefs.GetBearerToken(getContext()), model, new DataCallback<VideoCommentDelete>() {
+                @Override
+                public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                    Dialogs.HideProgressDialog();
+                    Prompt.SnackBar(v, videoCommentDelete.message);
+                }
+
+                @Override
+                public void onError(ServerError serverError) {
+                    Dialogs.HideProgressDialog();
+                    Prompt.SnackBar(v, serverError.getErrorMsg());
+                }
+            });
+        });
         reportVideoBtn.setOnClickListener(view -> {
             dialog.dismiss();
             if (isReported) {
@@ -624,72 +845,92 @@ public class Home_ForYouFragment extends Fragment implements HomeFollowingAdapte
 
     }
 
-    public static class BackgroundVideoDownload extends AsyncTask<String, String, String> {
-        String Link;
-        Context context;
-        String Timestamp = HelperClass.getCurrentTimeStamp();
-        String path = "";
+    @Override
+    public void VdoRplMoreOptions(String id, String reply) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.comment_more_options);
 
-        public BackgroundVideoDownload(String link) {
-            Link = link;
-        }
+        TextView deleteReply = dialog.findViewById(R.id.delete_comment);
+        deleteReply.setOnClickListener(view -> {
+            dialog.dismiss();
+            deleteCommentReply(id);
+        });
+        LinearLayout editReply = dialog.findViewById(R.id.edit_comment);
+        editReply.setOnClickListener(view -> {
+            dialog.dismiss();
+            editCommentReply(id, reply);
+        });
 
-        @Override
-        protected String doInBackground(String... strings) {
-            InputStream input = null;
-            OutputStream output = null;
-            String DestinationFilePath = Environment.getExternalStorageDirectory() + "/" + "Scriptube" + "/" + App.getContext().getPackageName() + "/" + "Shared_Videos" + "/";
-            File fell = new File(DestinationFilePath);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
+        dialog.show();
 
-            if (fell.exists()) {
+    }
 
-            } else
-                fell.mkdirs();
+    private void editCommentReply(String rplId, String reply) {
+        EDITING_COMMENT_REPLY = true;
+        COMMENT_REPLY_EDIT_ID = rplId;
+        EditTextInCommentsBottomDialog.setText(reply);
+    }
 
-
-            try {
-                URL url = new URL(Link);
-
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-
-                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    Log.d("downloadZipFile", "Server ResponseCode=" + connection.getResponseCode() + " ResponseMessage=" + connection.getResponseMessage());
-                }
-                input = connection.getInputStream();
-                File f = new File(DestinationFilePath, Timestamp + ".mp4");
-                path = f.getPath();
-                output = new FileOutputStream(f);
-                int fileLength = connection.getContentLength();
-
-                byte[] data = new byte[4096];
-                int count;
-                long total = 0;
-                while ((count = input.read(data)) != -1) {
-                    total += count;
-
-
-                    output.write(data, 0, count);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (output != null) output.close();
-                    if (input != null) input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+    private void deleteCommentReply(String id) {
+        DeleteCommentReply model = new DeleteCommentReply(id);
+        Dialogs.createProgressDialog(getContext());
+        apiManager.deleteCommentReply(Prefs.GetBearerToken(getContext()), model, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                hitCommentApi();
+                Dialogs.HideProgressDialog();
             }
 
-            File f = new File(DestinationFilePath);
-            OpenIntent(path);
+            @Override
+            public void onError(ServerError serverError) {
+                Dialogs.HideProgressDialog();
+                Toast.makeText(getContext(), serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-            return null;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        Log.i("fragmentAttach", "onAttach: For You");
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            Log.i("fragmentAttach", "onAttach: For You Visible");
         }
     }
 
 
+
+    private void getToken() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+
+                apiManager.GetPolicy(task.getResult(), new GetPolicyModel("s3bucket"), new DataCallback<GetPolicyModel>() {
+                    @Override
+                    public void onSuccess(GetPolicyModel getPolicyModel) {
+                        Prefs.SetBaseUrl(requireContext(), getPolicyModel.getData().getDescription());
+                        HitGlobalVideoApi("1", String.valueOf(PageCounter));
+                    }
+
+                    @Override
+                    public void onError(ServerError serverError) {
+                        getToken();
+                        Prompt.SnackBar(v, serverError.getErrorMsg());
+                    }
+                });
+
+
+            } else Dialogs.HideProgressDialog();
+        });
+    }
 }

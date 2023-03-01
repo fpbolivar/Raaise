@@ -4,19 +4,22 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS;
 
 import android.app.Dialog;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.webkit.CookieManager;
+import android.webkit.URLUtil;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,6 +41,7 @@ import com.arthenica.mobileffmpeg.FFmpeg;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.raaise.android.Adapters.CommentsAdapter;
+import com.raaise.android.Adapters.CommentsReplyAdapter;
 import com.raaise.android.Adapters.ShareVideoUserListAdapter;
 import com.raaise.android.Adapters.ViewSeeAllVideosFromSearchAcitivtyAdapter;
 import com.raaise.android.ApiManager.ApiManager;
@@ -51,34 +55,39 @@ import com.raaise.android.ApiManager.DataCallback;
 import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.ApiManager.ServerError;
 import com.raaise.android.BuildConfig;
-import com.raaise.android.Home.Fragments.Home_Following_foryou_Fragments.Home_ForYouFragment;
 import com.raaise.android.R;
 import com.raaise.android.Settings.Payments.PaymentMethods;
 import com.raaise.android.Try_AudioActivity;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
-import com.raaise.android.Utilities.HelperClasses.HelperClass;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
 import com.raaise.android.Utilities.HelperClasses.StringHelper;
+import com.raaise.android.model.BlockVideoPojo;
 import com.raaise.android.model.ChatListModel;
+import com.raaise.android.model.CommentReplyPojo;
+import com.raaise.android.model.DeleteCommentPojo;
+import com.raaise.android.model.DeleteCommentReply;
+import com.raaise.android.model.EditVideoCmntPojo;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.VideoCommentDelete;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implements ViewSeeAllVideosFromSearchAcitivtyAdapter.HomeReelsListener, CommentsAdapter.CommentReplyListener, ShareVideoUserListAdapter.ChatListListener {
+public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implements ViewSeeAllVideosFromSearchAcitivtyAdapter.HomeReelsListener,
+        CommentsReplyAdapter.VideoReplyListener, CommentsAdapter.CommentReplyListener, ShareVideoUserListAdapter.ChatListListener {
+    private String COMMENT_REPLY_EDIT_ID = "";
+    private boolean EDITING_COMMENT_REPLY = false;
     public List<ChatListModel.Data> chatListModels;
     int position;
+    private String videoID = "";
+    private String EDIT_COMMENT_ID = "";
+    private boolean EDITING_COMMENT = false;
+    private EditText EditTextInCommentsBottomDialog;
     ViewPager2 ViewPagerOfViewSeeAllVideosFromSearchAcitivty;
     ImageView back_btn_in_ViewPagerOfViewSeeAllVideosFromSearchAcitivty;
     ViewSeeAllVideosFromSearchAcitivtyAdapter VideoAdapter;
@@ -93,6 +102,46 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
     boolean isSelected;
     String VideoId;
     Dialog UserListDialog;
+    private String videoTitle = "";
+    private long downloadID;
+    private final BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+
+            if (downloadID == id) {
+                shareIntent();
+            }
+        }
+    };
+
+    private void shareIntent() {
+        File file = new File(Environment.getExternalStorageDirectory().getPath()
+                + "/Download/" + videoTitle);
+
+        String WaterMarkVideoName = "Scriptube_share" + new Date().getTime();
+        String command = "-i " + file.getPath() + " -i " + StringHelper.WaterMarkLogo + " -filter_complex \"[1]scale=iw/4:-1[wm];[0][wm]  overlay=20:main_h-overlay_h\" " + Environment.getExternalStorageDirectory().getPath() + "/Download/"  + WaterMarkVideoName + ".mp4";
+        FFmpeg.executeAsync(command, (executionId, returnCode) -> {
+            if (returnCode == RETURN_CODE_SUCCESS) {
+                try {
+                    File shareFile = new File(Environment.getExternalStorageDirectory().getPath() + "/Download/"  + WaterMarkVideoName + ".mp4");
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("video/mp4");
+                    intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(Objects.requireNonNull(App.getContext()), BuildConfig.APPLICATION_ID + ".provider", shareFile));
+                    App.getContext().startActivity(Intent.createChooser(intent, "share").setFlags(FLAG_ACTIVITY_NEW_TASK));
+                    if (file.exists()) {
+                        file.delete();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            Dialogs.HideProgressDialog();
+
+        });
+    }
 
     private static void OpenIntent(String path) {
 
@@ -139,6 +188,7 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
         VideoAdapter = new ViewSeeAllVideosFromSearchAcitivtyAdapter(ViewSeeAllVideosFromSearchAcitivty.this, list, ViewSeeAllVideosFromSearchAcitivty.this);
         ViewPagerOfViewSeeAllVideosFromSearchAcitivty.setAdapter(VideoAdapter);
         ViewPagerOfViewSeeAllVideosFromSearchAcitivty.setCurrentItem(position);
+        registerReceiver(onDownloadComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
     private void Initialization() {
@@ -159,6 +209,8 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
 
     @Override
     public void ShowCommentBottomSheetDialog(String VideoId, TextView textView) {
+        videoID = VideoId;
+        EDITING_COMMENT = false;
         Dialog dialog = new Dialog(ViewSeeAllVideosFromSearchAcitivty.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.comments_bottom_sheet);
@@ -180,12 +232,20 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
         imageClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EDITING_COMMENT = false;
+                EDITING_COMMENT_REPLY = false;
                 dialog.dismiss();
             }
         });
         TextView sendButtonInCommentSheet = dialog.findViewById(R.id.sendButtonInCommentSheet);
-        EditText EditTextInCommentsBottomDialog = dialog.findViewById(R.id.EditTextInCommentsBottomDialog);
+        EditTextInCommentsBottomDialog = dialog.findViewById(R.id.EditTextInCommentsBottomDialog);
         sendButtonInCommentSheet.setOnClickListener(view -> {
+            if (EDITING_COMMENT_REPLY){
+                hitCommentReplyEditApi(COMMENT_REPLY_EDIT_ID, EditTextInCommentsBottomDialog.getText().toString());
+            } else
+            if (EDITING_COMMENT){
+                hitEditVdoCommentApi(EDIT_COMMENT_ID, EditTextInCommentsBottomDialog.getText().toString());
+            } else
             if (!isReply) {
                 DoComment(VideoId,
                         EditTextInCommentsBottomDialog.getText().toString().trim(),
@@ -197,7 +257,7 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
             EditTextInCommentsBottomDialog.setText("");
 
         });
-        adapter = new CommentsAdapter(ViewSeeAllVideosFromSearchAcitivty.this, comments, ViewSeeAllVideosFromSearchAcitivty.this);
+        adapter = new CommentsAdapter(ViewSeeAllVideosFromSearchAcitivty.this, comments, ViewSeeAllVideosFromSearchAcitivty.this, ViewSeeAllVideosFromSearchAcitivty.this);
         CommentsRecyclerView.setAdapter(adapter);
         ListOfVideoCommentsModel model = new ListOfVideoCommentsModel(VideoId, "1000", "1");
         HitCommentsAPi(CommentsRecyclerView, commentsCount, sendButtonInCommentSheet, VideoId, textView);
@@ -209,6 +269,44 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
         dialog.setCancelable(true);
         dialog.show();
 
+    }
+
+    private void hitCommentReplyEditApi(String replyID, String reply) {
+        Dialogs.createProgressDialog(ViewSeeAllVideosFromSearchAcitivty.this);
+        CommentReplyPojo model = new CommentReplyPojo(replyID, reply);
+        apiManager.editCommentReply(Prefs.GetBearerToken(ViewSeeAllVideosFromSearchAcitivty.this), model, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                EDITING_COMMENT_REPLY = false;
+                hitCommentApi();
+                Dialogs.HideProgressDialog();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Toast.makeText(ViewSeeAllVideosFromSearchAcitivty.this, serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                Dialogs.HideProgressDialog();
+            }
+        });
+    }
+
+    private void hitEditVdoCommentApi(String edit_comment_id, String comment) {
+        Dialogs.createProgressDialog(ViewSeeAllVideosFromSearchAcitivty.this);
+        EditVideoCmntPojo pojo = new EditVideoCmntPojo(edit_comment_id, comment);
+        apiManager.editVideoComment(Prefs.GetBearerToken(ViewSeeAllVideosFromSearchAcitivty.this), pojo, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                EDITING_COMMENT = false;
+                EditTextInCommentsBottomDialog.setText("");
+                Dialogs.HideProgressDialog();
+                hitCommentApi();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Dialogs.HideProgressDialog();
+            }
+        });
     }
 
     private void DoReplyOverComment(String CommentId, String Reply, EditText editText, RecyclerView CommentsRecyclerView,
@@ -333,6 +431,25 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
         dialog.setContentView(R.layout.more_options_dialog);
 
         LinearLayout reportVideoBtn = dialog.findViewById(R.id.report_video_btn);
+        LinearLayout blockVideoBtn = dialog.findViewById(R.id.block_video_btn);
+        blockVideoBtn.setOnClickListener(view -> {
+            dialog.dismiss();
+            Dialogs.createProgressDialog(ViewSeeAllVideosFromSearchAcitivty.this);
+            BlockVideoPojo model = new BlockVideoPojo(list.get(position)._id);
+            apiManager.blockVideo(Prefs.GetBearerToken(ViewSeeAllVideosFromSearchAcitivty.this), model, new DataCallback<VideoCommentDelete>() {
+                @Override
+                public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                    Dialogs.HideProgressDialog();
+                    Toast.makeText(ViewSeeAllVideosFromSearchAcitivty.this, videoCommentDelete.message, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(ServerError serverError) {
+                    Dialogs.HideProgressDialog();
+                    Toast.makeText(ViewSeeAllVideosFromSearchAcitivty.this, serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
         reportVideoBtn.setOnClickListener(view -> {
             dialog.dismiss();
             reportVideo(id);
@@ -384,8 +501,7 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
         });
         ShareOnOtherApps.setOnClickListener(view -> {
             UserListDialog.dismiss();
-            Dialogs.showProgressDialog(ViewSeeAllVideosFromSearchAcitivty.this);
-            new Home_ForYouFragment.BackgroundVideoDownload(videoLink).execute();
+                beginDownload(videoLink);
         });
         Dialogs.createProgressDialog(ViewSeeAllVideosFromSearchAcitivty.this);
         GetUserListApi("", adapter);
@@ -508,9 +624,90 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
     public void ShowReplySheet(String Name, String CommentId) {
         replyCommentId = CommentId;
         isReply = true;
+        if (EDITING_COMMENT_REPLY){
+            EDITING_COMMENT_REPLY = false;
+        }
+        if (EDITING_COMMENT){
+            EDITING_COMMENT = false;
+        }
         CommentReply.setVisibility(View.VISIBLE);
         replyToText.setText(Name);
     }
+
+    @Override
+    public void moreOptionsClicked(String commentID, String comment) {
+        Dialog dialog = new Dialog(ViewSeeAllVideosFromSearchAcitivty.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.comment_more_options);
+
+        LinearLayout editComment = dialog.findViewById(R.id.edit_comment);
+        TextView deleteVideoComment = dialog.findViewById(R.id.delete_comment);
+        deleteVideoComment.setOnClickListener(view -> deleteVdoComment(videoID, commentID, dialog));
+        editComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editCmnt(comment, dialog, commentID);
+            }
+        });
+
+
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+    private void deleteVdoComment(String videoID, String commentID, Dialog dialog) {
+        Dialogs.createProgressDialog(ViewSeeAllVideosFromSearchAcitivty.this);
+        DeleteCommentPojo pojo = new DeleteCommentPojo(videoID, commentID);
+        apiManager.deleteVideoComment(Prefs.GetBearerToken(ViewSeeAllVideosFromSearchAcitivty.this), pojo, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                Dialogs.HideProgressDialog();
+                Toast.makeText(ViewSeeAllVideosFromSearchAcitivty.this, videoCommentDelete.message, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                hitCommentApi();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Dialogs.HideProgressDialog();
+                Toast.makeText(ViewSeeAllVideosFromSearchAcitivty.this, serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+
+    private void hitCommentApi() {
+        ListOfVideoCommentsModel model = new ListOfVideoCommentsModel(videoID, "1000", "1");
+        apiManager.ListOfVideoCommentsModel(Prefs.GetBearerToken(ViewSeeAllVideosFromSearchAcitivty.this), model, new DataCallback<ListOfVideoCommentsModel>() {
+            @Override
+            public void onSuccess(ListOfVideoCommentsModel listOfVideoCommentsModel) {
+                comments.clear();
+                comments.addAll(listOfVideoCommentsModel.getData());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+            }
+        });
+    }
+
+
+    private void editCmnt(String comment, Dialog dialog, String commentID) {
+        EDITING_COMMENT = true;
+        EDITING_COMMENT_REPLY = false;
+        dialog.dismiss();
+        if (!EditTextInCommentsBottomDialog.getText().toString().equalsIgnoreCase("")){
+            EditTextInCommentsBottomDialog.setText("");
+        }
+        EditTextInCommentsBottomDialog.setText(comment);
+        EDIT_COMMENT_ID = commentID;
+    }
+
 
     @Override
     public void chatSelected(String Slug, String ReceiverId, String SenderId, String UserImageLink, String Username, String ShortBio) {
@@ -521,70 +718,82 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
 
     }
 
-    public static class BackgroundVideoDownload extends AsyncTask<String, String, String> {
-        String Link;
-        Context context;
-        String Timestamp = HelperClass.getCurrentTimeStamp();
-        String path = "";
+    @Override
+    public void VdoRplMoreOptions(String id, String reply) {
+        Dialog dialog = new Dialog(ViewSeeAllVideosFromSearchAcitivty.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.comment_more_options);
 
-        public BackgroundVideoDownload(String link) {
-            Link = link;
-        }
+        TextView deleteReply = dialog.findViewById(R.id.delete_comment);
+        deleteReply.setOnClickListener(view -> {
+            dialog.dismiss();
+            deleteCommentReply(id);
+        });
+        LinearLayout editReply = dialog.findViewById(R.id.edit_comment);
+        editReply.setOnClickListener(view -> {
+            dialog.dismiss();
+            editCommentReply(id, reply);
+        });
 
-        @Override
-        protected String doInBackground(String... strings) {
-            InputStream input = null;
-            OutputStream output = null;
-            String DestinationFilePath = Environment.getExternalStorageDirectory() + "/" + "Scriptube" + "/" + App.getContext().getPackageName() + "/" + "Shared_Videos" + "/";
-            File fell = new File(DestinationFilePath);
-
-            if (fell.exists()) {
-//            return null;
-            } else
-                fell.mkdirs();
-
-
-            try {
-                URL url = new URL(Link);
-
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-
-                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    Log.d("downloadZipFile", "Server ResponseCode=" + connection.getResponseCode() + " ResponseMessage=" + connection.getResponseMessage());
-                }
-                input = connection.getInputStream();
-                File f = new File(DestinationFilePath, Timestamp + ".mp4");
-                path = f.getPath();
-                output = new FileOutputStream(f);
-                int fileLength = connection.getContentLength();
-
-                byte[] data = new byte[4096];
-                int count;
-                long total = 0;
-                while ((count = input.read(data)) != -1) {
-                    total += count;
-
-//                    Percentage.setText(((total * 100) / fileLength) + " %");
-                    output.write(data, 0, count);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (output != null) output.close();
-                    if (input != null) input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
+        dialog.show();
+    }
+    private void deleteCommentReply(String id) {
+        DeleteCommentReply model = new DeleteCommentReply(id);
+        Dialogs.createProgressDialog(ViewSeeAllVideosFromSearchAcitivty.this);
+        apiManager.deleteCommentReply(Prefs.GetBearerToken(ViewSeeAllVideosFromSearchAcitivty.this), model, new DataCallback<VideoCommentDelete>() {
+            @Override
+            public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                hitCommentApi();
+                Dialogs.HideProgressDialog();
             }
 
-            File f = new File(DestinationFilePath);
-            OpenIntent(path);
+            @Override
+            public void onError(ServerError serverError) {
+                Dialogs.HideProgressDialog();
+                Toast.makeText(ViewSeeAllVideosFromSearchAcitivty.this, serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void editCommentReply(String rplId, String reply) {
+        EDITING_COMMENT_REPLY = true;
+        COMMENT_REPLY_EDIT_ID = rplId;
+        EditTextInCommentsBottomDialog.setText(reply);
+    }
 
-            return null;
+    private void beginDownload(String audioLink) {
+        try {
+            Dialogs.createProgressDialog(ViewSeeAllVideosFromSearchAcitivty.this);
+            DownloadManager.Request downloadRequest = new DownloadManager.Request(Uri.parse(Prefs.GetBaseUrl(ViewSeeAllVideosFromSearchAcitivty.this) + audioLink));
+
+
+            String title = URLUtil.guessFileName(audioLink, null, null);
+            videoTitle = title;
+
+            downloadRequest.setTitle(title);
+
+            downloadRequest.setDescription("Downloading, Please Wait...!!!");
+
+            String cookie = CookieManager.getInstance().getCookie(audioLink);
+
+            downloadRequest.addRequestHeader("cookie", cookie);
+
+            downloadRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
+            downloadRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
+
+            downloadRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
+
+
+            DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            downloadID = downloadManager.enqueue(downloadRequest);
+        } catch (Exception e) {
+            Dialogs.HideProgressDialog();
+            Toast.makeText(ViewSeeAllVideosFromSearchAcitivty.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
 }

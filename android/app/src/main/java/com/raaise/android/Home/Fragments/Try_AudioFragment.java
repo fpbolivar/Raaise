@@ -282,7 +282,8 @@ public class Try_AudioFragment extends Fragment {
 
 
             String title = URLUtil.guessFileName(audioLink, null, null);
-            App.musicTitle = songName;
+            App.musicTitle = title;
+            App.songName = songName;
             App.fromTryAudio = true;
 
             downloadRequest.setTitle(title);

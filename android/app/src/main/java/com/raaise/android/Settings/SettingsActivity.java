@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
-import com.raaise.android.Activity.Credentials.Login;
+import com.raaise.android.Activity.credentials.Login;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.LogoutModel;
 import com.raaise.android.ApiManager.ApiModels.Notification_On_OffModel;

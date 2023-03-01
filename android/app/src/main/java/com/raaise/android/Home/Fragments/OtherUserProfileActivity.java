@@ -1,10 +1,17 @@
 package com.raaise.android.Home.Fragments;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +23,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 import com.raaise.android.Adapters.GetAllUserVideoAdapter;
 import com.raaise.android.Adapters.GetPublicUserVideoAdapter;
 import com.raaise.android.ApiManager.ApiManager;
@@ -28,13 +37,17 @@ import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.ApiManager.ServerError;
 import com.raaise.android.FollowersListFragment;
 import com.raaise.android.R;
+import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
+import com.raaise.android.model.BlockUserPojo;
+import com.raaise.android.model.VideoCommentDelete;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OtherUserProfileActivity extends AppCompatActivity implements GetAllUserVideoAdapter.UserVideoListener {
+    ImageView moreOptions;
     TextView total_donation_tvInOtherUserProfile,
             UserNameInProfileInOtherUserProfile,
             shortBioTVInOtherUserProfile,
@@ -89,6 +102,61 @@ public class OtherUserProfileActivity extends AppCompatActivity implements GetAl
 
 
     private void ClickListeners() {
+        moreOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(OtherUserProfileActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.more_options_dialog_other_user);
+
+                LinearLayout blobkUserBtn = dialog.findViewById(R.id.report_video_btn);
+                LinearLayout reportUserBtn = dialog.findViewById(R.id.report_user_btn);
+                blobkUserBtn.setOnClickListener(view -> {
+                    dialog.dismiss();
+                    Dialogs.createProgressDialog(OtherUserProfileActivity.this);
+                    BlockUserPojo model = new BlockUserPojo(UserId);
+                    apiManager.blockUser(Prefs.GetBearerToken(OtherUserProfileActivity.this), model, new DataCallback<VideoCommentDelete>() {
+                        @Override
+                        public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                            Dialogs.HideProgressDialog();
+                            onBackPressed();
+                        }
+
+                        @Override
+                        public void onError(ServerError serverError) {
+                            Dialogs.HideProgressDialog();
+                            Prompt.SnackBar(findViewById(android.R.id.content).getRootView(), serverError.getErrorMsg());
+                        }
+                    });
+                });
+
+                reportUserBtn.setOnClickListener(view -> {
+                    dialog.dismiss();
+                    Dialogs.createProgressDialog(OtherUserProfileActivity.this);
+                    BlockUserPojo model = new BlockUserPojo(UserId);
+                    apiManager.reportUser(Prefs.GetBearerToken(OtherUserProfileActivity.this), model, new DataCallback<VideoCommentDelete>() {
+                        @Override
+                        public void onSuccess(VideoCommentDelete videoCommentDelete) {
+                            Dialogs.HideProgressDialog();
+                            Prompt.SnackBar(findViewById(android.R.id.content).getRootView(), videoCommentDelete.message);
+                        }
+
+                        @Override
+                        public void onError(ServerError serverError) {
+                            Dialogs.HideProgressDialog();
+                            Prompt.SnackBar(findViewById(android.R.id.content).getRootView(), serverError.getErrorMsg());
+                        }
+                    });
+                });
+
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                dialog.getWindow().setGravity(Gravity.BOTTOM);
+                dialog.setCancelable(true);
+                dialog.show();
+            }
+        });
         FollowButtonInOtherUserProfile.setOnClickListener(view -> DoFollowUser());
         BackInOtherUserProfile.setOnClickListener(view -> finish());
         MessageButtonInOtherUserProfile.setOnClickListener(view -> {
@@ -145,6 +213,9 @@ public class OtherUserProfileActivity extends AppCompatActivity implements GetAl
     @Override
     protected void onResume() {
         super.onResume();
+        if (App.fromTryAudio){
+            onBackPressed();
+        }
         list.clear();
         adapter.notifyDataSetChanged();
         Page = 1;
@@ -251,10 +322,12 @@ public class OtherUserProfileActivity extends AppCompatActivity implements GetAl
             String PageNumber = String.valueOf(page);
 
             PublicUserVideoListModel model = new PublicUserVideoListModel(UserId, PageNumber, "6");
+            Log.i("modelVideo", "GetAllUserVideo: " + new Gson().toJson(model));
             apiManager.GetPublicUserVideoList(Prefs.GetBearerToken(getApplicationContext()), model, new DataCallback<PublicUserVideoListModel>() {
                 @Override
                 public void onSuccess(PublicUserVideoListModel publicUserVideoListModel) {
                     list.addAll(publicUserVideoListModel.getData());
+                    Log.i("getPublicVideoUser", "onSuccess: " + new Gson().toJson(publicUserVideoListModel.data));
                     adapter.notifyDataSetChanged();
                 }
 
@@ -270,7 +343,7 @@ public class OtherUserProfileActivity extends AppCompatActivity implements GetAl
     }
 
     private void Initialization() {
-
+        moreOptions = findViewById(R.id.more_options);
         HideSelf = findViewById(R.id.HideSelf);
         BackInOtherUserProfile = findViewById(R.id.BackInOtherUserProfile);
         FollowingLayout = findViewById(R.id.FollowingLayout);

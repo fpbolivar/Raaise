@@ -3,6 +3,7 @@ package com.raaise.android.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,9 +111,13 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
         if (obj.getUserId().getProfileImage() != null) {
             Glide.with(context).load(obj.getUserId().getProfileImage()).placeholder(R.drawable.placeholder).into(holder.ImageProfileInAdapter);
         }
+        Log.i("videoLiked", "onBindViewHolder: slug " + obj.slug);
+        Log.i("videoLiked", "onBindViewHolder: likedOrNot " + obj.videolikeCount);
         if (obj.isLiked()) {
+            Log.i("videoLiked", "onBindViewHolder: under liked" );
             holder.LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(context, R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
         } else {
+            Log.i("videoLiked", "onBindViewHolder: under unliked" );
             holder.LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(context, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
         }
         holder.LikeInHomeVideoSingleItem.setOnClickListener(view -> {

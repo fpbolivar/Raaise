@@ -2,6 +2,7 @@ package com.raaise.android.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.raaise.android.ApiManager.ApiModels.ListOfVideoCommentsModel;
 import com.raaise.android.Home.Fragments.OtherUserProfileActivity;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
+import com.raaise.android.Utilities.HelperClasses.Prefs;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,10 +27,12 @@ import java.util.Locale;
 public class CommentsReplyAdapter extends RecyclerView.Adapter<CommentsReplyAdapter.ViewHolder> {
     Context context;
     List<ListOfVideoCommentsModel.Data.ReplyId> list;
+    private VideoReplyListener mListener;
 
-    public CommentsReplyAdapter(Context context, List<ListOfVideoCommentsModel.Data.ReplyId> list) {
+    public CommentsReplyAdapter(Context context, List<ListOfVideoCommentsModel.Data.ReplyId> list, VideoReplyListener listener) {
         this.context = context;
         this.list = list;
+        this.mListener = listener;
     }
 
     @NonNull
@@ -41,8 +45,11 @@ public class CommentsReplyAdapter extends RecyclerView.Adapter<CommentsReplyAdap
     public void onBindViewHolder(@NonNull CommentsReplyAdapter.ViewHolder holder, int position) {
         ListOfVideoCommentsModel.Data.ReplyId model = list.get(position);
         holder.CommentReply.setText(model.getReply());
-
-
+        if (model.replyBy._id.equals(Prefs.GetUserID(context))){
+            holder.moreOptions.setVisibility(View.VISIBLE);
+        } else {
+            holder.moreOptions.setVisibility(View.INVISIBLE);
+        }
         holder.NameCommentReply.setOnClickListener(view -> DoOpenUserProfile(model));
         holder.commentatorReplyImage.setOnClickListener(view -> DoOpenUserProfile(model));
         holder.Time.setText(HelperClass.findDifference(model.getCreatedAt(),
@@ -55,6 +62,7 @@ public class CommentsReplyAdapter extends RecyclerView.Adapter<CommentsReplyAdap
                     .circleCrop()
                     .into(holder.commentatorReplyImage);
         }
+        holder.moreOptions.setOnClickListener(view -> mListener.VdoRplMoreOptions(model.get_id(), model.getReply()));
 
     }
 
@@ -71,13 +79,19 @@ public class CommentsReplyAdapter extends RecyclerView.Adapter<CommentsReplyAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView CommentReply, NameCommentReply, Time;
         ImageView commentatorReplyImage;
+        ImageView moreOptions;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            moreOptions = itemView.findViewById(R.id.more_options);
             commentatorReplyImage = itemView.findViewById(R.id.commentatorReplyImage);
             NameCommentReply = itemView.findViewById(R.id.NameCommentReply);
             CommentReply = itemView.findViewById(R.id.CommentReply);
             Time = itemView.findViewById(R.id.time);
         }
+    }
+
+    public interface VideoReplyListener{
+        void VdoRplMoreOptions(String id, String reply);
     }
 }

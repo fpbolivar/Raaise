@@ -44,6 +44,7 @@ import com.raaise.android.R;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 
 
 public class CameraFragment extends Fragment {
@@ -164,11 +165,17 @@ public class CameraFragment extends Fragment {
     }
 
     private void ShowTimer() {
+        String FORMAT = "%02d:%02d";
         Timer.setVisibility(View.VISIBLE);
-        new CountDownTimer(30000, 1000) {
+        new CountDownTimer(180000, 1000) {
 
+            @SuppressLint("SetTextI18n")
             public void onTick(long millisUntilFinished) {
-                Timer.setText("Remaining Time: " + millisUntilFinished / 1000);
+                Timer.setText("Remaining Time: "+String.format(FORMAT,
+                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
+                                TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
             }
 
             @SuppressLint("RestrictedApi")

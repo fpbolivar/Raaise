@@ -270,7 +270,7 @@
                     android:layout_marginHorizontal="30dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/curved_dark_grey_background"
-                    android:hint="Last Four of SSN"
+                    android:hint="Last 4-Digits of SSN"
                     android:maxLength="4"
                     android:inputType="number"
                     android:paddingStart="20dp"

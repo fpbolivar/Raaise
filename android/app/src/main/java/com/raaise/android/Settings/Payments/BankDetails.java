@@ -145,7 +145,7 @@ public class BankDetails extends AppCompatActivity {
         } else if (Get(PostalCodeET)) {
             Prompt.SnackBar(findViewById(android.R.id.content), "Enter Postal Code");
         } else if (Get(BankLastFourSSN)){
-            Prompt.SnackBar(findViewById(android.R.id.content), "Enter Last four of SSN");
+            Prompt.SnackBar(findViewById(android.R.id.content), "Enter Last 4-Digits of SSN");
         }else if (Get(PhoneNumberNumberET) || PhoneNumberNumberET.getText().toString().trim().length() < 10) {
             Prompt.SnackBar(findViewById(android.R.id.content), "Enter Phone Number");
         } else if (!AccountNumberET.getText().toString().trim().equalsIgnoreCase(ConfirmAccountNumberET.getText().toString().trim())) {

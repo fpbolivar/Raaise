@@ -48,13 +48,20 @@ import com.raaise.android.ApiManager.ApiModels.VerifyOtpModel;
 import com.raaise.android.ApiManager.ApiModels.VideoCommentModel;
 import com.raaise.android.ApiManager.ApiModels.VideoCommentsReplyModel;
 import com.raaise.android.ApiManager.ApiModels.VideoLikeDislikeModel;
+import com.raaise.android.model.BlockUserPojo;
+import com.raaise.android.model.BlockVideoPojo;
 import com.raaise.android.model.ChatListModel;
 import com.raaise.android.model.ChatModel;
 import com.raaise.android.model.ClaimedAmountPojo;
+import com.raaise.android.model.CommentReplyPojo;
+import com.raaise.android.model.DeleteCommentPojo;
+import com.raaise.android.model.DeleteCommentReply;
+import com.raaise.android.model.EditVideoCmntPojo;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicData;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.VideoCommentDelete;
 import com.raaise.android.model.VideoDonationModal;
 import com.raaise.android.model.VideoDonationPojo;
 import com.raaise.android.model.WithdrawalsPojo;
@@ -171,4 +178,18 @@ public interface ApiManager {
     void getUSerWithdrawals(String token, DataCallback<WithdrawalsPojo> callback);
 
     void claimVideoAmount(String token, VideoDonationModal videoDonationModal, DataCallback<ClaimedAmountPojo> callback);
+
+    void deleteVideoComment(String token, DeleteCommentPojo pojo, DataCallback<VideoCommentDelete> callback);
+
+    void editVideoComment(String token, EditVideoCmntPojo pojo, DataCallback<VideoCommentDelete> callback);
+
+    void deleteCommentReply(String token, DeleteCommentReply replyID, DataCallback<VideoCommentDelete> callback);
+
+    void editCommentReply(String token, CommentReplyPojo model, DataCallback<VideoCommentDelete> callback);
+
+    void blockUser(String token, BlockUserPojo model, DataCallback<VideoCommentDelete> callback);
+
+    void reportUser(String token, BlockUserPojo model, DataCallback<VideoCommentDelete> callback);
+
+    void blockVideo(String token, BlockVideoPojo model, DataCallback<VideoCommentDelete> callback);
 }

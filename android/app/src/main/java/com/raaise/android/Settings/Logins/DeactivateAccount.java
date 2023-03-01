@@ -15,7 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.raaise.android.Activity.Credentials.Login;
+import com.raaise.android.Activity.credentials.Login;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.DeactivateAccountModel;
 import com.raaise.android.ApiManager.ApiModels.DeleteAccountModel;

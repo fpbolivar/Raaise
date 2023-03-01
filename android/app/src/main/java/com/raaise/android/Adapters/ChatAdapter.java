@@ -2,6 +2,7 @@ package com.raaise.android.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder holder, int position) {
         ChatModel.Data chatModel = chatModels.get(position);
-
+        Log.i("chatMsg", "onBindViewHolder: " + chatModel.getMessage());
         holder.bgLayoutLinear.setBackground(!chatModel.getSenderId().getUserName().equalsIgnoreCase(Prefs.getUserName(mContext)) ? ContextCompat.getDrawable(mContext, R.drawable.chat_sender_bg) : ContextCompat.getDrawable(mContext, R.drawable.chat_receiver_bg));
         holder.layout.setGravity(!chatModel.getSenderId().getUserName().equalsIgnoreCase(Prefs.getUserName(mContext)) ? Gravity.START : Gravity.END);
         holder.chatTime.setGravity(!chatModel.getSenderId().getUserName().equalsIgnoreCase(Prefs.getUserName(mContext)) ? Gravity.START : Gravity.END);

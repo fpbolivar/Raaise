@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +24,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
+import com.raaise.android.Activity.credentials.Login;
 import com.raaise.android.ApiManager.ApiManager;
+import com.raaise.android.ApiManager.ApiModels.GetPolicyModel;
+import com.raaise.android.ApiManager.ApiModels.LoginModel;
 import com.raaise.android.ApiManager.ApiModels.UnreadMessageCountModel;
 import com.raaise.android.ApiManager.DataCallback;
 import com.raaise.android.ApiManager.RetrofitHelper.App;
@@ -36,7 +42,10 @@ import com.raaise.android.Home.Fragments.PlusFragment;
 import com.raaise.android.Home.Fragments.ProfileFragment;
 import com.raaise.android.Home.Fragments.SearchFragment;
 import com.raaise.android.R;
+import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
+import com.raaise.android.Utilities.HelperClasses.Prompt;
+import com.raaise.android.model.LoginPojo;
 
 public class Home extends AppCompatActivity {
     public VideoView adapterVideoVIew;
@@ -274,15 +283,15 @@ public class Home extends AppCompatActivity {
         if (!hasPermissions(this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (!Environment.isExternalStorageManager()) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                startActivity(intent);
-            }
-
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            if (!Environment.isExternalStorageManager()) {
+//                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+//                Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                intent.setData(uri);
+//                startActivity(intent);
+//            }
+//
+//        }
 
     }
 
@@ -351,5 +360,9 @@ public class Home extends AppCompatActivity {
         super.onDestroy();
     }
 
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        SelectHomeScreen();
+    }
 }

@@ -1,4 +1,4 @@
-package com.raaise.android.Activity.Credentials;
+package com.raaise.android.Activity.credentials;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,6 +68,7 @@ public class Login extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Log.i("fbToken", "onSuccess: fb " + new Gson().toJson(loginResult));
                 LoginWithFacebook(loginResult.getAccessToken().getToken());
             }
 
@@ -77,6 +78,7 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onError(@NonNull FacebookException e) {
+                Log.i("fbToken", "onSuccess: fb " + e.getMessage());
                 Prompt.SnackBar(findViewById(android.R.id.content), e.getMessage());
             }
         });
@@ -149,12 +151,17 @@ public class Login extends AppCompatActivity {
         if (requestCode == 1000) {
             if (data != null) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                Log.i("googleSignIn", "onActivityResult: " + task.isSuccessful());
+                if (task.isSuccessful()){
+                    Log.i("googleSignIn", "onActivityResult: " + task.isSuccessful());
+                }
                 handleSignInResult(task);
                 try {
                     GoogleSignInAccount account = task.getResult(ApiException.class);
                     String ServerauthCode = account.getServerAuthCode();
 
                 } catch (ApiException e) {
+                    Log.i("googleSignIn", "onActivityResult: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -197,8 +204,8 @@ public class Login extends AppCompatActivity {
         GoogleButton = findViewById(R.id.GoogleButton);
         Gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER))
-                .requestServerAuthCode(getString(R.string.server_client_id))
-                .requestIdToken(getString(R.string.server_client_id))
+//                .requestServerAuthCode(getString(R.string.server_client_id))
+                .requestIdToken("386568747603-c49pj1hfk7l17cniqujqif7njbe33ir8.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
         Gsc = GoogleSignIn.getClient(this, Gso);
@@ -224,7 +231,7 @@ public class Login extends AppCompatActivity {
                         public void onSuccess(LoginModel loginModel) {
                             Dialogs.HideProgressDialog();
 //                            try {
-                                Log.i("loginPojo", "PerformLogin: success " + new Gson().toJson(loginModel));
+                                Log.i("loginPojo", "PerformLogin: success inside login  " + new Gson().toJson(loginModel));
                                 apiManager.GetPolicy(loginModel.token, new GetPolicyModel("s3bucket"), new DataCallback<GetPolicyModel>() {
                                     @Override
                                     public void onSuccess(GetPolicyModel getPolicyModel) {
@@ -250,6 +257,7 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onError(ServerError serverError) {
                             Dialogs.HideProgressDialog();
+                            Log.i("loginPojo", "PerformLogin: success inside login  " + serverError.getErrorMsg());
                             Prompt.SnackBar(findViewById(android.R.id.content), serverError.getErrorMsg());
                         }
                     });
@@ -261,6 +269,7 @@ public class Login extends AppCompatActivity {
 
 
     private void LoginWithFacebook(String token) {
+        Log.i("fbToken", "LoginWithFacebook: " + token);
         Dialogs.createProgressDialog(Login.this);
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

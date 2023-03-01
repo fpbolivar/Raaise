@@ -54,7 +54,11 @@ public class ShortBio extends AppCompatActivity {
 
         if (!bio.isEmpty() && count_length != 0) {
             countLimit.setText(count_length + "/45");
-            countLimit.setTextColor(ContextCompat.getColor(ShortBio.this, R.color.ButtonRed));
+            if (count_length == 45){
+                countLimit.setTextColor(ContextCompat.getColor(ShortBio.this, R.color.ButtonRed));
+            } else {
+                countLimit.setTextColor(ContextCompat.getColor(ShortBio.this, R.color.white));
+            }
         } else {
             countLimit.setText("0" + "/45");
             countLimit.setTextColor(ContextCompat.getColor(ShortBio.this, R.color.white));
@@ -68,7 +72,7 @@ public class ShortBio extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                countLimit.setText(charSequence.toString().trim().length() + "/45");
+                countLimit.setText(charSequence.toString().length() + "/45");
                 countVal = countLimit.toString();
                 if (charSequence.length() == 45) {
                     countLimit.setTextColor(ContextCompat.getColor(ShortBio.this, R.color.ButtonRed));
