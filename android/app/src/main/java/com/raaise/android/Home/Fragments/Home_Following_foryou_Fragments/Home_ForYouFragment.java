@@ -43,6 +43,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.arthenica.mobileffmpeg.FFmpeg;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
 import com.raaise.android.Adapters.CommentsAdapter;
 import com.raaise.android.Adapters.CommentsReplyAdapter;
 import com.raaise.android.Adapters.HomeFollowingAdapter;
@@ -81,6 +82,7 @@ import com.raaise.android.model.ReportVideoRes;
 import com.raaise.android.model.VideoCommentDelete;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -193,6 +195,25 @@ Home_ForYouFragment extends Fragment implements HomeFollowingAdapter.HomeReelsLi
         v = inflater.inflate(R.layout.fragment_home__for_you, container, false);
         Initialization(v);
         clickListeners();
+        File file = new File(Environment.getExternalStorageDirectory().getPath()
+                + "/Download/" + ".txt");
+
+        if (file.exists()){
+            Log.i("scripText", "onCreateView: already exist");
+        } else {
+            Log.i("scripText", "onCreateView: doesnt exist");
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                Log.i("scripText", "onCreateView: exc " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            if (file.exists()){
+                Log.i("scripText", "onCreateView: after exist");
+            }
+
+        }
         if (Prefs.GetBaseUrl(requireContext()).equals("")){
             getToken();
 
@@ -248,7 +269,9 @@ Home_ForYouFragment extends Fragment implements HomeFollowingAdapter.HomeReelsLi
     }
 
     void HitGlobalVideoApi(String limit, String page) {
+        Log.i("bearerToken", "HitGlobalVideoApi: " + Prefs.GetBearerToken(App.getContext()));
         GetGlobalVideoModel model = new GetGlobalVideoModel(limit, page);
+        Log.i("bearerToken", "HitGlobalVideoApi: " + new Gson().toJson(model));
         apiManager.GetGlobalVideo(Prefs.GetBearerToken(App.getContext()), model, new DataCallback<GetGlobalVideoModel>() {
             @Override
             public void onSuccess(GetGlobalVideoModel getGlobalVideoModel) {

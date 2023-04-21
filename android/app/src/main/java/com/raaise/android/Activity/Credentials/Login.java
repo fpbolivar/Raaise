@@ -149,6 +149,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1000) {
+            Log.i("googleSignIn", "onActivityResult: " + new Gson().toJson(data));
             if (data != null) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                 Log.i("googleSignIn", "onActivityResult: " + task.isSuccessful());
@@ -205,7 +206,7 @@ public class Login extends AppCompatActivity {
         Gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER))
 //                .requestServerAuthCode(getString(R.string.server_client_id))
-                .requestIdToken("386568747603-c49pj1hfk7l17cniqujqif7njbe33ir8.apps.googleusercontent.com")
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         Gsc = GoogleSignIn.getClient(this, Gso);
@@ -217,13 +218,12 @@ public class Login extends AppCompatActivity {
             Prompt.SnackBar(findViewById(android.R.id.content), "Enter Email or Username");
         } else if (Password.isEmpty()) {
             Prompt.SnackBar(findViewById(android.R.id.content), "Enter Password");
-        } else if (!HelperClass.passwordCharValidation(Password)) {
-            Prompt.SnackBar(findViewById(android.R.id.content), "Password Must Contain 1 Uppercase,1 Lowercase,1 Special character with length 8");
+        } else if (Password.length() < 8) {
+            Prompt.SnackBar(findViewById(android.R.id.content), "Minumum password length should be 8");
         } else {
             Dialogs.createProgressDialog(Login.this);
             FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-
                     LoginPojo loginPojo = new LoginPojo(Email, Password, task.getResult());
                     Log.i("loginPojo", "PerformLogin: " + new Gson().toJson(loginPojo));
                     apiManager.Login(loginPojo, new DataCallback<LoginModel>() {
@@ -231,11 +231,11 @@ public class Login extends AppCompatActivity {
                         public void onSuccess(LoginModel loginModel) {
                             Dialogs.HideProgressDialog();
 //                            try {
-                                Log.i("loginPojo", "PerformLogin: success inside login  " + new Gson().toJson(loginModel));
+//                                Log.i("loginPojo", "PerformLogin: success inside login  " + new Gson().toJson(loginModel));
                                 apiManager.GetPolicy(loginModel.token, new GetPolicyModel("s3bucket"), new DataCallback<GetPolicyModel>() {
                                     @Override
                                     public void onSuccess(GetPolicyModel getPolicyModel) {
-                                        Log.i("loginPojo", "PerformLogin: success s3Bucket " + getPolicyModel.getData().getDescription());
+//                                        Log.i("loginPojo", "PerformLogin: success s3Bucket " + getPolicyModel.getData().getDescription());
                                         Prefs.SetBaseUrl(Login.this, getPolicyModel.getData().getDescription());
                                         Prefs.SetBearerToken(getApplicationContext(), loginModel.getToken());
                                         startActivity(new Intent(getApplicationContext(), Home.class));

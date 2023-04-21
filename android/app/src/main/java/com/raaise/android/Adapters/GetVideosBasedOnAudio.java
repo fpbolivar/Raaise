@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.raaise.android.ApiManager.ApiModels.GetVideosBasedOnAudioIdModel;
+import com.raaise.android.Home.Fragments.SingleVideoActivity;
 import com.raaise.android.Home.Fragments.TryAudioAllVideosActivity;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
@@ -42,6 +43,7 @@ public class GetVideosBasedOnAudio extends RecyclerView.Adapter<GetVideosBasedOn
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                context.startActivity(new Intent(context, SingleVideoActivity.class).putExtra("SlugForSingleVideo", list.get(position).getSlug()));
                 context.startActivity(new Intent(context, TryAudioAllVideosActivity.class).putExtra("ListOfAudioVideos", new Gson().toJson(list)).putExtra("PositionListOfAudioVideos", String.valueOf(position)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });

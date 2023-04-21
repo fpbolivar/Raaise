@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.raaise.android.ApiManager.ApiModels.ChangePasswordModel;
 import com.raaise.android.ApiManager.ApiModels.CreateNewPasswordModel;
 import com.raaise.android.ApiManager.ApiModels.DeactivateAccountModel;
@@ -65,11 +66,27 @@ import com.raaise.android.model.CommentReplyPojo;
 import com.raaise.android.model.DeleteCommentPojo;
 import com.raaise.android.model.DeleteCommentReply;
 import com.raaise.android.model.EditVideoCmntPojo;
+import com.raaise.android.model.GetLiveRoomChatBody;
+import com.raaise.android.model.GetRoomPojo;
+import com.raaise.android.model.JoinRoomRes;
+import com.raaise.android.model.LiveRoomChat;
+import com.raaise.android.model.LiveRoomData;
+import com.raaise.android.model.LiveRoomResponse;
+import com.raaise.android.model.LiveRoomTokenData;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicData;
 import com.raaise.android.model.MusicResponse;
+import com.raaise.android.model.PublicRoomPojo;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.RoomData;
+import com.raaise.android.model.RoomPojo;
+import com.raaise.android.model.RoomResponse;
+import com.raaise.android.model.RoomSlug;
+import com.raaise.android.model.SendChatBody;
+import com.raaise.android.model.SlugRoomData;
+import com.raaise.android.model.UpdateRoomPojo;
+import com.raaise.android.model.UpdateRoomRes;
 import com.raaise.android.model.VideoCommentDelete;
 import com.raaise.android.model.VideoDonationModal;
 import com.raaise.android.model.VideoDonationPojo;
@@ -1791,6 +1808,207 @@ public class ApiManagerImplementation implements ApiManager {
             @Override
             public void onFailure(Call<VideoCommentDelete> call, Throwable t) {
                     callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void createLiveRoom(String token, RoomPojo model, DataCallback<RoomResponse> callback) {
+        Log.i("creatingRoom", "createLiveRoom: Model " + model.title);
+        Log.i("creatingRoom", "createLiveRoom: Model " + model.description);
+        Log.i("creatingRoom", "createLiveRoom: Model " + model.logo);
+        Log.i("creatingRoom", "createLiveRoom: Model " + model.memberIds);
+        Log.i("creatingRoom", "createLiveRoom: Model " + model.roomType);
+
+        ApiUtilities.getApiInterface().createLiveRoom(token, model.getTitle(), model.getDescription(), model.getLogo(), model.getMemberIds(), model.getRoomType()).enqueue(new Callback<RoomResponse>() {
+            @Override
+            public void onResponse(Call<RoomResponse> call, Response<RoomResponse> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        } else if (response.body().status == 422){
+                            callback.onError(new ServerError(response.body().message));
+                        }else {
+                            Log.i("creatingRoom", "onFailure: Error not 200 " + response.body().message);
+                            callback.onError(new ServerError(response.body().message));
+                        }
+                    } else {
+                        callback.onError(new ServerError("Something went wrong"));
+                        Log.i("creatingRoom", "onFailure: Error Body null " + response.message());
+                    }
+                } else {
+                    Log.i("creatingRoom", "onFailure: not success " + response.message());
+                    callback.onError(new ServerError("Something went wrong"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RoomResponse> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+                Log.i("creatingRoom", "onFailure: Error throw " +t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void getLiveRooms(String token, GetRoomPojo model, DataCallback<LiveRoomResponse> callback) {
+        ApiUtilities.getApiInterface().getLiveRooms(token, model).enqueue(new Callback<LiveRoomResponse>() {
+            @Override
+            public void onResponse(Call<LiveRoomResponse> call, Response<LiveRoomResponse> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError(response.body().message));
+                    } else callback.onError(new ServerError("Something went wrong"));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<LiveRoomResponse> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void updateLiveRoom(String token, UpdateRoomPojo model, DataCallback<UpdateRoomRes> callback) {
+        ApiUtilities.getApiInterface().updateLiveRoom(token, model.title, model.description, model.logo, model.slug).enqueue(new Callback<UpdateRoomRes>() {
+            @Override
+            public void onResponse(Call<UpdateRoomRes> call, Response<UpdateRoomRes> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        } callback.onError(new ServerError(response.body().message));
+                    } else callback.onError(new ServerError("Something went wrong"));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<UpdateRoomRes> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void getRoomBySlug(String token, RoomSlug model, DataCallback<LiveRoomTokenData> callback) {
+        ApiUtilities.getApiInterface().getRoomBySlug(token, model).enqueue(new Callback<SlugRoomData>() {
+            @Override
+            public void onResponse(Call<SlugRoomData> call, Response<SlugRoomData> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body().data);
+                        } else callback.onError(new ServerError("Something went wrong"));
+                    } callback.onError(new ServerError("Something went wrong"));
+                } callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<SlugRoomData> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void getPublicRooms(String token, PublicRoomPojo model, DataCallback<ArrayList<LiveRoomData>> callback) {
+        ApiUtilities.getApiInterface().getPublicRooms(token, model).enqueue(new Callback<LiveRoomResponse>() {
+            @Override
+            public void onResponse(Call<LiveRoomResponse> call, Response<LiveRoomResponse> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body().data);
+                        } callback.onError(new ServerError(response.body().message));
+                    } else callback.onError(new ServerError("Try again later"));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<LiveRoomResponse> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void joinLiveRoom(String token, RoomSlug model, DataCallback<JoinRoomRes> callback) {
+        ApiUtilities.getApiInterface().joinPublicRoom(token, model).enqueue(new Callback<JoinRoomRes>() {
+            @Override
+            public void onResponse(Call<JoinRoomRes> call, Response<JoinRoomRes> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError(response.body().message));
+                    } else callback.onError(new ServerError("Something went wrong"));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<JoinRoomRes> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void leaveLiveRoom(String token, RoomSlug model, DataCallback<JoinRoomRes> callback) {
+        ApiUtilities.getApiInterface().leavePublicRoom(token, model).enqueue(new Callback<JoinRoomRes>() {
+            @Override
+            public void onResponse(Call<JoinRoomRes> call, Response<JoinRoomRes> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        } else callback.onError(new ServerError(response.body().message));
+                    } else callback.onError(new ServerError("Something went wrong"));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<JoinRoomRes> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void sendLiveChat(String token, SendChatBody model) {
+        ApiUtilities.getApiInterface().sendLiveChat(token, model).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void getLiveChat(String token, GetLiveRoomChatBody model, DataCallback<ArrayList<LiveRoomChat.ChatData>> callback) {
+        ApiUtilities.getApiInterface().getLiveRoomChat(token, model).enqueue(new Callback<LiveRoomChat>() {
+            @Override
+            public void onResponse(Call<LiveRoomChat> call, Response<LiveRoomChat> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200 && response.body().getData().size() > 1){
+                            callback.onSuccess(response.body().data);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LiveRoomChat> call, Throwable t) {
+
             }
         });
     }

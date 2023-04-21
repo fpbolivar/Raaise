@@ -3,6 +3,7 @@ package com.raaise.android.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import com.raaise.android.Utilities.HelperClasses.HelperClass;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.mainHomeData;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class HomeFollowingAdapter extends RecyclerView.Adapter<HomeFollowingAdapter.ViewHolder> {
@@ -55,6 +58,10 @@ public class HomeFollowingAdapter extends RecyclerView.Adapter<HomeFollowingAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         GetGlobalVideoModel.Data obj = list.get(position);
+        LocalDateTime dateTime = LocalDateTime.parse(obj.createdAt, DateTimeFormatter.ISO_DATE_TIME);
+        String outputDateString = dateTime.format(DateTimeFormatter.ofPattern("EEE d, yyyy"));
+        holder.dateTV.setText("Posted On " + outputDateString);
+        Log.i("createdAT", "onBindViewHolder: " + obj.createdAt);
         holder.VideoViewInHomeReels.setVideoPath(Prefs.GetBaseUrl(context) +obj.getVideoLink());
         holder.VideoViewInHomeReels.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -204,6 +211,14 @@ public class HomeFollowingAdapter extends RecyclerView.Adapter<HomeFollowingAdap
             holder.topRewardedHeading.setVisibility(View.GONE);
         }
 
+        try {
+            Log.i("countException", "onBindViewHolder: " + obj.getVideoViewCount());
+            holder.viewCountTV.setText("" + obj.getVideoViewCount());
+        } catch (Exception e){
+            Log.i("countException", "onBindViewHolder: " + e.getMessage());
+        }
+
+
     }
 
 
@@ -244,6 +259,7 @@ public class HomeFollowingAdapter extends RecyclerView.Adapter<HomeFollowingAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView viewCountTV;
         TextView topRewardedHeading;
         RecyclerView topRewardedRV;
         ImageView tryAudioBtn;
@@ -259,10 +275,13 @@ public class HomeFollowingAdapter extends RecyclerView.Adapter<HomeFollowingAdap
         LottieAnimationView Lottie_Heart, Lottie_PausePlay;
         RelativeLayout MainLayoutInFollowingVideoSingleItem, AudioItem;
         CardView FollowButtonInHomeVideoSingleItem;
+        TextView dateTV;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            dateTV = itemView.findViewById(R.id.date_tv);
+            viewCountTV = itemView.findViewById(R.id.view_count_tvk);
             topRewardedHeading = itemView.findViewById(R.id.top_rewarded_tv);
             topRewardedRV = itemView.findViewById(R.id.top_rewarded_rv);
             DonationLayout = itemView.findViewById(R.id.DonationLayout);

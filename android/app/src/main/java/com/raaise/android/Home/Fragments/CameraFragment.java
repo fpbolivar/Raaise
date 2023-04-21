@@ -16,6 +16,7 @@ import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -48,6 +49,9 @@ import java.util.concurrent.TimeUnit;
 
 
 public class CameraFragment extends Fragment {
+    private CameraSelector cameraSelector;
+    private Preview preview;
+    private Camera camera;
     public boolean isRecording = false;
     ImageView flashBtn;
     private CameraControl cameraControl;
@@ -100,6 +104,39 @@ public class CameraFragment extends Fragment {
                 flashEnabled = true;
                 flashBtn.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.flash_on));
             }
+        });
+
+        ScaleGestureDetector scaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.OnScaleGestureListener() {
+            @Override
+            public boolean onScale(@NonNull ScaleGestureDetector scaleGestureDetector) {
+                // Get the camera's current zoom ratio
+                float currentZoomRatio = camera.getCameraInfo().getZoomState().getValue().getZoomRatio();
+
+                // Get the pinch gesture's scaling factor
+                float delta = scaleGestureDetector.getScaleFactor();
+
+                // Update the camera's zoom ratio. This is an asynchronous operation that returns
+                // a ListenableFuture, allowing you to listen to when the operation completes.
+                cameraControl.setZoomRatio(currentZoomRatio * delta);
+
+                return true;
+            }
+
+            @Override
+            public boolean onScaleBegin(@NonNull ScaleGestureDetector scaleGestureDetector) {
+
+                return true;
+            }
+
+            @Override
+            public void onScaleEnd(@NonNull ScaleGestureDetector scaleGestureDetector) {
+            }
+        });
+
+        previewView.setOnTouchListener((view, motionEvent) -> {
+            view.performClick();
+            scaleGestureDetector.onTouchEvent(motionEvent);
+            return true;
         });
 
         return v;
@@ -196,10 +233,10 @@ public class CameraFragment extends Fragment {
 
             Uri selectedImageUri = data.getData();
 
-            
+
             String filemanagerstring = selectedImageUri.getPath();
 
-            
+
             String selectedImagePath = getPath(selectedImageUri);
             if (selectedImagePath != null) {
                 ((Home) requireActivity()).fromGallery = true;
@@ -244,22 +281,25 @@ public class CameraFragment extends Fragment {
     @SuppressLint("RestrictedApi")
     private void startCameraX(ProcessCameraProvider cameraProvider) {
         cameraProvider.unbindAll();
-        CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build();
+        cameraSelector = new CameraSelector.Builder()
+                    .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                    .build();
 
-        Preview preview = new Preview.Builder().build();
+
+
+        preview = new Preview.Builder().build();
         preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
         imageCapture = new ImageCapture.Builder()
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .build();
 
+
         videoCapture = new VideoCapture.Builder()
-                .setVideoFrameRate(30)
+                .setVideoFrameRate(15)
                 .build();
 
-        Camera camera = cameraProvider.bindToLifecycle(getActivity(), cameraSelector, preview, videoCapture);
+        camera = cameraProvider.bindToLifecycle(getActivity(), cameraSelector, preview, videoCapture);
         cameraControl = camera.getCameraControl();
     }
 
@@ -319,7 +359,7 @@ public class CameraFragment extends Fragment {
                                     } catch (Exception e){
                                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                         Log.i("debugAudio", "onVideoSavedError: " + e.getMessage());
-                                    }
+                                        }
 
                                 }
 
@@ -347,4 +387,4 @@ public class CameraFragment extends Fragment {
             cameraProvider.unbindAll();
         }
     }
-}
+        }

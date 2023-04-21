@@ -201,6 +201,20 @@
                     android:textFontWeight="300"
                     android:textSize="@dimen/_8ssp" />
 
+                <TextView
+                    android:id="@+id/date_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:fontFamily="@font/noto_sans"
+                    android:maxWidth="180dp"
+                    android:text="Posted On"
+                    android:textColor="@color/DullWhite"
+                    android:textFontWeight="300"
+                    android:textSize="@dimen/_8ssp" />
+
+
             </LinearLayout>
 
 
@@ -392,6 +406,28 @@
             android:gravity="center"
             android:src="@drawable/camera_in_singel"
             android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:src="@drawable/view_icon" />
+
+            <TextView
+                android:id="@+id/view_count_tvk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textFontWeight="300"
+                android:textSize="@dimen/_9ssp" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/more_options_btn"

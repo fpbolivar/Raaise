@@ -1,21 +1,30 @@
 package com.raaise.android.Home.MainHome;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
@@ -41,6 +50,8 @@ import com.raaise.android.Home.Fragments.HomeFragment;
 import com.raaise.android.Home.Fragments.PlusFragment;
 import com.raaise.android.Home.Fragments.ProfileFragment;
 import com.raaise.android.Home.Fragments.SearchFragment;
+import com.raaise.android.MainActivity;
+import com.raaise.android.NewCameraFragment;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
@@ -68,21 +79,81 @@ public class Home extends AppCompatActivity {
     Fragment fragment = null;
     FragmentManager fragmentManager = getSupportFragmentManager();
     TextView textViewCountMessage;
+    private static Dialog uploadDialog;
+    private static View view;
+    private static View uploadCompleteProgress;
+    private static Activity homeActivity;
 
     int PERMISSION_ALL = 1;
     String[] PERMISSIONS = {
+            Manifest.permission.BLUETOOTH,
+            Manifest.permission.BLUETOOTH,
+            Manifest.permission.BLUETOOTH_CONNECT,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.RECORD_AUDIO,
             android.Manifest.permission.CAMERA
     };
 
+    public static void uploadStarted() {
+        Log.i("serviceClass", "uploadStarted: Inside dialog");
+        homeActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                view.setVisibility(View.VISIBLE);
+            }
+        });
+
+    }
+
+    public static void uploadCompleted() {
+        homeActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                view.setVisibility(View.GONE);
+                showUploadCompleteDialog();
+            }
+        });
+
+    }
+
+    private static void showUploadCompleteDialog() {
+        homeActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                uploadCompleteProgress.setVisibility(View.VISIBLE);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        uploadCompleteProgress.setVisibility(View.GONE);
+                    }
+                }, 3000);
+            }
+        });
+
+    }
+
+    public static void interruptedDialog() {
+        homeActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                view.setVisibility(View.GONE);
+            }
+        });
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("tokenUser", "onCreate: " + Prefs.GetBearerToken(com.raaise.android.Home.MainHome.Home.this));
+        homeActivity = com.raaise.android.Home.MainHome.Home.this;
         getWindow().getAttributes().windowAnimations = R.anim.zoom_enter;
         setContentView(R.layout.activity_home);
-
+        view = findViewById(R.id.upload_progress);
+        uploadCompleteProgress = findViewById(R.id.upload_complete_progress);
+        Log.i("authKey", "onCreate: " + Prefs.GetBearerToken(this));
         Initialization();
         clickListeners();
         new Thread(new Runnable() {
@@ -184,7 +255,8 @@ public class Home extends AppCompatActivity {
 
     }
 
-    private void SelectInboxScreen() {
+    public void SelectInboxScreen() {
+        Log.i("fromChat", "SelectInboxScreen: Selected");
         HomeImageView.setImageResource(R.drawable.svg_unselect_home);
         SearchImageView.setImageResource(R.drawable.svg_unselect_search);
         InboxImageView.setImageResource(R.drawable.svg_select_inbox);
@@ -227,7 +299,7 @@ public class Home extends AppCompatActivity {
         InboxImageView = findViewById(R.id.InboxImageView);
         ProfileImageView = findViewById(R.id.ProfileImageView);
         fragmentManagerHelper = new FragmentManagerHelper(fragmentManager);
-
+        Log.i("whereTo", "Initialization: Home");
         SelectHomeScreen();
     }
 
@@ -238,6 +310,7 @@ public class Home extends AppCompatActivity {
             checkPermissions();
         } else {
             String[] PERMISSIONS = {
+                    Manifest.permission.BLUETOOTH_CONNECT,
                     Manifest.permission.READ_MEDIA_IMAGES,
                     Manifest.permission.READ_MEDIA_VIDEO,
                     Manifest.permission.READ_MEDIA_AUDIO,
@@ -363,6 +436,6 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        SelectHomeScreen();
+//        SelectHomeScreen();
     }
 }

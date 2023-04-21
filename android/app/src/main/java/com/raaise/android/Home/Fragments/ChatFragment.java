@@ -37,6 +37,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -326,9 +327,13 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Chat
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.backBtn:
-                requireActivity().onBackPressed();
+                backBtnClicked();
                 break;
         }
+    }
+
+    private void backBtnClicked() {
+        requireActivity().onBackPressed();
     }
 
     @Override
@@ -354,5 +359,27 @@ public class ChatFragment extends Fragment implements View.OnClickListener, Chat
 
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (App.fromTryAudio){
+            try {
+                for (Fragment fragment : getActivity().getSupportFragmentManager().getFragments()) {
+                    if (fragment instanceof HomeFragment){
+                        Log.i("fragment", "onResume: ");
+                    } else
+                    getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                }
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.FragmentContainer, new CameraFragment())
+                        .commit();
+            } catch (Exception e){
+                Log.i("onResumeMusic", "onResume: " + e.getMessage());
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.raaise.android;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -235,7 +236,7 @@ public class FollowersListFragment extends Fragment implements View.OnClickListe
     private void DoHitFollowerAPi(String s) {
 
         UserFollowersModel model = new UserFollowersModel(s, "", "1");
-
+        Log.i("followerStr", "DoHitFollowerAPi: " + s);
 
         manager.GetFollowersList(Prefs.GetBearerToken(getActivity()), model, new DataCallback<UserFollowersModel>() {
             @Override

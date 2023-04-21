@@ -57,10 +57,25 @@ import com.raaise.android.model.CommentReplyPojo;
 import com.raaise.android.model.DeleteCommentPojo;
 import com.raaise.android.model.DeleteCommentReply;
 import com.raaise.android.model.EditVideoCmntPojo;
+import com.raaise.android.model.GetLiveRoomChatBody;
+import com.raaise.android.model.GetRoomPojo;
+import com.raaise.android.model.JoinRoomRes;
+import com.raaise.android.model.LiveRoomChat;
+import com.raaise.android.model.LiveRoomData;
+import com.raaise.android.model.LiveRoomResponse;
+import com.raaise.android.model.LiveRoomTokenData;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicData;
+import com.raaise.android.model.PublicRoomPojo;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.RoomData;
+import com.raaise.android.model.RoomPojo;
+import com.raaise.android.model.RoomResponse;
+import com.raaise.android.model.RoomSlug;
+import com.raaise.android.model.SendChatBody;
+import com.raaise.android.model.UpdateRoomPojo;
+import com.raaise.android.model.UpdateRoomRes;
 import com.raaise.android.model.VideoCommentDelete;
 import com.raaise.android.model.VideoDonationModal;
 import com.raaise.android.model.VideoDonationPojo;
@@ -192,4 +207,22 @@ public interface ApiManager {
     void reportUser(String token, BlockUserPojo model, DataCallback<VideoCommentDelete> callback);
 
     void blockVideo(String token, BlockVideoPojo model, DataCallback<VideoCommentDelete> callback);
+
+    void createLiveRoom(String token, RoomPojo model , DataCallback<RoomResponse> callback);
+
+    void getLiveRooms(String token, GetRoomPojo model, DataCallback<LiveRoomResponse> callback);
+
+    void updateLiveRoom(String token, UpdateRoomPojo model, DataCallback<UpdateRoomRes> callback);
+
+    void getRoomBySlug(String token, RoomSlug model, DataCallback<LiveRoomTokenData> callback);
+
+    void getPublicRooms(String token, PublicRoomPojo model, DataCallback<ArrayList<LiveRoomData>> callback);
+
+    void joinLiveRoom(String token, RoomSlug model, DataCallback<JoinRoomRes> callback);
+
+    void leaveLiveRoom(String token, RoomSlug model, DataCallback<JoinRoomRes> callback);
+
+    void sendLiveChat(String token, SendChatBody model);
+
+    void getLiveChat(String token, GetLiveRoomChatBody model, DataCallback<ArrayList<LiveRoomChat.ChatData>> callback);
 }

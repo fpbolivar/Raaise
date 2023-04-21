@@ -2,6 +2,7 @@ package com.raaise.android.Home.Fragments;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,8 +20,10 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.raaise.android.Activity.credentials.Login;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.GetUserProfile;
+import com.raaise.android.ApiManager.ApiModels.LogoutModel;
 import com.raaise.android.ApiManager.ApiModels.UnReadNotificationCountModel;
 import com.raaise.android.ApiManager.DataCallback;
 import com.raaise.android.ApiManager.RetrofitHelper.App;
@@ -28,12 +31,21 @@ import com.raaise.android.ApiManager.ServerError;
 import com.raaise.android.Home.Fragments.Home_Following_foryou_Fragments.Home_FollowingFragment;
 import com.raaise.android.Home.Fragments.Home_Following_foryou_Fragments.Home_ForYouFragment;
 import com.raaise.android.R;
+import com.raaise.android.Settings.SettingsActivity;
+import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
 
 
 public class HomeFragment extends Fragment {
-
+    String AccHolderName = "AccHolderName";
+    String AccAccNumber = "AccNumber";
+    String AccRoutingNumber = "RoutingNumber";
+    String AccCity = "City";
+    String AccState = "State";
+    String AccAddress = "Address";
+    String AccPostalCode = "PostalCode";
+    String AccPhoneNumber = "PhoneNumber";
     public static int Reselected, Unselected;
     View v;
     TabLayout tabLayout;
@@ -85,6 +97,7 @@ public class HomeFragment extends Fragment {
         return true;
     }
     void GetUserProfile() {
+        Log.i("tokenFor", "GetUserProfile: " + Prefs.GetBearerToken(v.getContext()));
         apiManager.GetUserProfile(Prefs.GetBearerToken(v.getContext()), new DataCallback<GetUserProfile>() {
             @Override
             public void onSuccess(GetUserProfile getUserProfile) {
@@ -105,6 +118,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onError(ServerError serverError) {
                 Prompt.SnackBar(v, serverError.getErrorMsg());
+                if (serverError.getErrorMsg().toLowerCase().contains("unauthorized")){
+                    DoLogout();
+                }
             }
         });
     }
@@ -241,5 +257,43 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void DoLogout() {
+        Dialogs.createProgressDialog(getActivity());
+        apiManager.LogOut(Prefs.GetBearerToken(getActivity()), new DataCallback<LogoutModel>() {
+            @Override
+            public void onSuccess(LogoutModel logoutModel) {
+                Dialogs.HideProgressDialog();
+                Prefs.ClearBearerToken(getActivity());
+                Prefs.ClearBaseUrl(getActivity());
+                Prefs.ClearForgetPasswordEmail(getActivity());
+                Prefs.ClearFORGETPASSWORDTOKEN(getActivity());
+                Prefs.ClearUserID(getActivity());
+                Prefs.ClearUserShortBio(getActivity());
+                Prefs.ClearPushNotification(getActivity());
+                Prefs.ClearEmailNotification(getActivity());
+                Prefs.ClearPhoneNumberOfTheUser(getActivity());
+                Prefs.ClearUserEmail(getActivity());
+                Prefs.ClearForgetPasswordVerifyOtp(getActivity());
+                Prefs.ClearEmailNotification(getActivity());
+                Prefs.ClearBankDetails(getActivity(), AccHolderName);
+                Prefs.ClearBankDetails(getActivity(), AccAccNumber);
+                Prefs.ClearBankDetails(getActivity(), AccRoutingNumber);
+                Prefs.ClearBankDetails(getActivity(), AccCity);
+                Prefs.ClearBankDetails(getActivity(), AccState);
+                Prefs.ClearBankDetails(getActivity(), AccAddress);
+                Prefs.ClearBankDetails(getActivity(), AccPostalCode);
+                Prefs.ClearBankDetails(getActivity(), AccPhoneNumber);
 
+                Intent intent = new Intent(getActivity(), Login.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+                Dialogs.HideProgressDialog();
+            }
+        });
+
+    }
 }

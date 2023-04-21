@@ -18,6 +18,23 @@
     <!--        android:layout_height="match_parent"-->
     <!--        android:layout_above="@id/bottomBar" />-->
 
+    <include
+        android:id="@+id/upload_complete_progress"
+        android:visibility="gone"
+        layout="@layout/upload_complete_dialog"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <include
+        android:id="@+id/upload_progress"
+        android:visibility="gone"
+        layout="@layout/upload_dialog"
+        android:layout_above="@id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
     <LinearLayout
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"

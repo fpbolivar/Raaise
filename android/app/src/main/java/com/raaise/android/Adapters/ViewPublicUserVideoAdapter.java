@@ -175,6 +175,7 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
 
         holder.ShareVideo.setOnClickListener(view -> homeReelsListener.ShowShareVideoDialog(obj.getVideoLink(), obj.getUserId().get_id(), obj.getUserId().getProfileImage(), obj.getUserId().getShortBio(), obj.getUserId().getUserName(), obj.get_id()));
 
+        holder.videoViewCount.setText("" + obj.getVideoViewCount());
     }
 
     @Override
@@ -210,6 +211,7 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView videoViewCount;
         TextView topRewardedHead;
         ImageView tryAudioBtn, more_options_btn_UP, ShareVideo;
         LinearLayout songInfoContainer;
@@ -227,6 +229,7 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            videoViewCount = itemView.findViewById(R.id.view_count_tvk);
             topRewardedHead = itemView.findViewById(R.id.top_rewarded_tv);
             DonationLayout = itemView.findViewById(R.id.DonationLayout);
             ShareVideo = itemView.findViewById(R.id.ShareVideo);

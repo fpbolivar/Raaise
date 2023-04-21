@@ -71,4 +71,13 @@ public class StringHelper {
     public static final String BLOCK_USER = "block-user";
     public static final String REPORT_USER = "report-user";
     public static final String BLOCK_CONTENT = "block-content";
+    public static final String CREATE_ROOM = "create-live-room";
+    public static final String GET_LIVE_ROOM = "get-live-rooms";
+    public static final String EDIT_LIVE_ROOM = "update-live-room";
+    public static final String GET_ROOM_SLUG = "get-live-room-by-slug";
+    public static final String GET_PUBLIC_LIVE_ROOMS = "get-public-live-rooms";
+    public static final String JOIN_PUBLIC_ROOM = "join-public-live-room";
+    public static final String LEAVE_PUBLIC_ROOM = "leave-live-room";
+    public static final String SEND_LIVE_CHAT = "live-room/chat-send-message";
+    public static final String GET_LIVE_ROOM_CHAT = "live-room/get-live-room-chat";
 }

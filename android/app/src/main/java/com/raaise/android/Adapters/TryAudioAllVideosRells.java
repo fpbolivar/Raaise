@@ -173,6 +173,8 @@ public class TryAudioAllVideosRells extends RecyclerView.Adapter<TryAudioAllVide
         } else {
             holder.DonationLayout.setVisibility(View.GONE);
         }
+
+        holder.videoViewCount.setText("" + obj.getVideoViewCount());
     }
 
     @Override
@@ -208,6 +210,7 @@ public class TryAudioAllVideosRells extends RecyclerView.Adapter<TryAudioAllVide
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView videoViewCount;
         ImageView tryAudioBtn, more_options_btn_UP, ShareVideo;
         LinearLayout songInfoContainer;
         LinearLayout profileContainer, DonationLayout;
@@ -225,6 +228,7 @@ public class TryAudioAllVideosRells extends RecyclerView.Adapter<TryAudioAllVide
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            videoViewCount = itemView.findViewById(R.id.view_count_tvk);
             topRewardedHeading = itemView.findViewById(R.id.top_rewarded_tv);
             DonationLayout = itemView.findViewById(R.id.DonationLayout);
 

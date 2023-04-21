@@ -278,7 +278,7 @@ public class SignUp extends AppCompatActivity {
         Gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER))
 //                .requestServerAuthCode(getString(R.string.server_client_id))
-                .requestIdToken("386568747603-c49pj1hfk7l17cniqujqif7njbe33ir8.apps.googleusercontent.com")
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         Gsc = GoogleSignIn.getClient(this, Gso);
@@ -319,8 +319,9 @@ public class SignUp extends AppCompatActivity {
         } else if (ConfirmPassword.isEmpty()) {
             showMessage("Please enter Confirm password filed");
             return;
-        } else if (!HelperClass.passwordCharValidation(pswrd)) {
-            showMessage("Password Must Contain 1 Uppercase,1 Lowercase,1 Special character with length 8");
+        } else if (pswrd.length() < 8) {
+            Log.i("password", "PerformSignUp: " + pswrd);
+            showMessage("Minumum password length should be 8");
         } else if (!ConfirmPassword.matches(pswrd)) {
             showMessage("New password and confirm password must match");
         } else if (!termsPolicyCheckBox.isChecked()){

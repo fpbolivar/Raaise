@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/logo_container"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/public_room_tv"
+        app:cardCornerRadius="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="4dp">
+
+        <ImageView
+            android:id="@+id/public_room_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/app_icon"
+            android:scaleType="centerCrop"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/public_room_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginHorizontal="10dp"
+        app:layout_constraintLeft_toLeftOf="@id/logo_container"
+        app:layout_constraintRight_toRightOf="@id/logo_container"
+        app:layout_constraintTop_toBottomOf="@id/logo_container"
+        app:layout_constraintBottom_toTopOf="@id/public_room_desc_tv"
+        android:textColor="@color/white"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:text="Public Room"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:fontFamily="@font/noto_sans"/>
+
+    <TextView
+        android:id="@+id/public_room_desc_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_marginHorizontal="10dp"
+        android:ellipsize="end"
+        app:layout_constraintLeft_toLeftOf="@id/logo_container"
+        app:layout_constraintRight_toRightOf="@id/logo_container"
+        app:layout_constraintTop_toBottomOf="@id/public_room_tv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/DarkGrey"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:text="Public Room Description"
+        android:textSize="11sp"
+        android:fontFamily="@font/noto_sans"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

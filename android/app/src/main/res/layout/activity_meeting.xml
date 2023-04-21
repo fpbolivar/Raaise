@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".Home.MeetingActivity">
+    
+    <live.videosdk.rtc.android.VideoView
+        android:id="@+id/user_video_view"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="20dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvParticipants"
+        app:layout_constraintTop_toTopOf="@id/user_video_view"
+        app:layout_constraintRight_toRightOf="@id/user_video_view"
+        tools:listitem="@layout/item_remote_peer"
+        android:layout_marginBottom="14dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_width="120dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/live_chat_rv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintHeight_max="280dp"
+        android:background="@null"
+        app:stackFromEnd="true"
+        tools:listitem="@layout/live_chat_item"
+        app:layout_constraintBottom_toBottomOf="@id/rvParticipants"
+        app:layout_constraintLeft_toLeftOf="@id/rvParticipants"
+        app:layout_constraintRight_toRightOf="@id/rvParticipants"/>
+    
+    <LinearLayout
+        android:id="@+id/option_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/send_chat_et"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/send_chat_btn"
+                android:layout_marginStart="26dp"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_gravity="top"
+
+
+                android:layout_weight="1"
+                android:background="@color/Transparent"
+                android:hint="Say something..."
+                android:textColor="@color/white"
+                android:textColorHint="@color/DarkGrey"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/send_chat_btn"
+                app:layout_constraintTop_toTopOf="@id/send_chat_btn"
+                app:layout_constraintBottom_toBottomOf="@id/send_chat_btn"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="12dp"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"
+                android:src="@drawable/svg_sendbutton"
+                app:tint="@color/LogoGreyColor" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:weightSum="3"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnMic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                app:cardCornerRadius="55dp"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:id="@+id/mic_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="@color/Green"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/mic_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:src="@drawable/mic_on"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnLeave"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                app:cardCornerRadius="55dp"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="@color/Red"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/call_img"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnWebcam"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                app:cardCornerRadius="55dp"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:id="@+id/webcam_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="@color/Green"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/webcam_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/camera_on"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!--        <Button-->
+            <!--            -->
+            <!--            android:layout_width="0dp"-->
+            <!--            android:layout_weight="1"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginVertical="8dp"-->
+            <!--            android:textColor="@color/white"-->
+            <!--            android:text="Mic"/>-->
+
+            <!--        <Button-->
+            <!--            android:id="@+id/btnLeave"-->
+            <!--            android:layout_width="0dp"-->
+            <!--            android:layout_weight="1"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginVertical="8dp"-->
+            <!--            android:layout_marginHorizontal="8dp"-->
+            <!--            android:textColor="@color/white"-->
+            <!--            android:text="Leave"/>-->
+
+            <!--        <Button-->
+            <!--            android:id="@+id/btnWebcam"-->
+            <!--            android:layout_width="0dp"-->
+            <!--            android:layout_weight="1"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginVertical="8dp"-->
+            <!--            android:textColor="@color/white"-->
+            <!--            android:text="Webcam" />-->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

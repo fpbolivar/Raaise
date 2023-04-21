@@ -59,10 +59,21 @@ import com.raaise.android.model.CommentReplyPojo;
 import com.raaise.android.model.DeleteCommentPojo;
 import com.raaise.android.model.DeleteCommentReply;
 import com.raaise.android.model.EditVideoCmntPojo;
+import com.raaise.android.model.GetLiveRoomChatBody;
+import com.raaise.android.model.GetRoomPojo;
+import com.raaise.android.model.JoinRoomRes;
+import com.raaise.android.model.LiveRoomChat;
+import com.raaise.android.model.LiveRoomResponse;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicResponse;
+import com.raaise.android.model.PublicRoomPojo;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
+import com.raaise.android.model.RoomResponse;
+import com.raaise.android.model.RoomSlug;
+import com.raaise.android.model.SendChatBody;
+import com.raaise.android.model.SlugRoomData;
+import com.raaise.android.model.UpdateRoomRes;
 import com.raaise.android.model.VideoCommentDelete;
 import com.raaise.android.model.VideoDonationModal;
 import com.raaise.android.model.VideoDonationPojo;
@@ -320,4 +331,49 @@ public interface ApiInterface {
 
     @POST(StringHelper.BLOCK_CONTENT)
     Call<VideoCommentDelete> blockVideo(@Header(StringHelper.AUTHORIZATION) String token, @Body BlockVideoPojo pojo);
+
+    @Multipart
+    @POST(StringHelper.CREATE_ROOM)
+    Call<RoomResponse> createLiveRoom(@Header(StringHelper.AUTHORIZATION) String token,
+                                      @Part ("title") RequestBody title,
+                                      @Part ("description") RequestBody description,
+                                      @Part MultipartBody.Part logo,
+                                      @Part ("memberIds") RequestBody memberIds,
+                                      @Part ("roomType") RequestBody roomType);
+
+    @POST(StringHelper.GET_LIVE_ROOM)
+    Call<LiveRoomResponse> getLiveRooms(@Header(StringHelper.AUTHORIZATION) String token,
+                                        @Body GetRoomPojo pojo);
+
+    @Multipart
+    @POST(StringHelper.EDIT_LIVE_ROOM)
+    Call<UpdateRoomRes> updateLiveRoom(@Header(StringHelper.AUTHORIZATION) String token,
+                                       @Part ("title") RequestBody title,
+                                       @Part ("description") RequestBody description,
+                                       @Part MultipartBody.Part logo,
+                                       @Part ("slug") RequestBody roomSlug );
+
+    @POST(StringHelper.GET_ROOM_SLUG)
+    Call<SlugRoomData> getRoomBySlug(@Header(StringHelper.AUTHORIZATION) String token,
+                                     @Body RoomSlug model);
+
+    @POST(StringHelper.GET_PUBLIC_LIVE_ROOMS)
+    Call<LiveRoomResponse> getPublicRooms(@Header(StringHelper.AUTHORIZATION) String token,
+                                          @Body PublicRoomPojo pojo);
+
+    @POST(StringHelper.JOIN_PUBLIC_ROOM)
+    Call<JoinRoomRes> joinPublicRoom(@Header(StringHelper.AUTHORIZATION) String token,
+                                     @Body RoomSlug pojo);
+
+    @POST(StringHelper.LEAVE_PUBLIC_ROOM)
+    Call<JoinRoomRes> leavePublicRoom(@Header(StringHelper.AUTHORIZATION) String token,
+                                     @Body RoomSlug pojo);
+
+    @POST(StringHelper.SEND_LIVE_CHAT)
+    Call<JsonObject> sendLiveChat(@Header(StringHelper.AUTHORIZATION) String token,
+                                  @Body SendChatBody pojo);
+
+    @POST(StringHelper.GET_LIVE_ROOM_CHAT)
+    Call<LiveRoomChat> getLiveRoomChat(@Header(StringHelper.AUTHORIZATION) String token,
+                                       @Body GetLiveRoomChatBody pojo);
 }

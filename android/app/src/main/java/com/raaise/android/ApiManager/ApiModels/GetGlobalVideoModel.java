@@ -103,6 +103,7 @@ public class GetGlobalVideoModel {
         public int videoShareCount;
         public boolean isReported;
         public boolean isBlock;
+        public int videoViewCount;
         public String createdAt;
         public String updatedAt;
         public int __v;
@@ -112,6 +113,10 @@ public class GetGlobalVideoModel {
 
         public ArrayList<DonationUsers> getDonationUsers() {
             return donationUsers;
+        }
+
+        public int getVideoViewCount() {
+            return videoViewCount;
         }
 
         public int getVideoReportCount() {

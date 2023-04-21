@@ -73,7 +73,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PlusFragment extends Fragment implements AmountAdapter.AmountListener {
+public class PlusFragment extends Fragment implements AmountAdapter.AmountListener{
+    private static Dialog uploadDialog;
     public boolean isDonation = false;
     public String donationFromRV = "";
     public EditText donationAmtTV;
@@ -117,6 +118,19 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
         }
     }
 
+    public static void showVideoDialog() {
+        Home.uploadStarted();
+    }
+
+    public static void stopDialog() {
+        Home.uploadCompleted();
+    }
+
+    public static void interruptVideoDialog() {
+        Home.interruptedDialog();
+        Toast.makeText(App.getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -124,6 +138,7 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
         if (VideoPath != null) {
             ((Home) requireActivity()).videoPath = VideoPath;
         }
+        Log.i("serviceClass", "onCreateView: without in PLus" );
         Initialization(v);
         if (App.fromTryAudio){
             Log.i("fromTryAudio", "onCreateView: without " + ((Home) requireActivity()).videoUri);
@@ -177,6 +192,8 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                     Log.i("thumbFile", "onClick: fromGallery");
                     thumb = ThumbnailUtils.createVideoThumbnail(getRealPathFromUri(getContext(), Uri.parse(((Home) requireActivity()).videoUri)), MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
                 } else {
+                    Log.i("filePath", "onClick: " + getRealPathFromUri(getContext(), Uri.parse(VideoPath)));
+
                     thumb = MERGED_VIDEO_PATH.equals("") ? ThumbnailUtils.createVideoThumbnail(getRealPathFromUri(getContext(), Uri.parse(VideoPath)), MediaStore.Images.Thumbnails.FULL_SCREEN_KIND) : ThumbnailUtils.createVideoThumbnail(MERGED_VIDEO_PATH, MediaStore.Images.Thumbnails.FULL_SCREEN_KIND);
                 }
 
@@ -298,6 +315,7 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                 ((Home) requireActivity()).musicData = "";
                 ((Home) requireActivity()).videoPath = "";
                 ((Home) requireActivity()).videoUri = "";
+                ((Home) requireActivity()).bottomBar.setVisibility(View.VISIBLE);
                 ((Home) requireActivity()).SelectHomeScreen();
             } catch (Exception e){
                 Log.e("PlusFragment", "handleBackButtonClicked: " + e.getMessage());
@@ -471,10 +489,7 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                 CategoryID = RequestBody.create(MediaType.parse("text/plain"), CategoryId);
                 RequestBody finalAudioID = audioID;
                 RequestBody finalCategoryID = CategoryID;
-                Dialogs.showProgressDialog(getContext());
 
-
-                Dialogs.dismissProgressDialog();
                 File vdoFile;
                 RequestBody requestFile;
                 MultipartBody.Part vdoBody;
@@ -492,17 +507,22 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                 }
 
                 dialog.dismiss();
-                pojo = new VideoPojo(((Home) requireActivity()), Prefs.GetBearerToken(getActivity()), videoCaption, isDonation, donationAmt, finalAudioID, finalCategoryID, vdoBody, imageBody);
-                Intent intent = new Intent(getContext(), VideoService.class);
-                getActivity().startService(intent);
+                try {
+                    pojo = new VideoPojo(((Home) requireActivity()), Prefs.GetBearerToken(getActivity()), videoCaption, isDonation, donationAmt, finalAudioID, finalCategoryID, vdoBody, imageBody);
+                    Intent intent = new Intent(getContext(), VideoService.class);
+                    getActivity().startService(intent);
 
-                Toast.makeText(getActivity(), "Post will be created", Toast.LENGTH_SHORT).show();
-                ((Home) requireActivity()).shouldMergeAudio = false;
-                ((Home) requireActivity()).fromGallery = false;
-                ((Home) requireActivity()).musicData = "";
-                ((Home) requireActivity()).musicTitle = "";
-                MERGED_VIDEO_PATH = "";
-                ((Home) requireActivity()).SelectHomeScreen();
+                    ((Home) requireActivity()).shouldMergeAudio = false;
+                    ((Home) requireActivity()).fromGallery = false;
+                    ((Home) requireActivity()).musicData = "";
+                    ((Home) requireActivity()).musicTitle = "";
+                    MERGED_VIDEO_PATH = "";
+                    ((Home) requireActivity()).bottomBar.setVisibility(View.VISIBLE);
+                    ((Home) requireActivity()).SelectHomeScreen();
+                } catch (Exception e){
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -578,4 +598,44 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
         App.songName = "";
         Log.i("onDetach", "onDetach: Called");
     }
+
+//    @Override
+    public void uploadStarted() {
+        try {
+            Log.i("dialogExc", "uploadStarted: in dialog ");
+
+                uploadDialog = new Dialog(getContext());
+                uploadDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                uploadDialog.setContentView(R.layout.upload_dialog);
+
+
+
+                uploadDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                uploadDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                uploadDialog.getWindow().setGravity(Gravity.BOTTOM);
+                uploadDialog.setCancelable(false);
+                uploadDialog.show();
+
+        } catch (Exception e){
+            Log.i("dialogExc", "uploadStarted: " + e.getMessage());
+        }
+
+    }
+//
+//    @Override
+//    public void uploadCompleted() {
+//        if (uploadDialog != null){
+//            uploadDialog.dismiss();
+//        }
+//    }
+////
+////    @Override
+//    public void uploadInterrupted() {
+//        if (uploadDialog != null){
+//            uploadDialog.dismiss();
+//        }
+//    }
+
+
+    
 }

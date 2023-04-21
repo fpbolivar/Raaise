@@ -120,6 +120,7 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
     String VideoId;
     Dialog UserListDialog;
     private long downloadID;
+    ImageView backBTN;
     private final BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -388,6 +389,7 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
     private void Initialization() {
 
         Slug = getIntent().getStringExtra("SlugForSingleVideo");
+        backBTN = findViewById(R.id.backBtn);
         ShareVideo = findViewById(R.id.ShareVideo1);
         SongImage = findViewById(R.id.SongImage1);
         hashTagsTV = findViewById(R.id.hashTagsTV1);
@@ -420,6 +422,8 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
     }
 
     private void ClickListeners() {
+
+        backBTN.setOnClickListener(view -> onBackPressed());
 
         MainLayoutInFollowingVideoSingleItem.setOnClickListener(view -> {
             if (VideoViewInHomeReels.isPlaying()) {
@@ -966,6 +970,14 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
         } catch (Exception e) {
             Dialogs.HideProgressDialog();
             Toast.makeText(SingleVideoActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (App.fromTryAudio){
+            onBackPressed();
         }
     }
 }

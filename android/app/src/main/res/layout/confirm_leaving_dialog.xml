@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="#4E4E4E"
+    app:cardCornerRadius="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Raaise"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/ConfirmYourRecording"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="center"
+            android:text="Are you sure want to leave this Room ?"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:layout_below="@+id/ConfirmYourRecording"-->
+        <!--            android:layout_marginVertical="20dp"-->
+        <!--            android:orientation="vertical">-->
+
+        <!--            <com.google.android.material.card.MaterialCardView-->
+        <!--                android:id="@+id/YesInDeactivateAccount"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="40dp"-->
+        <!--                android:layout_below="@+id/ConfirmYourRecording"-->
+        <!--                android:layout_gravity="center_vertical"-->
+        <!--                android:layout_marginHorizontal="30dp"-->
+        <!--                android:layout_marginTop="10dp"-->
+        <!--                android:layout_weight="1"-->
+        <!--                app:cardBackgroundColor="@color/white"-->
+        <!--                app:cardCornerRadius="30dp">-->
+
+        <!--                <TextView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_gravity="center"-->
+        <!--                    android:text="Deactivate Account"-->
+        <!--                    android:textColor="@color/Red_donated_text_color"-->
+        <!--                    android:textSize="15sp"-->
+        <!--                    android:textStyle="bold" />-->
+
+        <!--            </com.google.android.material.card.MaterialCardView>-->
+
+        <!--            <com.google.android.material.card.MaterialCardView-->
+        <!--                android:id="@+id/NoInDeactivateAccount"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="40dp"-->
+        <!--                android:layout_below="@+id/YesInDeactivateAccount"-->
+        <!--                android:layout_gravity="center_vertical"-->
+        <!--                android:layout_marginHorizontal="30dp"-->
+        <!--                android:layout_marginTop="10dp"-->
+        <!--                android:layout_weight="1"-->
+        <!--                app:cardBackgroundColor="@color/black"-->
+        <!--                app:cardCornerRadius="30dp">-->
+
+        <!--                <TextView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_gravity="center"-->
+        <!--                    android:text="Cancel"-->
+        <!--                    android:textColor="@color/blue_color_titleSearch_screen"-->
+        <!--                    android:textSize="15sp"-->
+        <!--                    android:textStyle="bold" />-->
+
+        <!--            </com.google.android.material.card.MaterialCardView>-->
+        <!--        </LinearLayout>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ConfirmYourRecording"
+            android:layout_marginVertical="15dp"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/DarkGrey" />
+
+            <TextView
+                android:id="@+id/leave_room_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Leave Room"
+                android:textColor="@color/Red_donated_text_color"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/DarkGrey" />
+
+            <TextView
+                android:id="@+id/cancel_dialog_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Cancel"
+                android:textColor="@color/blue_color_titleSearch_screen"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

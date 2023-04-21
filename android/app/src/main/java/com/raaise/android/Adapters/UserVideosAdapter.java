@@ -151,6 +151,8 @@ public class UserVideosAdapter extends RecyclerView.Adapter<UserVideosAdapter.Vi
         holder.ShareVideo.setOnClickListener(view -> homeReelsListener.ShowShareVideoDialog(obj.getVideoLink(), obj.getUserId().get_id(), obj.getUserId().getProfileImage(), obj.getUserId().getShortBio(), obj.getUserId().getUserName(), obj.get_id()));
 
         holder.topRewardedTV.setVisibility(View.GONE);
+
+        holder.videoViewCount.setText("" + obj.getVideoViewCount());
     }
 
     @Override
@@ -175,6 +177,7 @@ public class UserVideosAdapter extends RecyclerView.Adapter<UserVideosAdapter.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView videoViewCount;
         TextView topRewardedTV;
         public static VideoView VideoViewInHomeReels;
         public static TextView NameInHomeVideoSingleItem, UserNameInHomeVideoSingleItem, DonationRaisedInHomeVideoSingleItem, SongNameInHomeVideoSingleItem, DonationAmount,
@@ -192,6 +195,7 @@ public class UserVideosAdapter extends RecyclerView.Adapter<UserVideosAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            videoViewCount = itemView.findViewById(R.id.view_count_tvk);
             topRewardedTV = itemView.findViewById(R.id.top_rewarded_tv);
             DonationLayout = itemView.findViewById(R.id.DonationLayout);
             ShareVideo = itemView.findViewById(R.id.ShareVideo);

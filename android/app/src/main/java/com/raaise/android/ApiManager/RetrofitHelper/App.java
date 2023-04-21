@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import live.videosdk.rtc.android.VideoSDK;
 
 public class App extends Application {
     public static ApiManagerImplementation apiManager;
@@ -17,6 +18,7 @@ public class App extends Application {
     public static String musicTitle = "";
     public static String songName = "";
     public static boolean claim = false;
+    public static boolean fromEditRoom = false;
     private static Context context;
     private final Socket mSocket;
 
@@ -43,6 +45,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         App.context = getApplicationContext();
+        VideoSDK.initialize(getApplicationContext());
     }
 
     public Socket getSocket() {

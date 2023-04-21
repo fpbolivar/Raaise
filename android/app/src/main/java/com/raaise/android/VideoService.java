@@ -9,10 +9,9 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.raaise.android.ApiManager.RetrofitHelper.ApiUtilities;
-import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.Home.Fragments.PlusFragment;
 import com.raaise.android.Home.MainHome.Home;
-import com.raaise.android.Utilities.HelperClasses.Dialogs;
+import com.raaise.android.Utilities.UploadListener;
 import com.raaise.android.model.VideoPojo;
 
 import java.io.File;
@@ -50,14 +49,17 @@ public class VideoService extends Service {
         try {
             new Thread(() -> {
                 VideoPojo pojo = PlusFragment.pojo;
+                PlusFragment.showVideoDialog();
+                Log.i("serviceClass", "onStartCommand: " + pojo.getVdoBody().toString());
                 ApiUtilities.getApiInterface().uploadVideo(pojo.getToken(), pojo.getVideoCaption(), pojo.isDonation(), pojo.getDonationAmt(), pojo.getFinalAudioId(),
                         pojo.getFinalCategoryId(), pojo.getVdoBody(), pojo.getImgBody()).enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                         if (response.isSuccessful()) {
+                            PlusFragment.stopDialog();
                             Log.i("serviceClass", "onResponse: Success");
                             try {
-
+                                Log.i("serviceClass", "onResponse: video upload Success " + response.toString());
                                 File audioFile = new File(Environment.getExternalStorageDirectory().getPath() + "/Download/" + pojo.getHome().musicTitle);
 
                                 if (audioFile.exists()) {
@@ -72,12 +74,14 @@ public class VideoService extends Service {
 
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable t) {
-                        Log.i("serviceClass", "onResponse: Failure");
+                        PlusFragment.interruptVideoDialog();
+                        Log.i("serviceClass", "onResponse: Failure " + t.getMessage());
                     }
                 });
 
             }).start();
         } catch (Exception e){
+            Log.i("serviceClass", "onStartCommand: " + e.getMessage());
         }
         return super.onStartCommand(intent, flags, startId);
     }
