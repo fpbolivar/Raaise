@@ -164,6 +164,7 @@ extension VisitProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UI
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = ViewVideoVC()
+        vc.changeDelegate = self
         vc.data = self.userVideos
         vc.selectedRow = indexPath.row
         vc.fromProfileId = self.userDetails?.id ?? ""
@@ -234,7 +235,13 @@ extension VisitProfileVC:BlockUserDelegate{
         self.present(vc, animated: true)
     }
 }
+extension VisitProfileVC:ViewVideoChangeDelegate{
+    func videoChange(post:Post,isLiked: Bool) {
+        self.delegate?.videoLiked(post:post,isLiked: isLiked)
+    }
+}
 //MARK: - Protocol
 protocol VisitProfileDelegate{
     func followActionChanged(withId id:String,isFollowing:Bool)
+    func videoLiked(post:Post,isLiked:Bool)
 }

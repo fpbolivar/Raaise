@@ -19,6 +19,7 @@ protocol HomeCellNavigationDelegate: AnyObject {
     func gotoUserProfile(withUser user:UserProfileData,isFollowing:Bool)
     func showComments(id:String,numberOfComments num :String)
     func errorOnLike(withMessage message:String)
+    func onLikeVideo(post:Post,isLike:Bool)
     func goTiTryAudio(withId audio :AudioDataModel)
     func viewCountError(error:String)
     func clickedFollowBtn(forUser id: String,isFollowing: Bool)
@@ -28,6 +29,8 @@ protocol HomeCellNavigationDelegate: AnyObject {
 
 class HomeTableViewCell: UITableViewCell {
     // MARK: - UI Components
+    @IBOutlet weak var viewCountLbl: UILabel!
+    @IBOutlet weak var postedOnLbl: UILabel!
     @IBOutlet weak var topRewardView3: UIView!
     @IBOutlet weak var topRewardView2: UIView!
     @IBOutlet weak var topRewardView1: UIView!
@@ -119,21 +122,25 @@ class HomeTableViewCell: UITableViewCell {
         topRewardPic2.layer.cornerRadius = 12.5
         topRewardPic3.layer.cornerRadius = 10
         seeMoreBtn.titleLabel?.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
-        playerView.contentMode = .scaleToFill
+        playerView.contentMode = .scaleAspectFit
         profileImg.layer.cornerRadius = profileImg.frame.height / 2
         profileImg.contentMode = .scaleAspectFill
         profileImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openProfile)))
+        nameLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openProfile)))
         nameBtn.addTarget(self, action: #selector(openProfile), for: .touchUpInside)
         reportBtn.layer.cornerRadius = reportBtn.frame.height / 2
         musicBtn.layer.cornerRadius = 20
         selectionStyle = .none
         likeCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
+        viewCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
         commentCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
         shareCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
         donationLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
         followLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
         musicLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX12)
         totalRaisedLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
+        postedOnLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
+        postedOnLbl.textColor = UIColor.lightGray
         userNameLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         nameLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
         captionLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
@@ -225,9 +232,24 @@ class HomeTableViewCell: UITableViewCell {
         }
         guard let url = URL(string: UserDefaultHelper.getBaseUrl()+post.videoLink) else{return}
         self.url = url
-        print("ALKMLKADMKA",url)
+        setDate(post: post)
+        viewCountLbl.text = Int(post.videoViewCount)?.shorten()
         
+    }
+    func setDate(post:Post){
+        let string = post.createdAt
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        guard let date = dateFormatter.date(from: post.createdAt) else{
         
+            return
+        }
+        dateFormatter.dateFormat = "EEEE d, yyyy"
+        let dateString = dateFormatter.string(from: date)
+        print("sdsadcsasx",dateString)
+        postedOnLbl.text = "Posted on \(dateString)"
     }
     func setTopSupporters(){
         guard let supportersList = self.post?.topSupportersList else{return}
@@ -419,13 +441,17 @@ class HomeTableViewCell: UITableViewCell {
         let param = ["slug":post?.slug ?? ""]
         DataManager.likeUnlikeVideoApi(param: param) { errorMessage in
             self.delegate?.errorOnLike(withMessage: errorMessage)
+            
+            
         } completion: { likeCount in
             DispatchQueue.main.async {
                 print("checkLIke2",self.post?.isLiked)
                 self.post?.videoLikeCount = "\(likeCount)"
                 self.likeCountLbl.text = likeCount.shorten()
                 self.likeVideo()
-                self.post?.videoCaption = "CHANGE AFTER LIKE"
+                guard let post = self.post else{return}
+                self.delegate?.onLikeVideo(post:post,isLike: post.isLiked)
+                //self.post?.videoCaption = "CHANGE AFTER LIKE"
             }
         }
     }
@@ -446,7 +472,7 @@ class HomeTableViewCell: UITableViewCell {
         }
     }
     @objc func likeVideo(){
-        if !liked {
+        if !self.post!.isLiked {
             liked = true
             self.post?.isLiked = true
             likeBtn.tintColor = .red

@@ -65,6 +65,8 @@ static var identifier = "VisitVCHeader"
         }
         if data.id == AuthManager.currentUser.id || isAccountDeleted{
             btnStack.isHidden = true
+        }else{
+            btnStack.isHidden = false
         }
         self.profileImg.layer.cornerRadius = self.profileImg.frame.height / 2
         self.profileImg.loadImgForProfile(url: data.profileImage)
@@ -99,9 +101,17 @@ static var identifier = "VisitVCHeader"
         } completion: {
             self.userDetails.follow = !self.userDetails.follow
             if self.userDetails.follow{
+             var count = Int(self.userDetails.followersCount) ?? 0
+                count = count + 1
+                self.userDetails.followersCount = "\(count)"
+                self.folllowerCount.text = "\(count)"
                 self.followingBtnLbl.text = "Unfollow"
             }else{
+                var count = Int(self.userDetails.followersCount) ?? 1
+                   count = count - 1
+                self.userDetails.followersCount = "\(count)"
                 self.followingBtnLbl.text = "Follow"
+                self.folllowerCount.text = "\(count)"
             }
             self.btnDelegate?.followBtnClicked(withId: self.userDetails.id,isFollowing: self.userDetails.follow)
         }

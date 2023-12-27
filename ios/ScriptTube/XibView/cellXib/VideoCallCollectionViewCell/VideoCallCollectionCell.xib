@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Bold.ttf">
+            <string>Roboto-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="VideoCallCollectionCell" customModule="Raaise_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="247" height="205"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="247" height="205"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gRw-tW-tK8" customClass="Circle_View" customModule="Raaise_App" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="247" height="205"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9di-7E-OfG">
+                                <rect key="frame" x="0.0" y="0.0" width="247" height="205"/>
+                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nzR-5e-n1i" customClass="RTCMTLVideoView">
+                                <rect key="frame" x="0.0" y="0.0" width="247" height="205"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.50248344369999998" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="nzR-5e-n1i" secondAttribute="trailing" id="2hQ-lg-39K"/>
+                            <constraint firstAttribute="bottom" secondItem="nzR-5e-n1i" secondAttribute="bottom" id="7Rd-Kw-koH"/>
+                            <constraint firstAttribute="bottom" secondItem="9di-7E-OfG" secondAttribute="bottom" id="C20-sa-jQ5"/>
+                            <constraint firstItem="9di-7E-OfG" firstAttribute="top" secondItem="gRw-tW-tK8" secondAttribute="top" id="Rob-ta-MR0"/>
+                            <constraint firstItem="9di-7E-OfG" firstAttribute="leading" secondItem="gRw-tW-tK8" secondAttribute="leading" id="frx-YP-3Vs"/>
+                            <constraint firstAttribute="trailing" secondItem="9di-7E-OfG" secondAttribute="trailing" id="let-iT-UGp"/>
+                            <constraint firstItem="nzR-5e-n1i" firstAttribute="top" secondItem="gRw-tW-tK8" secondAttribute="top" id="lzL-6d-Krf"/>
+                            <constraint firstItem="nzR-5e-n1i" firstAttribute="leading" secondItem="gRw-tW-tK8" secondAttribute="leading" id="u7r-iW-YM1"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="circle_View" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="gRw-tW-tK8" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Edd-QS-0c1"/>
+                <constraint firstItem="gRw-tW-tK8" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="cvP-il-90c"/>
+                <constraint firstAttribute="trailing" secondItem="gRw-tW-tK8" secondAttribute="trailing" id="xgY-vY-Y9U"/>
+                <constraint firstAttribute="bottom" secondItem="gRw-tW-tK8" secondAttribute="bottom" id="xne-yK-bcy"/>
+            </constraints>
+            <size key="customSize" width="247" height="205"/>
+            <connections>
+                <outlet property="nameLbl" destination="9di-7E-OfG" id="78V-Sz-1Ox"/>
+                <outlet property="videoView" destination="nzR-5e-n1i" id="yXO-vu-9ph"/>
+            </connections>
+            <point key="canvasLocation" x="246.56488549618319" y="74.295774647887328"/>
+        </collectionViewCell>
+    </objects>
+</document>

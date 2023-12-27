@@ -16,6 +16,9 @@ enum NavBarType{
     case addNewCard
     case onlyTopTitle
     case filter
+    case addRoom
+    case leaveRoom
+    case joinRoom
     case none
 
 }

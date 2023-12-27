@@ -17,6 +17,14 @@ class UserListDataModel{
     init(){
         
     }
+    init(roomData:JSON){
+        self.id = roomData[UserListKeys.id.rawValue].stringValue
+        self.userName = roomData[UserListKeys.userName.rawValue].stringValue
+        self.name = roomData[UserListKeys.name.rawValue].stringValue
+        //self.userId = roomData[selectType][UserListKeys.id.rawValue].stringValue
+       // self.count = roomData[UserListKeys.count.rawValue].stringValue
+        self.image = roomData[UserListKeys.profileImage.rawValue].stringValue
+    }
     init(data:JSON,isForFollowing:Bool){
         var selectType = ""
         self.id = data[UserListKeys.id.rawValue].stringValue

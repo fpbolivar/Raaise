@@ -18,11 +18,13 @@ class CommentPopUp: UIViewController {
     @IBOutlet weak var commentTf:UITextField!
     var videoId:String = ""
     var commentId:String?
+    var replyId:String?
     var page = 1
     var numberOfComments = ""
     var commentData : [CommentDataModel] = []
     var delegate:CommentPopUpDelegate?
     var replyIndex:IndexPath?
+    var isEdit = false
     override func viewDidLoad() {
         super.viewDidLoad()
         commentTf.layer.borderWidth = 0.5
@@ -65,18 +67,66 @@ class CommentPopUp: UIViewController {
     }
     @IBAction func postCommentBtn(_ sender: Any) {
         if !commentTf.text!.trimmingCharacters(in: .whitespaces).isEmpty{
-            if commentId == nil{
+            if  !isEdit && commentId == nil{
                 postComment()
+            }else if isEdit && commentId != nil{
+                postEditComment()
+            }
+            else if isEdit && commentId == nil{
+                postEditReply()
             }else{
                 postReply()
-                
             }
             self.commentTf.text = ""
             self.replyToView.isHidden = true
-            self.commentId = nil
+            
         }
     }
     //MARK: - Posting Comment & Reply Api
+    func postEditReply(){
+        let param = ["replyId":self.replyId!,"reply":commentTf.text!]
+        print("REPLYTEdit",AuthManager.currentUser.profileImage,AuthManager.currentUser.userName)
+        AuthManager.editReplyApi(delegate: self, param: param) { data in
+            print("REPLYTEdit",data)
+            let i = self.commentData.firstIndex { comment in
+                
+                return comment.replies.contains { reply in
+                    if reply.id == self.replyId{
+                        
+                    }
+                    return reply.id == self.replyId
+                }
+           }
+            
+           guard let index = i else{return}
+            let j = self.commentData[index].replies.firstIndex { reply in
+                return reply.id == self.replyId
+            }
+            guard let replyIndex = j else{return}
+            self.commentData[index].replies[replyIndex].reply = data["data"]["reply"].stringValue
+           self.tableView.reloadSections(IndexSet(integer: index), with: .fade)
+           self.commentId = nil
+           self.replyId = nil
+            self.isEdit = false
+        }
+    }
+    func postEditComment(){
+        let param = ["commentId":self.commentId!,"comment":commentTf.text!]
+        print("REPLYTOCOMMENT",AuthManager.currentUser.profileImage,AuthManager.currentUser.userName)
+        AuthManager.editCommentApi(delegate: self, param: param) { data in
+            print("EDITEDCOMMNMET",data)
+             let i = self.commentData.firstIndex { comment in
+                 print(comment.id,self.commentId)
+                return comment.id == self.commentId
+            }
+            guard let index = i else{return}
+            self.commentData[index].comment = data["data"]["comment"].stringValue
+            self.tableView.reloadSections(IndexSet(integer: index), with: .fade)
+            self.commentId = nil
+            self.replyId = nil
+            self.isEdit = false
+        }
+    }
     func postReply(){
         let param = ["commentId":self.commentId!,"reply":commentTf.text!]
         print("REPLYTOCOMMENT",AuthManager.currentUser.profileImage,AuthManager.currentUser.userName)
@@ -86,6 +136,8 @@ class CommentPopUp: UIViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadSections([self.replyIndex!.section], with: .none)
             }
+            self.isEdit = false
+            self.commentId = nil
         }
     }
     func postComment(){
@@ -98,6 +150,8 @@ class CommentPopUp: UIViewController {
                 self.tableView.reloadData()
                 self.totalCommentsLbl.text = "\(self.commentData.count) comments"
             }
+            self.isEdit = false
+            self.commentId = nil
         }
     }
     //MARK: - Get Chat Data Api
@@ -178,7 +232,7 @@ extension CommentPopUp:UITableViewDelegate,UITableViewDataSource{
         let distanceFromBottom = scrollView.contentSize.height - contentYOffset
 
         if distanceFromBottom == height && commentData.count >= 10{
-            print("You reached end of the table")
+            
             page = page + 1
             getCommentsApi {
                 self.tableView.reloadData()
@@ -188,6 +242,67 @@ extension CommentPopUp:UITableViewDelegate,UITableViewDataSource{
 }
 //MARK: - Comment & Reply Delegates
 extension CommentPopUp:CommentCellDelegate,ReplyDelegate{
+    func editReply(replyData: ReplyDataModel) {
+        self.commentTf.text = replyData.reply
+        //commentTf.becomeFirstResponder()
+        self.replyToView.isHidden = false
+        self.replyToLbl.text = "Edit Reply: \(replyData.reply)"
+        self.isEdit = true
+        self.replyId = replyData.id
+    }
+    
+    func deleteReply(replyData: ReplyDataModel) {
+        let param = ["replyId":replyData.id]
+        
+        AuthManager.deletereplyApi(delegate: self, param: param) {
+            let i = self.commentData.firstIndex { comment in
+                
+                return comment.replies.contains { reply in
+                    if reply.id == replyData.id{
+                        
+                    }
+                    return reply.id == replyData.id
+                }
+           }
+           guard let index = i else{return}
+            self.commentData[index].replies.removeAll { reply in
+                return reply.id == replyData.id
+            }
+            self.tableView.reloadSections(IndexSet(integer: index), with: .none)
+            self.isEdit = false
+            self.commentId = nil
+        }
+    }
+    
+    func deleteComment(commentData: CommentDataModel) {
+        
+        self.replyToView.isHidden = true
+        if isEdit{
+            commentTf.text = ""
+        }
+        let param = ["videoId":self.videoId,"commentId":commentData.id]
+        AuthManager.deleteCommentApi(delegate: self, param: param) {
+            let i = self.commentData.firstIndex { comment in
+                print(comment.id,commentData.id)
+                return comment.id == commentData.id
+           }
+           guard let index = i else{return}
+            self.commentData.remove(at: index)
+            self.tableView.deleteSections(IndexSet(integer: index), with: .fade)
+           
+            self.commentId = nil
+        }
+    }
+    
+    func editComment(commentData: CommentDataModel) {
+        self.commentTf.text = commentData.comment
+        //commentTf.becomeFirstResponder()
+        self.replyToView.isHidden = false
+        self.replyToLbl.text = "Edit Comment: \(commentData.comment)"
+        self.commentId = commentData.id
+        self.isEdit = true
+    }
+    
     func gotoProfile(withId id: String) {
         dismiss(animated: true){
             self.delegate?.dismissToVisitProfile(withId: id)

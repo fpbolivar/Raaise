@@ -360,10 +360,11 @@ class AuthManager{
             }
         }
     }
-    class func uploadVideoData(delegate:UIViewController,param:[String:Any],resourcesVideo:[String : URL],resourcesImage:[String : UIImage],completion:@escaping()->Void){
+    class func uploadVideoData(delegate:UIViewController,param:[String:Any],resourcesVideo:[String : URL],resourcesImage:[String : UIImage],completion:@escaping()->Void,progress:@escaping(Int)->Void){
         
         APIManager.MultipartVideoImageService(url: URLHelper.UPLOAD_VIDEO_URL, parameters: param, image_is_Selected: true,images:resourcesImage, video_is_Selected: true, resourcesVideo: resourcesVideo) { progressValue in
             print(progressValue)
+            progress(progressValue)
         } completionHandler: { json, error, statusCode in
             if let error = error{
                 print("UPLOADVIDEO",error)
@@ -417,6 +418,90 @@ class AuthManager{
                 if let jsonData = json{
                     if jsonData["status"].intValue == 200{
                         completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func editCommentApi(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
+        APIManager.postService(url: URLHelper.EDIT_COMMENTS_URL, parameters: param) { json, error, statusCode in
+            if let error = error{
+                print("EDITCOMMENTS",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                return
+            }else{
+                print("EDITCOMMENTS",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func editReplyApi(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
+        APIManager.postService(url: URLHelper.EDIT_REPLY_URL, parameters: param) { json, error, statusCode in
+            if let error = error{
+                print("EDITREply",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                return
+            }else{
+                print("EDITREply",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func deleteCommentApi(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        APIManager.postService(url: URLHelper.DELETE_COMMENTS_URL, parameters: param) { json, error, statusCode in
+            if let error = error{
+                print("DELETECOMMENTS",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                return
+            }else{
+                print("DELTECOMMENTS",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func deletereplyApi(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        APIManager.postService(url: URLHelper.DELETE_REPLY_URL, parameters: param) { json, error, statusCode in
+            if let error = error{
+                print("DELETEREply",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                return
+            }else{
+                print("DELETEREply",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
                     }else{
                         if jsonData["status"].intValue == 401{
                             AuthManager.invalidToken()
@@ -514,7 +599,7 @@ class AuthManager{
         }
     }
     class func makePaymentWithCardId(delegate:UIViewController,param:[String:String],completion:@escaping()->Void,onError:@escaping()->Void){
-
+        
         APIManager.postService(url: URLHelper.PAYMENT_URL, parameters: param) { json, error, statusCode in
             delegate.clearAllNotice()
             if let error = error{
@@ -634,6 +719,147 @@ class AuthManager{
             }else{
                 if let jsonData = json{
                     if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func joinLiveRoom(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        delegate.pleaseWait()
+        APIManager.postService(url: URLHelper.JOIN_LIVE_ROOM, parameters: param) {
+            json, error, statusCode in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("JOIN_LIVE_ROOM",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+            }else{
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func leaveLiveRoom(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        delegate.pleaseWait()
+        APIManager.postService(url: URLHelper.LEAVE_LIVE_ROOM, parameters: param) {
+            json, error, statusCode in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("LEAVE_LIVE_ROOM",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+            }else{
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func updateLiveRoomApi(delegate:UIViewController, param:[String:String], image:[String:UIImage]? = nil,completion: @escaping(JSON)->Void){
+        delegate.pleaseWait()
+        
+        APIManager.MultipartService(url: URLHelper.UPDATE_LIVE_ROOM, parameters: param, image_is_Selected: true,images: image) { progress in
+            print("IMAGEUPLOADPROG",progress)
+        } completionHandler: { json, error, status in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("updateLiveRoomApi",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate:delegate, pop: false)
+                return
+            }else{
+                if let jsonData = json{
+                    print("updateLiveRoomApi",jsonData,status)
+                    if jsonData["status"].intValue == 200{
+                        completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate:delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func createLiveRoomApi(delegate:UIViewController, param:[String:String], image:[String:UIImage]? = nil,completion: @escaping()->Void){
+        delegate.pleaseWait()
+        //CHANGE IMAGE IS SELECTED TO TRUE WHEN IMAGE IMPLEMENTATION DONE
+        APIManager.MultipartService(url: URLHelper.CREATE_LIVE_ROOM, parameters: param, image_is_Selected: false,images: image) { progress in
+            print("IMAGEUPLOADPROG",progress)
+        } completionHandler: { json, error, status in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("createLiveRoomApi",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate:delegate, pop: false)
+                return
+            }else{
+                if let jsonData = json{
+                    print("createLiveRoomApi",jsonData,status)
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate:delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func sendMessageApi(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        //delegate.pleaseWait()
+        APIManager.postService(url: URLHelper.SEND_MESSAGE_URL, parameters: param) {
+            json, error, statusCode in
+            //delegate.clearAllNotice()
+            if let error = error{
+                print("SEND_MESSAGE_URL",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+            }else{
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion()
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func updatePrivacy(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        delegate.pleaseWait()
+        APIManager.postService(url: URLHelper.UPDATE_PRIVACY_URL, parameters: param) {
+            json, error, statusCode in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("UPDATEPRIVACY",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+            }else{
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
                         completion()
                     }else{
                         if jsonData["status"].intValue == 401{

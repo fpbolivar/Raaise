@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeVC2" customModule="ScriptTube" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeVC2" customModule="Raaise_App" customModuleProvider="target">
             <connections>
                 <outlet property="bellIcon" destination="Fx3-Y0-1Qr" id="9up-W2-nr1"/>
                 <outlet property="followingLbl" destination="zxe-og-3jJ" id="974-ye-XgX"/>
@@ -22,6 +22,7 @@
                 <outlet property="notificationCountLbl" destination="ytE-qj-xeK" id="V14-sG-e0F"/>
                 <outlet property="notificationCountView" destination="qnB-uV-Eyd" id="KuE-le-J7n"/>
                 <outlet property="scrollView" destination="gEU-lU-rSu" id="yte-lJ-Wyh"/>
+                <outlet property="searchIcon" destination="XSq-X9-ZI1" id="hXN-HZ-aJq"/>
                 <outlet property="spinner1" destination="edX-Ic-Iqh" id="WK1-cd-yEu"/>
                 <outlet property="spinner2" destination="X0t-Vl-F20" id="VlK-Jg-Fzo"/>
                 <outlet property="tableView" destination="LM0-Rc-btV" id="1HK-Cy-Ug4"/>
@@ -122,7 +123,15 @@
                         <constraint firstAttribute="height" constant="20" id="nV3-hZ-o2S"/>
                     </constraints>
                 </imageView>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnB-uV-Eyd" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="XSq-X9-ZI1">
+                    <rect key="frame" x="339" y="88.5" width="20" height="18.5"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="M9Q-t3-ir4"/>
+                        <constraint firstAttribute="width" constant="20" id="O8s-gL-SRf"/>
+                    </constraints>
+                </imageView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnB-uV-Eyd" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
                     <rect key="frame" x="348.5" y="80.5" width="45.5" height="15"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ytE-qj-xeK">
@@ -186,10 +195,12 @@
                 <constraint firstItem="8gE-08-3DM" firstAttribute="top" secondItem="zxe-og-3jJ" secondAttribute="bottom" constant="1" id="Pgz-Yc-kCu"/>
                 <constraint firstItem="gEU-lU-rSu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="S79-JM-36E"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Fx3-Y0-1Qr" secondAttribute="trailing" constant="25" id="UwF-9j-9bF"/>
+                <constraint firstItem="XSq-X9-ZI1" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="Wyd-eG-UG0"/>
                 <constraint firstItem="qnB-uV-Eyd" firstAttribute="centerY" secondItem="Fx3-Y0-1Qr" secondAttribute="centerY" constant="-10" id="XhJ-2y-KsA"/>
                 <constraint firstItem="n8t-G0-Z0p" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="Yk0-Oc-IeY"/>
                 <constraint firstItem="heT-BF-wW5" firstAttribute="top" secondItem="n8t-G0-Z0p" secondAttribute="bottom" constant="1" id="eIt-Ij-Wsz"/>
                 <constraint firstItem="heT-BF-wW5" firstAttribute="centerX" secondItem="n8t-G0-Z0p" secondAttribute="centerX" constant="-20" id="fon-ey-fLa"/>
+                <constraint firstItem="Fx3-Y0-1Qr" firstAttribute="leading" secondItem="XSq-X9-ZI1" secondAttribute="trailing" constant="10" id="gGX-vk-fSD"/>
                 <constraint firstItem="n8t-G0-Z0p" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="-40" id="jad-Gm-3PI"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="gEU-lU-rSu" secondAttribute="trailing" id="kOe-VS-xb2"/>
                 <constraint firstItem="gEU-lU-rSu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="mPj-di-pQD"/>
@@ -202,6 +213,7 @@
     </objects>
     <resources>
         <image name="bell.fill" catalog="system" width="123" height="128"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="BackgroundColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

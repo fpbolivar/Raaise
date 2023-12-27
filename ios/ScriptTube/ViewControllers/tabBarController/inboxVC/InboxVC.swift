@@ -7,26 +7,42 @@
 
 import UIKit
 
-class InboxVC: BaseControllerVC {
-
+class InboxVC: BaseControllerVC,UIScrollViewDelegate {
+    
+    @IBOutlet weak var roomsView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var yourRoomsLbl: UILabel!
     @IBOutlet weak var searchTf: UITextField!
     @IBOutlet weak var notificationTable: UITableView!
     @IBOutlet weak var noResultLbl:UILabel!
     var customView: CustomRefreshControl!
     var refreshControl = UIRefreshControl()
     var page = 1
+    var roomPage = 1
     var chatListData:[ChatChannelModel] = []
+    var liveRoomListData:[LiveRoomDataModel] = []
     var tableSetup = false
+    
+//    self.yourRoomsLbl.isHidden = true
+//    self.collectionView.isHidden = true
+//    self.roomsView.isHidden = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
+        print("CURRENTTIMEIN UNIX",Date().millisecondsSince1970)
         notificationTable.register(UINib(nibName: SelectionCell.identifier, bundle: nil), forCellReuseIdentifier: SelectionCell.identifier)
+        collectionView.register(UINib(nibName: RoomCell.identifier, bundle: nil), forCellWithReuseIdentifier: RoomCell.identifier)
         searchTf.paddingLeftRightTextField(left: 35, right: 0)
         searchTf.layer.cornerRadius = 10
         searchTf.overrideUserInterfaceStyle = .light
         searchTf.delegate = self
-        addNavBar(headingText: "Chat", redText: "",type: .onlyTopTitle)
+//        addNavBar(headingText: "Chat", redText: "",type: .addRoom,addNewCardSelector: #selector(addRooms))
+        addNavBar(headingText: "Chat", redText: "",type: .smallNavBarOnlyBack)
         searchTf.attributedPlaceholder = NSAttributedString(string: "Search Users",attributes: [.foregroundColor: UIColor.lightGray])
+        setupCollectionView()
+        noResultLbl.text = "No Chats Found"
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,6 +50,7 @@ class InboxVC: BaseControllerVC {
         searchTf.text = ""
         noResultLbl.isHidden = true
         inboxData()
+        scrollView.delegate = self
         self.tabBarController?.tabBar.isHidden = false
     }
     //MARK: - Setup
@@ -45,6 +62,46 @@ class InboxVC: BaseControllerVC {
             self.tableSetup = true
             self.addRefreshControl()
         }
+    }
+    func setupCollectionView(){
+        DispatchQueue.main.async {
+            self.collectionView.dataSource = self
+            self.collectionView.delegate = self
+            self.collectionView.reloadData()
+            
+            
+        }
+    }
+    @objc func addRooms(){
+        let alertController = UIAlertController(title: "Raaise", message: "Select Option", preferredStyle: .alert)
+        
+        // create the actions
+        let createAction = UIAlertAction(title: "Create Room", style: .default) { _ in
+            // code to handle create room action
+            let vc = CreateRoomVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        let joinPublicAction = UIAlertAction(title: "Join Public Room", style: .default) { _ in
+            // code to handle join public room action
+            let vc = PublicRoomVC()
+            vc.hideTabbar = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { _ in
+            // code to handle cancel action
+        }
+        createAction.setValue(UIColor.white, forKey: "titleTextColor")
+        joinPublicAction.setValue(UIColor.white, forKey: "titleTextColor")
+        
+        // add the actions to the alert controller
+        alertController.addAction(createAction)
+        alertController.addAction(joinPublicAction)
+        alertController.addAction(cancelAction)
+        
+        // present the alert controller
+        present(alertController, animated: true, completion: nil)
     }
     func inboxData(){
         DataManager.getUnreadChatCount(delegate: self) { json in
@@ -67,42 +124,81 @@ class InboxVC: BaseControllerVC {
                 self.noResultLbl.isHidden = !self.chatListData.isEmpty
             }
         }
+        let roomParam = ["page":"\(roomPage)","limit":"10","query":""]
+        getRoomListApi(param: roomParam) {
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+                if(self.liveRoomListData.isEmpty){
+                    self.yourRoomsLbl.isHidden = true
+                    self.collectionView.isHidden = true
+                    self.roomsView.isHidden = true
+                }else{
+                    self.yourRoomsLbl.isHidden = true
+                    self.collectionView.isHidden = true
+                    self.roomsView.isHidden = true
+                }
+            }
+        }
     }
     func getChatListApi(param:[String:String],completion:@escaping()->Void){
         DataManager.getChatListAPI(delegate: self, param: param) { json in
+            
             var chat:[ChatChannelModel] = []
             json["data"].forEach { (message,data) in
                 print("MESAGE",message)
                 chat.append(ChatChannelModel(data: data))
             }
-            self.chatListData = chat
+            if self.page == 1{
+                self.chatListData = chat
+            }else{
+                self.chatListData.append(contentsOf: chat)
+            }
+            
+            completion()
+        }
+    }
+    func getRoomListApi(param:[String:String],completion:@escaping()->Void){
+        DataManager.getRoomListAPI(delegate: self, param: param) { json in
+            
+            var liveRoomData:[LiveRoomDataModel] = []
+            json["data"].forEach { (message,data) in
+                print("MESAGE",message)
+                liveRoomData.append(LiveRoomDataModel(json: data))
+            }
+            if self.roomPage == 1{
+                self.liveRoomListData = liveRoomData
+            }else{
+                self.liveRoomListData.append(contentsOf: liveRoomData)
+            }
+            
             completion()
         }
     }
     func addRefreshControl() {
-
+        
         guard let customView = Bundle.main.loadNibNamed("RefreshContents", owner: nil, options: nil) else {
             return
         }
-
+        
         guard let refreshView = customView[0] as? CustomRefreshControl else {
             return
         }
-
-
+        
+        
         refreshView.frame = refreshControl.frame
         self.customView = refreshView
         refreshControl.addSubview(refreshView)
-
+        
         refreshControl.tintColor = UIColor.clear
         refreshControl.backgroundColor = UIColor.clear
-
+        
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        if #available(iOS 10.0, *) {
-            notificationTable.refreshControl = refreshControl
-        } else {
-            notificationTable.addSubview(refreshControl)
-        }
+        //        if #available(iOS 10.0, *) {
+        //            notificationTable.refreshControl = refreshControl
+        //        } else {
+        //            notificationTable.addSubview(refreshControl)
+        //        }
+        scrollView.refreshControl = refreshControl
     }
     @objc func refresh(){
         refreshControl.beginRefreshing()
@@ -111,23 +207,51 @@ class InboxVC: BaseControllerVC {
     }
     //MARK: - Pagination
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let height = scrollView.frame.size.height
-        let contentYOffset = scrollView.contentOffset.y
-        let distanceFromBottom = scrollView.contentSize.height - contentYOffset
-        if distanceFromBottom == height{
-            print("YYYYYYYYYYYYY")
-            page = page + 1
-            let param = ["limit":"10","page":"\(page)"]
-            getChatListApi(param: param) {
-                DispatchQueue.main.async {
-                    self.notificationTable.isUserInteractionEnabled = false
-                    self.notificationTable.reloadData()
-                    self.notificationTable.isUserInteractionEnabled = true
+        
+        if let _ = scrollView as? UICollectionView{
+            let height = scrollView.frame.size.height
+            let contentYOffset = scrollView.contentOffset.y
+            let distanceFromBottom = scrollView.contentSize.height - contentYOffset
+            
+            if distanceFromBottom == height{
+                roomPage = roomPage + 1
+                let roomParam = ["page":"\(roomPage)","limit":"10","query":""]
+                getRoomListApi(param: roomParam) {
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                        if(self.liveRoomListData.isEmpty){
+                            self.yourRoomsLbl.isHidden = true
+                            self.collectionView.isHidden = true
+                            self.roomsView.isHidden = true
+                        }else{
+                            self.yourRoomsLbl.isHidden = false
+                            self.collectionView.isHidden = false
+                            self.roomsView.isHidden = false
+                        }
+                    }
+                }
+            }
+        }else{
+            let height = scrollView.frame.size.height
+            let contentYOffset = scrollView.contentOffset.y
+            let distanceFromBottom = scrollView.contentSize.height - contentYOffset
+            
+            if distanceFromBottom <= height{
+                
+                page = page + 1
+                let param = ["limit":"10","page":"\(page)"]
+                getChatListApi(param: param) {
+                    DispatchQueue.main.async {
+                        self.notificationTable.isUserInteractionEnabled = false
+                        self.notificationTable.reloadData()
+                        self.notificationTable.isUserInteractionEnabled = true
+                    }
                 }
             }
         }
+        
     }
-
+    
 }
 //MARK: - Table View Delegate
 extension InboxVC: UITableViewDelegate, UITableViewDataSource{
@@ -139,7 +263,7 @@ extension InboxVC: UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SelectionCell.identifier, for: indexPath) as! SelectionCell
-       
+        
         cell.selectionStyle = .none
         cell.chatList(data: chatListData[indexPath.row])
         return cell
@@ -183,5 +307,25 @@ extension InboxVC:UITextFieldDelegate{
                 }
             }
         }
+    }
+}
+//MARK: - Collection View Delegate
+extension InboxVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return liveRoomListData.count
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RoomCell.identifier, for: indexPath) as! RoomCell
+        cell.descriptionLbl.isHidden = true
+        cell.updateCell(data: liveRoomListData[indexPath.row])
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 80, height: collectionView.frame.height)
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = RoomDetailVC()
+        vc.roomData = liveRoomListData[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -10,6 +10,9 @@ import Photos
 protocol ViewVideoErrorDelegate{
     func popAndShowError(error:String)
 }
+protocol ViewVideoChangeDelegate{
+    func videoChange(post:Post,isLiked:Bool)
+}
 class ViewVideoVC: BaseControllerVC {
     @IBOutlet weak var menuImage: UIImageView!
     @IBOutlet weak var backImage: UIImageView!
@@ -25,6 +28,7 @@ class ViewVideoVC: BaseControllerVC {
     var visiblePost: Post?
     var fromProfileId = ""
     var slug: String? = nil
+    var changeDelegate:ViewVideoChangeDelegate?
     var delegate:ViewVideoFromProfile?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -205,6 +209,10 @@ extension ViewVideoVC:UIScrollViewDelegate{
 }
 //MARK: - Video Cell Navigaton Delegates
 extension ViewVideoVC:HomeCellNavigationDelegate{
+    func onLikeVideo(post: Post, isLike: Bool) {
+        changeDelegate?.videoChange(post:post,isLiked: isLike)
+    }
+    
     func clickedFollowBtn(forUser id: String, isFollowing: Bool) {
         let sameUser = self.data.filter { post in
             return post.userDetails?.id == id

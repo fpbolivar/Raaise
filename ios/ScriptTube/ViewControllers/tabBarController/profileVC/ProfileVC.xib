@@ -6,13 +6,13 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileVC" customModule="Raaise_App" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="Nhe-t1-1lG" id="MFB-yM-imN"/>
+                <outlet property="progress" destination="ABr-zb-YYt" id="L77-94-de9"/>
                 <outlet property="uploadView" destination="tdM-gY-iPT" id="if7-u6-0xQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -62,21 +62,37 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tdM-gY-iPT" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
-                    <rect key="frame" x="20" y="808.5" width="374" height="53.5"/>
+                    <rect key="frame" x="20" y="805" width="374" height="57"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your video is getting ready to be live for other users. Do not close the app until its done." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LCa-eo-0Rd">
-                            <rect key="frame" x="10" y="10" width="354" height="33.5"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ABr-zb-YYt" customClass="CircleProgress" customModule="Raaise_App" customModuleProvider="target">
+                            <rect key="frame" x="20" y="13.5" width="30" height="30"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="wiX-K3-XTH"/>
+                                <constraint firstAttribute="width" constant="30" id="zhO-ZO-Gj8"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="forgroundColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your upload is in progress." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LCa-eo-0Rd">
+                            <rect key="frame" x="60" y="20" width="304" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                    <color key="backgroundColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="0.76293460264900659" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="LCa-eo-0Rd" firstAttribute="leading" secondItem="tdM-gY-iPT" secondAttribute="leading" constant="10" id="KeU-my-ZNG"/>
-                        <constraint firstAttribute="bottom" secondItem="LCa-eo-0Rd" secondAttribute="bottom" constant="10" id="RDN-ur-y9z"/>
-                        <constraint firstAttribute="trailing" secondItem="LCa-eo-0Rd" secondAttribute="trailing" constant="10" id="W0G-BT-kwl"/>
-                        <constraint firstItem="LCa-eo-0Rd" firstAttribute="top" secondItem="tdM-gY-iPT" secondAttribute="top" constant="10" id="wcI-ZA-ZVC"/>
+                        <constraint firstItem="LCa-eo-0Rd" firstAttribute="centerY" secondItem="tdM-gY-iPT" secondAttribute="centerY" id="59G-Ro-89L"/>
+                        <constraint firstItem="LCa-eo-0Rd" firstAttribute="leading" secondItem="ABr-zb-YYt" secondAttribute="trailing" constant="10" id="Fp5-BE-JsB"/>
+                        <constraint firstItem="ABr-zb-YYt" firstAttribute="centerY" secondItem="tdM-gY-iPT" secondAttribute="centerY" id="dPH-MY-7Ef"/>
+                        <constraint firstAttribute="bottom" secondItem="LCa-eo-0Rd" secondAttribute="bottom" constant="20" id="dmD-9b-dsa"/>
+                        <constraint firstAttribute="trailing" secondItem="LCa-eo-0Rd" secondAttribute="trailing" constant="10" id="ebk-8k-de5"/>
+                        <constraint firstItem="LCa-eo-0Rd" firstAttribute="top" secondItem="tdM-gY-iPT" secondAttribute="top" constant="20" id="mTq-hG-5LC"/>
+                        <constraint firstItem="ABr-zb-YYt" firstAttribute="leading" secondItem="tdM-gY-iPT" secondAttribute="leading" constant="20" id="qPd-DG-xdv"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -112,8 +128,5 @@
         <namedColor name="BackgroundColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

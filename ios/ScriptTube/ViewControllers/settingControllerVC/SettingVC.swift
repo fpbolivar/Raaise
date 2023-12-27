@@ -11,7 +11,7 @@ class SettingVC: BaseControllerVC {
     @IBOutlet weak var  tableView:UITableView!
     var listData = [SettingOptionModal]()
     let manager = SettingOptionManager()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         listData = manager.getList()
@@ -55,21 +55,21 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 20))
-
+        
         let label = UILabel()
         label.frame = CGRect.init(x: 10, y: 15, width: headerView.frame.width-10, height: headerView.frame.height-5)
         label.text = listData[section].title.uppercased()
         label.textColor = UIColor(named: "some")//UIColor.white//UIColor(named: "borderColor2")
         label.font = AppFont.FontName.bold.getFont(size: AppFont.pX14)
         headerView.addSubview(label)
-
+        
         return headerView
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         40
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
+        
         return 55
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -101,98 +101,102 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
                 }
             }
         }else{
-        cell.setupText(item:listData[indexPath.section].items[indexPath.row])
+            cell.setupText(item:listData[indexPath.section].items[indexPath.row])
         }
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = listData[indexPath.section].items[indexPath.row]
         print(item.title.lowercased())
         tableView.deselectRow(at: indexPath, animated: true)
         switch item.title.lowercased() {
-
-            case "Personal Information".lowercased():
-                let vc = PersonalInfoFormVC()
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-
-            case "Username".lowercased():
-                let vc = UserNameFormVC()
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-
-            case "Short Bio".lowercased():
-                let vc = ShortBioFormVC()
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-
-            case "Change Password".lowercased():
-                let vc = ChangePasswordVC()
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-
-            case "Bank Details".lowercased():
-                let vc = BankAddDetailVC()
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
             
-            case "Terms of Service".lowercased():
-                let vc = HtmlTextRenderVC()
-                vc.fullNavTitle = "Terms of Service"
-                vc.redNavTitle = "Service"
-                vc.viewType = .service
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
+        case "Personal Information".lowercased():
+            let vc = PersonalInfoFormVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
             
-            case "Privacy Policy".lowercased():
-                let vc = HtmlTextRenderVC()
-                vc.viewType = .privacy
-                vc.fullNavTitle = "Privacy Policy"
-                vc.redNavTitle = "Policy"
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
+        case "Username".lowercased():
+            let vc = UserNameFormVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
             
-            case "Copyright Policy".lowercased():
-                let vc = HtmlTextRenderVC()
-                vc.viewType = .copyright
-                vc.fullNavTitle = "Copyright Policy"
-                vc.redNavTitle = "Policy"
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
+        case "Short Bio".lowercased():
+            let vc = ShortBioFormVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
             
-            case "Deactivate Account".lowercased():
-                let vc = DeactivateAccountVC()
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
+        case "Change Password".lowercased():
+            let vc = ChangePasswordVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
             
-            case "Support Raised".lowercased():
-                let vc = DonationRaisedListVC()
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-
-            case "Delete Account".lowercased():
-                let vc = DeleteAccountVC()
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-
-            case "Withdrawals".lowercased():
-                let vc = WithdrawListVC()
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-
-            case "Payment Methods".lowercased():
-                let vc =  PaymemtSavedCardListVC()
-                self.navigationController?.pushViewController(vc, animated: true)
-                break
-          
-            case "logout".lowercased():
+        case "Bank Details".lowercased():
+            let vc = BankAddDetailVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+            
+        case "Terms of Service".lowercased():
+            let vc = HtmlTextRenderVC()
+            vc.fullNavTitle = "Terms of Service"
+            vc.redNavTitle = "Service"
+            vc.viewType = .service
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+            
+        case "Privacy Policy".lowercased():
+            let vc = HtmlTextRenderVC()
+            vc.viewType = .privacy
+            vc.fullNavTitle = "Privacy Policy"
+            vc.redNavTitle = "Policy"
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+        case "Privacy Control".lowercased():
+            let vc = PrivacyControlVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+            
+        case "Copyright Policy".lowercased():
+            let vc = HtmlTextRenderVC()
+            vc.viewType = .copyright
+            vc.fullNavTitle = "Copyright Policy"
+            vc.redNavTitle = "Policy"
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+            
+        case "Deactivate Account".lowercased():
+            let vc = DeactivateAccountVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+            
+        case "Support Raised".lowercased():
+            let vc = DonationRaisedListVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+            
+        case "Delete Account".lowercased():
+            let vc = DeleteAccountVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+            
+        case "Withdrawals".lowercased():
+            let vc = WithdrawListVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+            
+        case "Payment Methods".lowercased():
+            let vc =  PaymemtSavedCardListVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            break
+            
+        case "logout".lowercased():
             createLogoutAlert()
-                break
+            break
             
-            default:
-                print(item)
-
+        default:
+            print(item)
+            
         }
     }
     func createLogoutAlert(){

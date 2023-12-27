@@ -27,14 +27,33 @@ class AddMediaVC: UIViewController {
     var isFrontCamera = false
     var isRecording = false
     var needTorch = false
+    var longPress = UILongPressGestureRecognizer()
+    var pan = UIPanGestureRecognizer()
     var delegate:CustomVideoPostedDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
-        buttonView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(recordVideo)))
+         longPress = UILongPressGestureRecognizer(target: self, action: #selector(recordVideo))
+        longPress.delegate = self
+        pan = UIPanGestureRecognizer(target: self, action: #selector(zoomVideo))
+        pan.delegate = self
+        buttonView.addGestureRecognizer(longPress)
+        buttonView.addGestureRecognizer(pan)
         galleryView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openGallery)))
+        
     }
     
+    @objc func zoomVideo(_ sender:UIPanGestureRecognizer){
+        if sender.velocity(in: view).y < 0 || sender.velocity(in: view).y > 0{
+            print("sjhdbasijbdjw", -sender.translation(in: view).y)
+            cameraManager.zoom(by: -sender.translation(in: view).y/50.0)
+        }
+        
+        
+    }
+    @IBAction func flipCameraBtnCLicked(_ sender: Any) {
+        changeCamera()
+    }
     @IBAction func flashBtnClicked(_ sender: Any) {
         needTorch = !needTorch
         if needTorch{
@@ -161,7 +180,7 @@ class AddMediaVC: UIViewController {
             timer = Timer()
             self.timer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(calculateSeconds), userInfo: nil, repeats: true)
         case .changed:
-            print("ZOOOM")
+            print("ZOOOM",sender)
         case .cancelled, .ended:
             if cameraManager.isRecording() ?? false{
                 
@@ -392,4 +411,9 @@ func encodeVideo(at videoURL: URL, completionHandler: ((URL?, Error?) -> Void)?)
         }
             
     })
+}
+extension AddMediaVC: UIGestureRecognizerDelegate{
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return (gestureRecognizer == pan && otherGestureRecognizer == longPress)
+     }
 }

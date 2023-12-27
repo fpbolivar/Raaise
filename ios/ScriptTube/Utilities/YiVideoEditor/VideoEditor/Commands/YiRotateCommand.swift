@@ -24,6 +24,7 @@ class YiRotateCommand: NSObject, YiVideoEditorCommandProtocol {
         var layerInstruction: AVMutableVideoCompositionLayerInstruction?
         let t1 = CGAffineTransform(translationX: videoSize.height, y: 0.0)
         let t2 = t1.rotated(by: CGFloat((90.0 / 180.0 * .pi)))
+        print("VIDEOSIZE33",videoSize.height,videoSize.width)
         if videoSize.height > videoSize.width{
             return
         }

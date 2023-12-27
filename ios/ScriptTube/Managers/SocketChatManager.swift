@@ -4,7 +4,7 @@ import SocketIO
 class SocketChatManager {
 
     // MARK: - Properties
-    let manager = SocketManager(socketURL: URL(string: "http://82.180.161.7:5000")!, config: [.log(false), .compress])
+    let manager = SocketManager(socketURL: URL(string: URLHelper.SOCKET_URL)!, config: [.log(false), .compress])
     var socket: SocketIOClient? = nil
 
     // MARK: - Life Cycle

@@ -23,7 +23,7 @@ internal struct DPDConstant {
 	}
 
 	internal struct UI {
-
+        static let Align = NSTextAlignment.left
 		static let TextColor = UIColor.black
         static let SelectedTextColor = UIColor.black
 		static let TextFont = UIFont.systemFont(ofSize: 15)

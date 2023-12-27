@@ -11,7 +11,7 @@ import GoogleSignIn
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-   static let signInConfig = GIDConfiguration(clientID: "201557307033-958382ttchrur82u65n689l6ubhd0kn8.apps.googleusercontent.com")
+   static let signInConfig = GIDConfiguration(clientID: "301537983297-hndherttr1gvgqs2dcfqoplr0eonrs1f.apps.googleusercontent.com")
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchVC" customModule="ScriptTube" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchVC" customModule="Raaise_App" customModuleProvider="target">
             <connections>
                 <outlet property="backImage" destination="Oet-Uf-b3f" id="c3C-Mr-Jyi"/>
                 <outlet property="noResultLbl" destination="X32-j6-iLE" id="gnQ-9G-A7H"/>
@@ -24,8 +24,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_back" translatesAutoresizingMaskIntoConstraints="NO" id="Oet-Uf-b3f">
-                    <rect key="frame" x="0.0" y="58" width="44" height="30"/>
+                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_back" translatesAutoresizingMaskIntoConstraints="NO" id="Oet-Uf-b3f">
+                    <rect key="frame" x="10" y="58" width="44" height="30"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="44" id="HyT-oS-69D"/>
@@ -33,7 +33,7 @@
                     </constraints>
                 </imageView>
                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search Users" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f75-kA-MoC">
-                    <rect key="frame" x="20" y="58" width="374" height="35"/>
+                    <rect key="frame" x="20" y="98" width="374" height="35"/>
                     <color key="backgroundColor" name="TFcolor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="nwS-SL-Nb5"/>
@@ -43,7 +43,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hCV-js-Wdy">
-                    <rect key="frame" x="34" y="68.5" width="15" height="13.5"/>
+                    <rect key="frame" x="34" y="108.5" width="15" height="13.5"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -52,17 +52,17 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type Something to Search" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6d-Dc-rdz">
-                    <rect key="frame" x="0.0" y="93" width="414" height="769"/>
+                    <rect key="frame" x="0.0" y="133" width="414" height="729"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" name="TFcolor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bbD-fA-HDS" customClass="ContentSizedTableView" customModule="ScriptTube" customModuleProvider="target">
-                    <rect key="frame" x="10" y="103" width="394" height="759"/>
+                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bbD-fA-HDS" customClass="ContentSizedTableView" customModule="Raaise_App" customModuleProvider="target">
+                    <rect key="frame" x="10" y="143" width="394" height="719"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Results Found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X32-j6-iLE">
-                    <rect key="frame" x="0.0" y="113" width="414" height="20.5"/>
+                    <rect key="frame" x="0.0" y="153" width="414" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" name="lightGray"/>
                     <nil key="highlightedColor"/>
@@ -80,13 +80,13 @@
                 <constraint firstItem="m6d-Dc-rdz" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ODN-q9-RSx"/>
                 <constraint firstItem="hCV-js-Wdy" firstAttribute="centerX" secondItem="f75-kA-MoC" secondAttribute="centerX" multiplier="0.2" id="aJk-t6-vAV"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="m6d-Dc-rdz" secondAttribute="trailing" id="bKi-9H-IBD"/>
-                <constraint firstItem="f75-kA-MoC" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="bX8-uI-CBu"/>
+                <constraint firstItem="f75-kA-MoC" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="bX8-uI-CBu"/>
                 <constraint firstItem="bbD-fA-HDS" firstAttribute="top" secondItem="f75-kA-MoC" secondAttribute="bottom" constant="10" id="cHK-Yb-z3N"/>
                 <constraint firstItem="m6d-Dc-rdz" firstAttribute="top" secondItem="f75-kA-MoC" secondAttribute="bottom" id="g8l-WL-bMY"/>
                 <constraint firstItem="hCV-js-Wdy" firstAttribute="centerY" secondItem="f75-kA-MoC" secondAttribute="centerY" id="iJu-Re-cyP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="X32-j6-iLE" secondAttribute="trailing" id="mlN-dK-ase"/>
                 <constraint firstItem="Oet-Uf-b3f" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="mpI-fQ-dQb"/>
-                <constraint firstItem="Oet-Uf-b3f" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="nGw-Gt-RlL"/>
+                <constraint firstItem="Oet-Uf-b3f" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="nGw-Gt-RlL"/>
                 <constraint firstItem="bbD-fA-HDS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="nWl-lT-5f9"/>
                 <constraint firstItem="X32-j6-iLE" firstAttribute="top" secondItem="f75-kA-MoC" secondAttribute="bottom" constant="20" id="tN6-34-rav"/>
             </constraints>

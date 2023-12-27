@@ -56,46 +56,48 @@ class PersonalInfoFormVC: BaseControllerVC {
         AlertView().alertCameraGallery(msg: "Select Option", delegate: self) { action in
             if action == .camera{
                 self.openCamera()
+                self.imagePickerDelegate = self
             }else if action == .photo{
+                self.imagePickerDelegate = self
                 self.openGallery()
             }else{
                 
             }
         }
     }
-    func openCamera(){
-        if UIImagePickerController.isSourceTypeAvailable(.camera){
-            let picker = UIImagePickerController()
-            picker.sourceType = .camera
-            picker.delegate = self
-            self.present(picker,animated: true)
-        }else{
-            AlertView().showCameraNotAvailableAlert(delegate:  self, pop: false)
-        }
-    }
-    func openGallery(){
-        if #available(iOS 14, *) {
-                    var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
-                    config.selectionLimit = 1
-                    config.filter = .images
-                    config.preferredAssetRepresentationMode = .current
-                    let picker = PHPickerViewController(configuration: config)
-                    picker.delegate = self
-                    DispatchQueue.main.async {
-                        self.present(picker, animated: true, completion: nil)
-                    }
-        } else {
-            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
-                let picker = UIImagePickerController()
-                picker.sourceType = .photoLibrary
-                picker.delegate = self
-                self.present(picker,animated: true)
-            }else{
-                
-            }
-        }
-
-    }
+//    func openCamera(){
+//        if UIImagePickerController.isSourceTypeAvailable(.camera){
+//            let picker = UIImagePickerController()
+//            picker.sourceType = .camera
+//            picker.delegate = self
+//            self.present(picker,animated: true)
+//        }else{
+//            AlertView().showCameraNotAvailableAlert(delegate:  self, pop: false)
+//        }
+//    }
+//    func openGallery(){
+//        if #available(iOS 14, *) {
+//                    var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
+//                    config.selectionLimit = 1
+//                    config.filter = .images
+//                    config.preferredAssetRepresentationMode = .current
+//                    let picker = PHPickerViewController(configuration: config)
+//                    picker.delegate = self
+//                    DispatchQueue.main.async {
+//                        self.present(picker, animated: true, completion: nil)
+//                    }
+//        } else {
+//            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+//                let picker = UIImagePickerController()
+//                picker.sourceType = .photoLibrary
+//                picker.delegate = self
+//                self.present(picker,animated: true)
+//            }else{
+//
+//            }
+//        }
+//
+//    }
     func paddingTF(tf:UITextField,value:Int=20){
         tf.paddingLeftRightTextField(left: CGFloat(value), right: CGFloat(value))
     }
@@ -151,60 +153,6 @@ class PersonalInfoFormVC: BaseControllerVC {
 
 }
 //MARK: -Image Picker Delegate
-extension PersonalInfoFormVC: UIImagePickerControllerDelegate,UINavigationControllerDelegate{
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true)
-    }
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-       
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else{
-            return
-        }
-        if picker.sourceType == .camera{
-        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
-        }
-        picker.dismiss(animated: true)
-        self.profileImage.image = image
-        imageChanged = true
-    }
-    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            print("Not Stored")
-        }
-
-    }
-}
-extension PersonalInfoFormVC:PHPickerViewControllerDelegate{
-    @available(iOS 14, *)
-
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        UIWindow.keyWin.rootViewController?.dismiss(animated: true, completion: nil)
-        print("didFinishPicking",results)
-        guard !results.isEmpty else { return }
-        // request image urls
-        let identifier = results.compactMap(\.assetIdentifier)
-        let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifier, options: nil)
-        let _ = fetchResult.count
-        fetchResult.enumerateObjects {(asset, index, stop) in
-           
-            PHAsset.getURL(ofPhotoWith: asset) { (url) in
-                if let url = url {
-                  // got image url
-                    do {
-                        let imageData = try Data(contentsOf: url)
-                        self.profileImage.image = UIImage(data: imageData)
-                        self.imageChanged = true
-                        } catch {
-                            print("\(#function) Error loading image : \(error)")
-                        }
-                } else {
-                  // show error
-                    print(" ERROR didFinishPicking")
-                }
-            }
-        }
-    }
-}
 extension PHAsset {
 static func getURL(ofPhotoWith mPhasset: PHAsset, completionHandler : @escaping ((_ responseURL : URL?) -> Void)) {
             if mPhasset.mediaType == .image {
@@ -233,4 +181,10 @@ static func getURL(ofPhotoWith mPhasset: PHAsset, completionHandler : @escaping 
             }
             
         }
+}
+extension PersonalInfoFormVC:ImagePickerDelegate{
+    func didSelectImage(image: UIImage) {
+        self.imageChanged = true
+        self.profileImage.image = image
+    }
 }

@@ -76,6 +76,7 @@ class AddPostVC: BaseControllerVC {
         }
     }
     func setupChooseArticleDropDown() {
+        chooseArticleDropDown.align = .left
         chooseArticleDropDown.anchorView = categoryTf
         chooseArticleDropDown.bottomOffset = CGPoint(x: 0, y: categoryTf.bounds.height + 10)
         chooseArticleDropDown.backgroundColor = UIColor(named: "TFcolor")
@@ -152,7 +153,7 @@ class AddPostVC: BaseControllerVC {
     //MARK: - Add Post Api
     func addpostApi(){
         
-        self.pleaseWait()
+        //self.pleaseWait()
         Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: false)
         do{
              videoData = try Data(contentsOf: videoUrl)
@@ -163,8 +164,8 @@ class AddPostVC: BaseControllerVC {
         }
         
         let param = ["videoCaption":captionTv.text!.trimmingCharacters(in: .whitespaces),"isDonation":optionsSwitch.isOn,"donationAmount":donationTf.text ?? "0","audioId":selectedAudioId,"categoryId":selectedCategory] as [String : Any]
-//        self.navigationController?.popToRootViewController(animated: true)
-//        self.delegate?.postAdded(status: .start)
+        self.navigationController?.popToRootViewController(animated: true)
+        self.delegate?.postAdded(status: .start)
         VideoUploadStatus.isUploading?(true)
         VideoUploadStatus.isUploadingVar = true
         DispatchQueue.global(qos: .background).async {
@@ -177,6 +178,8 @@ class AddPostVC: BaseControllerVC {
                     //self.navigationController?.popToRootViewController(animated: true)
                     self.delegate?.postAdded(status: .finish)
                 }
+            } progress: { progress in
+                VideoUploadStatus.progress?(progress)
             }
         }
     }
@@ -228,4 +231,5 @@ enum UploadStatus{
 class VideoUploadStatus{
     static var isUploading:((Bool)->Void)?
     static var isUploadingVar = false
+    static var progress:((Int)->Void)?
 }

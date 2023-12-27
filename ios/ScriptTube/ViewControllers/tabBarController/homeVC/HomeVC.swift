@@ -302,6 +302,10 @@ extension HomeVC: UIScrollViewDelegate {
 
 // MARK: - Navigation Delegate
 extension HomeVC: HomeCellNavigationDelegate {
+    func onLikeVideo(post: Post, isLike: Bool) {
+        //
+    }
+    
     
     
     func clickedFollowBtn(forUser id: String, isFollowing: Bool) {

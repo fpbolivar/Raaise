@@ -23,6 +23,7 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
     var shareVideoLink:String = ""
     var viewIsVisisble = false
     //MARK: - UI Components
+    @IBOutlet weak var searchIcon: UIImageView!
     @IBOutlet weak var noVidLbl1: UILabel!
     @IBOutlet weak var noVidLbl: UILabel!
     @IBOutlet weak var spinner1: UIActivityIndicatorView!
@@ -60,6 +61,7 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
         self.tabBarController?.tabBar.isHidden = false
         viewIsVisisble = true
         xPage == 1 ? checkPlay(table2: true) : checkPlay()
+       
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -121,6 +123,10 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
         let vc = NotificationVC()
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    @objc func gotoSearch(){
+        let vc = SearchVC()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     //MARK: - Setup
     func setup(){
         let tbc = self.tabBarController as! MainTabBarVC
@@ -128,6 +134,7 @@ class HomeVC2: BaseControllerVC,UIScrollViewDelegate {
         forYouTap = UITapGestureRecognizer(target: self, action: #selector(scrollToFollowing))
         followingTap = UITapGestureRecognizer(target: self, action: #selector(scrollToFollowing))
         bellIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(gotoNotification)))
+        searchIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(gotoSearch)))
         notificationCountView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(gotoNotification)))
         followingLbl.addGestureRecognizer(followingTap)
         forYouLbl.addGestureRecognizer(forYouTap)
@@ -409,6 +416,19 @@ extension HomeVC2:MainTabbarVCDelegate{
 }
 //MARK: - Navigation from Home page Delegates
 extension HomeVC2:HomeCellNavigationDelegate{
+    func onLikeVideo(post: Post,isLike:Bool) {
+        //tableView.reloadData()
+        print("KASDKANDK",post.isLiked,visibleCell?.post?.isLiked)
+//        if xPage == 1{
+//
+//            data2.forEach { onePost in
+//                if post.id == onePost.id{
+//                    onePost
+//                }
+//            }
+//        }
+    }
+    
     func gotoUserProfileOfSupporter(withUser user: DonationUserModel) {
         let vc = VisitProfileVC()
         vc.id = user.id
@@ -526,6 +546,19 @@ extension HomeVC2:CommentPopUpDelegate{
 }
 //MARK: - Navigation Delegates
 extension HomeVC2:VisitProfileDelegate{
+    func videoLiked(post:Post,isLiked: Bool) {
+        if visibleCell?.post?.id == post.id{
+            visibleCell?.post?.isLiked = isLiked
+            visibleCell?.likeCountLbl.text = post.videoLikeCount
+            if isLiked{
+                visibleCell?.likeBtn.tintColor = .red
+            }else{
+                visibleCell?.likeBtn.tintColor = .white
+            }
+        }
+        
+    }
+    
     func followActionChanged(withId id: String, isFollowing: Bool) {
         let sameUser = self.data.filter { post in
             return post.userDetails?.id == id

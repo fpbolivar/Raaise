@@ -92,7 +92,22 @@ class CameraManager: NSObject, AVCaptureFileOutputRecordingDelegate {
             output.stopRecording()
         }
     }
-    
+    func zoom(by factor:Double){
+        let zoomFactor = CGFloat(factor)
+        let minimumZoomFactor: CGFloat = 1.0
+        let maximumZoomFactor: CGFloat = min(captureDevice.activeFormat.videoMaxZoomFactor, 10.0)
+        let notLessThanZero = max(zoomFactor, minimumZoomFactor)
+        let finalZoom = min(notLessThanZero, maximumZoomFactor)
+        print("ZOZOZOZo")
+        do {
+            try captureDevice?.lockForConfiguration()
+            captureDevice?.ramp(toVideoZoomFactor: finalZoom, withRate: 10.0) // zoom in
+            captureDevice?.unlockForConfiguration()
+        } catch {
+            // handle error
+            print("ZOOMERROE",error)
+        }
+    }
     // TODO: Reset Capture session and other settings if user reshoot
     func resetCaptureSession(){
         removeAllTempFiles()

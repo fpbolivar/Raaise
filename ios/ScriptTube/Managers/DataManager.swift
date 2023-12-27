@@ -251,6 +251,32 @@ class DataManager{
             }
         }
     }
+    class func getUserListForRooms(delegate:UIViewController,needLoader:Bool,param:[String:String],onError:@escaping(String)->Void,completion:@escaping(JSON)->Void){
+        needLoader ? delegate.pleaseWait() : print("noloader")
+        let url = URLHelper.GET_USER_LIST_FOR_ROOM
+        print("FOLLOWERLIST",url)
+        APIManager.postService(url: url, parameters: param) { json, error, statusCode in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("FOLLOWERLIST",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                onError(error.localizedDescription)
+            }else{
+                print("FOLLOWERLIST",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                        onError(jsonData["message"].stringValue)
+                    }
+                }
+            }
+        }
+    }
     class func getOtherUserVideos(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
         delegate.pleaseWait()
         APIManager.postService(url: URLHelper.GET_USER_VIDEOS_BY_ID_URL, parameters: param) { json, error, statusCode in
@@ -452,6 +478,78 @@ class DataManager{
             }
         }
     }
+    class func getRoomListAPI(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
+        APIManager.postService(url: URLHelper.GET_LIVE_ROOM, parameters: param) { json, error, statusCode in
+            if let error = error{
+                print("GETLIVEROOMLIST",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate:delegate, pop:false)
+                return
+            }else{
+                print("GETLIVEROOMLIST",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func getPublicRoomListAPI(delegate:UIViewController,param:[String:String],needLoader:Bool = false,completion:@escaping(JSON)->Void){
+        if needLoader{
+            delegate.pleaseWait()
+        }
+        
+        APIManager.postService(url: URLHelper.GET_LIVE_ROOM_PUBLIC, parameters: param) { json, error, statusCode in
+            if needLoader{
+                delegate.clearAllNotice()
+            }
+            if let error = error{
+                
+                print("GETLIVEPUBLICROOMLIST",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate:delegate, pop:false)
+                return
+            }else{
+                
+                print("GETLIVEPUBLICROOMLIST",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func getPublicRoomBySlugAPI(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
+        APIManager.postService(url: URLHelper.GET_LIVE_ROOM_BY_SLUG, parameters: param) { json, error, statusCode in
+            if let error = error{
+                print("getPublicRoomBySlugAPI",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate:delegate, pop:false)
+                return
+            }else{
+                print("getPublicRoomBySlugAPI",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
     class func getChatApi(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
         APIManager.postService(url: URLHelper.GET_CHAT_URL, parameters: param) { json, error, statusCode in
             if let error = error{
@@ -639,6 +737,26 @@ class DataManager{
                             AuthManager.invalidToken()
                         }
                         AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    class func getVideoChat(param:[String:String],onError:@escaping(String)->Void,completion:@escaping(JSON)->Void){
+        APIManager.postService(url: URLHelper.GET_VIDEO_CHAT_URL, parameters: param) { json, error, statusCode in
+            if let error = error{
+                print("GET_VIDEO_CHAT_URL",error)
+                onError(error.localizedDescription)
+            }else{
+                print("GET_VIDEO_CHAT_URL",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        onError(jsonData["message"].stringValue)
                     }
                 }
             }

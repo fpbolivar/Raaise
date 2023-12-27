@@ -531,7 +531,7 @@ class APIManager{
             
                         }
                         for (key, value) in parameters {
-                            
+                            print("MULTIPARTPARAM","\(value)".data(using:.utf8),"\(value)",key)
                           multipartFormData.append("\(value)".data(using:.utf8)!, withName: key)
                         }
             
@@ -545,12 +545,13 @@ class APIManager{
             .responseJSON { response in
                switch response.result{
                case .success(let value):
-                   
+                   print("MuliSuc")
                    let json = JSON(value)
                    
                    print(response.response?.statusCode ?? "")
                    completionHandler(json, nil,response.response?.statusCode)
                case .failure(let error):
+                   print("MuliFAIl",response.response)
                    completionHandler(nil, error,response.response?.statusCode)
                }
             }

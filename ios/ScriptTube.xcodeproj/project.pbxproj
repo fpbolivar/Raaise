@@ -12,6 +12,8 @@
 		01067893298A5FFB009AC9AC /* BlockUserPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01067891298A5FFB009AC9AC /* BlockUserPopUp.swift */; };
 		01067894298A5FFB009AC9AC /* BlockUserPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01067892298A5FFB009AC9AC /* BlockUserPopUp.xib */; };
 		01067896298A683C009AC9AC /* DonationUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01067895298A683C009AC9AC /* DonationUserModel.swift */; };
+		011C6FCC2A0F8D320070F1BF /* PrivacyControlVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011C6FCA2A0F8D320070F1BF /* PrivacyControlVC.swift */; };
+		011C6FCD2A0F8D320070F1BF /* PrivacyControlVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 011C6FCB2A0F8D320070F1BF /* PrivacyControlVC.xib */; };
 		0123AF48295D71260016A1D9 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 0123AF47295D71260016A1D9 /* SocketIO */; };
 		0123AF4A295D74FE0016A1D9 /* SocketChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123AF49295D74FE0016A1D9 /* SocketChatManager.swift */; };
 		0123AF4C295DD0ED0016A1D9 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123AF4B295DD0ED0016A1D9 /* ChatModel.swift */; };
@@ -52,6 +54,10 @@
 		01367C44292E411800DE1EB2 /* SelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01367C42292E411800DE1EB2 /* SelectionCell.xib */; };
 		01367C47292E790000DE1EB2 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01367C45292E790000DE1EB2 /* CommentTableViewCell.swift */; };
 		01367C48292E790000DE1EB2 /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01367C46292E790000DE1EB2 /* CommentTableViewCell.xib */; };
+		013780A129FA8FD90066AC0B /* VideoCallCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0137809F29FA8FD90066AC0B /* VideoCallCollectionCell.swift */; };
+		013780A229FA8FD90066AC0B /* VideoCallCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 013780A029FA8FD90066AC0B /* VideoCallCollectionCell.xib */; };
+		013780A629FAA7DF0066AC0B /* VideoChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013780A429FAA7DF0066AC0B /* VideoChatCell.swift */; };
+		013780A729FAA7DF0066AC0B /* VideoChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 013780A529FAA7DF0066AC0B /* VideoChatCell.xib */; };
 		013AFC732941BBFE004469E1 /* GSAVPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013AFC552941BBFE004469E1 /* GSAVPlayerViewController.swift */; };
 		013AFC742941BBFE004469E1 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013AFC572941BBFE004469E1 /* Int+Extensions.swift */; };
 		013AFC752941BBFE004469E1 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013AFC582941BBFE004469E1 /* String+Extensions.swift */; };
@@ -77,6 +83,8 @@
 		013AFC8A2941BBFE004469E1 /* VideoFullscreenTransitioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013AFC712941BBFE004469E1 /* VideoFullscreenTransitioner.swift */; };
 		013AFC8B2941BBFE004469E1 /* VideoFullscreenPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013AFC722941BBFE004469E1 /* VideoFullscreenPlayerView.swift */; };
 		013AFC8D2941C398004469E1 /* CacheAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013AFC8C2941C398004469E1 /* CacheAudio.swift */; };
+		0145494629F7905600222CCE /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0145494429F7905600222CCE /* RoomCell.swift */; };
+		0145494729F7905600222CCE /* RoomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0145494529F7905600222CCE /* RoomCell.xib */; };
 		01606E05294B253400B618C6 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01606E03294B253400B618C6 /* CategoryCell.swift */; };
 		01606E06294B253400B618C6 /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01606E04294B253400B618C6 /* CategoryCell.xib */; };
 		0163B7952946E56100F203AA /* VisitProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0163B7932946E56100F203AA /* VisitProfileVC.swift */; };
@@ -89,6 +97,24 @@
 		0163B7A22947368300F203AA /* ReplyTblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0163B7A02947368300F203AA /* ReplyTblCell.xib */; };
 		0163B7AB294876A200F203AA /* ReportBtnPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0163B7A9294876A200F203AA /* ReportBtnPopUp.swift */; };
 		0163B7AC294876A200F203AA /* ReportBtnPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0163B7AA294876A200F203AA /* ReportBtnPopUp.xib */; };
+		016DA57C29F7A321004C3D94 /* RoomDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016DA57A29F7A321004C3D94 /* RoomDetailVC.swift */; };
+		016DA57D29F7A321004C3D94 /* RoomDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016DA57B29F7A321004C3D94 /* RoomDetailVC.xib */; };
+		016DA58129F7ABD2004C3D94 /* RoomMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016DA57F29F7ABD2004C3D94 /* RoomMemberCell.swift */; };
+		016DA58229F7ABD2004C3D94 /* RoomMemberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016DA58029F7ABD2004C3D94 /* RoomMemberCell.xib */; };
+		016DA58429F7AE1D004C3D94 /* CircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016DA58329F7AE1D004C3D94 /* CircularImageView.swift */; };
+		016DA58C29F7BB40004C3D94 /* EditRoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016DA58A29F7BB40004C3D94 /* EditRoomVC.swift */; };
+		016DA58D29F7BB40004C3D94 /* EditRoomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016DA58B29F7BB40004C3D94 /* EditRoomVC.xib */; };
+		016DA59129F7C598004C3D94 /* PublicRoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016DA58F29F7C598004C3D94 /* PublicRoomVC.swift */; };
+		016DA59229F7C598004C3D94 /* PublicRoomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016DA59029F7C598004C3D94 /* PublicRoomVC.xib */; };
+		016DA59629F7D894004C3D94 /* CreateRoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016DA59429F7D894004C3D94 /* CreateRoomVC.swift */; };
+		016DA59729F7D894004C3D94 /* CreateRoomVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016DA59529F7D894004C3D94 /* CreateRoomVC.xib */; };
+		016DA59B29F7DBC6004C3D94 /* SelectedUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016DA59929F7DBC6004C3D94 /* SelectedUserCell.swift */; };
+		016DA59C29F7DBC6004C3D94 /* SelectedUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016DA59A29F7DBC6004C3D94 /* SelectedUserCell.xib */; };
+		016DA59E29F7EE35004C3D94 /* RoomListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016DA59D29F7EE35004C3D94 /* RoomListModel.swift */; };
+		016DA5A229F8FC54004C3D94 /* MeetingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016DA5A029F8FC54004C3D94 /* MeetingVC.swift */; };
+		016DA5A329F8FC54004C3D94 /* MeetingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016DA5A129F8FC54004C3D94 /* MeetingVC.xib */; };
+		016DA5A729F93E0B004C3D94 /* VideoCallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016DA5A529F93E0B004C3D94 /* VideoCallCell.swift */; };
+		016DA5A829F93E0B004C3D94 /* VideoCallCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016DA5A629F93E0B004C3D94 /* VideoCallCell.xib */; };
 		01719E4E297A67A700929EDD /* DonationRaisedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01719E4C297A67A700929EDD /* DonationRaisedCell.swift */; };
 		01719E4F297A67A700929EDD /* DonationRaisedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01719E4D297A67A700929EDD /* DonationRaisedCell.xib */; };
 		01719E53297A77CB00929EDD /* VideoAnalyticsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01719E51297A77CB00929EDD /* VideoAnalyticsVC.swift */; };
@@ -123,6 +149,9 @@
 		01A1ED2F294342550095A125 /* YiAddAudioCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1ED26294342550095A125 /* YiAddAudioCommand.swift */; };
 		01A1ED30294342550095A125 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 01A1ED28294342550095A125 /* .gitkeep */; };
 		01A1ED3229435EE30095A125 /* CommentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A1ED3129435EE30095A125 /* CommentDataModel.swift */; };
+		01BAA46929FBB12F002822A1 /* LiveRoomChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BAA46829FBB12F002822A1 /* LiveRoomChatModel.swift */; };
+		01BF33FD2A0F8EC9001AA26A /* PrivacyControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BF33FB2A0F8EC9001AA26A /* PrivacyControlCell.swift */; };
+		01BF33FE2A0F8EC9001AA26A /* PrivacyControlCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01BF33FC2A0F8EC9001AA26A /* PrivacyControlCell.xib */; };
 		01C23F6B292F7BF30072861D /* ProfileSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C23F69292F7BF30072861D /* ProfileSliderView.swift */; };
 		01C23F6C292F7BF30072861D /* ProfileSliderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C23F6A292F7BF30072861D /* ProfileSliderView.xib */; };
 		01C23F6E292F8BBD0072861D /* Validators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C23F6D292F8BBD0072861D /* Validators.swift */; };
@@ -300,6 +329,7 @@
 		01F884B02934D62D002AEE67 /* AmountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F884AE2934D62D002AEE67 /* AmountCell.xib */; };
 		01F884B32934DDB6002AEE67 /* CancelEditingPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F884B12934DDB6002AEE67 /* CancelEditingPopUp.swift */; };
 		01F884B42934DDB6002AEE67 /* CancelEditingPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F884B22934DDB6002AEE67 /* CancelEditingPopUp.xib */; };
+		01FC273C29F94F6300288980 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FC273B29F94F6300288980 /* UIButtonExtension.swift */; };
 		78C2CB2D321C61664424489F /* Pods_ScriptTube.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA859E7F2F2D48FEFA4E48D /* Pods_ScriptTube.framework */; };
 		7D5D106D29508ABA00C10333 /* FacebookBasics in Frameworks */ = {isa = PBXBuildFile; productRef = 7D5D106C29508ABA00C10333 /* FacebookBasics */; };
 		7D5D106F29508ABA00C10333 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7D5D106E29508ABA00C10333 /* FacebookCore */; };
@@ -444,6 +474,8 @@
 		01067891298A5FFB009AC9AC /* BlockUserPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockUserPopUp.swift; sourceTree = "<group>"; };
 		01067892298A5FFB009AC9AC /* BlockUserPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlockUserPopUp.xib; sourceTree = "<group>"; };
 		01067895298A683C009AC9AC /* DonationUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationUserModel.swift; sourceTree = "<group>"; };
+		011C6FCA2A0F8D320070F1BF /* PrivacyControlVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyControlVC.swift; sourceTree = "<group>"; };
+		011C6FCB2A0F8D320070F1BF /* PrivacyControlVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivacyControlVC.xib; sourceTree = "<group>"; };
 		0123AF49295D74FE0016A1D9 /* SocketChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketChatManager.swift; sourceTree = "<group>"; };
 		0123AF4B295DD0ED0016A1D9 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		0123AF4D2962B85C0016A1D9 /* SharePopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePopUp.swift; sourceTree = "<group>"; };
@@ -485,6 +517,10 @@
 		01367C42292E411800DE1EB2 /* SelectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectionCell.xib; sourceTree = "<group>"; };
 		01367C45292E790000DE1EB2 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		01367C46292E790000DE1EB2 /* CommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
+		0137809F29FA8FD90066AC0B /* VideoCallCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallCollectionCell.swift; sourceTree = "<group>"; };
+		013780A029FA8FD90066AC0B /* VideoCallCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoCallCollectionCell.xib; sourceTree = "<group>"; };
+		013780A429FAA7DF0066AC0B /* VideoChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoChatCell.swift; sourceTree = "<group>"; };
+		013780A529FAA7DF0066AC0B /* VideoChatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoChatCell.xib; sourceTree = "<group>"; };
 		013AFC552941BBFE004469E1 /* GSAVPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSAVPlayerViewController.swift; sourceTree = "<group>"; };
 		013AFC572941BBFE004469E1 /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		013AFC582941BBFE004469E1 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
@@ -510,6 +546,8 @@
 		013AFC712941BBFE004469E1 /* VideoFullscreenTransitioner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoFullscreenTransitioner.swift; sourceTree = "<group>"; };
 		013AFC722941BBFE004469E1 /* VideoFullscreenPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoFullscreenPlayerView.swift; sourceTree = "<group>"; };
 		013AFC8C2941C398004469E1 /* CacheAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheAudio.swift; sourceTree = "<group>"; };
+		0145494429F7905600222CCE /* RoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
+		0145494529F7905600222CCE /* RoomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomCell.xib; sourceTree = "<group>"; };
 		01606E03294B253400B618C6 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		01606E04294B253400B618C6 /* CategoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
 		0163B7932946E56100F203AA /* VisitProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitProfileVC.swift; sourceTree = "<group>"; };
@@ -522,6 +560,24 @@
 		0163B7A02947368300F203AA /* ReplyTblCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReplyTblCell.xib; sourceTree = "<group>"; };
 		0163B7A9294876A200F203AA /* ReportBtnPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBtnPopUp.swift; sourceTree = "<group>"; };
 		0163B7AA294876A200F203AA /* ReportBtnPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportBtnPopUp.xib; sourceTree = "<group>"; };
+		016DA57A29F7A321004C3D94 /* RoomDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDetailVC.swift; sourceTree = "<group>"; };
+		016DA57B29F7A321004C3D94 /* RoomDetailVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomDetailVC.xib; sourceTree = "<group>"; };
+		016DA57F29F7ABD2004C3D94 /* RoomMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMemberCell.swift; sourceTree = "<group>"; };
+		016DA58029F7ABD2004C3D94 /* RoomMemberCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomMemberCell.xib; sourceTree = "<group>"; };
+		016DA58329F7AE1D004C3D94 /* CircularImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularImageView.swift; sourceTree = "<group>"; };
+		016DA58A29F7BB40004C3D94 /* EditRoomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRoomVC.swift; sourceTree = "<group>"; };
+		016DA58B29F7BB40004C3D94 /* EditRoomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditRoomVC.xib; sourceTree = "<group>"; };
+		016DA58F29F7C598004C3D94 /* PublicRoomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicRoomVC.swift; sourceTree = "<group>"; };
+		016DA59029F7C598004C3D94 /* PublicRoomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PublicRoomVC.xib; sourceTree = "<group>"; };
+		016DA59429F7D894004C3D94 /* CreateRoomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomVC.swift; sourceTree = "<group>"; };
+		016DA59529F7D894004C3D94 /* CreateRoomVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateRoomVC.xib; sourceTree = "<group>"; };
+		016DA59929F7DBC6004C3D94 /* SelectedUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedUserCell.swift; sourceTree = "<group>"; };
+		016DA59A29F7DBC6004C3D94 /* SelectedUserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectedUserCell.xib; sourceTree = "<group>"; };
+		016DA59D29F7EE35004C3D94 /* RoomListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomListModel.swift; sourceTree = "<group>"; };
+		016DA5A029F8FC54004C3D94 /* MeetingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingVC.swift; sourceTree = "<group>"; };
+		016DA5A129F8FC54004C3D94 /* MeetingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingVC.xib; sourceTree = "<group>"; };
+		016DA5A529F93E0B004C3D94 /* VideoCallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallCell.swift; sourceTree = "<group>"; };
+		016DA5A629F93E0B004C3D94 /* VideoCallCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoCallCell.xib; sourceTree = "<group>"; };
 		01719E4C297A67A700929EDD /* DonationRaisedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationRaisedCell.swift; sourceTree = "<group>"; };
 		01719E4D297A67A700929EDD /* DonationRaisedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DonationRaisedCell.xib; sourceTree = "<group>"; };
 		01719E51297A77CB00929EDD /* VideoAnalyticsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAnalyticsVC.swift; sourceTree = "<group>"; };
@@ -558,6 +614,9 @@
 		01A1ED26294342550095A125 /* YiAddAudioCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YiAddAudioCommand.swift; sourceTree = "<group>"; };
 		01A1ED28294342550095A125 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		01A1ED3129435EE30095A125 /* CommentDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDataModel.swift; sourceTree = "<group>"; };
+		01BAA46829FBB12F002822A1 /* LiveRoomChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveRoomChatModel.swift; sourceTree = "<group>"; };
+		01BF33FB2A0F8EC9001AA26A /* PrivacyControlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyControlCell.swift; sourceTree = "<group>"; };
+		01BF33FC2A0F8EC9001AA26A /* PrivacyControlCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivacyControlCell.xib; sourceTree = "<group>"; };
 		01C23F69292F7BF30072861D /* ProfileSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSliderView.swift; sourceTree = "<group>"; };
 		01C23F6A292F7BF30072861D /* ProfileSliderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileSliderView.xib; sourceTree = "<group>"; };
 		01C23F6D292F8BBD0072861D /* Validators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validators.swift; sourceTree = "<group>"; };
@@ -867,6 +926,7 @@
 		01F884AE2934D62D002AEE67 /* AmountCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AmountCell.xib; sourceTree = "<group>"; };
 		01F884B12934DDB6002AEE67 /* CancelEditingPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelEditingPopUp.swift; sourceTree = "<group>"; };
 		01F884B22934DDB6002AEE67 /* CancelEditingPopUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CancelEditingPopUp.xib; sourceTree = "<group>"; };
+		01FC273B29F94F6300288980 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		591095797D0D72830FB4B00C /* Pods-ScriptTube.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScriptTube.debug.xcconfig"; path = "Target Support Files/Pods-ScriptTube/Pods-ScriptTube.debug.xcconfig"; sourceTree = "<group>"; };
 		799D91673E8A3C197CA6A33F /* Pods-ScriptTube.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScriptTube.release.xcconfig"; path = "Target Support Files/Pods-ScriptTube/Pods-ScriptTube.release.xcconfig"; sourceTree = "<group>"; };
 		7CA859E7F2F2D48FEFA4E48D /* Pods_ScriptTube.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScriptTube.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1025,6 +1085,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		011C6FC92A0F8D160070F1BF /* PrivacuControlVC */ = {
+			isa = PBXGroup;
+			children = (
+				011C6FCA2A0F8D320070F1BF /* PrivacyControlVC.swift */,
+				011C6FCB2A0F8D320070F1BF /* PrivacyControlVC.xib */,
+			);
+			path = PrivacuControlVC;
+			sourceTree = "<group>";
+		};
 		0123AF5A2966A3C70016A1D9 /* refreshControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -1129,6 +1198,24 @@
 			path = SearchWithListVC;
 			sourceTree = "<group>";
 		};
+		0137809E29FA8FAD0066AC0B /* VideoCallCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				0137809F29FA8FD90066AC0B /* VideoCallCollectionCell.swift */,
+				013780A029FA8FD90066AC0B /* VideoCallCollectionCell.xib */,
+			);
+			path = VideoCallCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		013780A329FAA7BE0066AC0B /* VideoChatMsgCell */ = {
+			isa = PBXGroup;
+			children = (
+				013780A429FAA7DF0066AC0B /* VideoChatCell.swift */,
+				013780A529FAA7DF0066AC0B /* VideoChatCell.xib */,
+			);
+			path = VideoChatMsgCell;
+			sourceTree = "<group>";
+		};
 		013AFC532941BBFE004469E1 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1208,6 +1295,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		0145494329F7903E00222CCE /* roomCell */ = {
+			isa = PBXGroup;
+			children = (
+				0145494429F7905600222CCE /* RoomCell.swift */,
+				0145494529F7905600222CCE /* RoomCell.xib */,
+			);
+			path = roomCell;
+			sourceTree = "<group>";
+		};
 		0163B7922946E54400F203AA /* VisitProfileVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1217,6 +1313,78 @@
 				0163B7982946E81300F203AA /* VisitVCHeader.xib */,
 			);
 			path = VisitProfileVC;
+			sourceTree = "<group>";
+		};
+		016DA57929F7A30A004C3D94 /* RoomDetailScreen */ = {
+			isa = PBXGroup;
+			children = (
+				016DA57A29F7A321004C3D94 /* RoomDetailVC.swift */,
+				016DA57B29F7A321004C3D94 /* RoomDetailVC.xib */,
+			);
+			path = RoomDetailScreen;
+			sourceTree = "<group>";
+		};
+		016DA57E29F7ABAE004C3D94 /* roomMemberCell */ = {
+			isa = PBXGroup;
+			children = (
+				016DA57F29F7ABD2004C3D94 /* RoomMemberCell.swift */,
+				016DA58029F7ABD2004C3D94 /* RoomMemberCell.xib */,
+			);
+			path = roomMemberCell;
+			sourceTree = "<group>";
+		};
+		016DA58529F7BB04004C3D94 /* EditRoomScreen */ = {
+			isa = PBXGroup;
+			children = (
+				016DA58A29F7BB40004C3D94 /* EditRoomVC.swift */,
+				016DA58B29F7BB40004C3D94 /* EditRoomVC.xib */,
+			);
+			path = EditRoomScreen;
+			sourceTree = "<group>";
+		};
+		016DA58E29F7C539004C3D94 /* PublicRoomVC */ = {
+			isa = PBXGroup;
+			children = (
+				016DA58F29F7C598004C3D94 /* PublicRoomVC.swift */,
+				016DA59029F7C598004C3D94 /* PublicRoomVC.xib */,
+			);
+			path = PublicRoomVC;
+			sourceTree = "<group>";
+		};
+		016DA59329F7D877004C3D94 /* CreateRoomVC */ = {
+			isa = PBXGroup;
+			children = (
+				016DA59429F7D894004C3D94 /* CreateRoomVC.swift */,
+				016DA59529F7D894004C3D94 /* CreateRoomVC.xib */,
+			);
+			path = CreateRoomVC;
+			sourceTree = "<group>";
+		};
+		016DA59829F7DBA8004C3D94 /* selectedUserCell */ = {
+			isa = PBXGroup;
+			children = (
+				016DA59929F7DBC6004C3D94 /* SelectedUserCell.swift */,
+				016DA59A29F7DBC6004C3D94 /* SelectedUserCell.xib */,
+			);
+			path = selectedUserCell;
+			sourceTree = "<group>";
+		};
+		016DA59F29F8FC36004C3D94 /* MeetingVC */ = {
+			isa = PBXGroup;
+			children = (
+				016DA5A029F8FC54004C3D94 /* MeetingVC.swift */,
+				016DA5A129F8FC54004C3D94 /* MeetingVC.xib */,
+			);
+			path = MeetingVC;
+			sourceTree = "<group>";
+		};
+		016DA5A429F93DE5004C3D94 /* VideoCallCell */ = {
+			isa = PBXGroup;
+			children = (
+				016DA5A529F93E0B004C3D94 /* VideoCallCell.swift */,
+				016DA5A629F93E0B004C3D94 /* VideoCallCell.xib */,
+			);
+			path = VideoCallCell;
 			sourceTree = "<group>";
 		};
 		01719E50297A77A600929EDD /* VideoAnalyticsVC */ = {
@@ -1302,6 +1470,7 @@
 				013AFC8C2941C398004469E1 /* CacheAudio.swift */,
 				0123C909294995EE0067F314 /* CalculateDateDifference.swift */,
 				01719E972983ADC200929EDD /* AVMutableComposition+MultipleVideoMerge.swift */,
+				016DA58329F7AE1D004C3D94 /* CircularImageView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1309,6 +1478,11 @@
 		0183680E291B7D230017193A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				016DA59F29F8FC36004C3D94 /* MeetingVC */,
+				016DA59329F7D877004C3D94 /* CreateRoomVC */,
+				016DA58E29F7C539004C3D94 /* PublicRoomVC */,
+				016DA58529F7BB04004C3D94 /* EditRoomScreen */,
+				016DA57929F7A30A004C3D94 /* RoomDetailScreen */,
 				01D4E2512955D08500C74DE7 /* SearchResultVC */,
 				01D4E23D2954691400C74DE7 /* HomeVC2 */,
 				0123C90D2949C4310067F314 /* FollowListVC */,
@@ -1391,6 +1565,15 @@
 				01A1ED28294342550095A125 /* .gitkeep */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		01BF33FA2A0F8EA7001AA26A /* PrivacyControlCell */ = {
+			isa = PBXGroup;
+			children = (
+				01BF33FB2A0F8EC9001AA26A /* PrivacyControlCell.swift */,
+				01BF33FC2A0F8EC9001AA26A /* PrivacyControlCell.xib */,
+			);
+			path = PrivacyControlCell;
 			sourceTree = "<group>";
 		};
 		01C23F6F292F8D410072861D /* Toast */ = {
@@ -1868,6 +2051,7 @@
 		7D64FA1F29275252009F2754 /* XibView */ = {
 			isa = PBXGroup;
 			children = (
+				013780A329FAA7BE0066AC0B /* VideoChatMsgCell */,
 				0123AF5A2966A3C70016A1D9 /* refreshControl */,
 				01367C2F292E04C200DE1EB2 /* popUpXib */,
 				7D64FA2F2927B937009F2754 /* cellXib */,
@@ -1887,6 +2071,7 @@
 		7D64FA272927B688009F2754 /* settingControllerVC */ = {
 			isa = PBXGroup;
 			children = (
+				011C6FC92A0F8D160070F1BF /* PrivacuControlVC */,
 				01719E50297A77A600929EDD /* VideoAnalyticsVC */,
 				7D64FA59292B6C1D009F2754 /* withdrawsListVC */,
 				7D64FA58292B6C01009F2754 /* donationRaisedListVC */,
@@ -1918,6 +2103,8 @@
 				01D4E261295D5F9700C74DE7 /* ChatChannelModel.swift */,
 				0123AF4B295DD0ED0016A1D9 /* ChatModel.swift */,
 				01067895298A683C009AC9AC /* DonationUserModel.swift */,
+				016DA59D29F7EE35004C3D94 /* RoomListModel.swift */,
+				01BAA46829FBB12F002822A1 /* LiveRoomChatModel.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1925,6 +2112,12 @@
 		7D64FA2F2927B937009F2754 /* cellXib */ = {
 			isa = PBXGroup;
 			children = (
+				01BF33FA2A0F8EA7001AA26A /* PrivacyControlCell */,
+				0137809E29FA8FAD0066AC0B /* VideoCallCollectionViewCell */,
+				016DA5A429F93DE5004C3D94 /* VideoCallCell */,
+				016DA59829F7DBA8004C3D94 /* selectedUserCell */,
+				016DA57E29F7ABAE004C3D94 /* roomMemberCell */,
+				0145494329F7903E00222CCE /* roomCell */,
 				01D4E242295586DD00C74DE7 /* SearchCell */,
 				01CF20F0292F340A00AB4DD6 /* chatCell */,
 				7D64FAA4292BBDFC009F2754 /* profileVideoItemCell */,
@@ -2158,6 +2351,7 @@
 				7D64FA51292B60F9009F2754 /* Extension+UITableView.swift */,
 				7D64FA98292BA7A1009F2754 /* Extension+UIView.swift */,
 				7D64FA9E292BB179009F2754 /* Extension+String.swift */,
+				01FC273B29F94F6300288980 /* UIButtonExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2425,8 +2619,10 @@
 				7D64FA7A292BA252009F2754 /* ProfileVC.xib in Resources */,
 				0123AF502962B85C0016A1D9 /* SharePopUp.xib in Resources */,
 				7D64FA5D292B6C46009F2754 /* WithdrawListVC.xib in Resources */,
+				013780A229FA8FD90066AC0B /* VideoCallCollectionCell.xib in Resources */,
 				01836804291B79330017193A /* LaunchScreen.storyboard in Resources */,
 				0129D5A92939B31F00768B24 /* applause-01.mp3 in Resources */,
+				016DA59229F7C598004C3D94 /* PublicRoomVC.xib in Resources */,
 				0123C9112949C44A0067F314 /* FollowListVC.xib in Resources */,
 				01836801291B79330017193A /* Assets.xcassets in Resources */,
 				01367C44292E411800DE1EB2 /* SelectionCell.xib in Resources */,
@@ -2441,6 +2637,7 @@
 				7DEB61F12926503B00DA43EC /* SignUpVC.xib in Resources */,
 				01CF20EF292F305600AB4DD6 /* ChatHeaderView.xib in Resources */,
 				7D64FA50292B5F09009F2754 /* CardCell.xib in Resources */,
+				016DA59729F7D894004C3D94 /* CreateRoomVC.xib in Resources */,
 				0123AF5D2966A3C70016A1D9 /* RefreshContents.xib in Resources */,
 				019D4B982950789C0012D666 /* README.md in Resources */,
 				01CF20F8292F3DA100AB4DD6 /* SendChatCell.xib in Resources */,
@@ -2453,7 +2650,9 @@
 				0123AF542962FF680016A1D9 /* ChatVideoCell.xib in Resources */,
 				01F884A72934C5A7002AEE67 /* CustomizeVideoVC.xib in Resources */,
 				7DEB61DD2926409A00DA43EC /* NotoSans-Thin.ttf in Resources */,
+				016DA57D29F7A321004C3D94 /* RoomDetailVC.xib in Resources */,
 				7DEB62172926663100DA43EC /* ShortBioFormVC.xib in Resources */,
+				016DA58D29F7BB40004C3D94 /* EditRoomVC.xib in Resources */,
 				01F884B42934DDB6002AEE67 /* CancelEditingPopUp.xib in Resources */,
 				01DBBB58293F255E00049D24 /* CommentPopUp.xib in Resources */,
 				01367C48292E790000DE1EB2 /* CommentTableViewCell.xib in Resources */,
@@ -2462,6 +2661,7 @@
 				7D64FA8D292BA6CB009F2754 /* HomeTableViewCell.xib in Resources */,
 				7DEB61E82926409B00DA43EC /* NotoSans-ExtraLightItalic.ttf in Resources */,
 				01D4E24C2955A78000C74DE7 /* UserResultCell.xib in Resources */,
+				01BF33FE2A0F8EC9001AA26A /* PrivacyControlCell.xib in Resources */,
 				01067894298A5FFB009AC9AC /* BlockUserPopUp.xib in Resources */,
 				7D64FA332927B968009F2754 /* SettingCell.xib in Resources */,
 				01C24105293218B90072861D /* CreatePasswordVC.xib in Resources */,
@@ -2475,6 +2675,7 @@
 				01CF20FC292F458000AB4DD6 /* ChatHeaderCell.xib in Resources */,
 				7DEB61E12926409A00DA43EC /* NotoSans-LightItalic.ttf in Resources */,
 				7DEB61D82926409A00DA43EC /* NotoSans-Regular.ttf in Resources */,
+				016DA5A329F8FC54004C3D94 /* MeetingVC.xib in Resources */,
 				0163B7AC294876A200F203AA /* ReportBtnPopUp.xib in Resources */,
 				01D4E2552955D0C100C74DE7 /* SearchResultVC.xib in Resources */,
 				01F884AC2934CF6B002AEE67 /* AddPostVC.xib in Resources */,
@@ -2488,6 +2689,7 @@
 				01367C33292E04EF00DE1EB2 /* DonationPopUpViewController.xib in Resources */,
 				01CF2100292F506100AB4DD6 /* CommentPopUpView.xib in Resources */,
 				0163B7A22947368300F203AA /* ReplyTblCell.xib in Resources */,
+				016DA59C29F7DBC6004C3D94 /* SelectedUserCell.xib in Resources */,
 				7D64FA382927C0B4009F2754 /* BankAddDetailVC.xib in Resources */,
 				01719E5C297A97EE00929EDD /* FilterPopUpVC.xib in Resources */,
 				01CF20EB292F2E3E00AB4DD6 /* ChatVC.xib in Resources */,
@@ -2504,6 +2706,8 @@
 				01719E54297A77CB00929EDD /* VideoAnalyticsVC.xib in Resources */,
 				7D64FA3D2927C0F6009F2754 /* HtmlTextRenderVC.xib in Resources */,
 				01367C39292E24DC00DE1EB2 /* TryAudioVC.xib in Resources */,
+				016DA5A829F93E0B004C3D94 /* VideoCallCell.xib in Resources */,
+				016DA58229F7ABD2004C3D94 /* RoomMemberCell.xib in Resources */,
 				7DEB61E42926409B00DA43EC /* NotoSans-BlackItalic.ttf in Resources */,
 				7D64FA57292B65A5009F2754 /* AddNewPaymentMethodVC.xib in Resources */,
 				7DEB625429266A8800DA43EC /* OnboardingView.xib in Resources */,
@@ -2519,7 +2723,10 @@
 				7DEB620E292663DD00DA43EC /* ChangePasswordVC.xib in Resources */,
 				018367FF291B79320017193A /* Main.storyboard in Resources */,
 				7D64FA422927C68E009F2754 /* DeactivateAccountVC.xib in Resources */,
+				0145494729F7905600222CCE /* RoomCell.xib in Resources */,
+				011C6FCD2A0F8D320070F1BF /* PrivacyControlVC.xib in Resources */,
 				01719E5E297E553600929EDD /* GoogleService-Info.plist in Resources */,
+				013780A729FAA7DF0066AC0B /* VideoChatCell.xib in Resources */,
 				7DEB6212292663F200DA43EC /* UserNameFormVC.xib in Resources */,
 				01CF20F4292F342800AB4DD6 /* ChatCell.xib in Resources */,
 				0163B79A2946E81300F203AA /* VisitVCHeader.xib in Resources */,
@@ -2587,6 +2794,7 @@
 				01C240CD2930CFDD0072861D /* NSButton+WebCache.m in Sources */,
 				0129D5AE293DE99800768B24 /* ReportVideoVC.swift in Sources */,
 				01C23F77292F8D410072861D /* Manager.swift in Sources */,
+				011C6FCC2A0F8D320070F1BF /* PrivacyControlVC.swift in Sources */,
 				019822832938B68300E4788A /* AudioVideoMerger.swift in Sources */,
 				7D64FA9B292BA808009F2754 /* Post.swift in Sources */,
 				01C240EF2930CFDD0072861D /* SDFileAttributeHelper.m in Sources */,
@@ -2595,6 +2803,7 @@
 				01367C32292E04EF00DE1EB2 /* DonationPopUpViewController.swift in Sources */,
 				7D64FA83292BA298009F2754 /* InboxVC.swift in Sources */,
 				01C240C32930CFDD0072861D /* UIImage+GIF.m in Sources */,
+				013780A629FAA7DF0066AC0B /* VideoChatCell.swift in Sources */,
 				01C240D92930CFDD0072861D /* SDWebImageTransition.m in Sources */,
 				013AFC742941BBFE004469E1 /* Int+Extensions.swift in Sources */,
 				01719E53297A77CB00929EDD /* VideoAnalyticsVC.swift in Sources */,
@@ -2602,6 +2811,7 @@
 				0163B7952946E56100F203AA /* VisitProfileVC.swift in Sources */,
 				012A6AB0294B32E700157372 /* DPDKeyboardListener.swift in Sources */,
 				012A6AB3294B32E700157372 /* DropDown.swift in Sources */,
+				016DA58429F7AE1D004C3D94 /* CircularImageView.swift in Sources */,
 				01C240C62930CFDD0072861D /* SDMemoryCache.m in Sources */,
 				01719E5B297A97EE00929EDD /* FilterPopUpVC.swift in Sources */,
 				7DEB62562926746F00DA43EC /* UIApplication+NavBar.swift in Sources */,
@@ -2612,6 +2822,7 @@
 				7DEB62072926618100DA43EC /* PersonalInfoFormVC.swift in Sources */,
 				0123C90C2949AD960067F314 /* UserListDataModel.swift in Sources */,
 				01D4E2572959A4EF00C74DE7 /* AppDelegate+FCM.swift in Sources */,
+				016DA5A729F93E0B004C3D94 /* VideoCallCell.swift in Sources */,
 				013AFC772941BBFE004469E1 /* AVAssetResourceLoadingRequest+Extensions.swift in Sources */,
 				7D64FA79292BA252009F2754 /* ProfileVC.swift in Sources */,
 				7D64FA9D292BB128009F2754 /* VideoCacheManager2.swift in Sources */,
@@ -2621,6 +2832,7 @@
 				01C3EE182938796300AD77F6 /* TabController.swift in Sources */,
 				0163B7992946E81300F203AA /* VisitVCHeader.swift in Sources */,
 				0123AF4A295D74FE0016A1D9 /* SocketChatManager.swift in Sources */,
+				01BAA46929FBB12F002822A1 /* LiveRoomChatModel.swift in Sources */,
 				013AFC892941BBFE004469E1 /* VideoPlayerView.swift in Sources */,
 				01C23FD0293083E80072861D /* Response.swift in Sources */,
 				01C240C12930CFDD0072861D /* SDWebImageIndicator.m in Sources */,
@@ -2628,6 +2840,7 @@
 				01C240D52930CFDD0072861D /* SDImageFrame.m in Sources */,
 				0129D5AB293DBE2700768B24 /* RecordButton.swift in Sources */,
 				7D64FA88292BA518009F2754 /* AddMediaVC.swift in Sources */,
+				016DA57C29F7A321004C3D94 /* RoomDetailVC.swift in Sources */,
 				7D64FA99292BA7A1009F2754 /* Extension+UIView.swift in Sources */,
 				01C23F79292F8D410072861D /* Animator.swift in Sources */,
 				01367C3F292E3A6F00DE1EB2 /* SearchWithListVC.swift in Sources */,
@@ -2671,6 +2884,7 @@
 				7DEB6211292663F200DA43EC /* UserNameFormVC.swift in Sources */,
 				01C240C02930CFDD0072861D /* SDWebImageCacheSerializer.m in Sources */,
 				01F884A62934C5A7002AEE67 /* CustomizeVideoVC.swift in Sources */,
+				016DA58C29F7BB40004C3D94 /* EditRoomVC.swift in Sources */,
 				01367C3B292E351B00DE1EB2 /* UICollectionView+.swift in Sources */,
 				01C240C52930CFDD0072861D /* UIImage+MultiFormat.m in Sources */,
 				01C240BF2930CFDD0072861D /* SDImageLoader.m in Sources */,
@@ -2679,6 +2893,7 @@
 				7D64FA6F292B9414009F2754 /* TabBarController.swift in Sources */,
 				01CF20FE292F504C00AB4DD6 /* CommentPopUpView.swift in Sources */,
 				01DBBB57293F255E00049D24 /* CommentPopUp.swift in Sources */,
+				016DA58129F7ABD2004C3D94 /* RoomMemberCell.swift in Sources */,
 				01C240E92930CFDD0072861D /* UIColor+SDHexString.m in Sources */,
 				01367C2D292DE8B100DE1EB2 /* NotificationCell.swift in Sources */,
 				7DEB624729266A4E00DA43EC /* SCPageControlView.swift in Sources */,
@@ -2700,12 +2915,15 @@
 				01E9E9C829346D7C00A2E87A /* AudioDataModel.swift in Sources */,
 				7DEB61C029263E7B00DA43EC /* Extension+Locale.swift in Sources */,
 				01C23FDD2930866F0072861D /* LocalStrings.swift in Sources */,
+				013780A129FA8FD90066AC0B /* VideoCallCollectionCell.swift in Sources */,
 				7D64FA95292BA730009F2754 /* MarqueeLabel.swift in Sources */,
 				7DEB61BD29263E7B00DA43EC /* Extension+MutableCollection.swift in Sources */,
 				01C23FCE293083E80072861D /* Notifications.swift in Sources */,
 				01C240C42930CFDD0072861D /* SDImageCodersManager.m in Sources */,
+				0145494629F7905600222CCE /* RoomCell.swift in Sources */,
 				7D64FA412927C68E009F2754 /* DeactivateAccountVC.swift in Sources */,
 				01C240D22930CFDD0072861D /* SDWebImageDownloaderConfig.m in Sources */,
+				01BF33FD2A0F8EC9001AA26A /* PrivacyControlCell.swift in Sources */,
 				01C23FD1293083E80072861D /* Alamofire.swift in Sources */,
 				7DEB61FC292658A100DA43EC /* ActiveBuilder.swift in Sources */,
 				01367C47292E790000DE1EB2 /* CommentTableViewCell.swift in Sources */,
@@ -2788,6 +3006,7 @@
 				013AFC7E2941BBFE004469E1 /* VideoCacheHandler.swift in Sources */,
 				01C23FC8293083E80072861D /* HTTPMethod.swift in Sources */,
 				0123AF5E2966A3C70016A1D9 /* CustomRefreshControl.swift in Sources */,
+				01FC273C29F94F6300288980 /* UIButtonExtension.swift in Sources */,
 				01C23FB3293083E80072861D /* URLHelper.swift in Sources */,
 				01C23FD5293083E80072861D /* EventMonitor.swift in Sources */,
 				01C23FD4293083E80072861D /* HTTPHeaders.swift in Sources */,
@@ -2797,8 +3016,10 @@
 				01C240F32930CFDD0072861D /* SDAssociatedObject.m in Sources */,
 				0163B79D2946FCF300F203AA /* EditProfileVideoVC.swift in Sources */,
 				7D64FAA2292BB913009F2754 /* UserHeaderReusableView.swift in Sources */,
+				016DA5A229F8FC54004C3D94 /* MeetingVC.swift in Sources */,
 				01C240E42930CFDD0072861D /* UIView+WebCacheOperation.m in Sources */,
 				018367FA291B79320017193A /* SceneDelegate.swift in Sources */,
+				016DA59E29F7EE35004C3D94 /* RoomListModel.swift in Sources */,
 				01C23F7E292F8DA50072861D /* ToastManager.swift in Sources */,
 				7DEB625329266A8800DA43EC /* OnboardingView.swift in Sources */,
 				01C240F12930CFDD0072861D /* SDDisplayLink.m in Sources */,
@@ -2814,7 +3035,9 @@
 				0163B7AB294876A200F203AA /* ReportBtnPopUp.swift in Sources */,
 				7DEB62342926688500DA43EC /* IQUIView+IQKeyboardToolbar.swift in Sources */,
 				01A1ED2D294342550095A125 /* YiCropCommand.swift in Sources */,
+				016DA59629F7D894004C3D94 /* CreateRoomVC.swift in Sources */,
 				01C24104293218B90072861D /* CreatePasswordVC.swift in Sources */,
+				016DA59129F7C598004C3D94 /* PublicRoomVC.swift in Sources */,
 				01C23FBF293083E80072861D /* DispatchQueue+Alamofire.swift in Sources */,
 				7D64FA69292B8682009F2754 /* WithdrawalsCell.swift in Sources */,
 				01C240D02930CFDD0072861D /* SDAnimatedImageRep.m in Sources */,
@@ -2852,6 +3075,7 @@
 				0123AF57296300470016A1D9 /* SendVideoCell.swift in Sources */,
 				01C240EE2930CFDD0072861D /* SDInternalMacros.m in Sources */,
 				01719E57297A798900929EDD /* VideoAnalyticsCell.swift in Sources */,
+				016DA59B29F7DBC6004C3D94 /* SelectedUserCell.swift in Sources */,
 				01C23FB6293083E80072861D /* MultipartFormData.swift in Sources */,
 				01C240B22930CFDD0072861D /* SDImageCoder.m in Sources */,
 				01C240B72930CFDD0072861D /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -3045,8 +3269,8 @@
 				CODE_SIGN_ENTITLEMENTS = ScriptTube/ScriptTube.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_TEAM = 72G5W4M267;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9A56D6QNBL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScriptTube/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Raaise App";
@@ -3065,7 +3289,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.5;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -Xcc -Wno-error=non-modular-include-in-framework-module -no-verify-emitted-module-interface";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raaise.ios;
 				PRODUCT_NAME = "Raaise App";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3085,8 +3310,8 @@
 				CODE_SIGN_ENTITLEMENTS = ScriptTube/ScriptTube.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
-				DEVELOPMENT_TEAM = 72G5W4M267;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9A56D6QNBL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScriptTube/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Raaise App";
@@ -3105,7 +3330,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.5;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -Xcc -Wno-error=non-modular-include-in-framework-module -no-verify-emitted-module-interface";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raaise.ios;
 				PRODUCT_NAME = "Raaise App";
 				PROVISIONING_PROFILE_SPECIFIER = "";

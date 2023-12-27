@@ -94,7 +94,9 @@ class AudioVideoMerger{
             let adtime = CGFloat(CMTimeGetSeconds(audioTime))
             let layer = self.createVideoLayer(forWatermark: false)
             let videoEditor = YiVideoEditor(videoURL: url!)
-            videoEditor.rotate(rotateDegree: .rotateDegree90)
+            if !pickedVideo{
+                videoEditor.rotate(rotateDegree: .rotateDegree90)
+            }
             videoEditor.addLayer(layer: layer)
             videoEditor.addAudio(asset: audioAsset, startingAt: 0, trackDuration: vdtime)
             videoEditor.export(exportURL: exportUrl) { [weak self] (session) in

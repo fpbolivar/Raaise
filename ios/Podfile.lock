@@ -105,11 +105,13 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.1.1)
+  - VideoSDKRTC (2.0.5)
 
 DEPENDENCIES:
   - Firebase/Core
   - FirebaseMessaging
   - GoogleSignIn
+  - VideoSDKRTC
 
 SPEC REPOS:
   trunk:
@@ -128,6 +130,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - nanopb
     - PromisesObjC
+    - VideoSDKRTC
 
 SPEC CHECKSUMS:
   AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
@@ -145,7 +148,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  VideoSDKRTC: a29cafb0415fc2593ead6707e113fae8643573bd
 
-PODFILE CHECKSUM: 4eb1116190a50140afef50239734c59c66bab859
+PODFILE CHECKSUM: b2d8cf4fffc4716678e6470297986464f080a7da
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.14.3

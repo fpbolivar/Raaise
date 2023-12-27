@@ -32,6 +32,7 @@ class UserProfileData{
     var dob = ""
     var ssnNumber = ""
     var accountHolderLastName = ""
+    var invitePrivacyControl = ""
     var unReadNotificationCount = 0
     var follow = false
     var isDeleted = true
@@ -45,6 +46,7 @@ class UserProfileData{
         self.follow = data[ApiKeys.follow.rawValue].boolValue
         self.id = data[ApiKeys.id.rawValue].stringValue
         self.userName = data[ApiKeys.userName.rawValue].stringValue
+        self.invitePrivacyControl = data[ApiKeys.invitePrivacyControl.rawValue].stringValue
         self.name = data[ApiKeys.name.rawValue].stringValue
         self.email = data[ApiKeys.email.rawValue].stringValue
         self.phoneNumber = data[ApiKeys.phoneNumber.rawValue].stringValue
@@ -75,6 +77,7 @@ class UserProfileData{
 enum ApiKeys:String{
     case id = "_id"
     case dob = "dob"
+    case invitePrivacyControl = "invitePrivacyControl"
     case ssnNumber = "SNNNumber"
     case accountHolderlastName = "accountHolderLastName"
     case name = "name"

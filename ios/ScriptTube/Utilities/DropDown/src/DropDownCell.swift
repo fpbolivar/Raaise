@@ -10,7 +10,6 @@ open class DropDownCell: UITableViewCell {
 		
 	//UI
 	@IBOutlet open weak var optionLabel: UILabel!
-	
 	var selectedBackgroundColor: UIColor?
     var highlightTextColor: UIColor?
     var normalTextColor: UIColor?
@@ -23,7 +22,7 @@ extension DropDownCell {
 	
 	override open func awakeFromNib() {
 		super.awakeFromNib()
-		
+        
 		//backgroundColor = .clear
 	}
 	

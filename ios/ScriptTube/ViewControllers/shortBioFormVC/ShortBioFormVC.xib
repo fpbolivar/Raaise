@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShortBioFormVC" customModule="ScriptTube" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShortBioFormVC" customModule="Raaise_App" customModuleProvider="target">
             <connections>
                 <outlet property="bioTF" destination="lcS-cU-s5d" id="h9H-h4-1NQ"/>
                 <outlet property="descriptionLbl" destination="TiK-EB-bAt" id="seg-sY-vgs"/>
@@ -29,7 +29,7 @@
                     <rect key="frame" x="0.0" y="48" width="414" height="848"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="rrL-Pn-y3f">
-                            <rect key="frame" x="20" y="0.0" width="374" height="281.5"/>
+                            <rect key="frame" x="20" y="0.0" width="374" height="282"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYV-AM-gOS">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
@@ -38,19 +38,19 @@
                                         <constraint firstAttribute="height" constant="70" id="q1J-iw-B1a"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A short bio which described you and help the other users to check you opinions." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiK-EB-bAt" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="80" width="374" height="31.5"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A short bio which described you and help the other users to check you opinions." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiK-EB-bAt" customClass="ActiveLabel" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="80" width="374" height="32"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" name="lightGray"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBS-Vf-Viv">
-                                    <rect key="frame" x="0.0" y="121.5" width="374" height="75"/>
+                                    <rect key="frame" x="0.0" y="122" width="374" height="75"/>
                                     <subviews>
-                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OHy-Ot-JUt" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OHy-Ot-JUt" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="48"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcS-cU-s5d" customClass="CustomTextView" customModule="ScriptTube" customModuleProvider="target">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcS-cU-s5d" customClass="CustomTextView" customModule="Raaise_App" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="48"/>
                                                     <color key="backgroundColor" name="TFcolor"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -106,14 +106,14 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g1c-pB-P2Y">
-                                    <rect key="frame" x="0.0" y="206.5" width="374" height="10"/>
+                                    <rect key="frame" x="0.0" y="207" width="374" height="10"/>
                                     <color key="backgroundColor" name="BackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="10" id="OeT-ly-MtG"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jI5-Pp-qJA" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="226.5" width="374" height="44"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jI5-Pp-qJA" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="227" width="374" height="44"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGF-4t-o8b">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
@@ -148,7 +148,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpd-2w-Jem">
-                                    <rect key="frame" x="0.0" y="280.5" width="374" height="1"/>
+                                    <rect key="frame" x="0.0" y="281" width="374" height="1"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="mgH-o4-Q41"/>
@@ -179,7 +179,7 @@
     </objects>
     <designables>
         <designable name="TiK-EB-bAt">
-            <size key="intrinsicContentSize" width="485.5" height="16"/>
+            <size key="intrinsicContentSize" width="486" height="16"/>
         </designable>
     </designables>
     <resources>

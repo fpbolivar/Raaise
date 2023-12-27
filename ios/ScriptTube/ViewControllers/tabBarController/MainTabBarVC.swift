@@ -33,7 +33,7 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
         delegate = self
         homeViewController = HomeVC2()
         homeNavigationController = UINavigationController(rootViewController: homeViewController)
-        discoverViewController = UINavigationController(rootViewController:SearchVC())//
+        discoverViewController = UINavigationController(rootViewController:SearchVC())//PublicRoomVC
         mediaViewController = AddMediaVC()
         inboxViewController = UINavigationController(rootViewController:InboxVC()) //
         profileViewController = UINavigationController(rootViewController:ProfileVC())// 
@@ -108,7 +108,8 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
 extension MainTabBarVC:CustomVideoPostedDelegate{
     func videoPosted(status:UploadStatus) {
         if status == .start{
-            ToastManager.successToast(delegate: self, msg: "Your Video is uploading, DO NOT close the App")
+            //ToastManager.successToast(delegate: self, msg: "Your Video is uploading, DO NOT close the App")
+            self.selectedIndex = 4
         }else{
             ToastManager.successToast(delegate: self, msg: "Video Posted Successfully.")
         }

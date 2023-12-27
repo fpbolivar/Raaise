@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReplyTblCell" rowHeight="83" id="KGk-i7-Jjw" customClass="ReplyTblCell" customModule="ScriptTube" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReplyTblCell" rowHeight="83" id="KGk-i7-Jjw" customClass="ReplyTblCell" customModule="Raaise_App" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="83"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -43,14 +43,27 @@
                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wac-Su-MNW">
+                        <rect key="frame" x="300" y="10" width="10" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="nAt-dc-Zvi"/>
+                            <constraint firstAttribute="height" constant="15" id="vH0-Az-KzB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="ic_ham_menu_2"/>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="7cf-S0-oVm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="11b-0e-Fza"/>
+                    <constraint firstItem="Wac-Su-MNW" firstAttribute="centerY" secondItem="IMF-hl-fxK" secondAttribute="centerY" id="4cZ-o4-j35"/>
                     <constraint firstItem="Awt-D2-FKQ" firstAttribute="leading" secondItem="7cf-S0-oVm" secondAttribute="trailing" constant="13" id="DJV-p6-SsB"/>
                     <constraint firstItem="7cf-S0-oVm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="50" id="TyO-Eu-wgD"/>
                     <constraint firstAttribute="trailing" secondItem="Awt-D2-FKQ" secondAttribute="trailing" constant="20" id="U5a-2C-57c"/>
                     <constraint firstItem="Awt-D2-FKQ" firstAttribute="top" secondItem="IMF-hl-fxK" secondAttribute="bottom" constant="10" id="YtH-yB-W3D"/>
+                    <constraint firstAttribute="trailing" secondItem="Wac-Su-MNW" secondAttribute="trailing" constant="10" id="kbV-Wr-erh"/>
                     <constraint firstItem="IMF-hl-fxK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="m88-PU-q9G"/>
                     <constraint firstItem="Pee-nY-IVV" firstAttribute="leading" secondItem="IMF-hl-fxK" secondAttribute="trailing" constant="5" id="n50-MY-niH"/>
                     <constraint firstAttribute="bottom" secondItem="Awt-D2-FKQ" secondAttribute="bottom" constant="10" id="rCO-B3-K6S"/>
@@ -63,6 +76,7 @@
             <connections>
                 <outlet property="commentLbl" destination="Awt-D2-FKQ" id="vI8-ie-ARn"/>
                 <outlet property="nameLbl" destination="IMF-hl-fxK" id="2iS-og-YCQ"/>
+                <outlet property="optionBtn" destination="Wac-Su-MNW" id="ixL-XD-abY"/>
                 <outlet property="profileImage" destination="7cf-S0-oVm" id="Qx4-JE-3TS"/>
                 <outlet property="timeLbl" destination="Pee-nY-IVV" id="JN0-Jg-pd0"/>
             </connections>
@@ -70,6 +84,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="ic_ham_menu_2" width="800" height="800"/>
         <image name="person.circle.fill" catalog="system" width="128" height="123"/>
     </resources>
 </document>

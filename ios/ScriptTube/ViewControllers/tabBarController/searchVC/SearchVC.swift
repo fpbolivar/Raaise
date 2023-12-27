@@ -14,6 +14,8 @@ class SearchVC: UIViewController {
     @IBOutlet weak var noResultLbl:UILabel!
     var result = SearchResultModel()
     var searchParam:[String:String]!
+    var hideTabbar = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
@@ -22,11 +24,19 @@ class SearchVC: UIViewController {
         searchTf.delegate = self
         
         tableView.register(UINib(nibName: SearchCell.identifier, bundle: nil), forCellReuseIdentifier: SearchCell.identifier)
+    
+        if hideTabbar{
+//            addNavBar(headingText: "Public Rooms to join", redText: "",type: .smallNavBarOnlyBack)
+            backImage.isHidden = true
+        }else{
+//            addNavBar(headingText: "Public Rooms to join", redText: "",type: .onlyTopTitle)
+            backImage.isHidden = true
+        }
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = hideTabbar
     }
     //MARK: - Api method
     func searchApi(withText text:[String:String],completion:@escaping()->Void){

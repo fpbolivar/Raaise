@@ -8,18 +8,30 @@
 import UIKit
 
 class ProfileVC: UIViewController {
+    @IBOutlet weak var progress: CircleProgress!
     @IBOutlet weak var uploadView: CardView!
     @IBOutlet weak var  collectionView:UICollectionView!
+    var refreshControl = UIRefreshControl()
+    var customView: CustomRefreshControl!
     var userVideoData: [String] = []
     var userVideos = [Post]()
     var needLoader = true
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
+        progress.layer.cornerRadius = progress.frame.height / 2
+        progress.forgroundColor = .white
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("UPLPADSTATUS",VideoUploadStatus.isUploadingVar)
         self.uploadView.isHidden = !VideoUploadStatus.isUploadingVar
+        VideoUploadStatus.progress = { prog in
+           
+            self.progress.progress = CGFloat(Double(prog)/100.00)
+            print("UPLPADSTATUS",VideoUploadStatus.isUploadingVar,prog)
+        }
         VideoUploadStatus.isUploading = { isUploading in
             self.uploadView.isHidden = !isUploading
         }
@@ -30,6 +42,36 @@ class ProfileVC: UIViewController {
         getProfileApi(needLoader: needLoader)
         needLoader = false
         self.tabBarController?.tabBar.isHidden = false
+    }
+    func addRefreshControl() {
+
+        guard let customView = Bundle.main.loadNibNamed("RefreshContents", owner: nil, options: nil) else {
+            return
+        }
+
+        guard let refreshView = customView[0] as? CustomRefreshControl else {
+            return
+        }
+
+
+        refreshView.frame = refreshControl.frame
+        self.customView = refreshView
+        refreshControl.addSubview(refreshView)
+
+        refreshControl.tintColor = UIColor.clear
+        refreshControl.backgroundColor = UIColor.clear
+
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            collectionView.refreshControl = refreshControl
+        } else {
+            collectionView.addSubview(refreshControl)
+        }
+    }
+    @objc func refresh(){
+        refreshControl.beginRefreshing()
+        self.customView.spinner.startAnimating()
+        getProfileApi(needLoader: false)
     }
     //MARK: - Api Methods
     func getProfileVideos(needloader:Bool,completion:@escaping()->Void){
@@ -43,6 +85,10 @@ class ProfileVC: UIViewController {
             }
             needloader ? self.clearAllNotice() : print("NOLOADER")
             completion()
+            guard let _ = self.customView else{return}
+            self.refreshControl.endRefreshing()
+            self.customView.spinner.stopAnimating()
+            
         }
     }
     func getProfileApi(needLoader:Bool){
@@ -60,6 +106,7 @@ class ProfileVC: UIViewController {
         collectionView.register(UINib(nibName:ProfileSliderView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProfileSliderView.identifier)
         collectionView.register(UINib(nibName:UserHeaderReusableView.identifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserHeaderReusableView.identifier)
         collectionView.register(UINib(nibName: ProfileVideoItemCell.identifier, bundle: nil), forCellWithReuseIdentifier: ProfileVideoItemCell.identifier)
+        self.addRefreshControl()
     }
     func delegateCollectioView(){
         collectionView.delegate = self

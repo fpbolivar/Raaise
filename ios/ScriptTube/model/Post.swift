@@ -25,6 +25,7 @@ class Post{
     var isDonation = false
     var videoViewCount = ""
     var isReported = false
+    var createdAt = ""
     init(){
         
     }
@@ -48,6 +49,7 @@ class Post{
         }else{
             print("sahcbsjhcbsjhcbh22")
         }
+        self.createdAt = data[PostKeys.createdAt.rawValue].stringValue
         self.isViewed = data[PostKeys.isViewed.rawValue].boolValue
         self.isDonation = data[PostKeys.isDonation.rawValue].boolValue
         self.isReported = data[PostKeys.isReported.rawValue].boolValue
@@ -109,4 +111,5 @@ enum PostKeys:String{
     case isReported = "isReported"
     case donationUsers = "donationUsers"
     case getVideo = "getVideo"
+    case createdAt = "createdAt"
 }

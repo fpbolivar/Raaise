@@ -330,6 +330,9 @@ public final class DropDown: UIView {
 	@objc public dynamic var textColor = DPDConstant.UI.TextColor {
 		didSet { reloadAllComponents() }
 	}
+    @objc public dynamic var align = DPDConstant.UI.Align {
+        didSet { reloadAllComponents() }
+    }
 
     /**
      The color of the text for selected cells of the drop down.
@@ -1069,7 +1072,7 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
 		if index >= 0 && index < localizationKeysDataSource.count {
 			cell.accessibilityIdentifier = localizationKeysDataSource[index]
 		}
-		
+        cell.optionLabel.textAlignment = align
 		cell.optionLabel.textColor = textColor
 		cell.optionLabel.font = textFont
 		cell.selectedBackgroundColor = selectionBackgroundColor

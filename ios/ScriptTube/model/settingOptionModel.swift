@@ -42,7 +42,7 @@ class SettingOptionManager{
 
     func getList()->[SettingOptionModal]{
 
-        let myprofileSection = SettingOptionModal(title: "MY ACCOUNT", items: [SettingOptionItems(title: "Personal Information", subtitle: ""),SettingOptionItems(title: "Username", subtitle: ""),SettingOptionItems(title: "Short Bio", subtitle: ""),SettingOptionItems(title: "Change Password", subtitle: "")], type: .profile)
+        let myprofileSection = SettingOptionModal(title: "MY ACCOUNT", items: [SettingOptionItems(title: "Personal Information", subtitle: ""),SettingOptionItems(title: "Username", subtitle: ""),SettingOptionItems(title: "Short Bio", subtitle: ""),SettingOptionItems(title: "Change Password", subtitle: ""),SettingOptionItems(title: "Privacy Control", subtitle: "")], type: .profile)
 
 
         let notificationSection = SettingOptionModal(title: "NOTIFICATIONS", items: [SettingOptionItems(title: "Push Notifications", subtitle: "",type: .switchBtn),SettingOptionItems(title: "Email Notifications", subtitle: "")], type: .switchBtn)
