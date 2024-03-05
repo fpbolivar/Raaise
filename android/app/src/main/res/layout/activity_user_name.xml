@@ -63,14 +63,14 @@
             android:background="@drawable/curved_dark_grey_background"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="@"
-                android:textColor="#BFBFC1"
-                android:textSize="14sp" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:fontFamily="@font/noto_sans"-->
+<!--                android:text="@"-->
+<!--                android:textColor="#BFBFC1"-->
+<!--                android:textSize="14sp" />-->
 
             <EditText
                 android:id="@+id/UsernameEditTextInChangeUserName"
@@ -78,6 +78,10 @@
                 android:layout_height="50dp"
                 android:background="@drawable/curved_dark_grey_background"
                 android:hint="Username"
+                android:drawableLeft="@drawable/username_icon"
+                android:drawableTint="@color/icon_white"
+                android:drawablePadding="@dimen/_5sdp"
+                android:paddingHorizontal="20dp"
                 android:inputType="textEmailAddress"
                 android:paddingEnd="20dp"
                 android:textColor="@color/light_grey"

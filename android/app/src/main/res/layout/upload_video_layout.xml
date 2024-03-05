@@ -5,44 +5,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    android:backgroundTint="@color/black"
+    android:backgroundTint="@color/WhiteColor"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
-        android:backgroundTint="@color/black">
+        android:background="@color/WhiteColor"
+        android:backgroundTint="@color/WhiteColor">
 
-        <LinearLayout
-            android:id="@+id/heading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bottom_dialog_dark"
-            android:backgroundTint="@color/black"
-            android:orientation="vertical"
+        <RelativeLayout
+            android:id="@+id/postRelative"
+            android:layout_width="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:padding="8dp"
-                android:text="Upload Video"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/backBtn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
             android:layout_margin="20dp"
-            android:src="@drawable/back_arrow_white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/heading" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/backBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/back_arrow_white" />
+
+            <LinearLayout
+                android:id="@+id/heading"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_dialog_dark"
+                android:backgroundTint="@color/WhiteColor"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="8dp"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="Add Details"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:background="#66AF00FD"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintLeft_toLeftOf="@id/postRelative"
+            app:layout_constraintTop_toBottomOf="@id/postRelative"
+            android:layout_height=".5dp"/>
+
 
         <!--        by default top = 17dp-->
         <TextView
@@ -53,18 +73,19 @@
             android:fontFamily="@font/noto_sans"
             android:text="@string/new_post"
             android:textColor="@color/white"
+            android:visibility="gone"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="@id/backBtn"
-            app:layout_constraintTop_toBottomOf="@id/backBtn" />
+            app:layout_constraintLeft_toLeftOf="@id/postRelative"
+            app:layout_constraintTop_toBottomOf="@id/postRelative" />
 
         <!--        by default top = 20dp-->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="20dp"
-            app:cardCornerRadius="6dp"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_marginTop="40dp"
+            app:cardCornerRadius="10dp"
             app:layout_constraintLeft_toLeftOf="@id/new_post_heading"
             app:layout_constraintTop_toBottomOf="@id/new_post_heading"
             app:strokeColor="@color/white"
@@ -88,10 +109,9 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:background="@drawable/curved_dark_grey_background"
-            android:backgroundTint="#414141"
             android:fontFamily="@font/noto_sans"
             android:gravity="start"
-            android:hint="Add Description"
+            android:hint="Write caption"
             android:padding="12dp"
             android:textColor="@color/white"
             android:textColorHint="@color/light_grey"
@@ -106,13 +126,40 @@
             android:id="@+id/layout_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
             app:layout_constraintTop_toBottomOf="@id/desc_edit_text">
+
+            <TextView
+                android:id="@+id/chooseTags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:fontFamily="@font/noto_sans"
+                android:textColor="@color/pink_color"
+                android:text="Choose tags for post"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RvforCategory"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/chooseTags"
+                android:layout_height="wrap_content"/>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/chooseTags"
+                android:layout_height="wrap_content"/>
 
             <Spinner
                 android:id="@+id/select_category_spin"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:visibility="gone"
                 android:layout_marginHorizontal="15sp"
                 android:background="@drawable/upload_video_spinner_bg"
                 android:paddingLeft="15dp"
@@ -121,30 +168,21 @@
 
         </RelativeLayout>
 
-        <View
-            android:id="@id/view"
-            android:layout_width="0dp"
-            android:layout_height="1.5dp"
-            android:layout_marginTop="16dp"
-            android:background="#121212"
-            app:layout_constraintLeft_toLeftOf="@id/cardView"
-            app:layout_constraintRight_toRightOf="@id/desc_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/layout_spinner" />
 
         <!--        by default top = 10dp-->
         <TextView
             android:id="@+id/donationHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/noto_sans"
             android:padding="6dp"
             android:text="@string/do_you_want_donation"
-            android:textColor="#9A9C9F"
+            android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="@id/view"
-            app:layout_constraintTop_toBottomOf="@id/view" />
+            app:layout_constraintLeft_toLeftOf="@id/layout_spinner"
+            app:layout_constraintTop_toBottomOf="@id/layout_spinner" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/donationToggleBtn"
@@ -152,7 +190,7 @@
             android:layout_height="20dp"
             android:src="@drawable/setting_arrow"
             android:thumb="@drawable/thumb_grey"
-
+            android:layout_marginRight="20dp"
             app:layout_constraintBottom_toBottomOf="@id/donationHeading"
             app:layout_constraintRight_toRightOf="@id/desc_edit_text"
             app:layout_constraintTop_toTopOf="@id/donationHeading"
@@ -205,7 +243,7 @@
                     android:fontFamily="@font/noto_sans"
                     android:padding="6dp"
                     android:text="Enter Amount"
-                    android:textColor="#9A9C9F"
+                    android:textColor="@color/white"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="@id/amount_rv"
@@ -218,11 +256,11 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@drawable/curved_grey_background"
-                    android:backgroundTint="#414141"
-                    android:drawableStart="@drawable/dollar"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:background="@drawable/curved_dark_grey_background"
+                    android:drawableStart="@drawable/dollar_icon1"
                     android:drawablePadding="6dp"
-                    android:drawableTint="@color/white"
+                    android:drawableTint="@color/icon_white"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center_vertical"
                     android:hint="Enter your support amount"
@@ -241,13 +279,13 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.cardview.widget.CardView
+        <RelativeLayout
             android:id="@+id/submitVideoBtn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/LogoGreyColor"
+            android:background="@drawable/button_shape_login"
             app:cardCornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -260,12 +298,12 @@
                 android:layout_marginVertical="8dp"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
-                android:text="Submit"
+                android:text="Upload Video"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-        </androidx.cardview.widget.CardView>
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

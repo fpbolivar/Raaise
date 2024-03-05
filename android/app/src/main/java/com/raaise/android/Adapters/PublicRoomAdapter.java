@@ -48,6 +48,12 @@ public class PublicRoomAdapter extends RecyclerView.Adapter<PublicRoomAdapter.Vi
         holder.roomNameTV.setText(data.title);
         holder.roomDescTV.setText(data.description);
 
+        if (data.isOnline.equals("0")){
+            holder.online.setVisibility(View.GONE);
+        } else {
+            holder.online.setVisibility(View.VISIBLE);
+        }
+
         holder.itemView.setOnClickListener(view -> mListener.RoomSelected(data));
     }
 
@@ -61,9 +67,11 @@ public class PublicRoomAdapter extends RecyclerView.Adapter<PublicRoomAdapter.Vi
         ImageView roomLogoIV;
         TextView roomNameTV;
         TextView roomDescTV;
+        ImageView online;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            online = itemView.findViewById(R.id.online_status);
             roomLogoIV = itemView.findViewById(R.id.public_room_logo);
             roomNameTV = itemView.findViewById(R.id.public_room_tv);
             roomDescTV = itemView.findViewById(R.id.public_room_desc_tv);

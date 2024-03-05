@@ -25,39 +25,34 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <live.videosdk.rtc.android.VideoView
-                    android:id="@+id/user_video_view"
+                
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    android:orientation="horizontal">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvParticipants"
-                    android:layout_width="160dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="22dp"
-                    tools:listitem="@layout/item_remote_peer"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    <live.videosdk.rtc.android.VideoView
+                        android:id="@+id/user_video_view"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="match_parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/live_chat_rv"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintHeight_default="wrap"
-                    app:layout_constraintHeight_max="280dp"
-                    android:background="@null"
-                    app:stackFromEnd="true"
-                    android:layout_marginBottom="6dp"
-                    tools:listitem="@layout/live_chat_item"
-                    app:layout_constraintBottom_toBottomOf="@id/user_video_view"
-                    app:layout_constraintLeft_toLeftOf="@id/user_video_view"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvParticipants"
+                        android:visibility="gone"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        tools:listitem="@layout/item_remote_peer"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -71,8 +66,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5"
-            android:visibility="gone"
             android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvParticipants2"
+                android:layout_marginTop="4dp"
+                tools:listitem="@layout/item_remote_peer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="75dp"
@@ -84,11 +85,16 @@
                 android:backgroundTint="@color/DarkGrey"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvParticipants2"
-                android:layout_marginTop="4dp"
-                tools:listitem="@layout/item_remote_peer"
+                android:id="@+id/live_chat_rv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layout_constraintHeight_default="wrap"
+                app:layout_constraintHeight_max="280dp"
+                android:background="@null"
+                app:stackFromEnd="true"
+                android:layout_marginBottom="6dp"
+                tools:listitem="@layout/live_chat_item"/>
 
         </LinearLayout>
 
@@ -109,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:background="@color/Green"
+            android:background="@color/white"
             android:orientation="horizontal">
 
             <ImageView
@@ -117,6 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="8dp"
+                app:tint="@color/black"
                 android:src="@drawable/mic_on"/>
         </LinearLayout>
 
@@ -139,9 +146,10 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/call_img"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:src="@drawable/ic_call_end"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -160,7 +168,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:background="@color/Green"
+            android:background="@color/white"
             android:orientation="horizontal">
 
             <ImageView
@@ -168,11 +176,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="10dp"
+                app:tint="@color/black"
                 android:src="@drawable/camera_on"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/chat_container"

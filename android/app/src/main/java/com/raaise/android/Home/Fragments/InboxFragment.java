@@ -25,6 +25,7 @@ import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
+import com.raaise.android.Utilities.textPaint.TextPaint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +116,7 @@ public class InboxFragment extends Fragment implements NotificationAdapter.notif
     private void Initialization() {
         list = new ArrayList<>();
         markAllAsReadBtn = v.findViewById(R.id.mark_all_tv);
+        TextPaint.getGradientColor(markAllAsReadBtn);
         SwipeRefreshLayout = v.findViewById(R.id.SwipeRefreshLayout);
         NotificationRV = v.findViewById(R.id.NotificationRV);
         BackInNotification = v.findViewById(R.id.BackInNotification);

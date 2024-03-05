@@ -1,5 +1,6 @@
 package com.raaise.android.ApiManager.ApiModels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GlobalSearchModel {
@@ -34,7 +35,6 @@ public class GlobalSearchModel {
         public List<Users> users;
         public List<Posts> posts;
         public List<Audios> audios;
-
         public List<Users> getUsers() {
             return users;
         }
@@ -255,6 +255,15 @@ public class GlobalSearchModel {
             public boolean isLiked;
             public boolean isFollow;
             public boolean isViewed;
+            public ArrayList<GetGlobalVideoModel.DonationUsers> donationUsers;
+
+            public ArrayList<GetGlobalVideoModel.DonationUsers> getDonationUsers() {
+                return donationUsers;
+            }
+
+            public void setDonationUsers(ArrayList<GetGlobalVideoModel.DonationUsers> donationUsers) {
+                this.donationUsers = donationUsers;
+            }
 
             public AudioId getAudioId() {
                 return audioId;

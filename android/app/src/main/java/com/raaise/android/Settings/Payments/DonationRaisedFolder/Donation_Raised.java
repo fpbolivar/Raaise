@@ -1,5 +1,6 @@
 package com.raaise.android.Settings.Payments.DonationRaisedFolder;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -18,17 +19,19 @@ import com.raaise.android.ApiManager.ServerError;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
+import com.raaise.android.Utilities.textPaint.TextPaint;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Donation_Raised extends AppCompatActivity {
-    TextView TotalDonatedAmountText, TotalRaisedAmountText, TotalWithdrawalAmountText;
+    TextView TotalDonatedAmountText, TotalRaisedAmountText, TotalWithdrawalAmountText,overviewText,videosText;
     ApiManager apiManager = App.getApiManager();
     DonationRaisedAdapter adapter;
     List<UserDonationHistoryModel.Data.UserVideo> list;
     RecyclerView DonationHistoryRecyclerView;
     ImageView BackInDonationRaised;
+    private boolean android10 = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class Donation_Raised extends AppCompatActivity {
         setContentView(R.layout.activity_donation_raised2);
         Initialization();
         ClickListeners();
-        HitApi();
+//        HitApi();
     }
 
     private void HitApi() {
@@ -74,15 +77,28 @@ public class Donation_Raised extends AppCompatActivity {
         TotalDonatedAmountText = findViewById(R.id.TotalDonatedAmountText);
         TotalRaisedAmountText = findViewById(R.id.TotalRaisedAmountText);
         TotalWithdrawalAmountText = findViewById(R.id.TotalWithdrawalAmountText);
+        overviewText = findViewById(R.id.overView);
+        videosText = findViewById(R.id.video);
+        TextPaint.getGradientColor(overviewText);
+        TextPaint.getGradientColor(videosText);
+
+
         list = new ArrayList<>();
         adapter = new DonationRaisedAdapter(Donation_Raised.this, list);
         DonationHistoryRecyclerView.setAdapter(adapter);
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        HitApi();
-        Log.i("claimAmount", "onRestart: Called");
+    protected void onResume() {
+        super.onResume();
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+            while (android10){
+                HitApi();
+                android10 = false;
+            }
+        } else {
+            HitApi();
+        }
+
     }
 }

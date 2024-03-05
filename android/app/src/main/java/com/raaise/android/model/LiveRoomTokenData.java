@@ -11,8 +11,18 @@ public class LiveRoomTokenData {
     public String logo;
     public HostID hostId;
     public ArrayList<MemberIds> memberIds;
+    public String scheduleType;
+    public String scheduleDateTime;
     public String roomId;
     public String token;
+
+    public String getScheduleType() {
+        return scheduleType;
+    }
+
+    public String getScheduleDateTime() {
+        return scheduleDateTime;
+    }
 
     public String get_id() {
         return _id;

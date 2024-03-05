@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ScaleGestureDetector;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -42,7 +43,10 @@ import androidx.fragment.app.Fragment;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.raaise.android.Home.MainHome.Home;
 import com.raaise.android.R;
+import com.raaise.android.Select_AudioActivity;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -53,19 +57,20 @@ public class CameraFragment extends Fragment {
     private Preview preview;
     private Camera camera;
     public boolean isRecording = false;
-    ImageView flashBtn;
+    ImageView flashBtn,flashBtn1,cameraFlipBtn;
     private CameraControl cameraControl;
     boolean flashEnabled = false;
     View v;
     PreviewView previewView;
     ImageView GallerySelected;
-    ImageView CameraButtonOuterShell;
+    ImageView CameraButtonOuterShell,CameraButtonOuterShell1,imageClose;
     RelativeLayout CameraClickButton;
     TextView Timer;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ImageCapture imageCapture;
     private VideoCapture videoCapture;
     int PERMISSION_ALL = 1;
+    RelativeLayout relativeEye;
     String[] PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -73,17 +78,20 @@ public class CameraFragment extends Fragment {
             android.Manifest.permission.CAMERA
     };
     ProcessCameraProvider cameraProvider;
+    int cameraFacing=CameraSelector.LENS_FACING_BACK;
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_camera, container, false);
+        ((Home) requireActivity()).videoProgressBar.setVisibility(View.GONE);
         Initialization();
         Log.i("Initialization", "onCreateView: " + (cameraProviderFuture == null));
         cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
 
 
         cameraProviderFuture.addListener(() -> {
+            Log.e("cameraProviderFuture","cameraProviderFuture");
             try {
                 cameraProvider = cameraProviderFuture.get();
                 startCameraX(cameraProvider);
@@ -96,14 +104,28 @@ public class CameraFragment extends Fragment {
         }, getExecuter());
 
         ClickListeners();
-        flashBtn.setOnClickListener(view -> {
+//        flashBtn.setOnClickListener(view -> {
+//            if (flashEnabled){
+//                flashEnabled = false;
+//                flashBtn.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.flash_off));
+//            } else {
+//                flashEnabled = true;
+//                flashBtn.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.flash_on));
+//            }
+//        });
+
+        flashBtn1.setOnClickListener(view -> {
             if (flashEnabled){
                 flashEnabled = false;
-                flashBtn.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.flash_off));
+                flashBtn1.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.flash_off));
             } else {
                 flashEnabled = true;
-                flashBtn.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.flash_on));
+                flashBtn1.setImageDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.flash_on));
             }
+        });
+
+        cameraFlipBtn.setOnClickListener(view -> {
+           flipCamera();
         });
 
         ScaleGestureDetector scaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.OnScaleGestureListener() {
@@ -142,6 +164,22 @@ public class CameraFragment extends Fragment {
         return v;
     }
 
+
+    private void flipCamera() {
+        if(cameraFacing==CameraSelector.LENS_FACING_BACK){
+            cameraFacing=CameraSelector.LENS_FACING_FRONT;
+        }else{
+            cameraFacing=CameraSelector.LENS_FACING_BACK;
+        }
+        try {
+            startCameraX(cameraProviderFuture.get());
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -172,7 +210,6 @@ public class CameraFragment extends Fragment {
         });
 
         CameraClickButton.setOnClickListener(view -> {
-
             if (!isRecording) {
 //                CameraButtonOuterShell.setColorFilter(ContextCompat.getColor(v.getContext(), R.color.WhiteColor), android.graphics.PorterDuff.Mode.SRC_IN);
                 try {
@@ -184,7 +221,7 @@ public class CameraFragment extends Fragment {
 
             } else {
                 GallerySelected.setVisibility(View.VISIBLE);
-                flashBtn.setVisibility(View.VISIBLE);
+                flashBtn1.setVisibility(View.VISIBLE);
                 Timer.setVisibility(View.GONE);
                 isRecording = false;
                 new Thread(new Runnable() {
@@ -266,46 +303,75 @@ public class CameraFragment extends Fragment {
     }
 
     private void Initialization() {
+        imageClose=v.findViewById(R.id.imageClose);
         GallerySelected = v.findViewById(R.id.GallerySelected);
+        CameraButtonOuterShell1=v.findViewById(R.id.CameraButtonOuterShell11);
         CameraButtonOuterShell = v.findViewById(R.id.CameraButtonOuterShell);
         CameraClickButton = v.findViewById(R.id.CameraClickButton);
         previewView = v.findViewById(R.id.PreviewVIew);
         flashBtn = v.findViewById(R.id.flash_button);
+        flashBtn1 = v.findViewById(R.id.flash_button1);
+        cameraFlipBtn= v.findViewById(R.id.flipCam_button);
+        relativeEye=v.findViewById(R.id.relativeEye);
+
+
         Timer = v.findViewById(R.id.Timer);
+        imageClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    ((Home) requireActivity()).bottomBar.setVisibility(View.VISIBLE);
+                    ((Home) requireActivity()).SelectHomeScreen();
+                } catch (Exception e){
+                    Log.e("PlusFragment", "handleBackButtonClicked: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        try {
+//            ((Home) requireActivity()).fragmentManagerHelper.replace(new HomeFragment(), false);
+//            ((Home) requireActivity()).bottomBar.setVisibility(View.VISIBLE);
+//            ((Home) requireActivity()).SelectHomeScreen();
+//        } catch (Exception e){
+//            Log.e("PlusFragment", "handleBackButtonClicked: " + e.getMessage());
+//        }
     }
 
     private Executor getExecuter() {
         return ContextCompat.getMainExecutor(requireContext());
     }
-
     @SuppressLint("RestrictedApi")
     private void startCameraX(ProcessCameraProvider cameraProvider) {
-        cameraProvider.unbindAll();
         cameraSelector = new CameraSelector.Builder()
-                    .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                    .requireLensFacing(cameraFacing)
                     .build();
 
-
-
         preview = new Preview.Builder().build();
-        preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
         imageCapture = new ImageCapture.Builder()
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .build();
 
-
         videoCapture = new VideoCapture.Builder()
+                .setTargetRotation(getActivity().getWindowManager().getDefaultDisplay().getRotation())
                 .setVideoFrameRate(15)
                 .build();
 
+        cameraProvider.unbindAll();
+
         camera = cameraProvider.bindToLifecycle(getActivity(), cameraSelector, preview, videoCapture);
+        preview.setSurfaceProvider(previewView.getSurfaceProvider());
         cameraControl = camera.getCameraControl();
     }
 
     @SuppressLint("RestrictedApi")
     @RequiresApi(api = Build.VERSION_CODES.P)
     private void recordVideo() {
+        Log.e("Null","NotNull"+videoCapture);
         if (videoCapture != null) {
 
             String videoName = "Raaise" + System.currentTimeMillis();
@@ -316,19 +382,12 @@ public class CameraFragment extends Fragment {
 
             try {
                 if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, 1002);
 
-                    return;
                 } else {
-
                     // Set background
+                    CameraButtonOuterShell1.setColorFilter(ContextCompat.getColor(v.getContext(), R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+
                     CameraButtonOuterShell.setColorFilter(ContextCompat.getColor(v.getContext(), R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
             if (flashEnabled){
                 cameraControl.enableTorch(true);
@@ -336,33 +395,32 @@ public class CameraFragment extends Fragment {
                     GallerySelected.setVisibility(View.GONE);
                     ShowTimer();
                     isRecording = true;
-                    flashBtn.setVisibility(View.GONE);
+                    relativeEye.setVisibility(View.GONE);
+                    imageClose.setVisibility(View.GONE);
                     videoCapture.startRecording(
                             new VideoCapture.OutputFileOptions.Builder(
                                     getActivity().getContentResolver(),
                                     MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                                     contentValues
                             ).build(),
+
                             getActivity().getMainExecutor(),
                             new VideoCapture.OnVideoSavedCallback() {
                                 @Override
                                 public void onVideoSaved(@NonNull VideoCapture.OutputFileResults outputFileResults) {
                                     Log.i("onVideoSaved", "onVideoSaved: " + outputFileResults.getSavedUri().toString());
-
                                     try {
+                                            getActivity().getSupportFragmentManager()
+                                                    .beginTransaction()
+                                                    .setReorderingAllowed(true)
+                                                    .replace(R.id.FragmentContainer, new PlusFragment(String.valueOf(outputFileResults.getSavedUri())), null)
+                                                    .commit();
 
-                                        getActivity().getSupportFragmentManager()
-                                                .beginTransaction()
-                                                .setReorderingAllowed(true)
-                                                .replace(R.id.FragmentContainer, new PlusFragment(String.valueOf(outputFileResults.getSavedUri())), null)
-                                                .commit();
                                     } catch (Exception e){
                                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                         Log.i("debugAudio", "onVideoSavedError: " + e.getMessage());
                                         }
-
                                 }
-
                                 @Override
                                 public void onError(int videoCaptureError, @NonNull String message, @Nullable Throwable cause) {
                                     Toast.makeText(getActivity(), "Error saving video: " + message, Toast.LENGTH_SHORT).show();
@@ -374,8 +432,6 @@ public class CameraFragment extends Fragment {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 

@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -47,6 +48,7 @@ import com.raaise.android.FragmentManagerHelper;
 import com.raaise.android.Home.Fragments.CameraFragment;
 import com.raaise.android.Home.Fragments.ChatListFragment;
 import com.raaise.android.Home.Fragments.HomeFragment;
+import com.raaise.android.Home.Fragments.JoinRoomFragment;
 import com.raaise.android.Home.Fragments.PlusFragment;
 import com.raaise.android.Home.Fragments.ProfileFragment;
 import com.raaise.android.Home.Fragments.SearchFragment;
@@ -56,7 +58,11 @@ import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
+import com.raaise.android.model.CurrentPrivacyResponse;
 import com.raaise.android.model.LoginPojo;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
+
 
 public class Home extends AppCompatActivity {
     public VideoView adapterVideoVIew;
@@ -83,10 +89,11 @@ public class Home extends AppCompatActivity {
     private static View view;
     private static View uploadCompleteProgress;
     private static Activity homeActivity;
+    public ProgressBar videoProgressBar;
+    private Socket socket;
 
     int PERMISSION_ALL = 1;
     String[] PERMISSIONS = {
-            Manifest.permission.BLUETOOTH,
             Manifest.permission.BLUETOOTH,
             Manifest.permission.BLUETOOTH_CONNECT,
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -151,6 +158,13 @@ public class Home extends AppCompatActivity {
         homeActivity = com.raaise.android.Home.MainHome.Home.this;
         getWindow().getAttributes().windowAnimations = R.anim.zoom_enter;
         setContentView(R.layout.activity_home);
+        App app = (App) getApplication();
+        socket = app.getSocket();
+        if (!socket.connected()){
+            socket.connect();
+        }
+        Log.i("userIDforChat", "onCreate: " + Prefs.GetUserID(com.raaise.android.Home.MainHome.Home.this));
+        socket.emit("onlineUsers", Prefs.GetUserID(com.raaise.android.Home.MainHome.Home.this));
         view = findViewById(R.id.upload_progress);
         uploadCompleteProgress = findViewById(R.id.upload_complete_progress);
         Log.i("authKey", "onCreate: " + Prefs.GetBearerToken(this));
@@ -164,6 +178,33 @@ public class Home extends AppCompatActivity {
         }).start();
         Prefs.SetExtra(getApplicationContext(), "", "OverSelectedMusicData");
 
+        getPrivacyControl();
+    }
+
+    private void getPrivacyControl() {
+        if (Prefs.getPrivacyPosition(com.raaise.android.Home.MainHome.Home.this) == -1){
+            apiManager.getCurrentPrivacyControl(Prefs.GetBearerToken(com.raaise.android.Home.MainHome.Home.this), new DataCallback<CurrentPrivacyResponse>() {
+                @Override
+                public void onSuccess(CurrentPrivacyResponse PrivacyResponse) {
+                    if (PrivacyResponse.privacyControl.equalsIgnoreCase("Following")){
+                        Prefs.setPrivacyPosition(com.raaise.android.Home.MainHome.Home.this, 0);
+                    } else if (PrivacyResponse.privacyControl.equalsIgnoreCase("Followers")){
+                        Prefs.setPrivacyPosition(com.raaise.android.Home.MainHome.Home.this, 1);
+                    } else if (PrivacyResponse.privacyControl.equalsIgnoreCase("Anyone")){
+                        Prefs.setPrivacyPosition(com.raaise.android.Home.MainHome.Home.this, 2);
+                    } else if (PrivacyResponse.privacyControl.equalsIgnoreCase("Nobody")){
+                        Prefs.setPrivacyPosition(com.raaise.android.Home.MainHome.Home.this, 3);
+                    } else {
+                        Prefs.setPrivacyPosition(com.raaise.android.Home.MainHome.Home.this, 2);
+                    }
+                }
+
+                @Override
+                public void onError(ServerError serverError) {
+
+                }
+            });
+        }
     }
 
     private void clickListeners() {
@@ -185,10 +226,10 @@ public class Home extends AppCompatActivity {
     }
 
     public void SelectHomeScreen() {
-        HomeImageView.setImageResource(R.drawable.svg_select_home);
-        SearchImageView.setImageResource(R.drawable.svg_unselect_search);
-        InboxImageView.setImageResource(R.drawable.svg_unselect_inbox);
-        ProfileImageView.setImageResource(R.drawable.svg_unselect_profile);
+        HomeImageView.setImageResource(R.drawable.home_selected_icon);
+        SearchImageView.setImageResource(R.drawable.search_icon);
+        InboxImageView.setImageResource(R.drawable.chat_status);
+        ProfileImageView.setImageResource(R.drawable.user_icon);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -216,6 +257,9 @@ public class Home extends AppCompatActivity {
             case 5:
                 fragment = new ProfileFragment();
                 break;
+            case 6:
+                fragment = new JoinRoomFragment(false);
+                break;
             default:
                 fragment = null;
                 break;
@@ -223,15 +267,15 @@ public class Home extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .setReorderingAllowed(true)
-                .replace(R.id.FragmentContainer, fragment, null)
+                .replace(R.id.FragmentContainer, fragment, fragment == new CameraFragment()?"CAMERA_FRAGMENT":null)
                 .commit();
     }
 
-    private void SelectSearchScreen() {
-                HomeImageView.setImageResource(R.drawable.svg_unselect_home);
-                SearchImageView.setImageResource(R.drawable.svg_select_search);
-                InboxImageView.setImageResource(R.drawable.svg_unselect_inbox);
-                ProfileImageView.setImageResource(R.drawable.svg_unselect_profile);
+    public void SelectSearchScreen() {
+        HomeImageView.setImageResource(R.drawable.home_selected_icon);
+        SearchImageView.setImageResource(R.drawable.search_icon);
+        InboxImageView.setImageResource(R.drawable.chat_status);
+        ProfileImageView.setImageResource(R.drawable.user_icon);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -241,10 +285,11 @@ public class Home extends AppCompatActivity {
     }
 
     private void SelectPlusScreen() {
-        HomeImageView.setImageResource(R.drawable.svg_unselect_home);
-        SearchImageView.setImageResource(R.drawable.svg_unselect_search);
-        InboxImageView.setImageResource(R.drawable.svg_unselect_inbox);
-        ProfileImageView.setImageResource(R.drawable.svg_unselect_profile);
+        bottomBar.setVisibility(View.GONE);
+        HomeImageView.setImageResource(R.drawable.home_selected_icon);
+        SearchImageView.setImageResource(R.drawable.search_icon);
+        InboxImageView.setImageResource(R.drawable.chat_status);
+        ProfileImageView.setImageResource(R.drawable.user_icon);
 
         new Thread(new Runnable() {
             @Override
@@ -257,10 +302,10 @@ public class Home extends AppCompatActivity {
 
     public void SelectInboxScreen() {
         Log.i("fromChat", "SelectInboxScreen: Selected");
-        HomeImageView.setImageResource(R.drawable.svg_unselect_home);
-        SearchImageView.setImageResource(R.drawable.svg_unselect_search);
-        InboxImageView.setImageResource(R.drawable.svg_select_inbox);
-        ProfileImageView.setImageResource(R.drawable.svg_unselect_profile);
+        HomeImageView.setImageResource(R.drawable.home_selected_icon);
+        SearchImageView.setImageResource(R.drawable.search_icon);
+        InboxImageView.setImageResource(R.drawable.chat_status);
+        ProfileImageView.setImageResource(R.drawable.user_icon);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -271,10 +316,10 @@ public class Home extends AppCompatActivity {
     }
 
     private void SelectProfileScreen() {
-        HomeImageView.setImageResource(R.drawable.svg_unselect_home);
-        SearchImageView.setImageResource(R.drawable.svg_unselect_search);
-        InboxImageView.setImageResource(R.drawable.svg_unselect_inbox);
-        ProfileImageView.setImageResource(R.drawable.svg_select_profile);
+        HomeImageView.setImageResource(R.drawable.home_selected_icon);
+        SearchImageView.setImageResource(R.drawable.search_icon);
+        InboxImageView.setImageResource(R.drawable.chat_status);
+        ProfileImageView.setImageResource(R.drawable.user_icon);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -285,8 +330,7 @@ public class Home extends AppCompatActivity {
     }
 
     private void Initialization() {
-
-
+        videoProgressBar = findViewById(R.id.video_loader);
         textViewCountMessage = findViewById(R.id.textViewCountMessage);
         bottomBar = findViewById(R.id.bottomBar);
         Home = findViewById(R.id.Home);
@@ -429,10 +473,32 @@ public class Home extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onBackPressed() {
+        super.onBackPressed();
+
+//        fragment= getSupportFragmentManager().findFragmentByTag("CAMERA_FRAGMENT");
+//
+//        if (fragment!=null) {
+//            bottomBar.setVisibility(View.VISIBLE);
+//            SelectHomeScreen();
+//        }else{
+//            super.onBackPressed();
+//        }
+//
+//        int count =getSupportFragmentManager().findFragmentById("CAMERA_FRAGMENT");
+//        if(count == 0){
+//            super.onBackPressed();
+//            finish();
+//        }else {
+//            getSupportFragmentManager().popBackStack();
+//        }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        socket.disconnect();
+    }
     @Override
     protected void onRestart() {
         super.onRestart();

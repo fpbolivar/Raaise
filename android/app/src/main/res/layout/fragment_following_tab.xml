@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="20dp"
+    android:background="@color/WhiteColor"
+    tools:context=".Home.Fragments.tabFragments.followings.FollowingTabFragment">
+
+        <RelativeLayout
+            android:id="@+id/mainRelative"
+            android:layout_width="match_parent"
+            android:background="@color/WhiteColor"
+            android:layout_height="match_parent">
+
+            <!--        Followings -->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/followers_list_RV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/follower_following_single_item" />
+
+            <RelativeLayout
+                android:id="@+id/NoResultFound"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/noto_sans"
+                    android:text="No Result Found"
+                    android:textColor="@color/DarkGrey"
+                    android:textSize="16sp" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+</RelativeLayout>

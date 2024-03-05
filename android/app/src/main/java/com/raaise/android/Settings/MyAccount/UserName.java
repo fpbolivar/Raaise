@@ -72,7 +72,7 @@ public class UserName extends AppCompatActivity {
             @Override
             public void onSuccess(UpdateUserProfileModel updateUserProfileModel) {
                 if (updateUserProfileModel.getStatusCode() == 200) {
-                    Prompt.SnackBar(findViewById(android.R.id.content), updateUserProfileModel.getMessage());
+                    Prompt.SnackBar(findViewById(android.R.id.content), "Username updated Successfully");
                 }
 
             }

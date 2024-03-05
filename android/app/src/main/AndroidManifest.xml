@@ -11,11 +11,15 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-    <uses-feature android:name="android.hardware.bluetooth" android:required="false"/>
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
 
+    <uses-feature
+        android:name="android.hardware.bluetooth"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="false" />
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -35,7 +39,7 @@
         android:configChanges="orientation|keyboardHidden"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/app_icon"
+        android:icon="@drawable/app_icon_1"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
@@ -46,10 +50,17 @@
         android:windowSoftInputMode="adjustResize"
         tools:targetApi="31">
         <activity
-            android:name=".Home.MeetingActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"
+            android:name=".Activity.credentials.ChooseInterestActivity"
             android:exported="false" />
+        <activity
+            android:name=".Settings.MyAccount.PrivacyControl"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Home.MeetingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".VideoService"

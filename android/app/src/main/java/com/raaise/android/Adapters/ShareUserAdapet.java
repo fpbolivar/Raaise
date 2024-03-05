@@ -39,7 +39,7 @@ public class ShareUserAdapet extends RecyclerView.Adapter<ShareUserAdapet.ViewHo
                     .placeholder(R.drawable.placeholder)
                     .into(holder.userProfileIV);
             holder.userNameTV.setText(model.getSenderId().getName());
-            holder.Count.setText(model.getSenderId().getFollowersCount() + " following");
+            holder.Count.setText(model.getSenderId().getFollowersCount() + " followers");
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -53,7 +53,7 @@ public class ShareUserAdapet extends RecyclerView.Adapter<ShareUserAdapet.ViewHo
                     .placeholder(R.drawable.placeholder)
                     .into(holder.userProfileIV);
             holder.userNameTV.setText(model.getReceiverId().getName());
-            holder.Count.setText(model.getReceiverId().getFollowersCount() + " following");
+            holder.Count.setText(model.getReceiverId().getFollowersCount() + " followers");
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

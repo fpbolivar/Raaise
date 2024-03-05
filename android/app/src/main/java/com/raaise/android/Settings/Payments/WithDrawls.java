@@ -18,6 +18,7 @@ import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.ApiManager.ServerError;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
+import com.raaise.android.Utilities.textPaint.TextPaint;
 import com.raaise.android.model.WithdrawalsPojo;
 
 public class WithDrawls extends AppCompatActivity {
@@ -69,6 +70,7 @@ public class WithDrawls extends AppCompatActivity {
         BackArrow = findViewById(R.id.BackInSignUp);
         BankDetail = findViewById(R.id.tv_bankDetails);
 
+        TextPaint.getGradientColor(BankDetail);
         withdrawalsRV.setAdapter(adapter);
 
     }

@@ -37,7 +37,7 @@ public class SeeAllUsersOfSearchAdapter extends RecyclerView.Adapter<SeeAllUsers
     @Override
     public void onBindViewHolder(@NonNull SeeAllUsersOfSearchAdapter.ViewHolder holder, int position) {
         GlobalSearchModel.Data.Users obj = list.get(position);
-        holder.Count.setText(obj.getFollowersCount() + " Followers");
+        holder.Count.setText(obj.getFollowersCount() + " followers");
         holder.userNameTV.setText(obj.getName());
         Glide.with(context).load(obj.getProfileImage()).placeholder(R.drawable.placeholder).into(holder.userProfileIV);
         holder.MainFollowListElement.setOnClickListener(view -> {

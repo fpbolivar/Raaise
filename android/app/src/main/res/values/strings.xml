@@ -5,25 +5,25 @@
     <string name="select_all">Select All</string>
     <string name="Username">\@John_Doe</string>
     <string name="Username1">\@kate_rose</string>
-    <string name="select_audio">Select <font color="#4C75A3">Audio</font></string>
-    <string name="follwer_list">Followers <font color="#4C75A3">List</font></string>
-    <string name="following_list">Following <font color="#4C75A3">List</font></string>
+    <string name="select_audio">Select <font color="#CCAF00FD">Audio</font></string>
+    <string name="follwer_list">Followers <font color="#CCAF00FD">List</font></string>
+    <string name="following_list">Following <font color="#CCAF00FD">List</font></string>
     <string name="chat_title">Lorem Ipsum is simply dummy text of the printing and type setting industry.</string>
-    <string name="donation_dialog_text">Enter some amount to support this creator</string>
+    <string name="donation_dialog_text">Enter some amount to support \n this creator</string>
     <string name="chatScreenDummyText">"Lorem Ipsum is simply dummy text of the printing"</string>
     <string name="Please_Wait">Please wait</string>
 
     <string name="facebook_app_id">571053325026277</string>
     <string name="fb_login_protocol_scheme">fb1234</string>
     <string name="facebook_client_token">56789</string>
-    <string name="already_acc">You don’t have an account? <font color="#4C75A3">SignUp</font></string>
+    <string name="already_acc">Don’t have an account? <font color="#AF00FD"><b>Create Now</b></font></string>
     <string name="do_you_want_donation">Do you want Support?</string>
     <string name="other_amount">Other Amount</string>
     <string name="new_post">New <font color="#4C75A3">Post</font></string>
     <string name="edit_caption">Edit <font color="#ffffff">Post</font></string>
-    <string name="terms_of_service_heading">Terms of <font color="#4C75A3">Service</font></string>
-    <string name="privacy_policy_heading">Privacy <font color="#4C75A3">Policy</font></string>
-    <string name="copyright_policy_heading">Copyright <font color="#4C75A3">Policy</font></string>
+    <string name="terms_of_service_heading">Terms of <font color="#CCAF00FD">Service</font></string>
+    <string name="privacy_policy_heading">Privacy <font color="#CCAF00FD">Policy</font></string>
+    <string name="copyright_policy_heading">Copyright <font color="#CCAF00FD">Policy</font></string>
     <string name="report_video">Report Video</string>
     <string name="why_are_you_reporting">Why are you reporting this post?</string>
     <string name="tell_us_here">Tell us here...</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="WhiteColor">#000000</color>
+    <color name="WhiteColor">#220131</color>
     <color name="Transparent">#00FFFFFF</color>
     <color name="GreyColor">#D7D7D7</color>
     <color name="hintGreyColor">#BFBFC1</color>
@@ -16,7 +16,18 @@
     <color name="ButtonRed">#C90202</color>
     <color name="TextColor">#ffffff</color>
     <color name="followesGreycolor">#AfA9AB</color>
-    <color name="BlueColorSettings">#006EE9</color>
+    <color name="BlueColorSettings">#CCAF00FD</color>
     <color name="Red">#FF0000</color>
     <color name="DullWhite">#BBBBBB</color>
+
+
+    <color name="light_white">#80FFFFFF</color>
+    <color name="icon_white">#F2FFFFFF</color>
+    <color name="text_color">#AF00FD</color>
+    <color name="view_color">#381a45</color>
+    <color name="stroke_color">#66AF00FD</color>
+    <color name="pink_color">#EE22AA</color>
+    <color name="profile_color">#66000A1A</color>
+    <color name="lineStroke_color">#421856</color>
+    <color name="dialog_color_dark">#220131</color>
 </resources>

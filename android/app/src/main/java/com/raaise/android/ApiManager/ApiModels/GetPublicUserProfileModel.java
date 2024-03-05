@@ -1,5 +1,7 @@
 package com.raaise.android.ApiManager.ApiModels;
 
+import java.util.ArrayList;
+
 public class GetPublicUserProfileModel {
     public String userIdentity;
     public int status;
@@ -33,6 +35,7 @@ public class GetPublicUserProfileModel {
         public String profileImage;
         public boolean isBlock;
         public boolean isActive;
+        public String coverImage;
         public String userGoogleId;
         public String userFaceBookId;
         public String donatedAmount;
@@ -47,6 +50,28 @@ public class GetPublicUserProfileModel {
         public String createdAt;
         public String updatedAt;
         public int __v;
+        ArrayList<String> blockedIds;
+        ArrayList<InterestedCategories> interestCategoryData;
+        ArrayList<DonationUsers> donationUsers;
+
+        public ArrayList<DonationUsers> getDonationUsers() {
+            return donationUsers;
+        }
+
+        public void setDonationUsers(ArrayList<DonationUsers> donationUsers) {
+            this.donationUsers = donationUsers;
+        }
+
+        public String blocked_by;
+
+        public String getBlocked_by() {
+            return blocked_by;
+        }
+
+        public ArrayList<String> getBlockedIds() {
+            return blockedIds;
+        }
+
         public int videoCount;
         public boolean follow;
 
@@ -152,6 +177,105 @@ public class GetPublicUserProfileModel {
 
         public int getVideoCount() {
             return videoCount;
+        }
+
+        public ArrayList<InterestedCategories> getInterestCategoryData() {
+            return interestCategoryData;
+        }
+
+        public void setInterestCategoryData(ArrayList<InterestedCategories> interestCategoryData) {
+            this.interestCategoryData = interestCategoryData;
+        }
+
+        public class DonationUsers{
+            public String id;
+            public String name;
+            public String userName;
+
+            public String profileImage;
+            public String credit;
+
+            public String getUsername() {
+                return userName;
+            }
+
+            public void setUsername(String userName) {
+                this.userName = userName;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getProfileImage() {
+                return profileImage;
+            }
+
+            public void setProfileImage(String profileImage) {
+                this.profileImage = profileImage;
+            }
+
+            public String getCredit() {
+                return credit;
+            }
+
+            public void setCredit(String credit) {
+                this.credit = credit;
+            }
+        }
+
+        public class InterestedCategories {
+            public String _id;
+            public String name;
+            public boolean isDeleted;
+            public String createdAt;
+            public String updatedAt;
+            public String image;
+            public int __v;
+
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
+            }
+
+            public String get_id() {
+                return _id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public boolean isDeleted() {
+                return isDeleted;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public String getUpdatedAt() {
+                return updatedAt;
+            }
+
+            public int get__v() {
+                return __v;
+            }
         }
     }
 }

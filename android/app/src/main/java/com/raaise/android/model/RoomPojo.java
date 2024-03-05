@@ -9,6 +9,16 @@ public class RoomPojo {
     public MultipartBody.Part logo;
     public RequestBody memberIds;
     public RequestBody roomType;
+    public RequestBody scheduleType;
+    public RequestBody scheduleDateTime;
+
+    public RequestBody getScheduleType() {
+        return scheduleType;
+    }
+
+    public RequestBody getScheduleDateTime() {
+        return scheduleDateTime;
+    }
 
     public RequestBody getTitle() {
         return title;
@@ -30,11 +40,14 @@ public class RoomPojo {
         return roomType;
     }
 
-    public RoomPojo(RequestBody title, RequestBody description, MultipartBody.Part logo, RequestBody memberIds, RequestBody roomType) {
+    public RoomPojo(RequestBody title, RequestBody description, MultipartBody.Part logo, RequestBody memberIds, RequestBody roomType,
+                    RequestBody scheduleType, RequestBody scheduleDateTime) {
         this.title = title;
         this.description = description;
         this.logo = logo;
         this.memberIds = memberIds;
         this.roomType = roomType;
+        this.scheduleType = scheduleType;
+        this.scheduleDateTime = scheduleDateTime;
     }
 }

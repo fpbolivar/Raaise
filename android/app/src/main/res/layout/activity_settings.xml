@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/SettingBGColor"
-    android:backgroundTint="@color/black"
+    android:background="@color/WhiteColor"
+    android:backgroundTint="@color/WhiteColor"
     android:fillViewport="true"
     android:orientation="vertical"
     tools:context=".Settings.SettingsActivity">
@@ -14,7 +14,7 @@
         android:id="@+id/UpperPart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="30dp">
 
         <ImageView
             android:id="@+id/BackInSignUp"
@@ -24,20 +24,29 @@
             android:layout_marginStart="30dp"
             android:adjustViewBounds="true"
             android:src="@drawable/backarrow"
-            app:tint="@color/DullWhite" />
-    </RelativeLayout>
+            app:tint="@color/white" />
 
-    <TextView
-        android:id="@+id/settingHeading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/noto_sans"
-        android:text="Settings"
-        android:textColor="@color/DullWhite"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/settingHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Settings"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="#66AF00FD"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_below="@+id/settingHeading"
+            android:layout_height=".5dp"/>
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -47,7 +56,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/black">
+            android:background="@color/WhiteColor">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,13 +70,14 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/myAccount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
                         android:fontFamily="@font/noto_sans"
                         android:text="MY ACCOUNT"
                         android:textColor="@color/BlueColorSettings"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -97,7 +107,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Personal Information"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -105,14 +115,27 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginEnd="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
-                        <include layout="@layout/single_grey_line" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
+
+                        </RelativeLayout>
+
 
                         <RelativeLayout
                             android:id="@+id/UserNameInSettings"
@@ -129,7 +152,7 @@
                                 android:fontFamily="@font/noto_sans"
                                 android:gravity="center_vertical"
                                 android:text="Username"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -137,14 +160,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginEnd="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
-                        <include layout="@layout/single_grey_line" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/ShortBioInSettings"
@@ -162,7 +191,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Short Bio"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -170,14 +199,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
-                        <include layout="@layout/single_grey_line" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/ChangePasswordInSettings"
@@ -195,7 +230,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Change Password"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -203,13 +238,51 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/privacy_control_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="15dp"
+                                android:layout_marginStart="20dp"
+                                android:fontFamily="@font/noto_sans"
+
+                                android:gravity="center_vertical"
+                                android:text="Privacy Control"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+
+                            <ImageView
+                                android:layout_width="10dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="20dp"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/setting_arrow"
+                                app:tint="@color/white" />
+
+                        </RelativeLayout>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -227,8 +300,9 @@
                         android:layout_marginStart="30dp"
                         android:fontFamily="@font/noto_sans"
                         android:text="NOTIFICATIONS"
+                        android:id="@+id/myNoti"
                         android:textColor="@color/BlueColorSettings"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -256,7 +330,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Push Notifications"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <androidx.appcompat.widget.SwitchCompat
@@ -265,15 +339,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
-
                                 android:thumb="@drawable/thumb"
                                 app:track="@drawable/track" />
 
                         </RelativeLayout>
 
-                        <include layout="@layout/single_grey_line" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -290,7 +369,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Email Notifications"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <androidx.appcompat.widget.SwitchCompat
@@ -299,7 +378,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
                                 android:thumb="@drawable/thumb"
@@ -325,8 +404,9 @@
                         android:layout_marginStart="30dp"
                         android:fontFamily="@font/noto_sans"
                         android:text="PAYMENTS"
+                        android:id="@+id/myPayment"
                         android:textColor="@color/BlueColorSettings"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -355,7 +435,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Payment Methods"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -363,14 +443,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
-                        <include layout="@layout/single_grey_line" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/DonationRaisedInSettings"
@@ -388,7 +474,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Support Raised"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -396,14 +482,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
-                        <include layout="@layout/single_grey_line" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/WithDrawlsInSettings"
@@ -421,7 +513,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Withdrawals"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -429,14 +521,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
-                        <include layout="@layout/single_grey_line" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/BankDetailsInSettings"
@@ -454,7 +552,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Bank Details"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -462,10 +560,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
@@ -487,8 +585,9 @@
                         android:layout_marginStart="30dp"
                         android:fontFamily="@font/noto_sans"
                         android:text="ABOUT"
+                        android:id="@+id/about"
                         android:textColor="@color/BlueColorSettings"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -517,7 +616,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Terms of Service"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -525,14 +624,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
-                        <include layout="@layout/single_grey_line" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/PrivacyPolicyInSettings"
@@ -550,7 +655,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Privacy Policy"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -558,14 +663,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
-                        <include layout="@layout/single_grey_line" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/CopyrightPolicyInSettings"
@@ -583,7 +694,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Copyright Policy"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -591,10 +702,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
@@ -617,8 +728,9 @@
                         android:layout_marginStart="30dp"
                         android:fontFamily="@font/noto_sans"
                         android:text="LOGINS"
+                        android:id="@+id/logins"
                         android:textColor="@color/BlueColorSettings"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -647,7 +759,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Deactivate Account"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -655,14 +767,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
-                        <include layout="@layout/single_grey_line" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/DeleteAccountInSettings"
@@ -688,14 +806,20 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 
-                        <include layout="@layout/single_grey_line" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp">
+                            <include layout="@layout/single_grey_line" />
+
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/LogoutInSettings"
@@ -713,7 +837,7 @@
 
                                 android:gravity="center_vertical"
                                 android:text="Logout"
-                                android:textColor="@color/DullWhite"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                             <ImageView
@@ -721,10 +845,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginEnd="20dp"
                                 android:adjustViewBounds="true"
                                 android:src="@drawable/setting_arrow"
-                                app:tint="@color/DullWhite" />
+                                app:tint="@color/white" />
 
                         </RelativeLayout>
 

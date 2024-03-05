@@ -63,46 +63,101 @@ profile. These details will be used to give enhanced engagement of  the applicat
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/Text1InForgetPassword"
             android:layout_marginTop="12dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:cardCornerRadius="100dp"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="160dp">
 
-                <RelativeLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="110dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginHorizontal="20dp"
+                    app:cardCornerRadius="20dp">
 
                     <ImageView
-                        android:id="@+id/userImage"
+                        android:id="@+id/CoverImageInOtherUserProfile"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="fitXY" />
+                        android:layout_alignParentStart="true"
+                        android:adjustViewBounds="true"
+                        android:background="@color/black"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/cover_image_1" />
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/UploadCoverImageInPersonalInformation"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentBottom="true"
+                    android:backgroundTint="#A3BAB6B6"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="@dimen/_40sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/camera_svg"
+                    app:fabSize="mini"
+                    app:tint="@android:color/white" />
+
+                <!--*************   Profile Image    *************-->
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_alignParentBottom="true"
+                    android:backgroundTint="@color/WhiteColor"
+                    app:cardCornerRadius="1000dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center"
+                        app:cardCornerRadius="1000dp"
+                        android:background="@drawable/settings_block_bg"
+                        android:padding="@dimen/_10sdp"  >
+
+                        <ImageView
+                            android:id="@+id/userImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:background="@color/black"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/placeholder" />
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/UploadImageInPersonalInformation"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="-40dp"
+                    android:layout_toRightOf="@+id/cardView"
+                    android:backgroundTint="#A3BAB6B6"
+                    android:src="@drawable/camera_svg"
+                    app:fabSize="mini"
+                    app:tint="@android:color/white" />
+
+            </RelativeLayout>
 
 
-                </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/UploadImageInPersonalInformation"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="-10dp"
-                android:src="@drawable/camera_svg"
-                app:fabSize="mini"
-                app:layout_constraintEnd_toEndOf="@+id/cardView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@android:color/white" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -115,10 +170,13 @@ profile. These details will be used to give enhanced engagement of  the applicat
             android:layout_marginTop="20dp"
             android:background="@drawable/curved_dark_grey_background"
             android:hint="Name"
+            android:drawableLeft="@drawable/name_icon"
+            android:drawableTint="@color/icon_white"
+            android:drawablePadding="@dimen/_15sdp"
             android:inputType="textPersonName"
             android:paddingHorizontal="20dp"
             android:textColor="@color/light_grey"
-            android:textColorHint="@color/light_grey"
+            android:textColorHint="@color/light_white"
             android:textSize="14sp" />
 
         <EditText
@@ -131,6 +189,9 @@ profile. These details will be used to give enhanced engagement of  the applicat
             android:background="@drawable/curved_dark_grey_background"
             android:clickable="false"
             android:enabled="false"
+            android:drawableLeft="@drawable/email_signup"
+            android:drawableTint="@color/icon_white"
+            android:drawablePadding="@dimen/_12sdp"
             android:hint="Email Address"
             android:inputType="textNoSuggestions"
             android:paddingHorizontal="20dp"
@@ -148,9 +209,12 @@ profile. These details will be used to give enhanced engagement of  the applicat
             android:background="@drawable/curved_dark_grey_background"
             android:hint="Phone Number (Optional)"
             android:inputType="phone"
+            android:drawableLeft="@drawable/phone_icon"
+            android:drawableTint="@color/icon_white"
+            android:drawablePadding="@dimen/_15sdp"
             android:paddingHorizontal="20dp"
             android:textColor="@color/light_grey"
-            android:textColorHint="@color/light_grey"
+            android:textColorHint="@color/light_white"
             android:textSize="14sp" />
 
         <LinearLayout

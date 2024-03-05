@@ -15,25 +15,22 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
         android:background="@color/Transparent"
-        app:tabIndicator="@drawable/custom_tablayout_indicator1"
-        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorColor="@color/Transparent"
         app:tabIndicatorFullWidth="false"
         app:tabIndicatorGravity="bottom"
         app:tabTextAppearance="@style/MineCustomTabText"
-        app:tabTextColor="@color/white" />
+        app:tabTextColor="@color/Transparent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp">
+        android:layout_marginEnd="79dp"
+        android:layout_marginTop="39dp">
 
         <TextView
             android:id="@+id/NotificationCount"
@@ -45,18 +42,31 @@
             android:padding="1.5dp"
             android:textColor="@color/white"
             android:textSize="11sp"
+            android:layout_marginLeft="-5dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/NotificationBellIcon"
             app:layout_constraintStart_toEndOf="@+id/NotificationBellIcon" />
 
         <ImageView
             android:id="@+id/NotificationBellIcon"
-            android:layout_width="19dp"
-            android:layout_height="16dp"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_17sdp"
             android:src="@drawable/bell_icon"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/search"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:visibility="gone"
+            android:src="@drawable/svg_select_audio_search"
+            app:layout_constraintBottom_toBottomOf="@id/NotificationBellIcon"
+            app:layout_constraintRight_toLeftOf="@id/NotificationBellIcon"
+            app:layout_constraintTop_toTopOf="@id/NotificationBellIcon"
+            app:tint="@color/white" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

@@ -71,8 +71,8 @@ public class ChangePassword extends AppCompatActivity implements View.OnClickLis
             Prompt.SnackBar(findViewById(android.R.id.content), "Please Enter New Password");
         } else if (confirmPass.isEmpty()) {
             Prompt.SnackBar(findViewById(android.R.id.content), "Please Enter Confirm Password");
-        } else if (!HelperClass.passwordCharValidation(newPass)) {
-            Prompt.SnackBar(findViewById(android.R.id.content), "Password Must Contain 1 Uppercase,1 Lowercase,1 Special character with length 8");
+        } else if (newPass.length() < 8) {
+            Prompt.SnackBar(findViewById(android.R.id.content), "Minumum password length should be 8");
         } else if (!confirmPass.matches(newPass)) {
             Prompt.SnackBar(findViewById(android.R.id.content), "New password and confirm password must match");
         } else {

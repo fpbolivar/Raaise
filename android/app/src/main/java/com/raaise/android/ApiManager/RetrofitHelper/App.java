@@ -19,6 +19,7 @@ public class App extends Application {
     public static String songName = "";
     public static boolean claim = false;
     public static boolean fromEditRoom = false;
+    public static boolean userFollowUnfolle = false;
     private static Context context;
     private final Socket mSocket;
 
@@ -52,14 +53,4 @@ public class App extends Application {
         return mSocket;
     }
 
-//    private HttpProxyCacheServer proxy;
-//
-//    public static HttpProxyCacheServer getProxy(Context context) {
-//        App app = (App) context.getApplicationContext();
-//        return app.proxy == null ? (app.proxy = app.newProxy()) : app.proxy;
-//    }
-//
-//    private HttpProxyCacheServer newProxy() {
-//        return new HttpProxyCacheServer(this);
-//    }
 }

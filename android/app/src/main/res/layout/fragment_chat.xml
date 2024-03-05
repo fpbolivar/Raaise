@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/WhiteColor">
 
     <ImageView
         android:id="@+id/backBtn"
@@ -97,18 +97,52 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/chatPersonIV" />
 
-                <TextView
-                    android:id="@+id/totalDonationHeading"
+                <RelativeLayout
+                    android:id="@+id/relativeDonation"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/noto_sans"
-                    android:text="Total Supported"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chatPersonName" />
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:paddingHorizontal="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:background="@drawable/total_suppot_bg"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/total_donation_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:text="Total Supported"
+                        android:textColor="@color/white"
+                        android:textFontWeight="300"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/supportedImage"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_toRightOf="@+id/total_donation_tv"
+                        android:layout_marginHorizontal="5dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/support_icon"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/totalDonationHeading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:layout_toRightOf="@+id/supportedImage"
+                        android:text="$0"
+                        android:textColor="@color/white"
+                        android:textFontWeight="300"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+
 
                 <TextView
                     android:id="@+id/ShortBioOfChatUser"
@@ -128,7 +162,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/chatRV"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="7dp"
@@ -157,36 +191,45 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="22dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/black"
-        android:backgroundTint="@color/black"
+        android:background="@drawable/settings_block_bg"
         android:gravity="bottom"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
-        <EditText
-            android:id="@+id/send_chat_et"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
             android:layout_gravity="top"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/send_chat_et"
+                android:layout_width="@dimen/_230sdp"
+                android:layout_height="50dp"
+                android:hint="Message..."
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:paddingStart="@dimen/_6sdp"
+                android:background="@color/Transparent"
+                android:textColor="@color/white"
+                android:textColorHint="@color/DarkGrey"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/send_chat_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@+id/send_chat_et"
+                android:padding="10dp"
+                android:src="@drawable/svg_sendbutton"
+                app:tint="@color/LogoGreyColor" />
+        </LinearLayout>
 
 
-            android:layout_weight="1"
-            android:background="@color/Transparent"
-            android:hint="Message..."
-            android:textColor="@color/white"
-            android:textColorHint="@color/DarkGrey"
-            android:textSize="18sp" />
-
-        <ImageView
-            android:id="@+id/send_chat_btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            android:padding="10dp"
-            android:src="@drawable/svg_sendbutton"
-            app:tint="@color/LogoGreyColor" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

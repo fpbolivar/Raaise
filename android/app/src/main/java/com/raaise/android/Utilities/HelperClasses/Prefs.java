@@ -3,11 +3,15 @@ package com.raaise.android.Utilities.HelperClasses;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.raaise.android.Settings.MyAccount.PrivacyControl;
+
 public class Prefs {
     private static final String NAME_OF_THE_USER = "name_of_the_user";
     private static final String USER_NAME = "user_name";
     private static final String PHONE_NUMBER_OF_USER = "phone_number_of_user";
     private static final String USER_IMAGE = "user_image";
+    private static final String USER_COVER_IMAGE = "user_cover_image";
+
     private static final String USER_EMAIL = "user_email";
     private static final String USER_ShortBio = "USER_ShortBio";
     private static final String USER_ID = "USER_ID";
@@ -19,6 +23,7 @@ public class Prefs {
     private static final String ForgetPasswordVerifyOtp = "Forget_Password_Verify_Otp";
     private static final String PUSH_NOTIFICATION = "PUSH_NOTIFICATION";
     private static final String EMAIL_NOTIFICATION = "EMAIL_NOTIFICATION";
+    private static final String PRIVACY_POSITION = "PRIVACY_POSITION";
 
     public static void SetBearerToken(Context context, String loggedInUserToken) {
         SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
@@ -177,6 +182,18 @@ public class Prefs {
         editor.apply();
     }
 
+    public static String getUserCoverImage(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
+        return pref.getString(USER_COVER_IMAGE, "");
+    }
+
+    public static void setUserCoverImage(Context context, String userName) {
+        SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(USER_COVER_IMAGE, userName);
+        editor.apply();
+    }
+
     public static String getUserImage(Context context) {
         SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
         return pref.getString(USER_IMAGE, "");
@@ -319,6 +336,25 @@ public class Prefs {
         SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(Key, "");
+        editor.apply();
+    }
+
+    public static void setPrivacyPosition(Context context, int position){
+        SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(PRIVACY_POSITION, position);
+        editor.apply();
+    }
+
+    public static int getPrivacyPosition(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
+        return pref.getInt(PRIVACY_POSITION, -1);
+    }
+
+    public static void clearPrivacyPosition(Context context){
+        SharedPreferences pref = context.getSharedPreferences(My_Prefference, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(PRIVACY_POSITION, -1);
         editor.apply();
     }
 }

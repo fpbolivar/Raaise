@@ -4,24 +4,34 @@
     android:id="@+id/MainLayoutInFollowingVideoSingleItem"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/WhiteColor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cons"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <VideoView
-            android:id="@+id/VideoViewInHomeReels"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardBanner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-
+            app:cardBackgroundColor="@color/WhiteColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="match_parent">
+
+            <VideoView
+                android:id="@+id/VideoViewInHomeReels"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                app:background="@color/WhiteColor"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:scaleType="centerInside" />
+
+        </androidx.cardview.widget.CardView>
 
         <View
             android:layout_width="match_parent"
@@ -90,214 +100,395 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/home_layout_shadow">
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="20dp"
+        android:layout_height="wrap_content">
 
-
-        <LinearLayout
-            android:id="@+id/profileContainer"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_7sdp"
-            android:layout_marginBottom="@dimen/_3sdp"
-            android:gravity="center_vertical"
-            app:layout_constraintBottom_toTopOf="@+id/hashTagsTV"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/profile_bg_cir">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/_100sdp">
-
-                <ImageView
-                    android:id="@+id/ImageProfileInAdapter"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:background="@drawable/circular_shape"
-                    android:scaleType="centerCrop"
-                     />
-
-            </androidx.cardview.widget.CardView>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/profileContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/_9sdp"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toTopOf="@+id/hashTagsTV"
+                app:layout_constraintLeft_toLeftOf="parent">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_34sdp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardViewImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        app:cardCornerRadius="@dimen/_100sdp">
+
+                        <ImageView
+                            android:id="@+id/ImageProfileInAdapter"
+                            android:layout_width="@dimen/_28sdp"
+                            android:layout_height="@dimen/_28sdp"
+                            android:background="@drawable/circular_shape"
+                            android:scaleType="centerCrop"
+                            />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/verficationCardView"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:visibility="gone"
+                        android:backgroundTint="@color/Transparent"
+                        android:background="@color/Transparent"
+                        android:layout_marginBottom="5dp"
+                        app:cardBackgroundColor="@color/Transparent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true">
+                        <ImageView
+                            android:id="@+id/verfication_icon"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/verification_badge_white" />
+
+                    </androidx.cardview.widget.CardView>
+
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/NameInHomeVideoSingleItem"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:fontFamily="@font/noto_sans"
-                            android:maxWidth="@dimen/_180sdp"
-                            android:textColor="@color/white"
-                            android:textFontWeight="400"
-                            android:textSize="@dimen/_13ssp" />
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/UserNameInHomeVideoSingleItem"
+                            <TextView
+                                android:id="@+id/NameInHomeVideoSingleItem"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_2sdp"
+                                android:fontFamily="@font/noto_sans"
+                                android:maxWidth="@dimen/_180sdp"
+                                android:textColor="@color/white"
+                                android:textFontWeight="400"
+                                android:textSize="@dimen/_13ssp" />
+
+                            <TextView
+                                android:id="@+id/UserNameInHomeVideoSingleItem"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="4dp"
+                                android:visibility="gone"
+                                android:fontFamily="@font/noto_sans"
+                                android:maxWidth="@dimen/_180sdp"
+                                android:textColor="@color/white"
+                                android:textFontWeight="300"
+                                android:textSize="@dimen/_8ssp" />
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/FollowButtonInHomeVideoSingleItem"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="@font/noto_sans"
-                            android:maxWidth="@dimen/_180sdp"
-                            android:textColor="@color/white"
-                            android:textFontWeight="300"
-                            android:textSize="@dimen/_8ssp" />
+                            android:layout_height="@dimen/_18sdp"
+                            android:layout_marginStart="@dimen/_3sdp"
+                            android:background="@drawable/circular_gradient_bg"
+                            app:cardCornerRadius="@dimen/_40sdp">
+
+                            <TextView
+                                android:id="@+id/FollowTextInHomeVideoSingleItem"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginHorizontal="10dp"
+                                android:fontFamily="@font/noto_sans"
+                                android:textColor="@color/white"
+                                android:textFontWeight="300"
+                                android:textSize="@dimen/_9ssp" />
+                        </RelativeLayout>
 
                     </LinearLayout>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/FollowButtonInHomeVideoSingleItem"
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_18sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:backgroundTint="@color/LogoGreyColor"
-                        app:cardCornerRadius="@dimen/_40sdp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:maxWidth="180dp"
+                        android:visibility="gone"
+                        android:text="Total raised: $"
+                        android:textColor="@color/white"
+                        android:textFontWeight="300"
+                        android:textSize="@dimen/_8ssp" />
 
-                        <TextView
-                            android:id="@+id/FollowTextInHomeVideoSingleItem"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginHorizontal="10dp"
-                            android:fontFamily="@font/noto_sans"
-                            android:gravity="center"
-                            android:textColor="@color/white"
-                            android:textFontWeight="300"
-                            android:textSize="@dimen/_10ssp" />
-                    </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/date_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/noto_sans"
+                        android:maxWidth="180dp"
+                        android:text="Posted On"
+                        android:visibility="gone"
+                        android:textColor="@color/DullWhite"
+                        android:textFontWeight="300"
+                        android:textSize="@dimen/_8ssp" />
+
+
                 </LinearLayout>
-
-
-                <TextView
-                    android:id="@+id/DonationRaisedInHomeVideoSingleItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:maxWidth="180dp"
-                    android:text="Total raised: $"
-                    android:textColor="@color/white"
-                    android:textFontWeight="300"
-                    android:textSize="@dimen/_8ssp" />
-
-                <TextView
-                    android:id="@+id/date_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:fontFamily="@font/noto_sans"
-                    android:maxWidth="180dp"
-                    android:text="Posted On"
-                    android:textColor="@color/DullWhite"
-                    android:textFontWeight="300"
-                    android:textSize="@dimen/_8ssp" />
 
 
             </LinearLayout>
 
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/hashTagsTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/SongLayout"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="7dp"
-            android:maxWidth="@dimen/_180sdp"
-            android:text="#insta ##reels...See more"
-            android:textColor="@color/DullWhite"
-            android:textSize="@dimen/_10ssp"
-            app:layout_constraintBottom_toTopOf="@id/SongLayout"
-            app:layout_constraintLeft_toLeftOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/SongLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/_7sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:gravity="center_vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <RelativeLayout
-                android:id="@+id/AudioItem"
-                android:layout_width="@dimen/_23sdp"
-                android:layout_height="@dimen/_23sdp"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:background="@drawable/user_image_bg">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_centerInParent="true"
-                    app:cardCornerRadius="@dimen/_50sdp">
-
-                    <ImageView
-                        android:id="@+id/SongImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                         />
-                </androidx.cardview.widget.CardView>
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/lottie_main"
-                android:layout_width="@dimen/_12sdp"
-                android:layout_height="@dimen/_12sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:src="@drawable/svg_music_sign_whitecolor" />
-
             <TextView
-                android:id="@+id/SongNameInHomeVideoSingleItem"
+                android:id="@+id/hashTagsTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:fontFamily="@font/noto_sans"
-                android:maxWidth="200dp"
-                android:text="Dummy"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_10ssp" />
+                android:layout_above="@id/SongLayout"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="7dp"
+                android:visibility="gone"
+                android:maxWidth="@dimen/_180sdp"
+                android:text="#insta ##reels...See more"
+                android:textColor="@color/DullWhite"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintBottom_toTopOf="@id/SongLayout"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/SongLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:visibility="gone"
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
 
+                <RelativeLayout
+                    android:id="@+id/AudioItem"
+                    android:layout_width="@dimen/_23sdp"
+                    android:layout_height="@dimen/_23sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:background="@drawable/user_image_bg">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_centerInParent="true"
+                        app:cardCornerRadius="@dimen/_50sdp">
+
+                        <ImageView
+                            android:id="@+id/SongImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            />
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/lottie_main"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:src="@drawable/svg_music_sign_whitecolor" />
+
+                <TextView
+                    android:id="@+id/SongNameInHomeVideoSingleItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/noto_sans"
+                    android:maxWidth="200dp"
+                    android:text="Dummy"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/ShareVideo"
+            android:layout_width="@dimen/_18sdp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="@dimen/_18sdp"
+            android:src="@drawable/share_icon" />
+
+        <ImageView
+            android:id="@+id/more_options_btn"
+            android:layout_width="@dimen/_15sdp"
+            app:layout_constraintRight_toRightOf="@+id/ShareVideo"
+            android:rotation="90"
+            android:layout_marginRight="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/ShareVideo"
+            app:layout_constraintRight_toLeftOf="@id/ShareVideo"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/more_options_btns" />
+
+        <ImageView
+            android:id="@+id/more_options_btn_UP"
+            android:layout_width="@dimen/_15sdp"
+            app:layout_constraintRight_toRightOf="@+id/ShareVideo"
+            android:rotation="90"
+            android:layout_marginRight="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/ShareVideo"
+            app:layout_constraintRight_toLeftOf="@id/ShareVideo"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/more_options_btns"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/cardName"
+        android:layout_marginTop="@dimen/_10sdp">
+
+        <RelativeLayout
+            android:id="@+id/relativeEye"
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_for_likes"
+            android:paddingVertical="@dimen/_3sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/eye_image"
+                android:layout_width="@dimen/_17sdp"
+                android:layout_height="@dimen/_17sdp"
+                android:src="@drawable/eye_icon"/>
+
+            <TextView
+                android:id="@+id/view_count_tvk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/eye_image"
+                android:textFontWeight="300"
+                android:textSize="@dimen/_9ssp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLike"
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_for_likes"
+            android:paddingVertical="@dimen/_3sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/relativeEye"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/like_image"
+                android:layout_width="@dimen/_17sdp"
+                android:layout_height="@dimen/_17sdp"
+                android:src="@drawable/heart_icon"/>
+            <TextView
+                android:id="@+id/LikeCountInHomeVideoSingleItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+
+                android:layout_toRightOf="@+id/like_image"
+                android:textFontWeight="300"
+                android:textSize="@dimen/_9ssp" />
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeSupport"
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_for_likes"
+            android:paddingVertical="@dimen/_3sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/relativeLike"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/support_image"
+                android:layout_width="@dimen/_17sdp"
+                android:layout_height="@dimen/_17sdp"
+                android:src="@drawable/support_icon_home" />
+
+            <TextView
+                android:id="@+id/DonationRaisedInHomeVideoSingleItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/support_image"
+                android:textColor="@color/white"
+                android:textFontWeight="300"
+                android:textSize="@dimen/_9ssp" />
+
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/SidePanel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_width="@dimen/_50sdp"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
@@ -306,7 +497,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/DonationLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_7sdp"
@@ -337,16 +527,17 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/LikeInHomeVideoSingleItem"
+
                 android:layout_width="@dimen/_22sdp"
                 android:layout_height="@dimen/_22sdp"
                 android:src="@drawable/heart_in_single" />
 
             <TextView
-                android:id="@+id/LikeCountInHomeVideoSingleItem"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
+
                 android:textFontWeight="300"
                 android:textSize="@dimen/_9ssp" />
         </LinearLayout>
@@ -382,7 +573,6 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/ShareVideo"
                 android:layout_width="@dimen/_22sdp"
                 android:layout_height="@dimen/_22sdp"
                 android:src="@drawable/send_in_single" />
@@ -420,17 +610,16 @@
                 android:src="@drawable/view_icon" />
 
             <TextView
-                android:id="@+id/view_count_tvk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
+                android:visibility="gone"
                 android:textFontWeight="300"
                 android:textSize="@dimen/_9ssp" />
 
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/more_options_btn"
             android:layout_width="@dimen/_22sdp"
             android:layout_height="@dimen/_22sdp"
             android:layout_marginTop="@dimen/_7sdp"
@@ -453,6 +642,7 @@
             android:layout_marginTop="@dimen/_65sdp"
             android:layout_marginEnd="@dimen/_2sdp"
             android:layout_marginBottom="@dimen/_8sdp"
+            android:visibility="gone"
             android:text="Top Rewarded"
             android:textColor="@color/white"
             android:textSize="@dimen/_11ssp"
@@ -465,26 +655,15 @@
             android:id="@+id/top_rewarded_rv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_180sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            app:layout_constraintLeft_toLeftOf="@id/top_rewarded_tv"
-            app:layout_constraintRight_toRightOf="@id/top_rewarded_tv"
-            app:layout_constraintTop_toBottomOf="@id/top_rewarded_tv" />
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/_85sdp"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
-
-    <ImageView
-        android:id="@+id/more_options_btn_UP"
-        android:layout_width="@dimen/_24sdp"
-        android:layout_height="@dimen/_24sdp"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/_20sdp"
-        android:rotation="90"
-        android:src="@drawable/more_options_btns"
-        android:visibility="gone" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/Lottie_Heart"
@@ -503,5 +682,84 @@
         android:adjustViewBounds="true"
         android:visibility="gone"
         app:lottie_speed="3" />
+
     <!--    </RelativeLayout>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comments_rv"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_above="@+id/commentsRelative"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/commentsRelative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginLeft="20dp"
+        android:weightSum="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/commentsConstraint"
+            android:layout_width="@dimen/_170sdp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_for_likes"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/EditTextInCommentsBottomDialog"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="6dp"
+                android:layout_marginEnd="6dp"
+                android:background="@color/Transparent"
+                android:hint="Write comment..."
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toRightOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/sendButtonInCommentSheet" />
+
+            <TextView
+                android:id="@+id/sendButtonInCommentSheet"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_vertical"
+                android:visibility="invisible"
+                android:text="Send"
+                android:textColor="@color/LogoGreyColor"
+                app:layout_constraintBottom_toBottomOf="@id/EditTextInCommentsBottomDialog"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/EditTextInCommentsBottomDialog" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/LikeInHomeVideoSingleItem"
+            android:layout_width="@dimen/_47sdp"
+            android:layout_height="@dimen/_47sdp"
+            android:layout_toRightOf="@+id/commentsConstraint"
+            android:src="@drawable/like_icon" />
+
+        <ImageView
+            android:id="@+id/DonationLayout"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_toRightOf="@+id/LikeInHomeVideoSingleItem"
+            android:src="@drawable/supports_amount" />
+
+    </LinearLayout>
+
 </RelativeLayout>

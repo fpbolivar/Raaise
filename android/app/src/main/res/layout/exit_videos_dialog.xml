@@ -79,12 +79,12 @@
             android:layout_marginTop="15dp"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
                 android:id="@+id/BackToEditingButton"
                 android:layout_width="150dp"
+                android:background="@drawable/button_shape_login"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/LogoGreyColor"
                 app:cardCornerRadius="10dp">
 
                 <TextView
@@ -92,8 +92,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginVertical="8dp"
-                    android:layout_toLeftOf="@id/view"
                     android:layout_weight="1"
+                    android:layout_centerInParent="true"
                     android:fontFamily="@font/noto_sans"
                     android:gravity="center"
                     android:padding="5dp"
@@ -101,7 +101,7 @@
                     android:textColor="@color/white"
                     android:textSize="13sp"
                     android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
+            </RelativeLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/DiscardButton"

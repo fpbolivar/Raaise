@@ -20,11 +20,13 @@ import java.util.ArrayList;
 public class RoomMemberAdapter extends RecyclerView.Adapter<RoomMemberAdapter.ViewHolder> {
 
     private Context mContext;
+    private RoomUserListener listener;
     private ArrayList<MemberIds> memberIds;
 
-    public RoomMemberAdapter(Context context){
+    public RoomMemberAdapter(Context context, RoomUserListener roomUserListener){
         this.mContext = context;
         this.memberIds = new ArrayList<>();
+        this.listener = roomUserListener;
     }
 
     @NonNull
@@ -44,6 +46,12 @@ public class RoomMemberAdapter extends RecyclerView.Adapter<RoomMemberAdapter.Vi
                 .into(holder.userImg);
 
         holder.userNameTV.setText(data.userName);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.UserSelected(data._id, data.userName);
+            }
+        });
     }
 
     @Override
@@ -66,6 +74,10 @@ public class RoomMemberAdapter extends RecyclerView.Adapter<RoomMemberAdapter.Vi
         this.memberIds.clear();
         this.memberIds.addAll(ids);
         notifyDataSetChanged();
+    }
+
+    public interface RoomUserListener{
+        void UserSelected(String id, String userName);
     }
 
 }

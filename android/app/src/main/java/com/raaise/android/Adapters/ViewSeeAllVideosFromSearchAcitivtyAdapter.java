@@ -14,6 +14,7 @@ import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -85,13 +86,18 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
         });
 
         if (obj.getUserId().getName() != null) {
-            holder.NameInHomeVideoSingleItem.setText(obj.getUserId().getName());
+            if (obj.getUserId().getName().length() > 10) {
+                holder.NameInHomeVideoSingleItem.setText(obj.getUserId().getName().substring(0, 10) + "...");
+            } else {
+                holder.NameInHomeVideoSingleItem.setText(obj.getUserId().getName());
+            }
+
         }
         if (obj.getUserId().getUserName() != null) {
             holder.UserNameInHomeVideoSingleItem.setText(obj.getUserId().getUserName());
         }
         if (obj.getDonationAmount() != null) {
-            holder.DonationRaisedInHomeVideoSingleItem.setText(String.format("Total Raised $%s", obj.getDonationAmount().isEmpty() ? 0 : obj.getDonationAmount()));
+            holder.DonationRaisedInHomeVideoSingleItem.setText(String.format("$%s", obj.getDonationAmount().isEmpty() ? 0 : obj.getDonationAmount()));
         }
         holder.LikeCountInHomeVideoSingleItem.setText(String.valueOf(obj.getVideolikeCount()));
         holder.CommentCountInHomeVideoSingleItem.setText(String.valueOf(obj.getVideoCommentCount()));
@@ -100,9 +106,9 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
             Glide.with(context).load(Prefs.GetBaseUrl(context) + obj.getUserId().getProfileImage()).placeholder(R.drawable.placeholder).into(holder.ImageProfileInAdapter);
         }
         if (obj.isLiked()) {
-            holder.LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(context, R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
+            holder.LikeInHomeVideoSingleItem.setImageDrawable(context.getDrawable(R.drawable.like_icon));
         } else {
-            holder.LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(context, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+            holder.LikeInHomeVideoSingleItem.setImageDrawable(context.getDrawable(R.drawable.like_icon_white));
         }
         holder.LikeInHomeVideoSingleItem.setOnClickListener(view -> {
             mainHomeData.ShowHeart(holder.Lottie_Heart);
@@ -123,7 +129,7 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
             }
         });
 
-        holder.DollarDonation.setOnClickListener(view -> homeReelsListener.ShowDonationDialog(obj.getUserId().get_id(), obj.get_id()));
+        holder.DollarDonation.setOnClickListener(view -> homeReelsListener.ShowDonationDialog(obj.getUserId().get_id(), obj.get_id(),obj));
         if (obj.isFollow()) {
             holder.FollowTextInHomeVideoSingleItem.setText("Following");
         } else {
@@ -151,7 +157,15 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
         holder.ShareVideo.setOnClickListener(view -> homeReelsListener.ShowShareVideoDialog(obj.getVideoLink(), obj.getUserId().get_id(), obj.getUserId().getProfileImage(), obj.getUserId().getShortBio(), obj.getUserId().getUserName(), obj.get_id()));
         holder.topRewardedHeading.setVisibility(View.GONE);
 
+        holder.DonationLayout.setOnClickListener(view -> homeReelsListener.ShowDonationDialog(obj.getUserId().get_id(), obj.get_id(),obj));
+        if(obj.getUserId().isVerified){
+            holder.verficationCardView.setVisibility(View.VISIBLE);
+        }else {
+            holder.verficationCardView.setVisibility(View.GONE);
+        }
         holder.videoViewCount.setText("" + obj.getVideoViewCount());
+        holder.commentsConstraint.setOnClickListener(view -> homeReelsListener.ShowCommentBottomSheetDialog(obj.get_id(), holder.CommentCountInHomeVideoSingleItem));
+
     }
 
     @Override
@@ -177,7 +191,7 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
         void ShowShareVideoDialog(String videoLink, String UserId, String UserImage, String UserShortBio, String UserName, String VideoId);
 
 
-        void ShowDonationDialog(String UserId, String VideoId);
+        void ShowDonationDialog(String UserId, String VideoId,GlobalSearchModel.Data.Posts obj);
 
         void notificationClicked(VideoView view);
 
@@ -191,8 +205,8 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
         TextView topRewardedHeading;
         ImageView tryAudioBtn, more_options_btn_UP, ShareVideo;
         LinearLayout songInfoContainer;
-        LinearLayout profileContainer, DonationLayout;
-        ImageView moreOptions, lottie_main;
+        LinearLayout profileContainer;
+        ImageView moreOptions, lottie_main, DonationLayout;
         ImageView CommentsInAdapter;
         LinearLayout Layout_Donation;
         VideoView VideoViewInHomeReels;
@@ -201,10 +215,15 @@ public class ViewSeeAllVideosFromSearchAcitivtyAdapter extends RecyclerView.Adap
                 LikeCountInHomeVideoSingleItem, hashTagsTV, CommentCountInHomeVideoSingleItem, VideoShareCountInHomeVideoSingleItem, FollowTextInHomeVideoSingleItem;
         LottieAnimationView Lottie_Heart, Lottie_PausePlay;
         RelativeLayout MainLayoutInFollowingVideoSingleItem, AudioItem;
-        CardView FollowButtonInHomeVideoSingleItem;
+        RelativeLayout FollowButtonInHomeVideoSingleItem;
+        ConstraintLayout commentsConstraint;
+        CardView verficationCardView;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            verficationCardView=itemView.findViewById(R.id.verficationCardView);
+            commentsConstraint=itemView.findViewById(R.id.commentsConstraint);
             videoViewCount = itemView.findViewById(R.id.view_count_tvk);
             topRewardedHeading = itemView.findViewById(R.id.top_rewarded_tv);
             DonationLayout = itemView.findViewById(R.id.DonationLayout);

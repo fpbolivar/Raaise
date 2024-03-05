@@ -125,6 +125,8 @@ public class UpdateUserProfileModel {
         public String deviceType;
         public String loginType;
         public String profileImage;
+        public String coverImage;
+
         public boolean isBlock;
         public boolean isActive;
         public String userGoogleId;
@@ -134,6 +136,14 @@ public class UpdateUserProfileModel {
         public String updatedAt;
         public String __v;
         public String phoneNumber;
+
+        public String getCoverImage() {
+            return coverImage;
+        }
+
+        public void setCoverImage(String coverImage) {
+            this.coverImage = coverImage;
+        }
 
         public String get_id() {
             return _id;

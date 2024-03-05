@@ -9,6 +9,6 @@ public class PublicRoomPojo {
     public PublicRoomPojo(String page, String limit) {
         this.page = page;
         this.limit = limit;
-        this.query = "room";
+        this.query = "";
     }
 }

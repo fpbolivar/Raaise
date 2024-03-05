@@ -36,6 +36,7 @@
             android:fontFamily="@font/noto_sans"
             android:textColor="@color/white_withdraw_text_color"
             android:textFontWeight="500"
+            android:textStyle="bold"
             android:textSize="14sp" />
 
 

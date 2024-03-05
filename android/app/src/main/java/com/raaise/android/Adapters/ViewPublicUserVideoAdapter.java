@@ -15,11 +15,13 @@ import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
+import com.raaise.android.ApiManager.ApiModels.GetGlobalVideoModel;
 import com.raaise.android.ApiManager.ApiModels.PublicUserVideoListModel;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
@@ -51,8 +53,6 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
     public void onBindViewHolder(@NonNull ViewPublicUserVideoAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         PublicUserVideoListModel.Data obj = list.get(position);
 
-
-
         holder.VideoViewInHomeReels.setVideoPath(Prefs.GetBaseUrl(context) + obj.getVideoLink());
         holder.VideoViewInHomeReels.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -61,6 +61,7 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
 
             }
         });
+
         holder.VideoViewInHomeReels.start();
         if (obj.isDonation) {
             holder.DonationLayout.setVisibility(View.VISIBLE);
@@ -68,11 +69,6 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
             holder.DonationLayout.setVisibility(View.GONE);
         }
         holder.CommentsInAdapter.setOnClickListener(view -> homeReelsListener.ShowCommentBottomSheetDialog(obj.get_id(), holder.CommentCountInHomeVideoSingleItem));
-
-
-
-
-
 
 
         holder.MainLayoutInFollowingVideoSingleItem.setOnClickListener(view -> {
@@ -97,13 +93,18 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
         });
 
         if (obj.getUserId().getName() != null) {
-            holder.NameInHomeVideoSingleItem.setText(obj.getUserId().getName());
+            if (obj.getUserId().getName().length() > 10) {
+                holder.NameInHomeVideoSingleItem.setText(obj.getUserId().getName().substring(0, 10) + "...");
+            } else {
+                holder.NameInHomeVideoSingleItem.setText(obj.getUserId().getName());
+            }
+
         }
         if (obj.getUserId().getUserName() != null) {
             holder.UserNameInHomeVideoSingleItem.setText(obj.getUserId().getUserName());
         }
         if (obj.getDonationAmount() != null) {
-            holder.DonationRaisedInHomeVideoSingleItem.setText(String.format("Total Raised $%s", obj.getDonationAmount().isEmpty() ? 0 : obj.getDonationAmount()));
+            holder.DonationRaisedInHomeVideoSingleItem.setText(String.format("$%s", obj.getDonationAmount().isEmpty() ? 0 : obj.getDonationAmount()));
         }
         holder.LikeCountInHomeVideoSingleItem.setText(String.valueOf(obj.getVideolikeCount()));
         holder.CommentCountInHomeVideoSingleItem.setText(String.valueOf(obj.getVideoCommentCount()));
@@ -114,11 +115,9 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
         Log.i("videoLiked", "onBindViewHolder: slug " + obj.slug);
         Log.i("videoLiked", "onBindViewHolder: likedOrNot " + obj.videolikeCount);
         if (obj.isLiked()) {
-            Log.i("videoLiked", "onBindViewHolder: under liked" );
-            holder.LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(context, R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
+            holder.LikeInHomeVideoSingleItem.setImageDrawable(context.getDrawable(R.drawable.like_icon));
         } else {
-            Log.i("videoLiked", "onBindViewHolder: under unliked" );
-            holder.LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(context, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+            holder.LikeInHomeVideoSingleItem.setImageDrawable(context.getDrawable(R.drawable.like_icon_white));
         }
         holder.LikeInHomeVideoSingleItem.setOnClickListener(view -> {
             mainHomeData.ShowHeart(holder.Lottie_Heart);
@@ -143,7 +142,7 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
             }
         });
 
-        holder.DollarDonation.setOnClickListener(view -> homeReelsListener.ShowDonationDialog(obj.getUserId().get_id(), obj.get_id()));
+        holder.DollarDonation.setOnClickListener(view -> homeReelsListener.ShowDonationDialog(obj.getUserId().get_id(), obj.get_id(),obj));
         if (obj.isFollow()) {
             holder.FollowTextInHomeVideoSingleItem.setText("Following");
         } else {
@@ -167,11 +166,17 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
                 homeReelsListener.tryAudio(obj.getAudioId().get_id());
             }
         });
-        
 
+        if(obj.getUserId().isVerified){
+            holder.verficationCardView.setVisibility(View.VISIBLE);
+        }else {
+            holder.verficationCardView.setVisibility(View.GONE);
+        }
         holder.topRewardedHead.setVisibility(View.GONE);
 
-        
+        holder.DonationLayout.setOnClickListener(view -> homeReelsListener.ShowDonationDialog(obj.getUserId().get_id(), obj.get_id(),obj));
+
+        holder.commentsConstraint.setOnClickListener(view -> homeReelsListener.ShowCommentBottomSheetDialog(obj.get_id(), holder.CommentCountInHomeVideoSingleItem));
 
         holder.ShareVideo.setOnClickListener(view -> homeReelsListener.ShowShareVideoDialog(obj.getVideoLink(), obj.getUserId().get_id(), obj.getUserId().getProfileImage(), obj.getUserId().getShortBio(), obj.getUserId().getUserName(), obj.get_id()));
 
@@ -201,7 +206,7 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
         void ShowShareVideoDialog(String videoLink, String UserId, String UserImage, String UserShortBio, String UserName, String VideoId);
 
 
-        void ShowDonationDialog(String UserId, String VideoId);
+        void ShowDonationDialog(String UserId, String VideoId, PublicUserVideoListModel.Data obj);
 
         void notificationClicked(VideoView view);
 
@@ -215,8 +220,8 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
         TextView topRewardedHead;
         ImageView tryAudioBtn, more_options_btn_UP, ShareVideo;
         LinearLayout songInfoContainer;
-        LinearLayout profileContainer, DonationLayout;
-        ImageView moreOptions, lottie_main;
+        LinearLayout profileContainer;
+        ImageView moreOptions, lottie_main,DonationLayout;
         ImageView CommentsInAdapter;
         LinearLayout Layout_Donation;
         VideoView VideoViewInHomeReels;
@@ -225,10 +230,14 @@ public class ViewPublicUserVideoAdapter extends RecyclerView.Adapter<ViewPublicU
                 LikeCountInHomeVideoSingleItem, hashTagsTV, CommentCountInHomeVideoSingleItem, VideoShareCountInHomeVideoSingleItem, FollowTextInHomeVideoSingleItem;
         LottieAnimationView Lottie_Heart, Lottie_PausePlay;
         RelativeLayout MainLayoutInFollowingVideoSingleItem, AudioItem;
-        CardView FollowButtonInHomeVideoSingleItem;
+        RelativeLayout FollowButtonInHomeVideoSingleItem;
+        ConstraintLayout commentsConstraint;
+        CardView verficationCardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            verficationCardView=itemView.findViewById(R.id.verficationCardView);
+            commentsConstraint=itemView.findViewById(R.id.commentsConstraint);
             videoViewCount = itemView.findViewById(R.id.view_count_tvk);
             topRewardedHead = itemView.findViewById(R.id.top_rewarded_tv);
             DonationLayout = itemView.findViewById(R.id.DonationLayout);

@@ -45,8 +45,8 @@ public class PublicUserFollowersAdapter extends RecyclerView.Adapter<PublicUserF
                     .circleCrop()
                     .placeholder(R.drawable.placeholder)
                     .into(holder.imageViewInFF);
-            holder.NameInFF.setText(mo.getFollowedBy().getName());
-            holder.FollowrCountInFF.setText(mo.getFollowedBy().getFollowersCount() + " Following");
+            holder.NameInFF.setText("@"+mo.getFollowedBy().getUserName());
+            holder.FollowrCountInFF.setText(mo.getFollowedBy().getFollowersCount() + " followers");
 
             holder.MainFollowListElement.setOnClickListener(view -> {
                 context.startActivity(new Intent(context, OtherUserProfileActivity.class).putExtra("UserIdForProfile", mo.getFollowedBy().get_id()).putExtra("UserNameForProfile", mo.getFollowedBy().getUserName()).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

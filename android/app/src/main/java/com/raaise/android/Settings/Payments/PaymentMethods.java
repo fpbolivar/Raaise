@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
+import com.raaise.android.Utilities.textPaint.TextPaint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -219,7 +221,7 @@ public class PaymentMethods extends AppCompatActivity implements PaymentCardAdap
                 list.clear();
                 list.addAll(payment_getCardsModel.getCards());
                 adapter.notifyDataSetChanged();
-                Layout_Login_Btn.setVisibility((list.size() == 0) ? View.GONE : View.VISIBLE);
+                Layout_Login_Btn.setVisibility((list.size() == 0 || VideoId == null) ? View.GONE : View.VISIBLE);
                 PaymentCardsRecyclerView.setVisibility((list.size() == 0) ? View.GONE : View.VISIBLE);
                 NoCardText.setVisibility((list.size() == 0) ? View.VISIBLE : View.GONE);
             }
@@ -257,6 +259,7 @@ public class PaymentMethods extends AppCompatActivity implements PaymentCardAdap
 
     private void Initialization() {
         AddNewCardInPaymentMethods = findViewById(R.id.AddNewCardInPaymentMethods);
+        TextPaint.getGradientColor(AddNewCardInPaymentMethods);
         PaymentCardsRecyclerView = findViewById(R.id.PaymentCardsRecyclerView);
         iv_back_btn = findViewById(R.id.BackInSignUp);
         Layout_Login_Btn = findViewById(R.id.PayButton);
@@ -270,7 +273,8 @@ public class PaymentMethods extends AppCompatActivity implements PaymentCardAdap
         amount = i.getStringExtra("AmountToDonate");
         donateTo = i.getStringExtra("DonateTo");
         VideoId = i.getStringExtra("VideoId");
-        if (VideoId == null || VideoId.equalsIgnoreCase("")) {
+        Log.i("isThereVideo", "Initialization: " + VideoId);
+        if (VideoId == null || VideoId.equalsIgnoreCase("") || VideoId.equals("null")) {
             Layout_Login_Btn.setVisibility(View.GONE);
         }
     }

@@ -40,6 +40,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.FacebookLoginModel;
+import com.raaise.android.ApiManager.ApiModels.GetPolicyModel;
 import com.raaise.android.ApiManager.ApiModels.GoogleLoginModel;
 import com.raaise.android.ApiManager.ApiModels.SignUpModel;
 import com.raaise.android.ApiManager.DataCallback;
@@ -84,21 +85,21 @@ public class SignUp extends AppCompatActivity {
         termsTextViewBtn = findViewById(R.id.termsTextView);
         termsPolicyCheckBox = findViewById(R.id.termsCheckBox);
 
-        SpannableString string = new SpannableString("By signing in your agreeing to our Terms of Service and Privacy Policy");
+        SpannableString string = new SpannableString("I have read and agree with Terms of Service & Privacy Policy");
 
         string.setSpan(new ClickableSpan() {
             @Override
             public void onClick(@NonNull View view) {
                 startActivity(new Intent(SignUp.this, SingleAbout.class).putExtra("AboutFrom", "TermsOfServiceInSettings"));
             }
-        }, 35, 52, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        }, 27, 43, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
 
         string.setSpan(new ClickableSpan() {
             @Override
             public void onClick(@NonNull View view) {
                 startActivity(new Intent(SignUp.this, SingleAbout.class).putExtra("AboutFrom", "PrivacyPolicyInSettings"));
             }
-        }, 56, 70, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        }, 46, 60, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
 
         termsTextViewBtn.setText(string);
         termsTextViewBtn.setMovementMethod(LinkMovementMethod.getInstance());
@@ -333,18 +334,33 @@ public class SignUp extends AppCompatActivity {
                 phoneNum = "";
             }
             SignUpModel signUpModel = new SignUpModel(name, username, email, pswrd, phoneNum, "android");
+            Log.e("SEND RESPONSE","Sign up response"+new Gson().toJson(signUpModel));
             apiManager.SignUp(signUpModel, new DataCallback<SignUpModel>() {
                 @Override
                 public void onSuccess(SignUpModel signUpModel) {
+                    Log.e("RESPONSE","Sign up response"+new Gson().toJson(signUpModel));
                     Dialogs.HideProgressDialog();
-                    Prompt.SnackBar(findViewById(android.R.id.content), "Login With New Id");
-                    NameEditTextInSignUp.setText("");
-                    UserNameEditTextInSignUp.setText("");
-                    EmailEditTextInSignUp.setText("");
-                    PhoneNumberEditTextInSignUp.setText("");
-                    PasswordEditTextInSignUp.setText("");
-                    startActivity(new Intent(getApplicationContext(), Login.class));
-                    finish();
+                    apiManager.GetPolicy(signUpModel.token, new GetPolicyModel("s3bucket"), new DataCallback<GetPolicyModel>() {
+                        @Override
+                        public void onSuccess(GetPolicyModel getPolicyModel) {
+                            Prefs.SetBaseUrl(SignUp.this, getPolicyModel.getData().getDescription());
+                            Prefs.SetBearerToken(getApplicationContext(), signUpModel.getToken());
+                            NameEditTextInSignUp.setText("");
+                            UserNameEditTextInSignUp.setText("");
+                            EmailEditTextInSignUp.setText("");
+                            PhoneNumberEditTextInSignUp.setText("");
+                            PasswordEditTextInSignUp.setText("");
+
+                            startActivity(new Intent(getApplicationContext(), ChooseInterestActivity.class));
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(ServerError serverError) {
+
+                        }
+                    });
+
                 }
 
                 @Override
@@ -356,6 +372,12 @@ public class SignUp extends AppCompatActivity {
             });
 
         }
+    }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SignUp.this,Login.class));
+        finish();
+        super.onBackPressed();
     }
 
     private void showMessage(String message) {

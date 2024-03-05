@@ -43,6 +43,7 @@ import com.google.gson.reflect.TypeToken;
 import com.raaise.android.Adapters.CommentsAdapter;
 import com.raaise.android.Adapters.CommentsReplyAdapter;
 import com.raaise.android.Adapters.ShareVideoUserListAdapter;
+import com.raaise.android.Adapters.TopRewardedAdapter;
 import com.raaise.android.Adapters.ViewSeeAllVideosFromSearchAcitivtyAdapter;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.GlobalSearchModel;
@@ -401,9 +402,9 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
             public void onSuccess(VideoLikeDislikeModel videoLikeDislikeModel) {
                 likecount.setText(String.valueOf(videoLikeDislikeModel.getVideoCount()));
                 if (videoLikeDislikeModel.isLike()) {
-                    img.setColorFilter(ContextCompat.getColor(ViewSeeAllVideosFromSearchAcitivty.this, R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
+                    img.setImageDrawable(getDrawable(R.drawable.like_icon));
                 } else {
-                    img.setColorFilter(ContextCompat.getColor(ViewSeeAllVideosFromSearchAcitivty.this, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+                    img.setImageDrawable(getDrawable(R.drawable.like_icon_white));
                 }
             }
 
@@ -534,18 +535,20 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
 
 
     @Override
-    public void ShowDonationDialog(String UserId, String VideoId) {
+    public void ShowDonationDialog(String UserId, String VideoId,GlobalSearchModel.Data.Posts obj) {
         final Dialog dialog = new Dialog(ViewSeeAllVideosFromSearchAcitivty.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow()
                 .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.layout_donation_dialog);
-        LinearLayout Donate = dialog.findViewById(R.id.dialog_btn_Donation);
+        dialog.setContentView(R.layout.supports_amount_dialog);
+        ImageView Donate = dialog.findViewById(R.id.dialog_btn_Donation);
         EditText donation_amount_ET = dialog.findViewById(R.id.donation_amount_ET);
         RelativeLayout Layout = dialog.findViewById(R.id.layout_donation_amount);
         ImageView Tick = dialog.findViewById(R.id.select_firstAmount_icon);
+        TextView noDataFound = dialog.findViewById(R.id.dataNotFound);
 
+        RecyclerView donatedRv = dialog.findViewById(R.id.commentsRV);
         Donate.setOnClickListener(view -> {
             if (!donation_amount_ET.getText().toString().trim().equalsIgnoreCase("")) {
 
@@ -559,6 +562,30 @@ public class ViewSeeAllVideosFromSearchAcitivty extends AppCompatActivity implem
                 Toast.makeText(ViewSeeAllVideosFromSearchAcitivty.this, "Enter Amount First", Toast.LENGTH_SHORT).show();
             }
         });
+        donatedRv.setVisibility(View.VISIBLE);
+
+        TopRewardedAdapter adapter = new TopRewardedAdapter(this);
+        LinearLayoutManager  linearLayoutManager
+                = new LinearLayoutManager(
+                this,
+                LinearLayoutManager.HORIZONTAL,
+                false);
+        if (obj.getDonationUsers() != null){
+            if (obj.getDonationUsers().size() > 0){
+                adapter.updateSupporterList(obj.getDonationUsers());
+            } else {
+                noDataFound.setVisibility(View.VISIBLE);
+            }
+        } else {
+            noDataFound.setVisibility(View.VISIBLE);
+        }
+        donatedRv.setLayoutManager(linearLayoutManager);
+        donatedRv.setAdapter(adapter);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
         dialog.show();
     }
 

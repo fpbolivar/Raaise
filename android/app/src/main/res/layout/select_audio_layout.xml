@@ -39,7 +39,7 @@
                 android:layout_marginTop="3dp"
                 android:lineHeight="16sp"
                 android:text="Take Me Home"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toRightOf="@id/user_image"
                 app:layout_constraintTop_toTopOf="@id/user_image" />
@@ -51,6 +51,7 @@
                 android:layout_marginStart="12dp"
                 android:lineHeight="16sp"
                 android:text="20k followers"
+                android:textColor="@color/white"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toBottomOf="@id/user_image"
                 app:layout_constraintLeft_toRightOf="@id/user_image" />

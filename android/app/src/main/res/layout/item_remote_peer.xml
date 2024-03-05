@@ -4,20 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="180dp"
-    tools:layout_height="180dp">
+    tools:layout_height="85dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        app:cardCornerRadius="12dp"
         android:backgroundTint="@color/DarkGrey">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            app:cardCornerRadius="10dp"
             android:backgroundTint="@color/DarkGrey">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,6 +31,29 @@
                     app:layout_constraintBottom_toTopOf="@id/tvName"
                     android:visibility="gone" />
 
+                <ImageView
+                    android:id="@+id/participantImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/blank_profile_img"
+                    android:backgroundTint="@color/black"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/tvName"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/user_mic"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/mic_on"/>
+
+
                 <TextView
                     android:id="@+id/tvName"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -44,7 +63,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="4dp"
-                    android:visibility="gone"
                     android:text="John Doe"
                     android:textColor="@color/white" />
             </androidx.constraintlayout.widget.ConstraintLayout>

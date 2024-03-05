@@ -48,6 +48,7 @@ import com.raaise.android.Adapters.CommentsAdapter;
 import com.raaise.android.Adapters.CommentsReplyAdapter;
 import com.raaise.android.Adapters.HomeFollowingAdapter;
 import com.raaise.android.Adapters.ShareVideoUserListAdapter;
+import com.raaise.android.Adapters.TopRewardedAdapter;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.GetGlobalVideoModel;
 import com.raaise.android.ApiManager.ApiModels.GetPolicyModel;
@@ -71,6 +72,7 @@ import com.raaise.android.Utilities.HelperClasses.Prompt;
 import com.raaise.android.Utilities.HelperClasses.ResumePlayForYou;
 import com.raaise.android.Utilities.HelperClasses.StopFollowingVideo;
 import com.raaise.android.Utilities.HelperClasses.StringHelper;
+import com.raaise.android.Utilities.textPaint.TextPaint;
 import com.raaise.android.model.BlockVideoPojo;
 import com.raaise.android.model.ChatListModel;
 import com.raaise.android.model.CommentReplyPojo;
@@ -117,6 +119,8 @@ Home_ForYouFragment extends Fragment implements HomeFollowingAdapter.HomeReelsLi
     String VideoId;
     Dialog UserListDialog;
     private long downloadID;
+
+    private boolean firstTime = true;
 
     private final BroadcastReceiver onDownloadComplete = new BroadcastReceiver() {
         @Override
@@ -195,25 +199,6 @@ Home_ForYouFragment extends Fragment implements HomeFollowingAdapter.HomeReelsLi
         v = inflater.inflate(R.layout.fragment_home__for_you, container, false);
         Initialization(v);
         clickListeners();
-        File file = new File(Environment.getExternalStorageDirectory().getPath()
-                + "/Download/" + ".txt");
-
-        if (file.exists()){
-            Log.i("scripText", "onCreateView: already exist");
-        } else {
-            Log.i("scripText", "onCreateView: doesnt exist");
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                Log.i("scripText", "onCreateView: exc " + e.getMessage());
-                e.printStackTrace();
-            }
-
-            if (file.exists()){
-                Log.i("scripText", "onCreateView: after exist");
-            }
-
-        }
         if (Prefs.GetBaseUrl(requireContext()).equals("")){
             getToken();
 
@@ -263,25 +248,37 @@ Home_ForYouFragment extends Fragment implements HomeFollowingAdapter.HomeReelsLi
         } catch (Exception e){
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-
+        if (App.userFollowUnfolle){
+            Home_FollowingFragment.doRefresh = true;
+            list.clear();
+            PageCounter = 1;
+            HitGlobalVideoApi("4", String.valueOf(PageCounter));
+            App.userFollowUnfolle = false;
+        }
         super.onResume();
     }
 
     void HitGlobalVideoApi(String limit, String page) {
+      //  ((Home) requireActivity()).videoProgressBar.setVisibility(View.VISIBLE);
         Log.i("bearerToken", "HitGlobalVideoApi: " + Prefs.GetBearerToken(App.getContext()));
         GetGlobalVideoModel model = new GetGlobalVideoModel(limit, page);
-        Log.i("bearerToken", "HitGlobalVideoApi: " + new Gson().toJson(model));
         apiManager.GetGlobalVideo(Prefs.GetBearerToken(App.getContext()), model, new DataCallback<GetGlobalVideoModel>() {
             @Override
             public void onSuccess(GetGlobalVideoModel getGlobalVideoModel) {
+                try {
+        //            ((Home) requireActivity()).videoProgressBar.setVisibility(View.GONE);
+                } catch (Exception e){
+                }
                 list.addAll(getGlobalVideoModel.getData());
                 homeFollowingAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onError(ServerError serverError) {
-
+                try {
+                    ((Home) requireActivity()).videoProgressBar.setVisibility(View.GONE);
+                } catch (Exception e){
+                }
             }
         });
     }
@@ -420,9 +417,9 @@ Home_ForYouFragment extends Fragment implements HomeFollowingAdapter.HomeReelsLi
             public void onSuccess(VideoLikeDislikeModel videoLikeDislikeModel) {
                 LikeCount.setText(String.valueOf(videoLikeDislikeModel.getVideoCount()));
                 if (videoLikeDislikeModel.isLike()) {
-                    Img.setColorFilter(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
+                    Img.setImageDrawable(getContext().getDrawable(R.drawable.like_icon));
                 } else {
-                    Img.setColorFilter(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+                    Img.setImageDrawable(getContext().getDrawable(R.drawable.like_icon_white));
                 }
             }
 
@@ -434,21 +431,19 @@ Home_ForYouFragment extends Fragment implements HomeFollowingAdapter.HomeReelsLi
     }
 
     @Override
-    public void ShowDonationDialog(String UserId, String VideoId) {
+    public void ShowDonationDialog(String UserId, String VideoId,GetGlobalVideoModel.Data obj) {
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow()
                 .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.layout_donation_dialog);
-        LinearLayout Donate = dialog.findViewById(R.id.dialog_btn_Donation);
+        dialog.setContentView(R.layout.supports_amount_dialog);
+        ImageView Donate = dialog.findViewById(R.id.dialog_btn_Donation);
         EditText donation_amount_ET = dialog.findViewById(R.id.donation_amount_ET);
-        RelativeLayout Layout = dialog.findViewById(R.id.layout_donation_amount);
-        ImageView Tick = dialog.findViewById(R.id.select_firstAmount_icon);
+        TextView top_donated = dialog.findViewById(R.id.top_donors);
+        TextView noDataFound = dialog.findViewById(R.id.dataNotFound);
 
-
-
-
+        RecyclerView donatedRv = dialog.findViewById(R.id.commentsRV);
 
         Donate.setOnClickListener(view -> {
             if (!donation_amount_ET.getText().toString().trim().equalsIgnoreCase("")) {
@@ -463,6 +458,30 @@ Home_ForYouFragment extends Fragment implements HomeFollowingAdapter.HomeReelsLi
                 Toast.makeText(getActivity(), "Enter Amount First", Toast.LENGTH_SHORT).show();
             }
         });
+        donatedRv.setVisibility(View.VISIBLE);
+
+        TopRewardedAdapter adapter = new TopRewardedAdapter(getActivity());
+        LinearLayoutManager  linearLayoutManager
+                = new LinearLayoutManager(
+                getActivity(),
+                LinearLayoutManager.HORIZONTAL,
+                false);
+        if (obj.getDonationUsers() != null){
+            if (obj.getDonationUsers().size() > 0){
+                adapter.updateSupporterList(obj.getDonationUsers());
+            } else {
+                        noDataFound.setVisibility(View.VISIBLE);
+            }
+        } else {
+            noDataFound.setVisibility(View.VISIBLE);
+        }
+        donatedRv.setLayoutManager(linearLayoutManager);
+        donatedRv.setAdapter(adapter);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.setCancelable(true);
         dialog.show();
     }
 
@@ -501,6 +520,7 @@ Home_ForYouFragment extends Fragment implements HomeFollowingAdapter.HomeReelsLi
             }
         });
         TextView sendButtonInCommentSheet = dialog.findViewById(R.id.sendButtonInCommentSheet);
+        TextPaint.getGradientColor(sendButtonInCommentSheet);
         EditTextInCommentsBottomDialog = dialog.findViewById(R.id.EditTextInCommentsBottomDialog);
         sendButtonInCommentSheet.setOnClickListener(view -> {
             if (EDITING_COMMENT_REPLY){

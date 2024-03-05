@@ -1,5 +1,6 @@
 package com.raaise.android.ApiManager.ApiModels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PublicUserVideoListModel {
@@ -63,7 +64,17 @@ public class PublicUserVideoListModel {
         public boolean isLiked;
         public boolean isFollow;
         public boolean isViewed;
+        public ArrayList<GetGlobalVideoModel.DonationUsers> donationUsers;
+
         public int __v;
+
+        public ArrayList<GetGlobalVideoModel.DonationUsers> getDonationUsers() {
+            return donationUsers;
+        }
+
+        public void setDonationUsers(ArrayList<GetGlobalVideoModel.DonationUsers> donationUsers) {
+            this.donationUsers = donationUsers;
+        }
 
         public String get_id() {
             return _id;
@@ -370,7 +381,16 @@ public class PublicUserVideoListModel {
             public String otp;
             public String createdAt;
             public String updatedAt;
+            public boolean isVerified;
             public int __v;
+
+            public boolean getIsVerified() {
+                return isVerified;
+            }
+
+            public void setIsVerified(boolean isVerified) {
+                this.isVerified = isVerified;
+            }
 
             public boolean isEmailNotification() {
                 return emailNotification;
@@ -531,6 +551,8 @@ public class PublicUserVideoListModel {
             public void set__v(int __v) {
                 this.__v = __v;
             }
+
+
         }
     }
 

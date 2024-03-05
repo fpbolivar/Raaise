@@ -27,6 +27,7 @@ import com.raaise.android.Settings.About.SingleAbout;
 import com.raaise.android.Settings.Logins.DeactivateAccount;
 import com.raaise.android.Settings.MyAccount.ChangePassword;
 import com.raaise.android.Settings.MyAccount.PersonalInformation;
+import com.raaise.android.Settings.MyAccount.PrivacyControl;
 import com.raaise.android.Settings.MyAccount.ShortBio;
 import com.raaise.android.Settings.MyAccount.UserName;
 import com.raaise.android.Settings.Payments.BankDetails;
@@ -36,12 +37,13 @@ import com.raaise.android.Settings.Payments.WithDrawls;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
+import com.raaise.android.Utilities.textPaint.TextPaint;
 
 public class SettingsActivity extends AppCompatActivity {
     RelativeLayout PersonalInformationInSettings,
             UserNameInSettings, ShortBioInSettings, ChangePasswordInSettings, PaymentMethodsInSettings, DonationRaisedInSettings,
             WithDrawlsInSettings, BankDetailsInSettings, TermsOfServiceInSettings, PrivacyPolicyInSettings, CopyrightPolicyInSettings,
-            DeactivateAccountInSettings, DeleteAccountInSettings, LogoutInSettings;
+            DeactivateAccountInSettings, DeleteAccountInSettings, LogoutInSettings, privacyControlBTN;
     Context context;
     ImageView BackArrow;
     SwitchCompat EmailNotificationSwitch, PushNotificationSwitch;
@@ -56,6 +58,8 @@ public class SettingsActivity extends AppCompatActivity {
     String AccAddress = "Address";
     String AccPostalCode = "PostalCode";
     String AccPhoneNumber = "PhoneNumber";
+
+    TextView myAccount,notification,payments,about,logins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void Initialization() {
         context = getApplicationContext();
+        privacyControlBTN = findViewById(R.id.privacy_control_btn);
         PersonalInformationInSettings = findViewById(R.id.PersonalInformationInSettings);
         UserNameInSettings = findViewById(R.id.UserNameInSettings);
         ShortBioInSettings = findViewById(R.id.ShortBioInSettings);
@@ -93,6 +98,17 @@ public class SettingsActivity extends AppCompatActivity {
         EmailNotificationSwitch = findViewById(R.id.EmailNotificationSwitch);
         PushNotificationSwitch = findViewById(R.id.PushNotificationSwitch);
 
+        myAccount=findViewById(R.id.myAccount);
+        TextPaint.getGradientColor(myAccount);
+        notification=findViewById(R.id.myNoti);
+        TextPaint.getGradientColor(notification);
+        payments=findViewById(R.id.myPayment);
+        TextPaint.getGradientColor(payments);
+        about=findViewById(R.id.about);
+        TextPaint.getGradientColor(about);
+        logins=findViewById(R.id.logins);
+        TextPaint.getGradientColor(logins);
+
 
         if (Prefs.GetEmailNotification(SettingsActivity.this).equals("1")) {
             EmailNotificationSwitch.setChecked(true);
@@ -108,6 +124,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void ClickListeners() {
+        privacyControlBTN.setOnClickListener(view -> startActivity(new Intent(context, PrivacyControl.class)));
         PersonalInformationInSettings.setOnClickListener(view -> startActivity(new Intent(context, PersonalInformation.class)));
         UserNameInSettings.setOnClickListener(view -> startActivity(new Intent(context, UserName.class)));
         ShortBioInSettings.setOnClickListener(view -> startActivity(new Intent(context, ShortBio.class)));
@@ -151,6 +168,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     public void showLogoutAccountDialog() {
@@ -162,6 +180,7 @@ public class SettingsActivity extends AppCompatActivity {
                 .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         TextView No = dialog.findViewById(R.id.NoInLogout);
         TextView LogoutYes = dialog.findViewById(R.id.YesInLogout);
+        TextPaint.getGradientColor(No);
         No.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,6 +228,7 @@ public class SettingsActivity extends AppCompatActivity {
                 Prefs.ClearBankDetails(SettingsActivity.this, AccAddress);
                 Prefs.ClearBankDetails(SettingsActivity.this, AccPostalCode);
                 Prefs.ClearBankDetails(SettingsActivity.this, AccPhoneNumber);
+                Prefs.clearPrivacyPosition(SettingsActivity.this);
 
                 Intent intent = new Intent(SettingsActivity.this, Login.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

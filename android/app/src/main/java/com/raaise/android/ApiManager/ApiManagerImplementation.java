@@ -57,12 +57,16 @@ import com.raaise.android.ApiManager.RetrofitHelper.ApiUtilities;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.StringHelper;
+import com.raaise.android.model.BannerModel;
 import com.raaise.android.model.BlockUserPojo;
 import com.raaise.android.model.BlockVideoPojo;
+import com.raaise.android.model.CategoriesModel;
+import com.raaise.android.model.CategoriesPojo;
 import com.raaise.android.model.ChatListModel;
 import com.raaise.android.model.ChatModel;
 import com.raaise.android.model.ClaimedAmountPojo;
 import com.raaise.android.model.CommentReplyPojo;
+import com.raaise.android.model.CurrentPrivacyResponse;
 import com.raaise.android.model.DeleteCommentPojo;
 import com.raaise.android.model.DeleteCommentReply;
 import com.raaise.android.model.EditVideoCmntPojo;
@@ -76,6 +80,10 @@ import com.raaise.android.model.LiveRoomTokenData;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicData;
 import com.raaise.android.model.MusicResponse;
+import com.raaise.android.model.PrivacyBody;
+import com.raaise.android.model.PrivacyModel;
+import com.raaise.android.model.PrivacyResponse;
+import com.raaise.android.model.PrivacyUsersRes;
 import com.raaise.android.model.PublicRoomPojo;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
@@ -87,6 +95,7 @@ import com.raaise.android.model.SendChatBody;
 import com.raaise.android.model.SlugRoomData;
 import com.raaise.android.model.UpdateRoomPojo;
 import com.raaise.android.model.UpdateRoomRes;
+import com.raaise.android.model.VerifiedResponse;
 import com.raaise.android.model.VideoCommentDelete;
 import com.raaise.android.model.VideoDonationModal;
 import com.raaise.android.model.VideoDonationPojo;
@@ -1820,7 +1829,7 @@ public class ApiManagerImplementation implements ApiManager {
         Log.i("creatingRoom", "createLiveRoom: Model " + model.memberIds);
         Log.i("creatingRoom", "createLiveRoom: Model " + model.roomType);
 
-        ApiUtilities.getApiInterface().createLiveRoom(token, model.getTitle(), model.getDescription(), model.getLogo(), model.getMemberIds(), model.getRoomType()).enqueue(new Callback<RoomResponse>() {
+        ApiUtilities.getApiInterface().createLiveRoom(token, model.getTitle(), model.getDescription(), model.getLogo(), model.getMemberIds(), model.getRoomType(), model.getScheduleType(), model.getScheduleDateTime()).enqueue(new Callback<RoomResponse>() {
             @Override
             public void onResponse(Call<RoomResponse> call, Response<RoomResponse> response) {
                 if (response.isSuccessful()){
@@ -2009,6 +2018,129 @@ public class ApiManagerImplementation implements ApiManager {
             @Override
             public void onFailure(Call<LiveRoomChat> call, Throwable t) {
 
+            }
+        });
+    }
+
+    @Override
+    public void updatePrivacyPolicy(String token, PrivacyModel model, DataCallback<String> callback) {
+        ApiUtilities.getApiInterface().updatePrivacyPolicy(token, model).enqueue(new Callback<PrivacyResponse>() {
+            @Override
+            public void onResponse(Call<PrivacyResponse> call, Response<PrivacyResponse> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body().message);
+                        } else callback.onError(new ServerError(response.body().message));
+                    } else callback.onError(new ServerError(response.body().message));
+                } else callback.onError(new ServerError(String.valueOf(response.code())));
+            }
+
+            @Override
+            public void onFailure(Call<PrivacyResponse> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void getPrivacyUsers(String token, PrivacyBody model, DataCallback<ArrayList<PrivacyUsersRes.PrivacyData>> callback) {
+        ApiUtilities.getApiInterface().getPrivacyUsers(token, model).enqueue(new Callback<PrivacyUsersRes>() {
+            @Override
+            public void onResponse(Call<PrivacyUsersRes> call, Response<PrivacyUsersRes> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body().getData());
+                        } else callback.onError(new ServerError(response.body().message));
+                    } else callback.onError(new ServerError(response.message()));
+                } else callback.onError(new ServerError("Something went wrong"));
+            }
+
+            @Override
+            public void onFailure(Call<PrivacyUsersRes> call, Throwable t) {
+                    callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void getCurrentPrivacyControl(String token, DataCallback<CurrentPrivacyResponse> callback) {
+        ApiUtilities.getApiInterface().getCurrentPrivacyControl(token).enqueue(new Callback<CurrentPrivacyResponse>() {
+            @Override
+            public void onResponse(Call<CurrentPrivacyResponse> call, Response<CurrentPrivacyResponse> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CurrentPrivacyResponse> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void getBanner(String token, DataCallback<BannerModel> callback) {
+        ApiUtilities.getApiInterface().getBanner(token).enqueue(new Callback<BannerModel>() {
+            @Override
+            public void onResponse(Call<BannerModel> call, Response<BannerModel> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            callback.onSuccess(response.body());
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<BannerModel> call, Throwable t) {
+                callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void submitCategories(String Token, CategoriesPojo ids, DataCallback<CategoriesModel> Callback) {
+        ApiUtilities.getApiInterface().submitCategories(Token,ids).enqueue(new Callback<CategoriesModel>() {
+            @Override
+            public void onResponse(Call<CategoriesModel> call, Response<CategoriesModel> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            Callback.onSuccess(response.body());
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<CategoriesModel> call, Throwable t) {
+                Callback.onError(new ServerError(t.getMessage()));
+            }
+        });
+    }
+
+    @Override
+    public void applyForVerification(String token, VerifiedResponse verified, DataCallback<VerifiedResponse> Callback) {
+        ApiUtilities.getApiInterface().applyForVerification(token,verified).enqueue(new Callback<VerifiedResponse>() {
+            @Override
+            public void onResponse(Call<VerifiedResponse> call, Response<VerifiedResponse> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null){
+                        if (response.body().status == 200){
+                            Callback.onSuccess(response.body());
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<VerifiedResponse> call, Throwable t) {
+                Callback.onError(new ServerError(t.getMessage()));
             }
         });
     }

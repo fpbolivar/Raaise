@@ -3,8 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="500dp"
-
     android:background="@drawable/bottom_dialog_dark">
+
+    <View
+        android:id="@+id/viewTop"
+        android:layout_width="100dp"
+        android:layout_height="4dp"
+        android:background="@drawable/cross_bg_straight"
+        android:layout_marginTop="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/comments_count_tv"
@@ -14,19 +24,20 @@
         android:fontFamily="@font/noto_sans"
         android:gravity="center"
         android:padding="6dp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:text="comments"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/view"
+        app:layout_constraintTop_toBottomOf="@id/viewTop"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintRight_toRightOf="parent" />
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height=".5dp"
-        android:background="@color/TextColor1"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="40dp"
+        android:background="@color/lineStroke_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/comments_count_tv" />
@@ -40,15 +51,16 @@
         android:src="@drawable/close_icon"
         app:layout_constraintBottom_toBottomOf="@id/comments_count_tv"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/comments_count_tv"
         app:tint="@color/white" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commentsRV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/black"
+        android:background="@color/dialog_color_dark"
         android:minHeight="100dp"
+        android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintBottom_toTopOf="@id/reply_container"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -60,8 +72,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="2dp"
-        android:background="@drawable/rounded_white_border"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/curved_dark_grey_background"
         android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -117,10 +129,10 @@
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="6dp"
-            android:background="@color/black"
-            android:hint="Add comment..."
+            android:background="@color/Transparent"
+            android:hint="Write comment..."
             android:textColor="@color/white"
-            android:textColorHint="#606060"
+            android:textColorHint="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

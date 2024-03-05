@@ -203,10 +203,10 @@ public class Try_AudioFragment extends Fragment {
         BackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction()
-                        .add(R.id.try_audio_container, new HomeFragment())
-                        .addToBackStack(null)
-                        .commit();
+//                getFragmentManager().beginTransaction()
+//                        .add(R.id.try_audio_container, new HomeFragment())
+//                        .addToBackStack(null)
+//                        .commit();
                 getActivity().finish();
             }
         });

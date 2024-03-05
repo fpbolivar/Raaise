@@ -30,6 +30,7 @@ import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.ApiManager.ServerError;
 import com.raaise.android.Home.Fragments.Home_Following_foryou_Fragments.Home_FollowingFragment;
 import com.raaise.android.Home.Fragments.Home_Following_foryou_Fragments.Home_ForYouFragment;
+import com.raaise.android.Home.MainHome.Home;
 import com.raaise.android.R;
 import com.raaise.android.Settings.SettingsActivity;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
@@ -56,6 +57,7 @@ public class HomeFragment extends Fragment {
     Home_FollowingFragment followingFrag;
     ApiManager apiManager = App.getApiManager();
     TextView NotificationCount;
+    ImageView searchBTN;
     int PERMISSION_ALL = 1;
     String[] PERMISSIONS = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -103,8 +105,10 @@ public class HomeFragment extends Fragment {
             public void onSuccess(GetUserProfile getUserProfile) {
                 try {
                     Prefs.setUserName(getActivity(), getUserProfile.data.userName);
+                    Prefs.setUserName(getActivity(), getUserProfile.data.userName);
                     Prefs.setNameOfUser(getActivity(), getUserProfile.data.name);
                     Prefs.setUserImage(getActivity(), getUserProfile.data.profileImage);
+                    Prefs.setUserCoverImage(getActivity(), getUserProfile.data.getCoverImage());
                     Prefs.SetPhoneNumberOfTheUser(getActivity(), getUserProfile.data.phoneNumber);
                     Prefs.SetUserEmail(getActivity(), getUserProfile.data.email);
                     Prefs.SetUserShortBio(getActivity(), getUserProfile.data.getShortBio());
@@ -118,7 +122,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onError(ServerError serverError) {
                 Prompt.SnackBar(v, serverError.getErrorMsg());
+                Log.i("whatsTheError", "onError: " + serverError.getErrorMsg());
                 if (serverError.getErrorMsg().toLowerCase().contains("unauthorized")){
+                    Log.i("whatsTheError", "onError: inside it" );
                     DoLogout();
                 }
             }
@@ -135,16 +141,24 @@ public class HomeFragment extends Fragment {
                     .replace(R.id.FragmentContainer, new InboxFragment(), null)
                     .commit();
         });
+
+        searchBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Home) requireActivity()).fragmentManagerHelper.replace(new SearchFragment(), true);
+            }
+        });
     }
 
 
     private void Initialization(View v) {
+        searchBTN = v.findViewById(R.id.search);
         NotificationCount = v.findViewById(R.id.NotificationCount);
         NotificationBellIcon = v.findViewById(R.id.NotificationBellIcon);
         tabLayout = v.findViewById(R.id.tabLayout);
         ViewPager = v.findViewById(R.id.ViewPager1);
-        tabLayout.addTab(tabLayout.newTab().setText("For You"));
-        tabLayout.addTab(tabLayout.newTab().setText("Following"));
+        tabLayout.addTab(tabLayout.newTab().setText(""));
+//        tabLayout.addTab(tabLayout.newTab().setText("Following"));
 
 
         showViewPager();
@@ -172,6 +186,7 @@ public class HomeFragment extends Fragment {
         apiManager.UnReadNotificationCount(Prefs.GetBearerToken(v.getContext()), new DataCallback<UnReadNotificationCountModel>() {
             @Override
             public void onSuccess(UnReadNotificationCountModel unReadNotificationCountModel) {
+                NotificationBellIcon.setVisibility(View.VISIBLE);
                 if (unReadNotificationCountModel.getNotificationUnreadCount() == 0) {
                     NotificationCount.setVisibility(View.INVISIBLE);
                 } else {
@@ -258,11 +273,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void DoLogout() {
-        Dialogs.createProgressDialog(getActivity());
-        apiManager.LogOut(Prefs.GetBearerToken(getActivity()), new DataCallback<LogoutModel>() {
-            @Override
-            public void onSuccess(LogoutModel logoutModel) {
-                Dialogs.HideProgressDialog();
                 Prefs.ClearBearerToken(getActivity());
                 Prefs.ClearBaseUrl(getActivity());
                 Prefs.ClearForgetPasswordEmail(getActivity());
@@ -283,17 +293,12 @@ public class HomeFragment extends Fragment {
                 Prefs.ClearBankDetails(getActivity(), AccAddress);
                 Prefs.ClearBankDetails(getActivity(), AccPostalCode);
                 Prefs.ClearBankDetails(getActivity(), AccPhoneNumber);
+                Prefs.clearPrivacyPosition(getContext());
 
                 Intent intent = new Intent(getActivity(), Login.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-            }
 
-            @Override
-            public void onError(ServerError serverError) {
-                Dialogs.HideProgressDialog();
-            }
-        });
 
     }
 }

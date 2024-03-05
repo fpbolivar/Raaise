@@ -1,11 +1,13 @@
 package com.raaise.android.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +17,7 @@ import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.model.ChatListModel;
+import com.raaise.android.model.ChatUserID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +27,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     public Context mContext;
     public ChatListListener chatListListener;
     public List<ChatListModel.Data> chatListModels;
+    private ArrayList<String> chatUserIDS;
 
     public ChatListAdapter(Context mContext, ChatListListener chatListListener, List<ChatListModel.Data> chatListModels) {
         this.mContext = mContext;
         this.chatListListener = chatListListener;
         this.chatListModels = chatListModels;
+        this.chatUserIDS = new ArrayList<>();
     }
 
     @NonNull
@@ -87,6 +92,29 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 });
             }
         }
+
+        if (chatUserIDS.size() > 0){
+            for (String userID : chatUserIDS){
+
+                if (!Prefs.GetUserID(mContext).equalsIgnoreCase(model.getSenderId().get_id()) && model.getSenderId() != null){
+                    if (userID.equals(model.senderId._id)){
+                        holder.onlineIV.setVisibility(View.VISIBLE);
+                        return;
+                    } else {
+                        holder.onlineIV.setVisibility(View.GONE);
+                    }
+                } else if (model.getReceiverId() != null){
+                    if (userID.equals(model.receiverId._id)){
+                        holder.onlineIV.setVisibility(View.VISIBLE);
+                        return;
+                    } else {
+                        holder.onlineIV.setVisibility(View.GONE);
+                    }
+                }
+
+            }
+        }
+
     }
 
     @Override
@@ -104,7 +132,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView userImage;
+        ImageView userImage, onlineIV;
         TextView userName;
         TextView lastChat, UnreadCount, lastChatTime;
 
@@ -115,6 +143,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             UnreadCount = itemView.findViewById(R.id.UnreadCount);
             lastChat = itemView.findViewById(R.id.lastChatText);
             userImage = itemView.findViewById(R.id.user_image);
+            onlineIV = itemView.findViewById(R.id.online_status);
         }
+    }
+
+    public void setChatIDS(ArrayList<String> ids){
+        this.chatUserIDS.clear();
+        this.chatUserIDS.addAll(ids);
+        notifyDataSetChanged();
     }
 }

@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,10 +23,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.raaise.android.Adapters.LiveChatAdapter;
 import com.raaise.android.Adapters.ParticipantAdapter;
+import com.raaise.android.Adapters.SecondaryParticipantAdapter;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.DataCallback;
 import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.ApiManager.ServerError;
+import com.raaise.android.MainActivity;
 import com.raaise.android.R;
 import com.raaise.android.Utilities.HelperClasses.HelperClass;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
@@ -50,11 +54,11 @@ import live.videosdk.rtc.android.listeners.ParticipantEventListener;
 import live.videosdk.rtc.android.listeners.PubSubMessageListener;
 import live.videosdk.rtc.android.model.PubSubPublishOptions;
 
-public class MeetingActivity extends AppCompatActivity {
+public class MeetingActivity extends AppCompatActivity implements ParticipantAdapter.SecondaryListener {
     // declare the variables we will be using to handle the meeting
     private Meeting meeting;
-    private boolean micEnabled = true;
-    private boolean webcamEnabled = true;
+    private boolean micEnabled;
+    private boolean webcamEnabled;
     ParticipantAdapter adapter;
 
     private ApiManager apiManager = App.getApiManager();
@@ -73,6 +77,10 @@ public class MeetingActivity extends AppCompatActivity {
     private String roomSlug;
 //    RecyclerView secondaryParticiepants;
     LinearLayout bottomSheet;
+    private GestureDetector gestureDetector;
+    private boolean IN_FRONT = true;
+    private RecyclerView rvParticipants;
+    private SecondaryParticipantAdapter secondaryParticipantAdapter;
 
 
 
@@ -84,6 +92,8 @@ public class MeetingActivity extends AppCompatActivity {
         final String meetingId = getIntent().getStringExtra("roomID");
         final String roomName = getIntent().getStringExtra("roomName");
         roomSlug = getIntent().getStringExtra("roomSlug");
+        micEnabled = getIntent().getBooleanExtra("micStatus", true);
+        webcamEnabled = getIntent().getBooleanExtra("camStatus", true);
         final String participantName = Prefs.getUserName(MeetingActivity.this);
         // 1. Configuration VideoSDK with Token
         VideoSDK.config(token);
@@ -94,9 +104,25 @@ public class MeetingActivity extends AppCompatActivity {
                 MeetingActivity.this, meetingId, participantName,
                 micEnabled, webcamEnabled,null, null, null);
         inItWidgets();
+        if (micEnabled) {
+            micBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.white));
+            micIV.setImageDrawable(ContextCompat.getDrawable(MeetingActivity.this, R.drawable.mic_on));
+        } else {
+            micBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.meeting_grey));
+            micIV.setImageDrawable(ContextCompat.getDrawable(MeetingActivity.this, R.drawable.mic_off));
+        }
+
+        if (webcamEnabled) {
+            webcamBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.white));
+            webcamIV.setImageDrawable(ContextCompat.getDrawable(MeetingActivity.this, R.drawable.camera_on));
+        } else {
+            webcamBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.meeting_grey));
+            webcamIV.setImageDrawable(ContextCompat.getDrawable(MeetingActivity.this, R.drawable.camera_off));
+        }
 
         // 3. Add event listener for listening upcoming events
         meeting.addEventListener(meetingEventListener);
+//        meeting.addEventListener(meetingEvent);
 
         //4. Join VideoSDK Meeting
         meeting.join();
@@ -105,14 +131,15 @@ public class MeetingActivity extends AppCompatActivity {
         // actions
         setActionListeners();
 
-        RecyclerView rvParticipants = findViewById(R.id.rvParticipants);
+        rvParticipants = findViewById(R.id.rvParticipants);
         rvParticipants.setLayoutManager(new LinearLayoutManager(MeetingActivity.this));
-        adapter = new ParticipantAdapter(meeting, meeting.getLocalParticipant(), meeting.getLocalParticipant().getId());
+        adapter = new ParticipantAdapter(meeting, MeetingActivity.this, MeetingActivity.this);
         rvParticipants.setAdapter(adapter);
 
         final RecyclerView secondaryParticiepants = findViewById(R.id.rvParticipants2);
-        secondaryParticiepants.setLayoutManager(new GridLayoutManager(MeetingActivity.this, 3));
-        secondaryParticiepants.setAdapter(new ParticipantAdapter(meeting, meeting.getLocalParticipant(), meeting.getLocalParticipant().getId()));
+        secondaryParticiepants.setLayoutManager(new GridLayoutManager(MeetingActivity.this, 5));
+        secondaryParticipantAdapter = new SecondaryParticipantAdapter(meeting);
+        secondaryParticiepants.setAdapter(secondaryParticipantAdapter);
 
         Participant user = meeting.getLocalParticipant();
         for (Map.Entry<String, Stream> entry : user.getStreams().entrySet()) {
@@ -184,6 +211,15 @@ public class MeetingActivity extends AppCompatActivity {
                 sendChatToDB(Prefs.GetUserID(MeetingActivity.this), roomSlug, message);
             }
         });
+
+        userVideoView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                gestureDetector.onTouchEvent(motionEvent);
+                return true;
+            }
+        });
+
     }
 
     private void sendChatToDB(String userID, String roomSlug, String message) {
@@ -202,6 +238,7 @@ public class MeetingActivity extends AppCompatActivity {
 
     private void inItWidgets() {
 
+        gestureDetector = new GestureDetector(this, new MyGestureListener());
         bottomSheet = findViewById(R.id.bottom_participents);
 
         userVideoView = findViewById(R.id.user_video_view);
@@ -216,6 +253,14 @@ public class MeetingActivity extends AppCompatActivity {
         webcamBG = findViewById(R.id.webcam_bg);
         webcamIV = findViewById(R.id.webcam_iv);
     }
+
+//    private final MeetingEventListener meetingEvent = new MeetingEventListener() {
+//        @Override
+//        public void onSpeakerChanged(String participantId) {
+//            Toast.makeText(MeetingActivity.this, "Active Speaker participantId" + participantId, Toast.LENGTH_SHORT).show();
+//            super.onSpeakerChanged(participantId);
+//        }
+//    };
 
     // creating the MeetingEventListener
     private final MeetingEventListener meetingEventListener = new MeetingEventListener() {
@@ -235,84 +280,18 @@ public class MeetingActivity extends AppCompatActivity {
 
         @Override
         public void onMeetingLeft() {
-            Log.d("#meeting", "onMeetingLeft()");
-//            meeting = null;
             if (!isDestroyed()) finish();
         }
 
         @Override
         public void onParticipantJoined(Participant participant) {
-            Log.i("partID", "onBindViewHolder:from join " + participant.getId());
-            try {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (meeting.getParticipants().size() > 3){
-                            Log.i("partingExcep", "onParticipantJoined: if size " + meeting.getParticipants().size());
-                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    findViewById(R.id.rvParticipants).setVisibility(View.GONE);
-                                    bottomSheet.setVisibility(View.VISIBLE);
-                                }
-                            }, 200);
-
-
-                        } else {
-                            Log.i("partingExcep", "onParticipantJoined: else size " + meeting.getParticipants().size());
-                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    findViewById(R.id.rvParticipants).setVisibility(View.VISIBLE);
-                                    bottomSheet.setVisibility(View.GONE);
-                                }
-                            }, 200);
-                        }
-                    }
-                }).start();
-
-            } catch (Exception e){
-                Log.i("partingExcep", "onParticipantJoined: " + e.getMessage());
-            }
-
-//            secondaryParticiepants.setAdapter(new ParticipantAdapter(meeting, participant));
 
             Toast.makeText(MeetingActivity.this, participant.getDisplayName() + " joined", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onParticipantLeft(Participant participant) {
-            try {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (meeting.getParticipants().size() > 3){
-                            Log.i("partingExcep", "onParticipantJoined: if size " + meeting.getParticipants().size());
-                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    findViewById(R.id.rvParticipants).setVisibility(View.GONE);
-                                    bottomSheet.setVisibility(View.VISIBLE);
-                                }
-                            }, 200);
 
-
-                        } else {
-                            Log.i("partingExcep", "onParticipantJoined: else size " + meeting.getParticipants().size());
-                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    findViewById(R.id.rvParticipants).setVisibility(View.VISIBLE);
-                                    bottomSheet.setVisibility(View.GONE);
-                                }
-                            }, 200);
-                        }
-                    }
-                }).start();
-
-            } catch (Exception e){
-                Log.i("partingExcep", "onParticipantJoined: " + e.getMessage());
-            }
             Toast.makeText(MeetingActivity.this, participant.getDisplayName() + " left", Toast.LENGTH_SHORT).show();
         }
     };
@@ -324,12 +303,12 @@ public class MeetingActivity extends AppCompatActivity {
 
                 // this will mute the local participant's mic
                 meeting.muteMic();
-                micBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.DarkGrey));
+                micBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.meeting_grey));
                 micIV.setImageDrawable(ContextCompat.getDrawable(MeetingActivity.this, R.drawable.mic_off));
             } else {
                 // this will unmute the local participant's mic
                 meeting.unmuteMic();
-                micBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.Green));
+                micBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.white));
                 micIV.setImageDrawable(ContextCompat.getDrawable(MeetingActivity.this, R.drawable.mic_on));
             }
             micEnabled=!micEnabled;
@@ -340,12 +319,12 @@ public class MeetingActivity extends AppCompatActivity {
             if (webcamEnabled) {
                 // this will disable the local participant webcam
                 meeting.disableWebcam();
-                webcamBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.DarkGrey));
+                webcamBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.meeting_grey));
                 webcamIV.setImageDrawable(ContextCompat.getDrawable(MeetingActivity.this, R.drawable.camera_off));
             } else {
                 // this will enable the local participant webcam
                 meeting.enableWebcam();
-                webcamBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.Green));
+                webcamBG.setBackgroundColor(ContextCompat.getColor(MeetingActivity.this, R.color.white));
                 webcamIV.setImageDrawable(ContextCompat.getDrawable(MeetingActivity.this, R.drawable.camera_on));
             }
             webcamEnabled=!webcamEnabled;
@@ -368,5 +347,35 @@ public class MeetingActivity extends AppCompatActivity {
 //            meeting = null;
         }
 
+    }
+
+    @Override
+    public void addParticipant(Participant participant) {
+        secondaryParticipantAdapter.addParticipant(participant);
+    }
+
+    @Override
+    public void participantOnline(boolean participantOnline) {
+        if (participantOnline){
+            rvParticipants.setVisibility(View.VISIBLE);
+        } else rvParticipants.setVisibility(View.GONE);
+    }
+
+    public class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            // Define the action you want to perform when double-tap occurs
+            if (IN_FRONT){
+                IN_FRONT = false;
+                meeting.changeWebcam();
+                userVideoView.setMirror(false);
+            } else {
+                IN_FRONT = true;
+                meeting.changeWebcam();
+                userVideoView.setMirror(true);
+            }
+            return true;
+        }
     }
 }

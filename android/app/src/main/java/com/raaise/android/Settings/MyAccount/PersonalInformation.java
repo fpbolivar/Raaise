@@ -57,15 +57,16 @@ public class PersonalInformation extends AppCompatActivity {
     private static final int CAMERA_PIC_REQUEST = 100;
     private static final int GALLERY_REQUEST_CODE = 101;
     private static final int CAMERA_PERMISSION = 121;
-    ImageView userImage;
+    ImageView userImage,CoverImageInOtherUserProfile;
     EditText NameEditTextInPersonalInformation, UserNameEditTextInPersonalInformation, PhoneNumberEditTextInPersonalInformation;
     LinearLayout UpdateButtonInPersonalInformation;
     String UserName, Name, PhnNo;
     ApiManager apiManager = App.getApiManager();
     ImageView BackArrow;
-    FloatingActionButton UploadImageInPersonalInformation;
+    FloatingActionButton UploadImageInPersonalInformation,UploadCoverImageInPersonalInformation;
     Uri imageUri = null;
-    File imageFile = null;
+    File imageFile = null,coverFile=null;
+    boolean isProfilePhoto=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +101,25 @@ public class PersonalInformation extends AppCompatActivity {
         PhoneNumberEditTextInPersonalInformation = findViewById(R.id.PhoneNumberEditTextInPersonalInformation);
         UpdateButtonInPersonalInformation = findViewById(R.id.UpdateButtonInPersonalInformation);
         UploadImageInPersonalInformation = findViewById(R.id.UploadImageInPersonalInformation);
+        UploadCoverImageInPersonalInformation=findViewById(R.id.UploadCoverImageInPersonalInformation);
+        CoverImageInOtherUserProfile=findViewById(R.id.CoverImageInOtherUserProfile);
     }
 
     private void Clicklisteners() {
-        UploadImageInPersonalInformation.setOnClickListener(view -> ShowUlpoadimageDialog());
+        UploadImageInPersonalInformation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isProfilePhoto=true;
+                ShowUlpoadimageDialog();
+            }
+        });
+        UploadCoverImageInPersonalInformation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isProfilePhoto=false;
+                ShowUlpoadimageDialog();
+            }
+        });
         UpdateButtonInPersonalInformation.setOnClickListener(view -> Validate());
     }
 
@@ -180,11 +196,15 @@ public class PersonalInformation extends AppCompatActivity {
     private void Validate() {
         Name = NameEditTextInPersonalInformation.getText().toString().trim();
         PhnNo = PhoneNumberEditTextInPersonalInformation.getText().toString().trim();
+        if (PhnNo.length() > 0 && PhnNo.length() < 10){
+            Prompt.SnackBar(findViewById(android.R.id.content), "Phone number must be of 10 digits");
+            return;
+        }
         if (Name.isEmpty()) {
             Prompt.SnackBar(findViewById(android.R.id.content), "Enter Name");
         } else {
-            if (imageUri != null && imageFile != null) {
-                UpdateUserDataWithImage(imageFile, Name, PhnNo);
+            if (imageUri != null && (imageFile != null || coverFile != null)) {
+                UpdateUserDataWithImage(imageFile,coverFile, Name, PhnNo);
             } else {
                 UpdateUserData(Name, PhnNo);
             }
@@ -192,17 +212,50 @@ public class PersonalInformation extends AppCompatActivity {
         }
     }
 
-    private void UpdateUserDataWithImage(File file, String namee, String phoneNumberr) {
+    private void UpdateUserDataWithImage(File file,File Coverfile, String namee, String phoneNumberr) {
         if (phoneNumberr == null || phoneNumberr.isEmpty()){
             phoneNumberr = "";
         }
+
         Dialogs.createProgressDialog(PersonalInformation.this);
-        RequestBody requestFileImg = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part image = MultipartBody.Part.createFormData("image", file.getName(), requestFileImg);
+        RequestBody coverRequestFileImg ;
+        MultipartBody.Part coverImage;
+       String coverImagePref= Prefs.getUserCoverImage(PersonalInformation.this);
+       String imagePref =Prefs.getUserCoverImage(PersonalInformation.this);
+        if(coverFile==null){
+            if(coverImagePref.equals("")){
+                coverRequestFileImg = RequestBody.create(MediaType.parse("image/*"),"");
+                coverImage=MultipartBody.Part.createFormData("coverImage", "");
+            }else {
+                coverImage=MultipartBody.Part.createFormData("coverImage", coverImagePref);
+            }
+
+        }else {
+            coverRequestFileImg = RequestBody.create(MediaType.parse("image/*"), Coverfile);
+            coverImage=MultipartBody.Part.createFormData("coverImage", Coverfile.getName(), coverRequestFileImg);
+        }
+
+        RequestBody requestFileImg;
+        MultipartBody.Part image ;
+
+        if(file==null){
+            if(imagePref.equals("")){
+                requestFileImg = RequestBody.create(MediaType.parse("image/*"),"");
+                image=MultipartBody.Part.createFormData("image", "");
+            }else {
+                image=MultipartBody.Part.createFormData("image", imagePref);
+            }
+
+        }else {
+            requestFileImg = RequestBody.create(MediaType.parse("image/*"), file);
+            image=MultipartBody.Part.createFormData("image", file.getName(), requestFileImg);
+        }
+
         RequestBody name = RequestBody.create(MediaType.parse("text/plain"), namee);
         RequestBody phoneNumber = RequestBody.create(MediaType.parse("text/plain"), phoneNumberr);
+
         ApiUtilities.getApiInterface().UpdateProfileWithImage(Prefs.GetBearerToken(PersonalInformation.this),
-                image, name, phoneNumber).enqueue(new Callback<UpdateUserProfileModel>() {
+                image,coverImage, name, phoneNumber).enqueue(new Callback<UpdateUserProfileModel>() {
             @Override
             public void onResponse(Call<UpdateUserProfileModel> call, Response<UpdateUserProfileModel> response) {
                 if (response.isSuccessful()) {
@@ -211,14 +264,24 @@ public class PersonalInformation extends AppCompatActivity {
                             Dialogs.HideProgressDialog();
                             Prompt.SnackBar(findViewById(android.R.id.content), response.body().getMessage());
                             Log.i("personalImg", "onResponse: " + Prefs.GetBaseUrl(PersonalInformation.this) + response.body().getData().getProfileImage());
+                            Log.i("personalImg", "onResponse: " + Prefs.GetBaseUrl(PersonalInformation.this) + response.body().getData().getCoverImage());
+
                             Glide.with(PersonalInformation.this)
                                     .load(Prefs.GetBaseUrl(PersonalInformation.this) + response.body().getData().getProfileImage())
                                     .circleCrop()
                                     .placeholder(R.drawable.placeholder)
                                     .into(userImage);
+
+                            Glide.with(PersonalInformation.this)
+                                    .load(Prefs.GetBaseUrl(PersonalInformation.this) + response.body().getData().getCoverImage())
+                                    .placeholder(R.drawable.placeholder)
+                                    .into(CoverImageInOtherUserProfile);
+
                             Prefs.setNameOfUser(PersonalInformation.this, response.body().getData().getName());
                             Prefs.SetPhoneNumberOfTheUser(PersonalInformation.this, response.body().getData().getPhoneNumber());
                             Prefs.setUserImage(PersonalInformation.this, response.body().getData().getProfileImage());
+                            Prefs.setUserCoverImage(PersonalInformation.this, response.body().getData().getCoverImage());
+
                         } else if (response.body().getStatusCode() == 422) {
                             Dialogs.HideProgressDialog();
 
@@ -256,13 +319,22 @@ public class PersonalInformation extends AppCompatActivity {
                 try {
                     Bitmap image = (Bitmap) data.getExtras().get("data");
                     imageUri = getImageUri(getApplicationContext(), image);
-                    imageFile = new File(getRealPathFromURI(imageUri));
+                    if(isProfilePhoto){
+                        imageFile = new File(getRealPathFromURI(imageUri));
 
-                    Glide.with(this)
-                            .load(Prefs.GetBaseUrl(PersonalInformation.this) + imageUri)
-                            .circleCrop()
-                            .placeholder(R.drawable.placeholder)
-                            .into(userImage);
+                        Glide.with(this)
+                                .load(imageUri)
+                                .circleCrop()
+                                .placeholder(R.drawable.placeholder)
+                                .into(userImage);
+                    }else{
+                        coverFile = new File(getRealPathFromURI(imageUri));
+                        Glide.with(this)
+                                .load(imageUri)
+                                .placeholder(R.drawable.placeholder)
+                                .into(CoverImageInOtherUserProfile);
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -272,12 +344,20 @@ public class PersonalInformation extends AppCompatActivity {
             if (data != null) {
                 try {
                     imageUri = data.getData();
-                    imageFile = new File(getRealPathFromURI(imageUri));
-                    Glide.with(this)
-                            .load(Prefs.GetBaseUrl(PersonalInformation.this) + imageUri)
-                            .circleCrop()
-                            .placeholder(R.drawable.placeholder)
-                            .into(userImage);
+                    if(isProfilePhoto){
+                        imageFile = new File(getRealPathFromURI(imageUri));
+                        Glide.with(this)
+                                .load(imageUri)
+                                .circleCrop()
+                                .placeholder(R.drawable.placeholder)
+                                .into(userImage);
+                    }else{
+                        coverFile = new File(getRealPathFromURI(imageUri));
+                        Glide.with(this)
+                                .load(imageUri)
+                                .placeholder(R.drawable.placeholder)
+                                .into(CoverImageInOtherUserProfile);
+                    }
                 } catch (Exception e) {
                     Log.i("galleryException", "onActivityResult: " + e.getMessage());
                 }
@@ -315,6 +395,11 @@ public class PersonalInformation extends AppCompatActivity {
                     .placeholder(R.drawable.placeholder)
                     .circleCrop()
                     .into(userImage);
+
+            Glide.with(PersonalInformation.this)
+                    .load(Prefs.GetBaseUrl(PersonalInformation.this) + Prefs.getUserCoverImage(PersonalInformation.this))
+                    .placeholder(R.drawable.placeholder)
+                    .into(CoverImageInOtherUserProfile);
         } catch (Exception e) {
             e.getStackTrace();
         }

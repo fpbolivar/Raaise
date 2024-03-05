@@ -1,14 +1,17 @@
 package com.raaise.android.Adapters;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.raaise.android.R;
@@ -26,14 +29,16 @@ import live.videosdk.rtc.android.VideoView;
 import live.videosdk.rtc.android.listeners.MeetingEventListener;
 import live.videosdk.rtc.android.listeners.ParticipantEventListener;
 
-public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.PeerViewHolder> {
+public class
+ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.PeerViewHolder> {
 
     private final List<Participant> participants = new ArrayList<>();
-    private String localID;
+    private SecondaryListener secondaryListener;
+    private Context context;
 
-    public ParticipantAdapter(Meeting meeting, Participant participant, String partID) {
-        this.localID = partID;
-        Log.i("partiesID", "ParticipantAdapter: " + localID + " " + partID);
+    public ParticipantAdapter(Meeting meeting, SecondaryListener listener, Context con) {
+        this.secondaryListener = listener;
+        this.context = con;
         // adding the local participant(You) to the list
 //        participants.add(participant);
 
@@ -42,8 +47,14 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
             @Override
             public void onParticipantJoined(Participant participant) {
                 // add participant to the list
-                participants.add(participant);
-                notifyItemInserted(participants.size() - 1);
+                if (participants.size() == 2) {
+                    secondaryListener.addParticipant(participant);
+                } else {
+                secondaryListener.participantOnline(true);
+                    participants.add(participant);
+                    notifyItemInserted(participants.size() - 1);
+                }
+
             }
 
             @Override
@@ -61,6 +72,9 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
                 if (pos >= 0) {
                     notifyItemRemoved(pos);
                 }
+                if (participants.size() == 0){
+                    secondaryListener.participantOnline(false);
+                }
             }
         });
     }
@@ -74,9 +88,6 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     @Override
     public void onBindViewHolder(@NonNull PeerViewHolder holder, int position) {
         Participant participant = participants.get(position);
-        for (Participant p : participants){
-            Log.i("partiesIDS", "ParticipantAdapter: onBind " + p.getId() );
-        }
 
         holder.tvName.setText(participant.getDisplayName());
 
@@ -95,8 +106,13 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         participant.addEventListener(new ParticipantEventListener() {
             @Override
             public void onStreamEnabled(Stream stream) {
-                Log.i("streamEnabled", "onStreamEnabled: enabled");
+                if (stream.getKind().equalsIgnoreCase("audio")){
+                    holder.userMicIV.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.mic_on));
+                }
+
                 if (stream.getKind().equalsIgnoreCase("video")) {
+                    holder.dummyImage.setVisibility(View.GONE);
+                    holder.participantView.setVisibility(View.VISIBLE);
                     holder.participantView.setVisibility(View.VISIBLE);
                     VideoTrack videoTrack = (VideoTrack) stream.getTrack();
                     holder.participantView.addTrack(videoTrack);
@@ -105,8 +121,12 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
             @Override
             public void onStreamDisabled(Stream stream) {
-                Log.i("stream", "onStreamEnabled: disabled");
+                if (stream.getKind().equalsIgnoreCase("audio")){
+                    holder.userMicIV.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.mic_off));
+                }
                 if (stream.getKind().equalsIgnoreCase("video")) {
+                    holder.dummyImage.setVisibility(View.VISIBLE);
+                    holder.participantView.setVisibility(View.GONE);
                     holder.participantView.removeTrack();
                 }
             }
@@ -126,11 +146,21 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         public TextView tvName;
         public View itemView;
 
+        ImageView userMicIV;
+        ImageView dummyImage;
+
         PeerViewHolder(@NonNull View view) {
             super(view);
             itemView = view;
             tvName = view.findViewById(R.id.tvName);
+            userMicIV = view.findViewById(R.id.user_mic);
+            dummyImage = view.findViewById(R.id.participantImageView);
             participantView = view.findViewById(R.id.participantView);
         }
+    }
+
+    public interface SecondaryListener{
+        void addParticipant(Participant participant);
+        void participantOnline(boolean participantOnline);
     }
 }

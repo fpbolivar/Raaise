@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/black">
+    android:background="@color/WhiteColor">
 
     <ImageView
         android:id="@+id/backBtn"
@@ -50,7 +50,7 @@
                 android:id="@+id/ShowHideProfile"
                 android:layout_width="match_parent"
 
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -110,15 +110,125 @@
                     android:textColor="@color/BlueColorSettings"
                     android:textSize="14sp"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/room_members_rv"
-                    android:layout_marginTop="16dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_marginHorizontal="20dp"
-                    tools:listitem="@layout/select_user_item"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/room_members_rv"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/call_options_container"
+                        android:layout_marginTop="16dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:layout_marginHorizontal="20dp"
+                        tools:listitem="@layout/select_user_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/call_options_container"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_gravity="bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/btnWebcam"
+                            app:layout_constraintTop_toTopOf="@id/initiate_call_btn"
+                            app:layout_constraintBottom_toBottomOf="@id/initiate_call_btn"
+                            app:layout_constraintRight_toLeftOf="@id/initiate_call_btn"
+                            android:layout_marginEnd="18dp"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            app:cardCornerRadius="55dp">
+
+                            <LinearLayout
+                                android:id="@+id/webcam_bg"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:background="@color/white"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/webcam_iv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:padding="10dp"
+                                    app:tint="@color/WhiteColor"
+                                    android:src="@drawable/camera_on"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/initiate_call_btn"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            app:cardCornerRadius="55dp"
+                            android:layout_margin="16dp">
+
+                            <LinearLayout
+                                android:id="@+id/call_bg"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:background="@color/Green"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/call_img"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/btnMic"
+                            app:layout_constraintTop_toTopOf="@id/initiate_call_btn"
+                            app:layout_constraintBottom_toBottomOf="@id/initiate_call_btn"
+                            app:layout_constraintLeft_toRightOf="@id/initiate_call_btn"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            app:cardCornerRadius="55dp"
+                            android:layout_marginStart="18dp">
+
+                            <LinearLayout
+                                android:id="@+id/mic_bg"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:background="@color/white"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/mic_iv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:padding="8dp"
+                                    app:tint="@color/black"
+                                    android:src="@drawable/mic_on"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
 
             </LinearLayout>
 

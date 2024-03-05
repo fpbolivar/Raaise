@@ -11,6 +11,11 @@ public class LiveRoomData {
     public String logo;
     public HostID hostId;
     public ArrayList<MemberIds> memberIds;
+    public String isOnline;
+
+    public String getIsOnline() {
+        return isOnline;
+    }
 //    public String roomId;
 //    public String token;
 

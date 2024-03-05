@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +42,7 @@ public class SelectedUsersAdapter extends RecyclerView.Adapter<SelectedUsersAdap
                 .load(Prefs.GetBaseUrl(mContext) + model.getProfileImage())
                 .placeholder(R.drawable.placeholder)
                 .into(holder.userImg);
+        holder.userName.setText(model.getUserName());
 
         holder.removeUserBtn.setOnClickListener(view -> {
             removeItem(model);
@@ -63,6 +65,10 @@ public class SelectedUsersAdapter extends RecyclerView.Adapter<SelectedUsersAdap
         notifyDataSetChanged();
     }
 
+    public ArrayList<SelectUsersModel> getUsersList(){
+        return usersModels;
+    }
+
     public ArrayList<String> getList() {
         ArrayList<String> ids = new ArrayList<>();
         for (SelectUsersModel model : usersModels){
@@ -75,11 +81,13 @@ public class SelectedUsersAdapter extends RecyclerView.Adapter<SelectedUsersAdap
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView userImg;
         ImageView removeUserBtn;
+        TextView userName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             userImg = itemView.findViewById(R.id.users_iv);
             removeUserBtn = itemView.findViewById(R.id.remove_user_iv);
+            userName = itemView.findViewById(R.id.user_name);
         }
     }
 

@@ -15,6 +15,7 @@ import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -109,13 +110,18 @@ public class UserVideosAdapter extends RecyclerView.Adapter<UserVideosAdapter.Vi
         }
 
         if (obj.getUserId().getName() != null) {
-            ViewHolder.NameInHomeVideoSingleItem.setText(obj.getUserId().getName());
+            if (obj.getUserId().getName().length() > 15) {
+                holder.NameInHomeVideoSingleItem.setText(obj.getUserId().getName().substring(0, 15) + "...");
+            } else {
+                holder.NameInHomeVideoSingleItem.setText(obj.getUserId().getName());
+            }
+
         }
         if (obj.getUserId().getUserName() != null) {
             ViewHolder.UserNameInHomeVideoSingleItem.setText(obj.getUserId().getUserName());
         }
         if (obj.getDonationAmount() != null) {
-            ViewHolder.DonationRaisedInHomeVideoSingleItem.setText(String.format("Total Raised $%s", obj.getDonationAmount().isEmpty() ? 0 : obj.getDonationAmount()));
+            ViewHolder.DonationRaisedInHomeVideoSingleItem.setText(String.format("$%s", obj.getDonationAmount().isEmpty() ? 0 : obj.getDonationAmount()));
         }
         ViewHolder.LikeCountInHomeVideoSingleItem.setText(String.valueOf(obj.getVideolikeCount()));
         ViewHolder.CommentCountInHomeVideoSingleItem.setText(String.valueOf(obj.getVideoCommentCount()));
@@ -124,9 +130,9 @@ public class UserVideosAdapter extends RecyclerView.Adapter<UserVideosAdapter.Vi
             Glide.with(context).load(obj.getUserId().getProfileImage()).placeholder(R.drawable.placeholder).into(holder.ImageProfileInAdapter);
         }
         if (obj.isLiked()) {
-            holder.LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(context, R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
+            holder.LikeInHomeVideoSingleItem.setImageDrawable(context.getDrawable(R.drawable.like_icon));
         } else {
-            holder.LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(context, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+            holder.LikeInHomeVideoSingleItem.setImageDrawable(context.getDrawable(R.drawable.like_icon_white));
         }
         holder.LikeInHomeVideoSingleItem.setOnClickListener(view -> {
             mainHomeData.ShowHeart(holder.Lottie_Heart);
@@ -153,6 +159,13 @@ public class UserVideosAdapter extends RecyclerView.Adapter<UserVideosAdapter.Vi
         holder.topRewardedTV.setVisibility(View.GONE);
 
         holder.videoViewCount.setText("" + obj.getVideoViewCount());
+        if(obj.getUserId().isVerified){
+            holder.verficationCardView.setVisibility(View.VISIBLE);
+        }else {
+            holder.verficationCardView.setVisibility(View.GONE);
+        }
+
+        holder.commentsConstraint.setOnClickListener(view -> homeReelsListener.ShowCommentBottomSheetDialog(obj.get_id(), holder.CommentCountInHomeVideoSingleItem));
     }
 
     @Override
@@ -184,17 +197,21 @@ public class UserVideosAdapter extends RecyclerView.Adapter<UserVideosAdapter.Vi
                 LikeCountInHomeVideoSingleItem, hashTagsTV, CommentCountInHomeVideoSingleItem, VideoShareCountInHomeVideoSingleItem, FollowTextInHomeVideoSingleItem;
         ImageView tryAudioBtn, more_options_btn_UP, ShareVideo;
         LinearLayout songInfoContainer;
-        LinearLayout profileContainer, DonationLayout;
-        ImageView moreOptions, lottie_main;
+        LinearLayout profileContainer;
+        CardView verficationCardView;
+        ImageView moreOptions, lottie_main,DonationLayout;
         ImageView CommentsInAdapter;
         LinearLayout Layout_Donation;
         ImageView LikeInHomeVideoSingleItem, ImageProfileInAdapter, DollarDonation, SongImage;
         LottieAnimationView Lottie_Heart, Lottie_PausePlay;
         RelativeLayout MainLayoutInFollowingVideoSingleItem, AudioItem;
-        CardView FollowButtonInHomeVideoSingleItem;
+        RelativeLayout FollowButtonInHomeVideoSingleItem;
+        ConstraintLayout commentsConstraint;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            verficationCardView=itemView.findViewById(R.id.verficationCardView);
+            commentsConstraint=itemView.findViewById(R.id.commentsConstraint);
             videoViewCount = itemView.findViewById(R.id.view_count_tvk);
             topRewardedTV = itemView.findViewById(R.id.top_rewarded_tv);
             DonationLayout = itemView.findViewById(R.id.DonationLayout);

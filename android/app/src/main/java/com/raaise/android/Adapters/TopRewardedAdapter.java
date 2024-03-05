@@ -51,7 +51,7 @@ public class TopRewardedAdapter extends RecyclerView.Adapter<TopRewardedAdapter.
                     .circleCrop()
                     .into(holder.topRewardedUser);
         }
-        holder.topRewardedUserName.setText(users.getName());
+        holder.topRewardedUserName.setText("@"+users.getName());
 
             if (position == 1){
 //                holder.cardView.getLayoutParams().height = 100;

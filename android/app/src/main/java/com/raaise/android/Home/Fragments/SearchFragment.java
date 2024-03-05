@@ -32,12 +32,14 @@ import com.raaise.android.ApiManager.ApiModels.GlobalSearchModel;
 import com.raaise.android.ApiManager.DataCallback;
 import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.ApiManager.ServerError;
+import com.raaise.android.Home.MainHome.Home;
 import com.raaise.android.Home.SearchScreens.SeeAllAudiosFragment;
 import com.raaise.android.Home.SearchScreens.SeeAllPostFragment;
 import com.raaise.android.Home.SearchScreens.SeeAllUsersFragment;
 import com.raaise.android.R;
 import com.raaise.android.Try_AudioActivity;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
+import com.raaise.android.Utilities.textPaint.TextPaint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +56,7 @@ public class SearchFragment extends Fragment implements SearchScreenAudioListAda
     List<GlobalSearchModel.Data.Posts> VideosList;
     ApiManager apiManager = App.getApiManager();
     View v;
-    TextView UsersSeeAll, AudioSeeAll, PostsSeeAll;
+    TextView UsersSeeAll, AudioSeeAll, PostsSeeAll,users,audio,trending;
     SearchView GlobalSearchView;
     RelativeLayout TypeSomethingForSearch, NoResultFound;
     LinearLayout WithoutSearch;
@@ -66,6 +68,7 @@ public class SearchFragment extends Fragment implements SearchScreenAudioListAda
                              Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.fragment_search, container, false);
+        ((Home) requireActivity()).videoProgressBar.setVisibility(View.GONE);
         inItWidgets(v);
         ClickListeners();
 
@@ -152,16 +155,16 @@ public class SearchFragment extends Fragment implements SearchScreenAudioListAda
     }
 
     private void ShowHideData(int AUDIOS, int POSTS, int USERS) {
-        if (AUDIOS == 0) {
-            ParentOfAudioPart.setVisibility(View.GONE);
-        } else {
-            ParentOfAudioPart.setVisibility(View.VISIBLE);
-            if (AUDIOS < 4) {
-                AudioSeeAll.setVisibility(View.GONE);
-            } else {
-                AudioSeeAll.setVisibility(View.VISIBLE);
-            }
-        }
+//        if (AUDIOS == 0) {
+//            ParentOfAudioPart.setVisibility(View.GONE);
+//        } else {
+//            ParentOfAudioPart.setVisibility(View.VISIBLE);
+//            if (AUDIOS < 4) {
+//                AudioSeeAll.setVisibility(View.GONE);
+//            } else {
+//                AudioSeeAll.setVisibility(View.VISIBLE);
+//            }
+//        }
         if (POSTS == 0) {
             ParentOfVideoPart.setVisibility(View.GONE);
         } else {
@@ -194,6 +197,14 @@ public class SearchFragment extends Fragment implements SearchScreenAudioListAda
         ParentOfVideoPart = view.findViewById(R.id.ParentOfVideoPart);
         ParentOfAudioPart = view.findViewById(R.id.ParentOfAudioPart);
         ParentOfUserPart = view.findViewById(R.id.ParentOfUserPart);
+        users = view.findViewById(R.id.users);
+      //  TextPaint.getGradientColor(users);
+        trending = view.findViewById(R.id.trending);
+  //      TextPaint.getGradientColor(trending);
+        audio = view.findViewById(R.id.audio);
+   //     TextPaint.getGradientColor(audio);
+
+
         AudiosList = new ArrayList<>();
         UsersList = new ArrayList<>();
         VideosList = new ArrayList<>();

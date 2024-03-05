@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/WhiteColor"
+    tools:context=".Activity.credentials.ChooseInterestActivity">
+
+    <RelativeLayout
+        android:id="@+id/layout_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/linear"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginHorizontal="20dp">
+
+        <TextView
+            android:id="@+id/chooseTags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:fontFamily="@font/noto_sans"
+            android:textColor="@color/pink_color"
+            android:text="Choose your \ninterests"/>
+
+        <TextView
+            android:id="@+id/recom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/noto_sans"
+            android:layout_below="@+id/chooseTags"
+            android:textColor="@color/white"
+            android:text="Get better video recommendations"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RvforCategory"
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/recom"
+            android:layout_height="wrap_content"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/recom"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2">
+
+        <RelativeLayout
+            android:id="@+id/cancelBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/cancel_bg"
+            app:cardCornerRadius="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="8dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Skip"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/submitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_shape_login"
+            app:cardCornerRadius="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="8dp"
+                android:fontFamily="@font/noto_sans"
+                android:gravity="center"
+                android:text="Continue"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

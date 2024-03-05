@@ -129,7 +129,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:text="Cancel"
-                android:textColor="@color/blue_color_titleSearch_screen"
+                android:textColor="@color/LogoGreyColor"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 

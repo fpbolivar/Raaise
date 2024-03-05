@@ -54,8 +54,8 @@ public class CreatePasswordFragment extends Fragment {
         } else if (ConfirmPass.isEmpty()) {
             Prompt.SnackBar(v, "Enter Confirm Password");
         }
-        else if (!HelperClass.passwordCharValidation(NewPass)) {
-            Prompt.SnackBar(v, "Password Must Contain 1 Uppercase,1 Lowercase,1 Special character with length 8");
+        else if (NewPass.length() < 8) {
+            Prompt.SnackBar(v, "Minumum password length should be 8");
         } else if (!NewPass.equals(ConfirmPass)) {
             Prompt.SnackBar(v, "New password & Confirm Password Must Match");
         } else {

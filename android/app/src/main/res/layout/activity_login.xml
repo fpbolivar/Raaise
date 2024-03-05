@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/WhiteColor"
     android:fillViewport="true"
     tools:context=".Activity.credentials.Login">
 
@@ -13,7 +13,7 @@
         android:id="@+id/Relative_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black">
+        android:background="@color/WhiteColor">
 
         <ImageView
             android:id="@+id/LogoInLogin"
@@ -24,19 +24,37 @@
             android:adjustViewBounds="true"
             android:src="@drawable/splash_logo" />
 
+        <TextView
+            android:id="@+id/loginTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_below="@+id/LogoInLogin"
+            android:fontFamily="@font/noto_sans"
+            android:text="Login"
+            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="20dp"
+            android:paddingHorizontal="10dp"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+
         <EditText
             android:id="@+id/EmailEditText"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/LogoInLogin"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="50dp"
+            android:layout_below="@+id/loginTitle"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:drawableLeft="@drawable/email_icon"
+            android:drawableTint="@color/icon_white"
+            android:drawablePadding="@dimen/_15sdp"
             android:background="@drawable/curved_dark_grey_background"
-            android:hint="Email address or Username"
+            android:hint="Enter email or username"
             android:inputType="textEmailAddress"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="12dp"
             android:textColor="@color/light_grey"
-            android:textColorHint="@color/light_grey"
+            android:textColorHint="@color/light_white"
             android:textCursorDrawable="@drawable/cursor_drawable"
             android:textSize="14sp" />
 
@@ -45,19 +63,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/EmailEditText"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="10dp"
-
-            android:hint="Password"
-            android:textColorHint="@color/TextColor1"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:hint="Enter Password"
+            android:textColorHint="@color/light_white"
             app:boxStrokeColor="@color/black"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:endIconMode="password_toggle"
             app:endIconTint="@color/white"
+            app:startIconDrawable="@drawable/pass_icon"
+            app:startIconTint="@color/icon_white"
             app:hintAnimationEnabled="false"
             app:hintEnabled="false"
-
             app:hintTextColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -65,16 +83,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/curved_dark_grey_background"
-                android:hint="Password"
+                android:hint="Enter Password"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:padding="15dp"
                 android:singleLine="true"
                 android:textColor="@color/light_grey"
-                android:textColorHint="@color/light_grey"
+                android:textColorHint="@color/light_white"
                 android:textCursorDrawable="@drawable/cursor_drawable"
                 android:textSize="14sp"
-
                 />
 
 
@@ -86,7 +103,7 @@
         <!--            android:layout_width="match_parent"-->
         <!--            android:layout_height="50dp"-->
         <!--            android:layout_below="@+id/EmailEditText"-->
-        <!--            android:layout_marginHorizontal="40dp"-->
+        <!--            android:layout_marginHorizontal="20dp"-->
         <!--            android:layout_marginTop="10dp"-->
         <!--            android:padding="10dp"-->
         <!--            android:background="@drawable/edit_text_shape"-->
@@ -101,7 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/passwordInputLayoutInLogin"
-            android:layout_marginHorizontal="40dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/button_shape_login"
             android:gravity="center"
@@ -111,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/noto_sans"
-                android:text="Login"
+                android:text="Log in"
                 android:textColor="@color/white"
                 android:textFontWeight="300"
                 android:textSize="16sp"
@@ -143,11 +160,10 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:background="@color/GreyColor" />
+                android:background="@color/light_white" />
 
             <TextView
                 android:id="@+id/OrContinue"
@@ -157,76 +173,99 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/noto_sans"
                 android:gravity="center"
-                android:text="Or continue with"
-                android:textColor="@color/white"
-                android:textSize="10sp" />
+                android:text="OR"
+                android:textColor="@color/light_white"
+                android:textSize="13sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="30dp"
+                android:layout_height="1dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@color/GreyColor" />
+                android:background="@color/light_white" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/FacebookButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+        <TextView
+            android:id="@+id/continueTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:layout_below="@+id/OrContinueLayout"
-            android:layout_marginHorizontal="40dp"
+            android:fontFamily="@font/noto_sans"
+            android:text="Continue with"
             android:layout_marginTop="50dp"
-            android:background="@drawable/stroke_background"
-            android:gravity="center|center_vertical">
-
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/svg_facebook" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="Continue with Facebook"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
-
-        </LinearLayout>
+            android:layout_centerHorizontal="true"
+            android:paddingHorizontal="10dp"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <LinearLayout
-            android:id="@+id/GoogleButton"
+            android:id="@+id/layoutContinue"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/FacebookButton"
-            android:layout_marginHorizontal="40dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/stroke_background"
-            android:gravity="center|center_vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/continueTitle"
+            android:layout_marginHorizontal="@dimen/_70sdp"
+            android:layout_marginTop="20dp"
+            android:weightSum="2"
+            android:gravity="center|center_horizontal">
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <LinearLayout
+                android:id="@+id/GoogleButton"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_weight="1"
+                android:background="@drawable/stroke_bg_fb"
+                android:gravity="center|center_vertical">
 
-                android:src="@drawable/svg_google" />
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/svg_google" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:fontFamily="@font/noto_sans"
-                android:text="Continue with Google     "
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+                <!--            <TextView-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginStart="15dp"-->
+                <!--                android:fontFamily="@font/noto_sans"-->
+                <!--                android:text="Continue with Google     "-->
+                <!--                android:textColor="@color/white"-->
+                <!--                android:textSize="14sp" />-->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/FacebookButton"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
+                android:layout_weight="1"
+                android:background="@drawable/stroke_bg_fb"
+                android:gravity="center|center_vertical">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/svg_facebook" />
+
+                <!--            <TextView-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginStart="15dp"-->
+                <!--                android:fontFamily="@font/noto_sans"-->
+                <!--                android:text="Continue with Facebook"-->
+                <!--                android:textColor="@color/white"-->
+                <!--                android:textSize="14sp" />-->
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/GoogleButton"
+            android:layout_below="@+id/layoutContinue"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="60dp">
 

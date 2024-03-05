@@ -53,6 +53,7 @@ public class FollowersListFragment extends Fragment implements View.OnClickListe
     PublicUserFollowersAdapter adapter4;
     PublicUserFollowingAdapter adapter3;
     String Username;
+    int PageNo=1;
     SearchView CommonFollowerFollowingListSearchView;
 
     public FollowersListFragment(int From) {
@@ -62,6 +63,10 @@ public class FollowersListFragment extends Fragment implements View.OnClickListe
     public FollowersListFragment(int From, String Username) {
         this.From = From;
         this.Username = Username;
+    }
+
+    public FollowersListFragment() {
+
     }
 
     @Nullable
@@ -80,16 +85,15 @@ public class FollowersListFragment extends Fragment implements View.OnClickListe
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                PageNo=1;
                 if (From == 1) {
-                    DoHitFollowingAPi(newText);
+                    DoHitFollowingAPi(newText,PageNo,true);
                 } else if (From == 2) {
-                    DoHitFollowerAPi(newText);
+                    DoHitFollowerAPi(newText,PageNo,true);
                 } else if (From == 3) {
-
-                    DoHitPublicUserFollowingAPi(Username, newText);
+                    DoHitPublicUserFollowingAPi(Username, newText,PageNo,true);
                 } else if (From == 4) {
-
-                    DoHitPublicUserFollowerAPi(Username, newText);
+                    DoHitPublicUserFollowerAPi(Username, newText,PageNo,true);
                 } else if (newText.isEmpty()) {
                     NoResultFound.setVisibility(View.GONE);
                 }
@@ -115,7 +119,24 @@ public class FollowersListFragment extends Fragment implements View.OnClickListe
             list2 = new ArrayList<>();
             adapter2 = new GetFolowingListAdapter(list2, getActivity());
             followers_list_RV.setAdapter(adapter2);
-            DoHitFollowingAPi("");
+            DoHitFollowingAPi("",PageNo,false);
+            followers_list_RV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (!recyclerView.canScrollVertically(1)) {
+                        PageNo++;
+                        DoHitFollowingAPi("",PageNo,false);
+                    }
+                }
+
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                }
+            });
+
+
 
         } else if (From == 2) {
 
@@ -123,7 +144,22 @@ public class FollowersListFragment extends Fragment implements View.OnClickListe
             list = new ArrayList<>();
             adapter = new FollowerFolowingAdapter(getActivity(), list);
             followers_list_RV.setAdapter(adapter);
-            DoHitFollowerAPi("");
+            DoHitFollowerAPi("",PageNo,false);
+            followers_list_RV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (!recyclerView.canScrollVertically(1)) {
+                        PageNo++;
+                        DoHitFollowerAPi("",PageNo,false);
+                    }
+                }
+
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                }
+            });
 
         } else if (From == 3) {
 
@@ -132,28 +168,59 @@ public class FollowersListFragment extends Fragment implements View.OnClickListe
             adapter3 = new PublicUserFollowingAdapter(list3, getActivity());
             followers_list_RV.setAdapter(adapter3);
 
-            DoHitPublicUserFollowingAPi(Username, "");
+            DoHitPublicUserFollowingAPi(Username, "",PageNo,false);
+            followers_list_RV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (!recyclerView.canScrollVertically(1)) {
+                        PageNo++;
+                        DoHitPublicUserFollowingAPi(Username, "",PageNo,false);
+                    }
+                }
 
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                }
+            });
 
         } else if (From == 4) {
-
             select_audio_title.setText(R.string.follwer_list);
             list4 = new ArrayList<>();
             adapter4 = new PublicUserFollowersAdapter(getActivity(), list4);
             followers_list_RV.setAdapter(adapter4);
-            DoHitPublicUserFollowerAPi(Username, "");
+            DoHitPublicUserFollowerAPi(Username, "",PageNo,false);
+            followers_list_RV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (!recyclerView.canScrollVertically(1)) {
+                        PageNo++;
+                        DoHitPublicUserFollowerAPi(Username, "",PageNo,false);
+                    }
+                }
+
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                }
+            });
+
 
         }
+
     }
 
-    private void DoHitPublicUserFollowingAPi(String username, String s) {
-        PublicUserFollowingModel model = new PublicUserFollowingModel(username, s, "", "1");
+    private void DoHitPublicUserFollowingAPi(String username, String s,int PageNo,boolean isClear) {
+        PublicUserFollowingModel model = new PublicUserFollowingModel(username, s, "10", String.valueOf(PageNo));
 
         manager.GetPublicUserFollowing(Prefs.GetBearerToken(getActivity()), model, new DataCallback<PublicUserFollowingModel>() {
             @Override
             public void onSuccess(PublicUserFollowingModel publicUserFollowingModel) {
-
-                list3.clear();
+                if(isClear){
+                    list3.clear();
+                }
                 list3.addAll(publicUserFollowingModel.getData());
                 NoResultFound.setVisibility(View.GONE);
                 if (list3.size() != 0) {
@@ -174,14 +241,16 @@ public class FollowersListFragment extends Fragment implements View.OnClickListe
         });
     }
 
-    private void DoHitPublicUserFollowerAPi(String username, String s) {
-        PublicUserFollowersModel model = new PublicUserFollowersModel(username, s, "", "1");
+    private void DoHitPublicUserFollowerAPi(String username, String s,int PageNo,boolean isClear) {
+        PublicUserFollowersModel model = new PublicUserFollowersModel(username, s, "10", String.valueOf(PageNo));
 
         manager.GetPublicUserFollowers(Prefs.GetBearerToken(getActivity()), model, new DataCallback<PublicUserFollowersModel>() {
             @Override
             public void onSuccess(PublicUserFollowersModel publicUserFollowersModel) {
-                list4.clear();
-
+            //    list4.clear();
+                if(isClear){
+                    list4.clear();
+                }
                 list4.addAll(publicUserFollowersModel.getData());
                 NoResultFound.setVisibility(View.GONE);
                 if (list4.size() != 0) {
@@ -203,16 +272,16 @@ public class FollowersListFragment extends Fragment implements View.OnClickListe
     }
 
 
-    private void DoHitFollowingAPi(String s) {
-
-
-        UserFollowingModel model = new UserFollowingModel(s, "", "1");
+    private void DoHitFollowingAPi(String s,int PageNo,boolean isClear) {
+        UserFollowingModel model = new UserFollowingModel(s, "10", String.valueOf(PageNo));
 
         manager.GetFollowingList(Prefs.GetBearerToken(getActivity()), model, new DataCallback<UserFollowingModel>() {
             @Override
             public void onSuccess(UserFollowingModel userFollowingModel) {
-                list2.clear();
-
+              //  list2.clear();
+                if(isClear){
+                    list2.clear();
+                }
                 list2.addAll(userFollowingModel.getData());
                 NoResultFound.setVisibility(View.GONE);
                 if (list2.size() != 0) {
@@ -233,16 +302,19 @@ public class FollowersListFragment extends Fragment implements View.OnClickListe
         });
     }
 
-    private void DoHitFollowerAPi(String s) {
+    private void DoHitFollowerAPi(String s,int PageNo,boolean isClear) {
 
-        UserFollowersModel model = new UserFollowersModel(s, "", "1");
+        UserFollowersModel model = new UserFollowersModel(s, "10", String.valueOf(PageNo));
         Log.i("followerStr", "DoHitFollowerAPi: " + s);
 
         manager.GetFollowersList(Prefs.GetBearerToken(getActivity()), model, new DataCallback<UserFollowersModel>() {
             @Override
             public void onSuccess(UserFollowersModel userFollowersModel) {
 
-                list.clear();
+              //  list.clear();
+                if(isClear){
+                    list.clear();
+                }
                 list.addAll(userFollowersModel.getData());
                 NoResultFound.setVisibility(View.GONE);
                 if (list.size() != 0) {

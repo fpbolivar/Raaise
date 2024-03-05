@@ -50,7 +50,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         GetUserNotificationsModel.NotificationMessage model = list.get(position);
         Glide.with(context).load(Prefs.GetBaseUrl(context) + model.getFromProfileImage()).placeholder(R.drawable.placeholder).into(holder.NotificationImage);
 
-        String s = model.getFromUserName() + " " + model.getMessage();
+        String s = model.getFromUserName() + " " + model.getTitle();
         SpannableString ss1 = new SpannableString(s);
         ss1.setSpan(new RelativeSizeSpan(1f), 0, model.getFromUserName().length(), 0); // set size
         ss1.setSpan(new ForegroundColorSpan(Color.parseColor("#D3D3D3")), 0, model.getFromUserName().length(), 0);// set color
@@ -82,6 +82,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         });
 
+        holder.messageTV.setText(model.getMessage());
+        holder.showMoreBTN.setOnClickListener(v -> {
+            if (holder.messageTV.getVisibility() == View.VISIBLE){
+                holder.messageTV.setVisibility(View.GONE);
+                holder.showMoreBTN.setText("Show More");
+            } else {
+                holder.messageTV.setVisibility(View.VISIBLE);
+                holder.showMoreBTN.setText("Hide");
+            }
+        });
 
     }
 
@@ -104,6 +114,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         ImageView NotificationImage;
         TextView NotificationName, NotificationDate;
         CardView Catcher;
+        TextView messageTV;
+        TextView showMoreBTN;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -111,6 +123,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             NotificationImage = itemView.findViewById(R.id.NotificationImage);
             NotificationName = itemView.findViewById(R.id.NotificationName);
             NotificationDate = itemView.findViewById(R.id.NotificationDate);
+            messageTV = itemView.findViewById(R.id.message_tv);
+            showMoreBTN = itemView.findViewById(R.id.show_more_btn);
         }
     }
 

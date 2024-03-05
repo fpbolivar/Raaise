@@ -1,5 +1,6 @@
 package com.raaise.android.ApiManager.ApiModels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GetAllUserVideoModel {
@@ -329,6 +330,7 @@ public class GetAllUserVideoModel {
             public String createdAt;
             public String updatedAt;
             public int __v;
+            public boolean isVerified;
 
             public boolean isEmailNotification() {
                 return emailNotification;

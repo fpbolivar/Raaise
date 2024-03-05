@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="20dp"
+    android:background="@color/WhiteColor"
+    tools:context=".Home.Fragments.tabFragments.donation.DonationTabFragment">
+
+        <RelativeLayout
+            android:id="@+id/mainRelative"
+            android:layout_width="match_parent"
+            android:background="@color/WhiteColor"
+            android:layout_height="match_parent">
+
+            <!--        Donation-->
+
+            <RelativeLayout
+                android:id="@+id/totalDonation"
+                android:layout_width="match_parent"
+                android:paddingHorizontal="20dp"
+                android:visibility="gone"
+                android:paddingVertical="10dp"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/totalDonationRecycler"
+                    android:layout_width="match_parent"
+                    android:scrollbars="none"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/totalDoation1"
+                android:layout_width="match_parent"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/totalDonation"
+                android:background="@drawable/curved_dark_grey_background"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/NameInFF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:layout_weight="1"
+                        android:textColor="@color/white_withdraw_text_color"
+                        android:textFontWeight="500"
+                        android:text="Total Raised"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
+
+
+                    <TextView
+                        android:id="@+id/FollowrCountInFF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/noto_sans"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:text="$0.00"
+                        android:textColor="@color/white"
+                        android:textFontWeight="500"
+                        android:textStyle="bold"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

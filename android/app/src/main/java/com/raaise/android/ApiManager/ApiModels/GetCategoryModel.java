@@ -26,7 +26,16 @@ public class GetCategoryModel {
         public boolean isDeleted;
         public String createdAt;
         public String updatedAt;
+        public String image;
         public int __v;
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
 
         public String get_id() {
             return _id;

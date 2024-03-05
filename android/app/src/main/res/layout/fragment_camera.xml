@@ -13,13 +13,54 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
+    <ImageView
+        android:id="@+id/imageClose"
+        android:layout_width="15dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/close_icon"
+        android:layout_margin="30dp"
+        app:tint="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/relativeEye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_for_likes"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:paddingVertical="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/flash_button1"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/flash_off"
+            android:visibility="visible"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/flipCam_button"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_below="@+id/flash_button1"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:src="@drawable/flip_camera_icon"
+            android:visibility="visible" />
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/Timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:background="@color/Red"
+        android:background="@drawable/red_bg_circular"
         android:padding="10dp"
         android:text="00:00"
         android:textColor="@color/white"
@@ -35,8 +76,8 @@
 
         <ImageView
             android:id="@+id/GallerySelected"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
@@ -61,15 +102,16 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/CameraButtonOuterShell"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/CameraButtonOuterShell11"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/camera_button_outer_shell" />
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:id="@+id/CameraButtonOuterShell"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerInParent="true"
                 android:padding="15dp"
                 android:src="@drawable/camera_button_inner_shell" />
@@ -84,6 +126,7 @@
             android:layout_marginStart="30dp"
             android:layout_toEndOf="@id/CameraClickButton"
             android:src="@drawable/flash_off"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/CameraClickButton"
             app:layout_constraintTop_toTopOf="parent" />

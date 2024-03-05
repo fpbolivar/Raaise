@@ -46,7 +46,7 @@ public class GetFolowingListAdapter extends RecyclerView.Adapter<GetFolowingList
                     .placeholder(R.drawable.placeholder)
                     .into(holder.imageViewInFF);
             holder.NameInFF.setText(mo.getFollowTo().getName());
-            holder.FollowrCountInFF.setText(String.format("%s Following", mo.getFollowTo().getFollowersCount()));
+            holder.FollowrCountInFF.setText(String.format("%s followers", mo.getFollowTo().getFollowersCount()));
             holder.MainFollowListElement.setOnClickListener(view -> {
                 context.startActivity(new Intent(context, OtherUserProfileActivity.class).putExtra("UserIdForProfile", mo.getFollowTo().get_id()).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             });

@@ -175,6 +175,7 @@ public class Login extends AppCompatActivity {
     private void clickListeners() {
         DoSignUpButton.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(), SignUp.class));
+            finish();
         });
         ForgetPassword.setOnClickListener(view ->
         {

@@ -50,12 +50,16 @@ import com.raaise.android.ApiManager.ApiModels.VideoCommentModel;
 import com.raaise.android.ApiManager.ApiModels.VideoCommentsReplyModel;
 import com.raaise.android.ApiManager.ApiModels.VideoLikeDislikeModel;
 import com.raaise.android.Utilities.HelperClasses.StringHelper;
+import com.raaise.android.model.BannerModel;
 import com.raaise.android.model.BlockUserPojo;
 import com.raaise.android.model.BlockVideoPojo;
+import com.raaise.android.model.CategoriesModel;
+import com.raaise.android.model.CategoriesPojo;
 import com.raaise.android.model.ChatListModel;
 import com.raaise.android.model.ChatModel;
 import com.raaise.android.model.ClaimedAmountPojo;
 import com.raaise.android.model.CommentReplyPojo;
+import com.raaise.android.model.CurrentPrivacyResponse;
 import com.raaise.android.model.DeleteCommentPojo;
 import com.raaise.android.model.DeleteCommentReply;
 import com.raaise.android.model.EditVideoCmntPojo;
@@ -66,6 +70,10 @@ import com.raaise.android.model.LiveRoomChat;
 import com.raaise.android.model.LiveRoomResponse;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicResponse;
+import com.raaise.android.model.PrivacyBody;
+import com.raaise.android.model.PrivacyModel;
+import com.raaise.android.model.PrivacyResponse;
+import com.raaise.android.model.PrivacyUsersRes;
 import com.raaise.android.model.PublicRoomPojo;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
@@ -74,6 +82,7 @@ import com.raaise.android.model.RoomSlug;
 import com.raaise.android.model.SendChatBody;
 import com.raaise.android.model.SlugRoomData;
 import com.raaise.android.model.UpdateRoomRes;
+import com.raaise.android.model.VerifiedResponse;
 import com.raaise.android.model.VideoCommentDelete;
 import com.raaise.android.model.VideoDonationModal;
 import com.raaise.android.model.VideoDonationPojo;
@@ -83,6 +92,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -115,6 +126,7 @@ public interface ApiInterface {
     @POST(StringHelper.UPDATE_PROFILE_URL)
     Call<UpdateUserProfileModel> UpdateProfileWithImage(@Header(StringHelper.AUTHORIZATION) String token,
                                                         @Part MultipartBody.Part image,
+                                                        @Part MultipartBody.Part coverImage,
                                                         @Part("name") RequestBody name,
                                                         @Part("phoneNumber") RequestBody phoneNumber);
 
@@ -339,7 +351,9 @@ public interface ApiInterface {
                                       @Part ("description") RequestBody description,
                                       @Part MultipartBody.Part logo,
                                       @Part ("memberIds") RequestBody memberIds,
-                                      @Part ("roomType") RequestBody roomType);
+                                      @Part ("roomType") RequestBody roomType,
+                                      @Part("scheduleType") RequestBody scheduleType,
+                                      @Part("scheduleDateTime") RequestBody scheduleDateTime);
 
     @POST(StringHelper.GET_LIVE_ROOM)
     Call<LiveRoomResponse> getLiveRooms(@Header(StringHelper.AUTHORIZATION) String token,
@@ -376,4 +390,23 @@ public interface ApiInterface {
     @POST(StringHelper.GET_LIVE_ROOM_CHAT)
     Call<LiveRoomChat> getLiveRoomChat(@Header(StringHelper.AUTHORIZATION) String token,
                                        @Body GetLiveRoomChatBody pojo);
+
+    @POST(StringHelper.PRIVACY_CONTROL)
+    Call<PrivacyResponse> updatePrivacyPolicy(@Header(StringHelper.AUTHORIZATION) String token,
+                                              @Body PrivacyModel pojo);
+
+    @POST(StringHelper.GET_PRIVACY_USERS)
+    Call<PrivacyUsersRes> getPrivacyUsers(@Header(StringHelper.AUTHORIZATION) String token,
+                                          @Body PrivacyBody pojo);
+
+    @GET(StringHelper.GET_CURRENT_PRIVACY_CONTROL)
+    Call<CurrentPrivacyResponse> getCurrentPrivacyControl(@Header(StringHelper.AUTHORIZATION) String token);
+    @GET(StringHelper.GET_BANNER)
+    Call<BannerModel> getBanner(@Header(StringHelper.AUTHORIZATION) String token);
+
+    @POST(StringHelper.CREATE_INTEREST)
+    Call<CategoriesModel> submitCategories(@Header(StringHelper.AUTHORIZATION) String token,@Body CategoriesPojo categoriesPojo);
+
+    @POST(StringHelper.APPLY_VERIFICATION)
+    Call<VerifiedResponse> applyForVerification(@Header(StringHelper.AUTHORIZATION) String token, @Body VerifiedResponse verifiedResponse);
 }

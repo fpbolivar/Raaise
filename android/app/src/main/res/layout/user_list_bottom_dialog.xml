@@ -4,12 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@drawable/bottom_dialog_dark"
     android:orientation="vertical">
+
+    <View
+        android:id="@+id/viewTop"
+        android:layout_width="100dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:background="@drawable/cross_bg_straight"
+        android:layout_marginTop="15dp"
+        />
 
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_15sdp"
         android:layout_height="wrap_content">
 
         <ImageView
@@ -19,6 +29,7 @@
             android:layout_marginEnd="5dp"
             android:layout_toStartOf="@+id/comments_count_tv"
             android:adjustViewBounds="true"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/svg_share"
             app:tint="@color/white" />
 
@@ -27,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-
             android:background="@drawable/bottom_dialog_dark"
             android:fontFamily="@font/noto_sans"
             android:gravity="center"
@@ -53,8 +63,10 @@
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height=".5dp"
-        android:background="@color/TextColor1"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="40dp"
+        android:background="@color/lineStroke_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/comments_count_tv" />
@@ -75,7 +87,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
 
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/view_color"
             app:cardCornerRadius="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -91,7 +103,7 @@
                     android:layout_margin="12dp"
                     android:rotation="90"
                     android:src="@drawable/more_options_btns"
-                    app:tint="@color/black" />
+                    app:tint="@color/white" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -170,6 +182,7 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
+        android:minHeight="200dp"
         android:layout_marginBottom="10dp"
         tools:listitem="@layout/chat_list_layout" />
 

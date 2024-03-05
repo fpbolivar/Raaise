@@ -83,6 +83,7 @@ import java.util.Objects;
 
 
 public class Home_FollowingFragment extends Fragment implements HomeFollowingAdapter.HomeReelsListener, CommentsAdapter.CommentReplyListener, StopForYouVideo, ResumePlayFollowing, ShareVideoUserListAdapter.ChatListListener, CommentsReplyAdapter.VideoReplyListener {
+    public static boolean doRefresh = false;
     private String COMMENT_REPLY_EDIT_ID = "";
     private boolean EDITING_COMMENT_REPLY = false;
     private boolean EDITING_COMMENT = false;
@@ -198,6 +199,14 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
     @Override
     public void onResume() {
         super.onResume();
+        if (doRefresh){
+            list.clear();
+            homeFollowingAdapter.notifyDataSetChanged();
+            PageCounter = 1;
+            HitGlobalVideoApi("following", "4", String.valueOf(PageCounter));
+            Log.i("userDetails", "onResume: yes");
+            doRefresh = false;
+        }
     }
 
     private void Initialization(View v) {
@@ -211,13 +220,15 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
     }
 
     void HitGlobalVideoApi(String type, String limit, String page) {
-        Log.i("onErrorVdo", "onError: Hitting" );
+        ((Home) requireActivity()).videoProgressBar.setVisibility(View.VISIBLE);
         GetGlobalVideoModel model = new GetGlobalVideoModel(type, limit, page);
         apiManager.GetGlobalVideo(Prefs.GetBearerToken(context), model, new DataCallback<GetGlobalVideoModel>() {
             @Override
             public void onSuccess(GetGlobalVideoModel getGlobalVideoModel) {
-                Log.i("onErrorVdo", "onError: " + getGlobalVideoModel.getData().size());
-
+                try {
+                    ((Home) requireActivity()).videoProgressBar.setVisibility(View.GONE);
+                } catch (Exception e){
+                }
                 list.addAll(getGlobalVideoModel.getData());
                 homeFollowingAdapter.notifyDataSetChanged();
                 dataNotFoundTV.setVisibility(View.GONE);
@@ -227,10 +238,12 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
 
             @Override
             public void onError(ServerError serverError) {
-                Log.i("onErrorVdo", "onError: " + serverError.getErrorMsg());
                 if (list.size() == 0)
                 dataNotFoundTV.setVisibility(View.VISIBLE);
-
+                try {
+                    ((Home) requireActivity()).videoProgressBar.setVisibility(View.GONE);
+                } catch (Exception e){
+                }
             }
         });
     }
@@ -356,9 +369,9 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
             public void onSuccess(VideoLikeDislikeModel videoLikeDislikeModel) {
                 LikeCount.setText(String.valueOf(videoLikeDislikeModel.getVideoCount()));
                 if (videoLikeDislikeModel.isLike()) {
-                    img.setColorFilter(ContextCompat.getColor(context, R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
+                    img.setImageDrawable(getContext().getDrawable(R.drawable.like_icon));
                 } else {
-                    img.setColorFilter(ContextCompat.getColor(context, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+                    img.setImageDrawable(getContext().getDrawable(R.drawable.like_icon_white));
                 }
             }
 
@@ -370,14 +383,14 @@ public class Home_FollowingFragment extends Fragment implements HomeFollowingAda
     }
 
     @Override
-    public void ShowDonationDialog(String UserId, String VideoId) {
+    public void ShowDonationDialog(String UserId, String VideoId, GetGlobalVideoModel.Data obj) {
         final Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow()
                 .setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.layout_donation_dialog);
-        LinearLayout Donate = dialog.findViewById(R.id.dialog_btn_Donation);
+        dialog.setContentView(R.layout.supports_amount_dialog);
+        ImageView Donate = dialog.findViewById(R.id.dialog_btn_Donation);
         EditText donation_amount_ET = dialog.findViewById(R.id.donation_amount_ET);
         RelativeLayout Layout = dialog.findViewById(R.id.layout_donation_amount);
         ImageView Tick = dialog.findViewById(R.id.select_firstAmount_icon);

@@ -12,6 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottomBar" />
+
+    <ProgressBar
+        android:id="@+id/video_loader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/icon_white"
+        android:layout_above="@id/bottomBar"
+        android:visibility="gone"/>
+
     <!--    <androidx.fragment.app.FragmentContainerView-->
     <!--        android:id="@+id/fragmentContainer"-->
     <!--        android:layout_width="match_parent"-->
@@ -96,16 +105,16 @@
         <LinearLayout
             android:id="@+id/Plus"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_55sdp"
                 android:layout_gravity="center_vertical|center_horizontal"
-                android:src="@drawable/plus_bottom_bar" />
+                android:src="@drawable/camera_icon" />
 
         </LinearLayout>
 
@@ -167,8 +176,8 @@
 
             <ImageView
                 android:id="@+id/ProfileImageView"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:adjustViewBounds="true" />
 
             <TextView

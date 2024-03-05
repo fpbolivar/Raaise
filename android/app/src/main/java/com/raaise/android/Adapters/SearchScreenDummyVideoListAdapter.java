@@ -2,6 +2,7 @@ package com.raaise.android.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,8 @@ public class SearchScreenDummyVideoListAdapter extends RecyclerView.Adapter<Sear
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GlobalSearchModel.Data.Posts obj = list.get(position);
-        Glide.with(context).load(Prefs.GetBaseUrl(context) + obj.getVideoImage()).placeholder(R.drawable.placeholder).into(holder.postViewIV);
+        Log.e("CAPTION","CAPTION"+new Gson().toJson(obj));
+        Glide.with(context).load(Prefs.GetBaseUrl(context) + obj.getVideoImage()).placeholder(R.drawable.settings_block_bg).into(holder.postViewIV);
         holder.viewCountTV.setText(String.valueOf(obj.getVideoViewCount()));
         holder.postViewIV.setOnClickListener(view -> {
             context.startActivity(new Intent(context, ViewSeeAllVideosFromSearchAcitivty.class).putExtra("ListOfSeeAllVideosPlaying", new Gson().toJson(list)).putExtra("PositionListOfSeeAllVideosPlaying", String.valueOf(position)).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

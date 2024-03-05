@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginHorizontal="10dp"
     android:background="@drawable/bottom_dialog_dark"
-    android:backgroundTint="@color/LogoGreyColor"
+    android:backgroundTint="@color/WhiteColor"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/noto_sans"
-        android:text="Scrip Tube"
+        android:text="Raaise"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="25dp" />

@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -129,6 +130,9 @@ public class ShowUserVideoFragment extends Fragment implements View.OnClickListe
             if (returnCode == RETURN_CODE_SUCCESS) {
                 try {
                     File shareFile = new File(Environment.getExternalStorageDirectory().getPath() + "/Download/"  + WaterMarkVideoName + ".mp4");
+                    if (shareFile.exists()){
+                        Log.i("sharingFile", "shareIntent: Exist");
+                    }
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("video/mp4");
                     intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(Objects.requireNonNull(App.getContext()), com.raaise.android.BuildConfig.APPLICATION_ID + ".provider", shareFile));
@@ -137,6 +141,7 @@ public class ShowUserVideoFragment extends Fragment implements View.OnClickListe
                         file.delete();
                     }
                 } catch (Exception e) {
+                    Log.i("sharingFile", "shareIntent: " + e.getMessage());
                     e.printStackTrace();
                 }
 
@@ -464,7 +469,7 @@ public class ShowUserVideoFragment extends Fragment implements View.OnClickListe
         dialog.setContentView(R.layout.edit_video_caption_bottom_sheet);
         ImageView video_thumbnail_InEditCaption, backBtn_InEditVideo;
         EditText desc_edit_text_InEditCaption;
-        CardView submitVideoBtn_InEditCaption;
+        RelativeLayout submitVideoBtn_InEditCaption;
         video_thumbnail_InEditCaption = dialog.findViewById(R.id.video_thumbnail_InEditCaption);
         Glide.with(v.getContext()).load(link).placeholder(R.drawable.placeholder).into(video_thumbnail_InEditCaption);
         backBtn_InEditVideo = dialog.findViewById(R.id.backBtn_InEditVideo);
@@ -543,9 +548,9 @@ public class ShowUserVideoFragment extends Fragment implements View.OnClickListe
             public void onSuccess(VideoLikeDislikeModel videoLikeDislikeModel) {
                 LikeCount.setText(String.valueOf(videoLikeDislikeModel.getVideoCount()));
                 if (videoLikeDislikeModel.isLike()) {
-                    img.setColorFilter(ContextCompat.getColor(v.getContext(), R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
+                    img.setImageDrawable(getContext().getDrawable(R.drawable.like_icon));
                 } else {
-                    img.setColorFilter(ContextCompat.getColor(v.getContext(), R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+                    img.setImageDrawable(getContext().getDrawable(R.drawable.like_icon_white));
                 }
             }
 

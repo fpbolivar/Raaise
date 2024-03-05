@@ -27,6 +27,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.raaise.android.Adapters.AmountAdapter;
+import com.raaise.android.Adapters.TagsCategoryAdapter;
 import com.raaise.android.ApiManager.ApiManager;
 import com.raaise.android.ApiManager.ApiModels.GetCategoryModel;
 import com.raaise.android.ApiManager.DataCallback;
@@ -55,6 +58,7 @@ import com.raaise.android.R;
 import com.raaise.android.Select_AudioActivity;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
+import com.raaise.android.Utilities.textPaint.TextPaint;
 import com.raaise.android.VideoService;
 import com.raaise.android.model.MusicData;
 import com.raaise.android.model.VideoPojo;
@@ -73,16 +77,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PlusFragment extends Fragment implements AmountAdapter.AmountListener{
+public class PlusFragment extends Fragment implements AmountAdapter.AmountListener, TagsCategoryAdapter.TagsCategoryListener {
     private static Dialog uploadDialog;
     public boolean isDonation = false;
     public String donationFromRV = "";
     public EditText donationAmtTV;
     String mergedVideoName;
     ImageView backBtn;
+    TagsCategoryAdapter tagsCategoryAdapter;
     Context context;
     VideoView videoView;
-    ImageView Iv_Btn_Donation;
+    LinearLayout Iv_Btn_Donation;
     LinearLayout SelectAudio;
     public static ApiManager apiManager = App.getApiManager();
     public static VideoPojo pojo;
@@ -95,6 +100,7 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
     boolean IsShowingDialog = true;
     private String MERGED_VIDEO_PATH = "";
     private TextView selectAudioTV;
+    private static File vdoFile;
 
     public PlusFragment() {
     }
@@ -123,6 +129,9 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
     }
 
     public static void stopDialog() {
+        if (vdoFile != null && vdoFile.exists()){
+            vdoFile.delete();
+        }
         Home.uploadCompleted();
     }
 
@@ -304,7 +313,7 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.exit_videos_dialog);
         CardView DiscardButton;
-        CardView BackToEditingButton;
+        RelativeLayout BackToEditingButton;
         DiscardButton = dialog.findViewById(R.id.DiscardButton);
         BackToEditingButton = dialog.findViewById(R.id.BackToEditingButton);
         DiscardButton.setOnClickListener(view ->
@@ -316,6 +325,10 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                 ((Home) requireActivity()).videoPath = "";
                 ((Home) requireActivity()).videoUri = "";
                 ((Home) requireActivity()).bottomBar.setVisibility(View.VISIBLE);
+                File file1 = new File(getRealPathFromUri(getContext(), Uri.parse(VideoPath)));
+                if (file1.exists()){
+                    file1.delete();
+                }
                 ((Home) requireActivity()).SelectHomeScreen();
             } catch (Exception e){
                 Log.e("PlusFragment", "handleBackButtonClicked: " + e.getMessage());
@@ -331,42 +344,50 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
     }
 
     private void showUploadVideoDialog(Bitmap thumb) {
-        if (thumb == null){
-            Log.i("thumbNail", "showUploadVideoDialog: null");
-        } else {
-            Log.i("thumbNail", "showUploadVideoDialog: not null");
-        }
         Dialog dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.upload_video_layout);
         dialog.setCancelable(false);
         File thumbFile = makeFileOutOfImage(thumb, ".jpg");
-
+        RecyclerView RecyclerViewInProfileTags=dialog.findViewById(R.id.RvforCategory);
+        ProgressBar progressBar=dialog.findViewById(R.id.progressBar);
+        TextView chooseTags=dialog.findViewById(R.id.chooseTags);
+        TextPaint.getGradientColor(chooseTags);
         ArrayList<String> amountList = new ArrayList<>();
         setupAmountList(amountList);
+
         List<GetCategoryModel.Data> categories = new ArrayList<>();
+        progressBar.setVisibility(View.VISIBLE);
         apiManager.GetCategories(Prefs.GetBearerToken(getActivity()), new DataCallback<GetCategoryModel>() {
             @Override
             public void onSuccess(GetCategoryModel getCategoryModel) {
+                progressBar.setVisibility(View.GONE);
+                Log.e("GetCategoryModel","GetCategoryModel"+new Gson().toJson(getCategoryModel.getData()));
+                RecyclerViewInProfileTags.setHasFixedSize(true);
+                RecyclerViewInProfileTags.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                tagsCategoryAdapter = new TagsCategoryAdapter(getContext(), PlusFragment.this,getCategoryModel.getData(),false);
+                RecyclerViewInProfileTags.setAdapter(tagsCategoryAdapter);
+                tagsCategoryAdapter.notifyDataSetChanged();
 
-                size = getCategoryModel.getData().size();
-                categories.addAll(getCategoryModel.getData());
-                arrayOfCategories = new String[size];
-                arrayOfCodes = new String[size];
-                for (int i = 0; i < size; i++) {
-                    arrayOfCategories[i] = getCategoryModel.getData().get(i).getName();
-                    arrayOfCodes[i] = getCategoryModel.getData().get(i).get_id();
-                }
-                ArrayAdapter<String> ad = new ArrayAdapter<String>(getContext(), R.layout.select_category_spin_text);
-                ad.add("Select Category");
-                ad.addAll(arrayOfCategories);
-
-                ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                selectCategorySpin.setAdapter(ad);
+//                size = getCategoryModel.getData().size();
+//                categories.addAll(getCategoryModel.getData());
+//                arrayOfCategories = new String[size];
+//                arrayOfCodes = new String[size];
+//                for (int i = 0; i < size; i++) {
+//                    arrayOfCategories[i] = getCategoryModel.getData().get(i).getName();
+//                    arrayOfCodes[i] = getCategoryModel.getData().get(i).get_id();
+//                }
+//                ArrayAdapter<String> ad = new ArrayAdapter<String>(getContext(), R.layout.select_category_spin_text);
+//                ad.add("Select Category");
+//                ad.addAll(arrayOfCategories);
+//
+//                ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                selectCategorySpin.setAdapter(ad);
             }
 
             @Override
             public void onError(ServerError serverError) {
+                progressBar.setVisibility(View.GONE);
 
             }
         });
@@ -377,7 +398,7 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
         SwitchCompat toggleBtn = dialog.findViewById(R.id.donationToggleBtn);
         ImageView thumbnailImage = dialog.findViewById(R.id.video_thumbnail);
         ImageView backButton = dialog.findViewById(R.id.backBtn);
-        CardView submitBtn = dialog.findViewById(R.id.submitVideoBtn);
+        RelativeLayout submitBtn = dialog.findViewById(R.id.submitVideoBtn);
         EditText videoDescText = dialog.findViewById(R.id.desc_edit_text);
         selectCategorySpin = dialog.findViewById(R.id.select_category_spin);
 
@@ -442,12 +463,16 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                     Toast.makeText(getActivity(), "Please add description", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (selectCategorySpin.getSelectedItem().toString().equalsIgnoreCase("Select Category")) {
+                if(CategoryId==null){
                     Toast.makeText(getActivity(), "Please Select Category", Toast.LENGTH_SHORT).show();
                     return;
-                } else {
-                    SelectCategorieId(selectCategorySpin.getSelectedItem().toString());
                 }
+//                if (selectCategorySpin.getSelectedItem().toString().equalsIgnoreCase("Select Category")) {
+//                    Toast.makeText(getActivity(), "Please Select Category", Toast.LENGTH_SHORT).show();
+//                    return;
+//                } else {
+//                    SelectCategorieId(selectCategorySpin.getSelectedItem().toString());
+//                }
                 RequestBody audioID = null;
                 RequestBody CategoryID = null;
                 RequestBody donationAmt;
@@ -490,7 +515,7 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
                 RequestBody finalAudioID = audioID;
                 RequestBody finalCategoryID = CategoryID;
 
-                File vdoFile;
+
                 RequestBody requestFile;
                 MultipartBody.Part vdoBody;
 
@@ -620,6 +645,11 @@ public class PlusFragment extends Fragment implements AmountAdapter.AmountListen
             Log.i("dialogExc", "uploadStarted: " + e.getMessage());
         }
 
+    }
+
+    @Override
+    public void multiSelectCategory(String id,List<String> ids) {
+        CategoryId=id;
     }
 //
 //    @Override

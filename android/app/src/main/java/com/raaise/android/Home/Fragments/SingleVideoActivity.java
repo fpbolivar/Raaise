@@ -35,6 +35,7 @@ import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -97,15 +98,16 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
     LinearLayout songInfoContainer;
     LinearLayout profileContainer;
     ImageView moreOptions, ShareVideo;
-    ImageView CommentsInAdapter, lottie_main;
+    ImageView lottie_main;
+    ConstraintLayout CommentsInAdapter;
     LinearLayout Layout_Donation;
     VideoView VideoViewInHomeReels;
     ImageView LikeInHomeVideoSingleItem, ImageProfileInAdapter, DollarDonation, SongImage;
     TextView NameInHomeVideoSingleItem, UserNameInHomeVideoSingleItem, DonationRaisedInHomeVideoSingleItem, SongNameInHomeVideoSingleItem, DonationAmount,
-            LikeCountInHomeVideoSingleItem, hashTagsTV, CommentCountInHomeVideoSingleItem, VideoShareCountInHomeVideoSingleItem, FollowTextInHomeVideoSingleItem;
+            LikeCountInHomeVideoSingleItem, hashTagsTV, CommentCountInHomeVideoSingleItem, VideoShareCountInHomeVideoSingleItem, FollowTextInHomeVideoSingleItem,eyeCount;
     LottieAnimationView Lottie_Heart, Lottie_PausePlay;
     RelativeLayout MainLayoutInFollowingVideoSingleItem, AudioItem;
-    CardView FollowButtonInHomeVideoSingleItem;
+    RelativeLayout FollowButtonInHomeVideoSingleItem;
     ApiManager apiManager = App.getApiManager();
     String Slug;
     boolean visible = false;
@@ -236,6 +238,8 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
                         NameInHomeVideoSingleItem.setText(obj1.getGetVideo().getUserId().getName());
                     }
 
+                    eyeCount.setText(String.valueOf(obj1.getGetVideo().getVideoViewCount()));
+
                 }
                 if (obj1.getGetVideo().getUserId().getUserName() != null) {
                     if (obj1.getGetVideo().getUserId().getUserName().length() > 10) {
@@ -246,7 +250,7 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
 
                 }
                 if (obj1.getGetVideo().getDonationAmount() != null) {
-                    DonationRaisedInHomeVideoSingleItem.setText(String.format("Total Raised $%s", obj1.getGetVideo().getDonationAmount().isEmpty() ? 0 : obj1.getGetVideo().getDonationAmount()));
+                    DonationRaisedInHomeVideoSingleItem.setText(String.format("$%s", obj1.getGetVideo().getDonationAmount().isEmpty() ? 0 : obj1.getGetVideo().getDonationAmount()));
                 }
                 LikeCountInHomeVideoSingleItem.setText(String.valueOf(obj1.getGetVideo().getVideolikeCount()));
                 CommentCountInHomeVideoSingleItem.setText(String.valueOf(obj1.getGetVideo().getVideoCommentCount()));
@@ -254,10 +258,11 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
                 if (obj1.getGetVideo().getUserId().getProfileImage() != null) {
                     Glide.with(SingleVideoActivity.this).load(Prefs.GetBaseUrl(SingleVideoActivity.this) + obj1.getGetVideo().getUserId().getProfileImage()).placeholder(R.drawable.placeholder).into(ImageProfileInAdapter);
                 }
-                if (obj1.isLike()) {
-                    LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(SingleVideoActivity.this, R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
+//
+                if (obj.isLike()) {
+                    LikeInHomeVideoSingleItem.setImageDrawable(getDrawable(R.drawable.like_icon));
                 } else {
-                    LikeInHomeVideoSingleItem.setColorFilter(ContextCompat.getColor(SingleVideoActivity.this, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+                    LikeInHomeVideoSingleItem.setImageDrawable(getDrawable(R.drawable.like_icon_white));
                 }
 
 
@@ -369,9 +374,9 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
             public void onSuccess(VideoLikeDislikeModel videoLikeDislikeModel) {
                 LikeCount.setText(String.valueOf(videoLikeDislikeModel.getVideoCount()));
                 if (videoLikeDislikeModel.isLike()) {
-                    Img.setColorFilter(ContextCompat.getColor(SingleVideoActivity.this, R.color.Red), android.graphics.PorterDuff.Mode.SRC_IN);
+                    LikeInHomeVideoSingleItem.setImageDrawable(getDrawable(R.drawable.like_icon));
                 } else {
-                    Img.setColorFilter(ContextCompat.getColor(SingleVideoActivity.this, R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+                    LikeInHomeVideoSingleItem.setImageDrawable(getDrawable(R.drawable.like_icon_white));
                 }
             }
 
@@ -419,6 +424,7 @@ public class SingleVideoActivity extends AppCompatActivity implements CommentsAd
         VideoShareCountInHomeVideoSingleItem = findViewById(R.id.VideoShareCountInHomeVideoSingleItem1);
         FollowTextInHomeVideoSingleItem = findViewById(R.id.FollowTextInHomeVideoSingleItem1);
         FollowButtonInHomeVideoSingleItem = findViewById(R.id.FollowButtonInHomeVideoSingleItem1);
+        eyeCount=findViewById(R.id.eyeCount);
     }
 
     private void ClickListeners() {

@@ -55,7 +55,7 @@
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/noto_sans"
-            android:text="A short bio which described you and help the other users to check you \nopinions."
+            android:text="A short bio which described you and help the other users to check your opinions."
             android:textColor="@color/light_grey"
             android:textSize="9sp" />
 
@@ -76,7 +76,7 @@
             android:padding="10dp"
             android:paddingHorizontal="20dp"
             android:textColor="@color/light_grey"
-            android:textColorHint="#BFBFC1"
+            android:textColorHint="@color/light_white"
             android:textFontWeight="300"
             android:textSize="14sp" />
 

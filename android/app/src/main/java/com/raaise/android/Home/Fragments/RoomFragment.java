@@ -46,10 +46,14 @@ import com.raaise.android.model.LiveRoomData;
 import com.raaise.android.model.LiveRoomTokenData;
 import com.raaise.android.model.RoomSlug;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 
-public class RoomFragment extends Fragment {
+public class RoomFragment extends Fragment implements RoomMemberAdapter.RoomUserListener {
 
     // Layout files
     CardView initiateCallBTN;
@@ -70,6 +74,16 @@ public class RoomFragment extends Fragment {
     LiveRoomData liveRoomData;
     LiveRoomTokenData liveRoomTokenData;
 
+    LinearLayout webcamBG;
+    ImageView webcamIV;
+    LinearLayout micBG;
+    ImageView micIV;
+    CardView btnWebcam;
+    CardView btnMic;
+    private boolean CAM_STATUS = true;
+    private boolean MIC_STATUS = true;
+    private boolean android10 = true;
+
     public RoomFragment(String liveRoomStr){
         this.liveStr = liveRoomStr;
     }
@@ -82,10 +96,6 @@ public class RoomFragment extends Fragment {
 
         ((Home) requireActivity()).bottomBar.setVisibility(View.GONE);
         liveRoomData = new Gson().fromJson(liveStr, LiveRoomData.class);
-        if (liveRoomData != null){
-            Log.i("roomSlug", "onCreateView: " + liveRoomData.slug);
-            getLiveRoom();
-        }
 
         backBTN.setOnClickListener(view1 -> requireActivity().onBackPressed());
         editRoomBtn.setOnClickListener(view12 -> {
@@ -96,11 +106,48 @@ public class RoomFragment extends Fragment {
 
         leaveRoomBTN.setOnClickListener(v -> showLeaveRoomDialog());
 
-        initiateCallBTN.setOnClickListener(v -> startActivity(new Intent(getActivity(), MeetingActivity.class).putExtra("roomName", liveRoomTokenData.title)
-                .putExtra("token", liveRoomTokenData.token)
-                .putExtra("roomID", liveRoomTokenData.roomId)
-                .putExtra("roomSlug", liveRoomTokenData.slug)));
+        initiateCallBTN.setOnClickListener(view13 -> {
+            startActivity(new Intent(getActivity(), MeetingActivity.class).putExtra("roomName", liveRoomTokenData.title)
+                    .putExtra("token", liveRoomTokenData.token)
+                    .putExtra("roomID", liveRoomTokenData.roomId)
+                    .putExtra("roomSlug", liveRoomTokenData.slug)
+                    .putExtra("micStatus", MIC_STATUS)
+                    .putExtra("camStatus", CAM_STATUS));
 
+            MIC_STATUS = true;
+            CAM_STATUS = true;
+            webcamBG.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+            webcamIV.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.camera_on));
+            micBG.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+            micIV.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.mic_on));
+        });
+
+        btnWebcam.setOnClickListener(v -> {
+            if (CAM_STATUS) {
+                webcamBG.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.meeting_grey));
+                webcamIV.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.camera_off));
+            } else {
+                webcamBG.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+                webcamIV.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.camera_on));
+            }
+            CAM_STATUS=!CAM_STATUS;
+            Log.i("camStatus", "onClick: " + CAM_STATUS);
+        });
+
+        btnMic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (MIC_STATUS) {
+
+                    micBG.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.meeting_grey));
+                    micIV.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.mic_off));
+                } else {
+                    micBG.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+                    micIV.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.mic_on));
+                }
+                MIC_STATUS=!MIC_STATUS;
+            }
+        });
         return view;
     }
 
@@ -150,15 +197,80 @@ public class RoomFragment extends Fragment {
         roomNameTV.setText(liveRoomData.title);
         roomDescTV.setText(liveRoomData.description);
         roomMemberAdapter.setList(liveRoomData.getMemberIds());
+
+        if (liveRoomData.hostId != null){
+            if (Prefs.GetUserID(getContext()).equals(liveRoomData.hostId._id)){
+                editRoomBtn.setVisibility(View.VISIBLE);
+            } else {
+                editRoomBtn.setVisibility(View.GONE);
+            }
+        } else {
+            editRoomBtn.setVisibility(View.GONE);
+        }
+
+        if (liveRoomData.scheduleType != null && liveRoomData.scheduleDateTime != null){
+            if (liveRoomData.scheduleType.equals("schedule_live_room")){
+                String dateTimeString = liveRoomData.scheduleDateTime;
+                Log.i("scheduledTime", "setupDataByToken: " + liveRoomData.scheduleDateTime);
+
+                // Convert the date and time string to a Date object
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                try {
+                    Date dateTime = dateFormat.parse(dateTimeString);
+                    Date now = new Date();
+
+                    // Compare the two dates
+                    int result = dateTime.compareTo(now);
+                    if (result < 0) {
+                        // The specified date and time is in the past
+                        Log.i("dateTime", "The specified date and time is in the past.");
+                    } else if (result == 0) {
+                        // The specified date and time is the same as the current date and time
+                        Log.i("dateTime", "The specified date and time is the same as the current date and time.");
+                    } else {
+                        // The specified date and time is in the future
+                        initiateCallBTN.setVisibility(View.GONE);
+                        btnWebcam.setVisibility(View.GONE);
+                        btnMic.setVisibility(View.GONE);
+                        Log.i("dateTime", "The specified date and time is in the future.");
+
+                        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                        SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd MMM", Locale.getDefault());
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+                        try {
+                            Date dateTime2 = inputFormat.parse(dateTimeString);
+
+                            String date = dateFormat2.format(dateTime2);
+                            String time = timeFormat.format(dateTime2);
+
+                            Toast.makeText(getContext(), "Room will be live by " + date + " on " + time, Toast.LENGTH_SHORT).show();
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
     private void inItWidgets(View view) {
         initiateCallBTN = view.findViewById(R.id.initiate_call_btn);
+        btnWebcam = view.findViewById(R.id.btnWebcam);
+        btnMic = view.findViewById(R.id.btnMic);
+        webcamBG = view.findViewById(R.id.webcam_bg);
+        webcamIV = view.findViewById(R.id.webcam_iv);
+        micBG = view.findViewById(R.id.mic_bg);
+        micIV = view.findViewById(R.id.mic_iv);
         callBG = view.findViewById(R.id.call_bg);
         editRoomBtn = view.findViewById(R.id.edit_room_btn);
         leaveRoomBTN = view.findViewById(R.id.leave_room_btn);
         roomMemebersRV = view.findViewById(R.id.room_members_rv);
-        roomMemberAdapter = new RoomMemberAdapter(getContext());
+        roomMemberAdapter = new RoomMemberAdapter(getContext(), RoomFragment.this);
         roomMemebersRV.setLayoutManager(new LinearLayoutManager(getContext()));
         roomMemebersRV.setAdapter(roomMemberAdapter);
         backBTN = view.findViewById(R.id.backBtn);
@@ -176,12 +288,22 @@ public class RoomFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("roomResume", "onResume: Resumed");
-        if (App.fromEditRoom){
-            App.fromEditRoom = false;
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+            // Code for Android 10
+            while (android10){
+                getLiveRoom();
+                android10 = false;
+            }
+        } else {
             getLiveRoom();
 
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        android10 = true;
     }
 
     private void getLiveRoom() {
@@ -201,5 +323,8 @@ public class RoomFragment extends Fragment {
             }
         });
     }
-
+    @Override
+    public void UserSelected(String id, String userName) {
+        startActivity(new Intent(getContext(), OtherUserProfileActivity.class).putExtra("UserIdForProfile", id).putExtra("UserNameForProfile", userName).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
 }

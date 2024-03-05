@@ -50,6 +50,8 @@ public class GetUserProfile {
         public String deviceType;
         public String loginType;
         public String profileImage;
+        public String coverImage;
+
         public boolean isBlock;
         public boolean isActive;
         public String createdAt;
@@ -60,6 +62,14 @@ public class GetUserProfile {
         public String shortBio;
         public String donatedAmount;
         public boolean isVerified;
+
+        public String getCoverImage() {
+            return coverImage;
+        }
+
+        public void setCoverImage(String coverImage) {
+            this.coverImage = coverImage;
+        }
 
         public int getVideoCount() {
             return videoCount;

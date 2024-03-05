@@ -2,7 +2,10 @@ package com.raaise.android.Home.Fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,8 +15,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,10 +27,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,33 +47,54 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 import com.raaise.android.Adapters.ChatListAdapter;
 import com.raaise.android.Adapters.RoomAdapter;
 import com.raaise.android.Adapters.SelectUsersAdapter;
 import com.raaise.android.Adapters.SelectedUsersAdapter;
 import com.raaise.android.ApiManager.ApiManager;
+import com.raaise.android.ApiManager.ApiModels.GetVideosBasedOnAudioIdModel;
+import com.raaise.android.ApiManager.ApiModels.GlobalSearchModel;
 import com.raaise.android.ApiManager.ApiModels.UserFollowersModel;
 import com.raaise.android.ApiManager.ApiModels.UserFollowingModel;
 import com.raaise.android.ApiManager.DataCallback;
 import com.raaise.android.ApiManager.RetrofitHelper.App;
 import com.raaise.android.ApiManager.ServerError;
 import com.raaise.android.Home.MainHome.Home;
+import com.raaise.android.MainActivity;
 import com.raaise.android.R;
+import com.raaise.android.Settings.MyAccount.PrivacyControl;
 import com.raaise.android.Settings.MyAccount.ShortBio;
 import com.raaise.android.Utilities.HelperClasses.Dialogs;
 import com.raaise.android.Utilities.HelperClasses.Prefs;
 import com.raaise.android.Utilities.HelperClasses.Prompt;
+import com.raaise.android.Utilities.textPaint.TextPaint;
+import com.raaise.android.model.BannerModel;
 import com.raaise.android.model.ChatListModel;
+import com.raaise.android.model.ChatModel;
+import com.raaise.android.model.ChatUserID;
 import com.raaise.android.model.GetRoomPojo;
 import com.raaise.android.model.LiveRoomData;
 import com.raaise.android.model.LiveRoomResponse;
+import com.raaise.android.model.PrivacyBody;
+import com.raaise.android.model.PrivacyUsersRes;
 import com.raaise.android.model.RoomPojo;
 import com.raaise.android.model.RoomResponse;
 import com.raaise.android.model.SelectUsersModel;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -93,16 +123,61 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
     private SelectedUsersAdapter selectedUsersAdapter;
     TextView selectedLabel;
     TextView selectUsersLabel;
-    ImageView roomLogo;
+    ImageView roomLogo,chatBanner;
     Uri selectedImageUri = null;
     private boolean LogoSelected = false;
     private String roomType = "public";
+    private String ROOM_TIMING;
+    public static final String GO_LIVE_NOW = "go_live_now";
+    public static final String SCHEDULE_LIVE_ROOM = "schedule_live_room";
+    Handler handler;
+    Runnable searchRunnable;
+    private Socket socket;
+    public Emitter.Listener onLogin = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            if (args[0] instanceof org.json.JSONArray) {
+                org.json.JSONArray data = (org.json.JSONArray) args[0];
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                ArrayList<String> chatUserIDS = new Gson().fromJson(String.valueOf(data), new TypeToken<ArrayList<String>>(){}.getType());
+                            adapter.setChatIDS(chatUserIDS);
+                            } catch (Exception e){
+                            }
+
+                        }
+                    });
+                } catch (Exception e) {
+                }
+            } else {
+                Log.e("chatEmitted", "Invalid data type: " + args[0].getClass().getName());
+            }
+        }
+    };
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_chat_list, container, false);
+        ((Home) requireActivity()).videoProgressBar.setVisibility(View.GONE);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                handler = new Handler();
+            }
+        });
         inItWidgets(view);
+        getBanner();
+        App app = (App) getActivity().getApplication();
+        socket = app.getSocket();
+        if (!socket.connected()){
+            socket.connect();
+        }
+        socket.on("onlineUsers", onLogin);
+
         GetUserListApi("");
         SearchViewInChatListMain.setQueryHint(Html.fromHtml("<font color = #d6d6d6>" + "Search Users" + "</font>"));
         SearchViewInChatListMain.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -118,7 +193,7 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
             }
         });
 
-        getLiveRooms();
+    //    getLiveRooms();
 
         return view;
     }
@@ -130,7 +205,8 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
             @Override
             public void onSuccess(LiveRoomResponse liveRoomResponse) {
                 Dialogs.HideProgressDialog();
-                if (liveRoomResponse.getData().size() > 1){
+                Log.i("liveRooms", "onSuccess: " + new Gson().toJson(liveRoomResponse));
+                if (liveRoomResponse.getData().size() > 0){
                     roomLabel.setVisibility(View.VISIBLE);
                 } else {
                     roomLabel.setVisibility(View.GONE);
@@ -144,6 +220,7 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
 
             @Override
             public void onError(ServerError serverError) {
+                Log.i("liveRooms", "onSuccess: " + serverError.error);
                 Dialogs.HideProgressDialog();
                 Toast.makeText(getContext(), serverError.getErrorMsg(), Toast.LENGTH_SHORT).show();
             }
@@ -194,7 +271,7 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
         });
 
         joinRoomBtn.setOnClickListener(view -> {
-            ((Home) requireActivity()).fragmentManagerHelper.replace(new JoinRoomFragment(), true);
+            ((Home) requireActivity()).fragmentManagerHelper.replace(new JoinRoomFragment(true), true);
         roomOptionsDialog.dismiss();
         });
 
@@ -209,6 +286,7 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
         Dialog roomDialog;
         selectUsersModels = new ArrayList<>();
         selectedUsersModels = new ArrayList<>();
+        ROOM_TIMING = GO_LIVE_NOW;
 
         EditText roomNameET;
         EditText roomDescET;
@@ -219,34 +297,133 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
         selectedUsersAdapter = new SelectedUsersAdapter(getContext(), this);
 
         TextView roomTypeTV;
+        TextView roomTimingTV;
         TextView chooseLogoBtn;
+        TextView scheduleTimeTV;
+        TextView scheduleDateTV;
         RecyclerView selectUsersRV;
         RecyclerView selectedUsersRV;
         SwitchCompat roomTypeSwitch;
+        SwitchCompat roomTimingSwitch;
+        LinearLayout dateTimeContainer;
+
+        EditText searchUserET;
 
         roomDialog = new Dialog(getContext());
         roomDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         roomDialog.setContentView(R.layout.room_dialog);
+        searchUserET = roomDialog.findViewById(R.id.search_user_et);
 
         roomNameET = roomDialog.findViewById(R.id.room_name_et);
         roomDescET = roomDialog.findViewById(R.id.room_desc_et);
         closeDialog = roomDialog.findViewById(R.id.imageClose);
         createRoomBTN = roomDialog.findViewById(R.id.create_room_btn);
         selectedLabel = roomDialog.findViewById(R.id.selected_users_label);
+        TextPaint.getGradientColor(selectedLabel);
         selectUsersLabel = roomDialog.findViewById(R.id.select_users_label);
+        TextPaint.getGradientColor(selectUsersLabel);
+
         roomTypeTV = roomDialog.findViewById(R.id.room_type_tv);
+        roomTimingTV = roomDialog.findViewById(R.id.room_timing_tv);
         roomTypeSwitch = roomDialog.findViewById(R.id.room_type_switch);
+        roomTimingSwitch = roomDialog.findViewById(R.id.room_timing_switch);
         chooseLogoBtn = roomDialog.findViewById(R.id.choose_room_logo_btn);
+        TextPaint.getGradientColor(chooseLogoBtn);
+
         roomLogo = roomDialog.findViewById(R.id.room_logo);
+        dateTimeContainer = roomDialog.findViewById(R.id.date_time_container);
+        scheduleDateTV = roomDialog.findViewById(R.id.schedule_date_tv);
+        scheduleTimeTV = roomDialog.findViewById(R.id.schedule_time_tv);
 
         selectUsersRV = roomDialog.findViewById(R.id.select_users_rv);
         selectedUsersRV = roomDialog.findViewById(R.id.selected_users_rv);
+        if (Prefs.getPrivacyPosition(getContext()) == 3){
+            selectUsersLabel.setVisibility(View.GONE);
+            searchUserET.setVisibility(View.GONE);
+        }
 
         selectedUsersRV.setAdapter(selectedUsersAdapter);
 
         selectedUsersRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         getAllUsers(selectUsersModels, selectUsersAdapter);
         selectUsersRV.setAdapter(selectUsersAdapter);
+
+        searchUserET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (searchRunnable != null) {
+                    handler.removeCallbacks(searchRunnable);
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        if (count > 1){
+                            Log.i("searchUsers", "onTextChanged: " + s);
+                            getAllUsers(selectUsersModels, selectUsersAdapter, s);
+                        } else getAllUsers(selectUsersModels, selectUsersAdapter);
+                    }
+                };
+                handler.postDelayed(searchRunnable, 800);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        scheduleDateTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get the current date
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                // Create a new DatePickerDialog and show it
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                // Do something with the selected date
+                                String formattedMonth = String.format("%02d", month + 1);
+                                String selectedDate = year + "-" + formattedMonth + "-" + String.format("%02d", dayOfMonth);
+                                scheduleDateTV.setText(selectedDate);
+                            }
+                        }, year, month, day);
+                datePickerDialog.show();
+
+            }
+        });
+
+        scheduleTimeTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get the current time
+                final Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+
+                // Create a new TimePickerDialog and show it
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                // Format the selected time as "HH:mm:ss"
+                                String formattedTime = String.format("%02d:%02d:%02d", hourOfDay, minute, 0);
+
+                                // Set the selected time in the TextView
+                                scheduleTimeTV.setText(formattedTime);
+                            }
+                        }, hour, minute, true);
+                timePickerDialog.show();
+            }
+        });
 
         roomTypeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked){
@@ -255,6 +432,18 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
             } else {
                 roomType = "public";
                 roomTypeTV.setText("Public");
+            }
+        });
+
+        roomTimingSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                ROOM_TIMING = SCHEDULE_LIVE_ROOM;
+                roomTimingTV.setText("Schedule Live Room");
+                dateTimeContainer.setVisibility(View.VISIBLE);
+            } else {
+                ROOM_TIMING = GO_LIVE_NOW;
+                roomTimingTV.setText("Go Live Now");
+                dateTimeContainer.setVisibility(View.GONE);
             }
         });
 
@@ -272,13 +461,16 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
                 return;
             }
             if (roomDescET.getText().toString().trim().equals("")){
-                Toast.makeText(getContext(), "Please give ashort description to you Room", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Please give a short description to you Room", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (selectedUsersAdapter.getItemCount() == 0){
-                Toast.makeText(getContext(), "Please select participants for you room", Toast.LENGTH_SHORT).show();
-                return;
+            if (Prefs.getPrivacyPosition(getContext()) != 3){
+                if (selectedUsersAdapter.getItemCount() == 0){
+                    Toast.makeText(getContext(), "Atleast Select one Member to create room", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
+
 
             RequestBody title = RequestBody.create(MediaType.parse("text/plain"), roomNameET.getText().toString());
             RequestBody description = RequestBody.create(MediaType.parse("text/plain"), roomDescET.getText().toString());
@@ -298,15 +490,32 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
                     stringBuilder.append(",");
                 }
             }
+            Log.i("membersIDS", "showCreateRoomDialog: " + stringBuilder);
             RequestBody memberIds = RequestBody.create(MediaType.parse("text/plain"), stringBuilder.toString());
             RequestBody roomTypeB = RequestBody.create(MediaType.parse("text/plain"), roomType);
+            RequestBody scheduleType = null;
+            RequestBody scheduleDateTime = null;
+            String scheduleDateTimeStr;
 
-            RoomPojo pojo = new RoomPojo(title, description, logo, memberIds, roomTypeB);
-            Log.i("roomCreation", "showCreateRoomDialog: " + roomNameET.getText().toString());
-            Log.i("roomCreation", "showCreateRoomDialog: " + roomDescET.getText().toString());
-            Log.i("roomCreation", "showCreateRoomDialog: " + logo.toString());
-            Log.i("roomCreation", "showCreateRoomDialog: " + stringBuilder);
-            Log.i("roomCreation", "showCreateRoomDialog: " + roomType);
+            if (roomTimingTV.getText().equals("Go Live Now")){
+                scheduleType = RequestBody.create(MediaType.parse("text/plain"), GO_LIVE_NOW);
+                scheduleDateTime = RequestBody.create(MediaType.parse("text/plain"), "");
+                Log.i("roomTiming", "showCreateRoomDialog: " + GO_LIVE_NOW);
+            } else if (roomTimingTV.getText().equals("Schedule Live Room")){
+                if (scheduleDateTV.getText().equals("")){
+                    Toast.makeText(getContext(), "Please fill date", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (scheduleTimeTV.getText().equals("")){
+                    Toast.makeText(getContext(), "Please fill time", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                scheduleDateTimeStr = scheduleDateTV.getText() + " " + scheduleTimeTV.getText();
+                scheduleType = RequestBody.create(MediaType.parse("text/plain"), SCHEDULE_LIVE_ROOM);
+                scheduleDateTime = RequestBody.create(MediaType.parse("text/plain"), scheduleDateTimeStr);
+            }
+            RoomPojo pojo = new RoomPojo(title, description, logo, memberIds, roomTypeB, scheduleType, scheduleDateTime);
+
             Dialogs.createProgressDialog(getContext());
             apiManager.createLiveRoom(Prefs.GetBearerToken(getContext()), pojo, new DataCallback<RoomResponse>() {
                 @Override
@@ -324,12 +533,11 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
                 }
             });
 
-            Log.i("roomCreation", "onClick: Creating " + file.getPath());
         });
 
         closeDialog.setOnClickListener(view -> roomDialog.dismiss());
 
-        roomDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        roomDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         roomDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         roomDialog.getWindow().setGravity(Gravity.BOTTOM);
         roomDialog.setCancelable(true);
@@ -351,41 +559,93 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
         }
     }
 
-    private ArrayList<SelectUsersModel> getAllUsers(ArrayList<SelectUsersModel> selectUsersModels, SelectUsersAdapter adapter) {
+    private ArrayList<SelectUsersModel> getAllUsers(ArrayList<SelectUsersModel> UsersModels, SelectUsersAdapter adapter) {
 
-        UserFollowersModel model1 = new UserFollowersModel("", "", "1");
-        apiManager.GetFollowersList(Prefs.GetBearerToken(getActivity()), model1, new DataCallback<UserFollowersModel>() {
+        PrivacyBody model1 = new PrivacyBody("1", "", "");
+        apiManager.getPrivacyUsers(Prefs.GetBearerToken(getContext()), model1, new DataCallback<ArrayList<PrivacyUsersRes.PrivacyData>>() {
             @Override
-            public void onSuccess(UserFollowersModel userFollowersModel) {
+            public void onSuccess(ArrayList<PrivacyUsersRes.PrivacyData> privacyData) {
+                UsersModels.clear();
+                ArrayList<SelectUsersModel> allNewModels = selectedUsersAdapter.getUsersList();
+                for (PrivacyUsersRes.PrivacyData mod : privacyData){
+                    SelectUsersModel selectUsersModel = new SelectUsersModel(mod._id, mod.profileImage, mod.name);
+                    UsersModels.add(selectUsersModel);
 
-                if (userFollowersModel != null){
-                    for (UserFollowersModel.Data mod : userFollowersModel.getData()){
-                        SelectUsersModel selectUsersModel = new SelectUsersModel(mod.followedBy._id, mod.getFollowedBy().getProfileImage(), mod.getFollowedBy().getName());
-                        Log.i("userList", "onSuccess: " + selectUsersModel.getId());
-                        selectUsersModels.add(selectUsersModel);
-                    }
-                    adapter.setList(selectUsersModels);
                 }
-
+                UsersModels.addAll(allNewModels);
+                HashSet<SelectUsersModel> uniques = new HashSet<SelectUsersModel>(UsersModels);
+                UsersModels.clear();
+                UsersModels.addAll(uniques);
+                ArrayList<SelectUsersModel> toRemove = new ArrayList<>();
+                for (SelectUsersModel modg : UsersModels){
+                    for (SelectUsersModel mok : allNewModels){
+                        if (modg.getId().equals(mok.getId())){
+                            toRemove.add(modg);
+                        }
+                    }
+                }
+                UsersModels.removeAll(toRemove);
+                adapter.setList(UsersModels);
+                if (UsersModels.size() == 0){
+                    selectUsersLabel.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onError(ServerError serverError) {
-                Prompt.SnackBar(view, serverError.getErrorMsg());
+
             }
         });
 
-        return selectUsersModels;
+        return UsersModels;
+
+    }
+
+    private ArrayList<SelectUsersModel> getAllUsers(ArrayList<SelectUsersModel> UsersModels, SelectUsersAdapter adapter, CharSequence userName) {
+
+        PrivacyBody model1 = new PrivacyBody("1", "", userName.toString());
+        apiManager.getPrivacyUsers(Prefs.GetBearerToken(getContext()), model1, new DataCallback<ArrayList<PrivacyUsersRes.PrivacyData>>() {
+            @Override
+            public void onSuccess(ArrayList<PrivacyUsersRes.PrivacyData> privacyData) {
+                UsersModels.clear();
+                ArrayList<SelectUsersModel> allNewModels = selectedUsersAdapter.getUsersList();
+                for (PrivacyUsersRes.PrivacyData mod : privacyData){
+                    SelectUsersModel selectUsersModel = new SelectUsersModel(mod._id, mod.profileImage, mod.name);
+                    UsersModels.add(selectUsersModel);
+                    UsersModels.addAll(allNewModels);
+
+                }
+                ArrayList<SelectUsersModel> toRemove = new ArrayList<>();
+                for (SelectUsersModel modg : UsersModels){
+                    for (SelectUsersModel mok : allNewModels){
+                        if (modg.getId().equals(mok.getId())){
+                            toRemove.add(modg);
+                        }
+                    }
+                }
+                UsersModels.removeAll(toRemove);
+                adapter.setList(UsersModels);
+            }
+
+            @Override
+            public void onError(ServerError serverError) {
+
+            }
+        });
+
+        return UsersModels;
 
     }
 
     private void inItWidgets(View view) {
         roomLabel = view.findViewById(R.id.room_label);
-        roomRV = view.findViewById(R.id.groupListRV);
-        roomDataList = new ArrayList<>();
-        roomRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        roomAdapter = new RoomAdapter(getContext(), this);
-        roomRV.setAdapter(roomAdapter);
+        TextPaint.getGradientColor(roomLabel);
+        chatBanner=view.findViewById(R.id.chatBanner);
+//        roomRV = view.findViewById(R.id.groupListRV);
+//        roomDataList = new ArrayList<>();
+//        roomRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+//        roomAdapter = new RoomAdapter(getContext(), this);
+//        roomRV.setAdapter(roomAdapter);
         createRoomBtn = view.findViewById(R.id.create_room_btn);
         SearchViewInChatListMain = view.findViewById(R.id.SearchViewInChatListMain);
         NoChatFound = view.findViewById(R.id.NoChatFound);
@@ -472,12 +732,49 @@ public class ChatListFragment extends Fragment implements ChatListAdapter.ChatLi
     @Override
     public void roomSelected(LiveRoomData data) {
         String roomData = new Gson().toJson(data);
-        Log.i("roomSelected", "roomSelected: Selected");
         try {
             ((Home) requireActivity()).fragmentManagerHelper.replace(new RoomFragment(roomData), true);
 
         } catch (Exception e){
             Log.i("roomSelected", "roomSelected: " + e.getMessage());
         }
+    }
+
+    private void getBanner(){
+        apiManager.getBanner(Prefs.GetBearerToken(getContext()), new DataCallback<BannerModel>() {
+            @Override
+            public void onSuccess(BannerModel bannerModel) {
+                if (getActivity() == null) {
+                    return;
+                }
+                Glide.with(getActivity())
+                        .load(Prefs.GetBaseUrl(getActivity())+bannerModel.getData().getImage())
+                        .into(chatBanner);
+
+                Log.e("link",bannerModel.getData().getLink());
+                chatBanner.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            try {
+                                Intent openLink = new Intent(Intent.ACTION_VIEW, Uri.parse(bannerModel.getData().getLink()));
+                                startActivity(openLink);
+                            } catch (ActivityNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+            }
+            @Override
+            public void onError(ServerError serverError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        socket.off("onlineUsers", onLogin);
     }
 }

@@ -48,12 +48,16 @@ import com.raaise.android.ApiManager.ApiModels.VerifyOtpModel;
 import com.raaise.android.ApiManager.ApiModels.VideoCommentModel;
 import com.raaise.android.ApiManager.ApiModels.VideoCommentsReplyModel;
 import com.raaise.android.ApiManager.ApiModels.VideoLikeDislikeModel;
+import com.raaise.android.model.BannerModel;
 import com.raaise.android.model.BlockUserPojo;
 import com.raaise.android.model.BlockVideoPojo;
+import com.raaise.android.model.CategoriesModel;
+import com.raaise.android.model.CategoriesPojo;
 import com.raaise.android.model.ChatListModel;
 import com.raaise.android.model.ChatModel;
 import com.raaise.android.model.ClaimedAmountPojo;
 import com.raaise.android.model.CommentReplyPojo;
+import com.raaise.android.model.CurrentPrivacyResponse;
 import com.raaise.android.model.DeleteCommentPojo;
 import com.raaise.android.model.DeleteCommentReply;
 import com.raaise.android.model.EditVideoCmntPojo;
@@ -66,6 +70,9 @@ import com.raaise.android.model.LiveRoomResponse;
 import com.raaise.android.model.LiveRoomTokenData;
 import com.raaise.android.model.LoginPojo;
 import com.raaise.android.model.MusicData;
+import com.raaise.android.model.PrivacyBody;
+import com.raaise.android.model.PrivacyModel;
+import com.raaise.android.model.PrivacyUsersRes;
 import com.raaise.android.model.PublicRoomPojo;
 import com.raaise.android.model.ReportVideoPojo;
 import com.raaise.android.model.ReportVideoRes;
@@ -76,12 +83,14 @@ import com.raaise.android.model.RoomSlug;
 import com.raaise.android.model.SendChatBody;
 import com.raaise.android.model.UpdateRoomPojo;
 import com.raaise.android.model.UpdateRoomRes;
+import com.raaise.android.model.VerifiedResponse;
 import com.raaise.android.model.VideoCommentDelete;
 import com.raaise.android.model.VideoDonationModal;
 import com.raaise.android.model.VideoDonationPojo;
 import com.raaise.android.model.WithdrawalsPojo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ApiManager {
     void DeleteAccount(String token, DataCallback<DeleteAccountModel> Callback);
@@ -225,4 +234,16 @@ public interface ApiManager {
     void sendLiveChat(String token, SendChatBody model);
 
     void getLiveChat(String token, GetLiveRoomChatBody model, DataCallback<ArrayList<LiveRoomChat.ChatData>> callback);
+
+    void updatePrivacyPolicy(String token, PrivacyModel model, DataCallback<String> callback);
+
+    void getPrivacyUsers(String token, PrivacyBody model, DataCallback<ArrayList<PrivacyUsersRes.PrivacyData>> callback);
+
+    void getCurrentPrivacyControl(String token, DataCallback<CurrentPrivacyResponse> callback);
+
+    void getBanner(String token, DataCallback<BannerModel> callback);
+    void submitCategories(String Token, CategoriesPojo ids, DataCallback<CategoriesModel> Callback);
+
+    void applyForVerification(String token,VerifiedResponse verified,DataCallback<VerifiedResponse> Callback);
+
 }

@@ -80,4 +80,13 @@ public class StringHelper {
     public static final String LEAVE_PUBLIC_ROOM = "leave-live-room";
     public static final String SEND_LIVE_CHAT = "live-room/chat-send-message";
     public static final String GET_LIVE_ROOM_CHAT = "live-room/get-live-room-chat";
+    public static final String PRIVACY_CONTROL = "update-invite-privacy-control";
+    public static final String GET_PRIVACY_USERS = "live-room/search-users-by-privacy-control";
+    public static final String GET_CURRENT_PRIVACY_CONTROL = "get-current-privacy-control";
+    public static final String GET_BANNER = "get-banner";
+
+    public static final String CREATE_INTEREST="add-interest";
+    public static final String APPLY_VERIFICATION="apply-for-verification";
+
+
 }

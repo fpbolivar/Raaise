@@ -10,8 +10,8 @@
         <item name="colorSecondaryVariant">@color/LogoGreyColor</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/black</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:statusBarColor">@color/WhiteColor</item>
+        <item name="android:navigationBarColor">@color/WhiteColor</item>
         <item name="android:windowNoTitle">true</item>
         <!--        <item name="android:windowTranslucentStatus">true</item>-->
         <!--        <item name="android:windowTranslucentNavigation">true</item>-->

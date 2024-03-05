@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:fillViewport="true"
-    android:padding="40dp"
+    android:padding="20dp"
     tools:context=".OtpActivity">
 
     <ImageView
