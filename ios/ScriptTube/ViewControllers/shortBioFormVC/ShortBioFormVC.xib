@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -29,37 +28,37 @@
                     <rect key="frame" x="0.0" y="48" width="414" height="848"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="rrL-Pn-y3f">
-                            <rect key="frame" x="20" y="0.0" width="374" height="282"/>
+                            <rect key="frame" x="20" y="0.0" width="374" height="292.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYV-AM-gOS">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
-                                    <color key="backgroundColor" name="BackgroundColor"/>
+                                    <color key="backgroundColor" name="bgColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="70" id="q1J-iw-B1a"/>
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A short bio which described you and help the other users to check you opinions." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiK-EB-bAt" customClass="ActiveLabel" customModule="Raaise_App" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="80" width="374" height="32"/>
+                                    <rect key="frame" x="0.0" y="80" width="374" height="31.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" name="lightGray"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBS-Vf-Viv">
-                                    <rect key="frame" x="0.0" y="122" width="374" height="75"/>
+                                    <rect key="frame" x="0.0" y="121.5" width="374" height="75"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OHy-Ot-JUt" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="48"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcS-cU-s5d" customClass="CustomTextView" customModule="Raaise_App" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="374" height="48"/>
-                                                    <color key="backgroundColor" name="TFcolor"/>
+                                                    <color key="backgroundColor" name="newBgColor"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Tell us something about yourself"/>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                                            <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="value" name="newBgColor"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="top">
                                                             <real key="value" value="5"/>
@@ -73,7 +72,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </textView>
                                             </subviews>
-                                            <color key="backgroundColor" name="TextFieldColor"/>
+                                            <color key="backgroundColor" name="newBgColor"/>
                                             <constraints>
                                                 <constraint firstItem="lcS-cU-s5d" firstAttribute="top" secondItem="OHy-Ot-JUt" secondAttribute="top" id="Cw5-PZ-apa"/>
                                                 <constraint firstAttribute="trailing" secondItem="lcS-cU-s5d" secondAttribute="trailing" id="Nii-Rh-Jag"/>
@@ -106,24 +105,24 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g1c-pB-P2Y">
-                                    <rect key="frame" x="0.0" y="207" width="374" height="10"/>
-                                    <color key="backgroundColor" name="BackgroundColor"/>
+                                    <rect key="frame" x="0.0" y="206.5" width="374" height="10"/>
+                                    <color key="backgroundColor" name="bgColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="10" id="OeT-ly-MtG"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jI5-Pp-qJA" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="227" width="374" height="44"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jI5-Pp-qJA" customClass="Gradient" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="226.5" width="374" height="55"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGF-4t-o8b">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <connections>
                                                 <action selector="submitAction:" destination="-1" eventType="touchUpInside" id="pAS-mh-lRY"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQN-5o-cSq">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -131,7 +130,7 @@
                                     </subviews>
                                     <color key="backgroundColor" name="ButtonColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="Dqs-tu-rCz"/>
+                                        <constraint firstAttribute="height" constant="55" id="Dqs-tu-rCz"/>
                                         <constraint firstAttribute="trailing" secondItem="GGF-4t-o8b" secondAttribute="trailing" id="Eje-zE-orY"/>
                                         <constraint firstItem="TQN-5o-cSq" firstAttribute="top" secondItem="jI5-Pp-qJA" secondAttribute="top" id="W17-AW-c6m"/>
                                         <constraint firstItem="TQN-5o-cSq" firstAttribute="leading" secondItem="jI5-Pp-qJA" secondAttribute="leading" id="WUM-F6-Ab9"/>
@@ -142,14 +141,27 @@
                                         <constraint firstItem="GGF-4t-o8b" firstAttribute="top" secondItem="jI5-Pp-qJA" secondAttribute="top" id="tnZ-lE-1oV"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                            <color key="value" name="Gradient1"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                            <color key="value" name="Gradient2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                            <real key="value" value="10"/>
+                                            <real key="value" value="15"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpd-2w-Jem">
-                                    <rect key="frame" x="0.0" y="281" width="374" height="1"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <rect key="frame" x="0.0" y="291.5" width="374" height="1"/>
+                                    <color key="backgroundColor" name="lightpurple"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="mgH-o4-Q41"/>
                                     </constraints>
@@ -167,7 +179,7 @@
                 </scrollView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="BackgroundColor"/>
+            <color key="backgroundColor" name="bgColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qCu-Qx-hxf" secondAttribute="trailing" id="AMA-sW-8gF"/>
                 <constraint firstAttribute="bottom" secondItem="qCu-Qx-hxf" secondAttribute="bottom" id="SjC-8g-R1V"/>
@@ -179,27 +191,30 @@
     </objects>
     <designables>
         <designable name="TiK-EB-bAt">
-            <size key="intrinsicContentSize" width="486" height="16"/>
+            <size key="intrinsicContentSize" width="485.5" height="16"/>
         </designable>
     </designables>
     <resources>
-        <namedColor name="BackgroundColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="ButtonColor">
             <color red="0.29803921568627451" green="0.45882352941176469" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="TFcolor">
-            <color red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Gradient1">
+            <color red="0.93333333333333335" green="0.13333333333333333" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="TextFieldColor">
-            <color red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Gradient2">
+            <color red="0.68627450980392157" green="0.0" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="bgColor">
+            <color red="0.13333333333333333" green="0.0039215686274509803" blue="0.19215686274509805" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="lightGray">
             <color red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="lightpurple">
+            <color red="0.68627450980392157" green="0.0" blue="0.99215686274509807" alpha="0.40000000596046448" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="newBgColor">
+            <color red="0.99607843137254903" green="1" blue="1" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

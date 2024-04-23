@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchVC: UIViewController {
+class SearchVC: BaseControllerVC {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchTf: UITextField!
     @IBOutlet weak var backImage: UIImageView!
@@ -22,7 +22,10 @@ class SearchVC: UIViewController {
         setup()
         self.setuptable()
         searchTf.delegate = self
-        
+        //Date:: 07, Mar 2024 - here we change the type
+        addNavBar(headingText: "Search", redText: "",
+                  type: .onlyTopTitle,
+                  color: UIColor(named: "bgColor"))
         tableView.register(UINib(nibName: SearchCell.identifier, bundle: nil), forCellReuseIdentifier: SearchCell.identifier)
     
         if hideTabbar{
@@ -65,7 +68,7 @@ class SearchVC: UIViewController {
         }
     }
    
-    @objc func backAction(){
+    @objc override func backAction(){
         self.navigationController?.popViewController(animated: true)
     }
 }

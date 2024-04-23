@@ -23,7 +23,7 @@ class ChangePasswordVC: BaseControllerVC {
         super.viewDidLoad()
         setfonts()
         setPlaceholder()
-        addNavBar(headingText:"Change Password",redText:"Password")
+        addNavBar(headingText:"Change Password",redText:"Password",color: UIColor(named: "bgColor") )
     }
     //MARK: -Setup
     @objc func showPassword(sender: UITapGestureRecognizer){

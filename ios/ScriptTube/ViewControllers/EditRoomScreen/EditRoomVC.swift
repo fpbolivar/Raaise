@@ -88,7 +88,11 @@ class EditRoomVC: BaseControllerVC {
     }
 }
 extension EditRoomVC:ImagePickerDelegate{
-    func didSelectImage(image: UIImage) {
+    func didSelectImage(image: UIImage, imgType: ImageType) {
         roomImage.image = image
     }
+    
+//    func didSelectImage(image: UIImage) {
+//       roomImage.image = image
+//    }
 }

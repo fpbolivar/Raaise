@@ -16,9 +16,13 @@ class HtmlTextRenderVC: BaseControllerVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         if isPresented{
-            addNavBar(headingText:fullNavTitle,leftAction: #selector(dismissPage),redText:redNavTitle)
+            addNavBar(headingText:fullNavTitle,leftAction: #selector(dismissPage),
+                      redText:redNavTitle,
+                      color: UIColor(named: "bgColor"))
         }else{
-            addNavBar(headingText:fullNavTitle,redText:redNavTitle)
+            addNavBar(headingText:fullNavTitle,
+                      redText:redNavTitle,
+                      color: UIColor(named: "bgColor"))
         }
         setfonts()
         getData(type: viewType)

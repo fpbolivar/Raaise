@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,14 +22,26 @@
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="z5l-ew-Tjz">
                     <rect key="frame" x="0.0" y="123" width="414" height="739"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" name="bgColor"/>
+                    <color key="separatorColor" name="lightpurple"/>
+                    <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nno-zW-4Ce">
+                    <rect key="frame" x="25" y="118" width="364" height="1"/>
+                    <color key="backgroundColor" name="lightpurple"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="gnH-g5-UCo"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="BackgroundColor"/>
+            <color key="backgroundColor" name="bgColor"/>
             <constraints>
                 <constraint firstItem="z5l-ew-Tjz" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="AcA-ih-KCV"/>
+                <constraint firstItem="nno-zW-4Ce" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="70" id="CAT-mc-XR4"/>
+                <constraint firstItem="nno-zW-4Ce" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="NHL-0h-dXp"/>
                 <constraint firstItem="z5l-ew-Tjz" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="gyC-Li-oCy"/>
+                <constraint firstAttribute="trailing" secondItem="nno-zW-4Ce" secondAttribute="trailing" constant="25" id="k7h-ad-tzx"/>
                 <constraint firstItem="z5l-ew-Tjz" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="75" id="nwW-B5-Bic"/>
                 <constraint firstItem="z5l-ew-Tjz" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="tUM-Gu-9Zt"/>
             </constraints>
@@ -38,11 +49,11 @@
         </view>
     </objects>
     <resources>
-        <namedColor name="BackgroundColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="bgColor">
+            <color red="0.13333333333333333" green="0.0039215686274509803" blue="0.19215686274509805" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="lightpurple">
+            <color red="0.68627450980392157" green="0.0" blue="0.99215686274509807" alpha="0.40000000596046448" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

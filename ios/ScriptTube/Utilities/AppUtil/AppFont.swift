@@ -29,8 +29,6 @@ class AppFont{
         }
         func getFont(size: CGFloat = 17.0) -> UIFont {
             let style = self.style
-            print(style)
-            print(AppFont.fontName)
             let font = UIFont(name: AppFont.fontName + style, size: size) ?? UIFont(name: AppFont.fontName, size: size) ?? UIFont.systemFont(ofSize: size)
             return font
         }

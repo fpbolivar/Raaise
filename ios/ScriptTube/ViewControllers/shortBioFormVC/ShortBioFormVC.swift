@@ -21,7 +21,7 @@ class ShortBioFormVC: BaseControllerVC {
         if bioTF.text.count == 45{
             textCountLbl.textColor = .red
         }
-        addNavBar(headingText:"Short Bio",redText:"Bio")
+        addNavBar(headingText:"Short Bio",redText:"Bio",color: UIColor(named:"bgColor" ))
     }
     //MARK: - Setup
     func setfonts(){

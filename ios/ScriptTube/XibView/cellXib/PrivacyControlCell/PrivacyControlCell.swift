@@ -28,11 +28,11 @@ class PrivacyControlCell: UITableViewCell {
     }
     func activeCheckbox(){
         //chechBox.borderWidth = 0
-        chechBox.backgroundColor = UIColor(named: "theme")
+        chechBox.backgroundColor = UIColor.white//UIColor(named: "new_theme")
     }
     func inactiveCheckbox(){
         //chechBox.borderWidth = 1
-        chechBox.backgroundColor = UIColor.black
+        chechBox.backgroundColor = UIColor(named: "bgColor")
     }
     
 }

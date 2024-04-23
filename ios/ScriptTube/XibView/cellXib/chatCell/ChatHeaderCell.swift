@@ -42,12 +42,37 @@ class ChatHeaderCell: UITableViewCell {
             verifiedImg.isHidden = true
         }
     }
-    func setAmountLbl(withAmount amt:String){
-        let text = "Total Supported   ($\(amt))"
-        let underlineAttriString = NSMutableAttributedString(string: text)
-        let range1 = (text as NSString).range(of: "($\(amt))")
-             
-             underlineAttriString.addAttribute(NSAttributedString.Key.font, value: AppFont.FontName.bold.getFont(size: AppFont.pX12), range: range1)
-        totalDonationLbl.attributedText = underlineAttriString
+    //Date:: 08, Mar 2024 - here we set only Amount
+//    func setAmountLbl_old(withAmount amt:String){
+//        let text = "Total Supported   ($\(amt))"
+//        let underlineAttriString = NSMutableAttributedString(string: text)
+//        let range1 = (text as NSString).range(of: "($\(amt))")
+//             
+//             underlineAttriString.addAttribute(NSAttributedString.Key.font, value: AppFont.FontName.bold.getFont(size: AppFont.pX12), range: range1)
+//        totalDonationLbl.attributedText = underlineAttriString
+//    }
+    
+    //Date:: 08, Mar 2024 - here we set Amount with coin image
+    func setAmountLbl(withAmount amt: String) {
+        let text = "Total Supported   $\(amt)"
+        
+        if let range1 = text.range(of: "$\(amt)") {
+            
+            let attributedString = NSMutableAttributedString(string: text)
+            
+            attributedString.addAttribute(.font, value: AppFont.FontName.regular.getFont(size: AppFont.pX12), range: NSRange(range1, in: text))
+            
+            let imageAttachment = NSTextAttachment()
+            imageAttachment.image = UIImage(named: "ic_coin") // Replace with your image name
+            imageAttachment.bounds = CGRect(x: 0, y: -5, width: 17, height: 17) // Adjust the bounds as needed
+            //imageAttachment.ali
+            
+            let imageString = NSAttributedString(attachment: imageAttachment)
+            
+            attributedString.insert(imageString, at: 16)
+            
+            // Set the final attributed text to the label
+            totalDonationLbl.attributedText = attributedString
+        }
     }
 }

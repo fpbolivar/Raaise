@@ -74,7 +74,7 @@ class SearchCell: UITableViewCell {
             break
         case .post:
             self.postResult = data as! [Post]
-            nameLbl.text = "Trending"
+            nameLbl.text = "Recommended Videos"//"Trending"
         case .none:
             print("NO SUCH Type")
         }

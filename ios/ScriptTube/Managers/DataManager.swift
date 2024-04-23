@@ -202,6 +202,7 @@ class DataManager{
     class func getUserFollowes(delegate:UIViewController,isForFollowing:Bool,param:[String:String],needLoader:Bool,onError:@escaping(String)->Void,completion:@escaping(JSON)->Void){
         needLoader ?  delegate.pleaseWait() : print("noloader")
         let url = isForFollowing ? URLHelper.GET_USER_FOLLOWING_URL : URLHelper.GET_USER_FOLLOWER_URL
+        //let url = isForFollowing ? URLHelper.GET_USER_FOLLOWER_URL : URLHelper.GET_OTHER_USER_FOLLOWER_URL
         print("FOLLOWERLIST",url)
         APIManager.postService(url: url, parameters: param) { json, error, statusCode in
             delegate.clearAllNotice()
@@ -225,9 +226,15 @@ class DataManager{
             }
         }
     }
-    class func getOtherUserFollowes(delegate:UIViewController,isForFollowing:Bool,needLoader:Bool,param:[String:String],onError:@escaping(String)->Void,completion:@escaping(JSON)->Void){
+    class func getOtherUserFollowes(delegate:UIViewController,
+                                    isForFollowing:Bool,
+                                    needLoader:Bool,
+                                    param:[String:String],
+                                    onError:@escaping(String)->Void,
+                                    completion:@escaping(JSON)->Void){
         needLoader ? delegate.pleaseWait() : print("noloader")
         let url = isForFollowing ? URLHelper.GET_OTHER_USER_FOLLOWING_URL : URLHelper.GET_OTHER_USER_FOLLOWER_URL
+        //let url = isForFollowing ? URLHelper.GET_OTHER_USER_FOLLOWING_URL : URLHelper.GET_USER_FOLLOWING_URL
         print("FOLLOWERLIST",url)
         APIManager.postService(url: url, parameters: param) { json, error, statusCode in
             delegate.clearAllNotice()
@@ -757,6 +764,51 @@ class DataManager{
                             AuthManager.invalidToken()
                         }
                         onError(jsonData["message"].stringValue)
+                    }
+                }
+            }
+        }
+    }
+    class func getBannerApi(delegate:UIViewController,completion:@escaping(JSON)->Void){
+        APIManager.getService(url: URLHelper.GET_BANNER) { json, error, status in
+            if let error = error{
+                print("USERVIDEOS",error,status)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                return
+            }else{
+                print("USERVIDEOS",json,status)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200 || jsonData["status"].int == 404{
+                        completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    
+    class func applyForVerification(delegate:UIViewController,param:[String:String],completion:@escaping(JSON)->Void){
+        delegate.pleaseWait()
+        APIManager.postService(url: URLHelper.APPLY_FOR_VERIFICATION, parameters: param) { json, error, statusCode in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("APPLYFORVERIFICATION",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate: delegate, pop: false)
+                return
+            }else{
+                print("APPLYFORVERIFICATION",json,statusCode)
+                if let jsonData = json{
+                    if jsonData["status"].intValue == 200{
+                        completion(jsonData)
+                    }else{
+                        if jsonData["status"].intValue == 401{
+                            AuthManager.invalidToken()
+                        }
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
                     }
                 }
             }

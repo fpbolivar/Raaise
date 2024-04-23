@@ -13,7 +13,7 @@ class ForgotVC: BaseControllerVC {
     @IBOutlet weak var nameTf: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        addNavBar(headingText:"Forgot Password",redText:"Password")
+        addNavBar(headingText:"Forgot Password",redText:"Password",color: UIColor(named: "bgColor"))
         enterEmailLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         nameTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         sendLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)

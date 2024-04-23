@@ -42,8 +42,10 @@ class URLHelper{
     static let DELETE_COMMENTS_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/video-comment-delete"
     static let DELETE_REPLY_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/delete-comment-reply"
     static let POST_REPLY_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/comment-reply"
+    
     static let GET_USER_FOLLOWER_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/user-followers"
     static let GET_USER_FOLLOWING_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/user-following"
+    
     static let GET_USER_PROFILE_BY_ID_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-user-profile-by-id"
     static let GET_USER_VIDEOS_BY_ID_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-user-videos-by-id"
     static let GET_VIDEOS_BY_AUDIO_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-videos-by-audio-id"
@@ -54,8 +56,10 @@ class URLHelper{
     static let EDIT_POST_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/edit-video-caption"
     static let GET_VIDEO_CATEGORY_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-categories"
     static let VIDEO_COUNT_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/video-view-by-user"
+    
     static let GET_OTHER_USER_FOLLOWING_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-user-follwing-list"
     static let GET_OTHER_USER_FOLLOWER_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-user-follwers-list"
+    
     static let GLOBAL_SEARCH_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/global-search"
     static let GET_USER_LIST_FOR_ROOM = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/live-room/search-users-by-privacy-control"
     static let ADD_CARD_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/add-card"
@@ -85,5 +89,10 @@ class URLHelper{
     static let UPDATE_LIVE_ROOM = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/update-live-room"
     static let CREATE_LIVE_ROOM = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/create-live-room"
     static let SEND_MESSAGE_URL = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/live-room/chat-send-message"
+    
+    static let GET_BANNER = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/get-banner"
+    static let  APPLY_FOR_VERIFICATION = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"user/apply-for-verification"
+    static let ADD_INTEREST = BASE_URL+SEGMENTCLIENT+SEGMENTAPIVERSION+"/user/add-interest"
+
 }
 

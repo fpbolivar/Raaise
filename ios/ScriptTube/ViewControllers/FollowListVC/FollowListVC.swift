@@ -8,9 +8,18 @@
 import UIKit
 
 class FollowListVC: BaseControllerVC {
+    
+    @IBOutlet weak var searchCardHeightCOnst: NSLayoutConstraint!
+    @IBOutlet weak var searchTopConst: NSLayoutConstraint!
+    
+    @IBOutlet weak var searchCardView: CardView!
+    
     @IBOutlet weak var noResultLbl:UILabel!
     @IBOutlet weak var searchTf: UITextField!
     @IBOutlet weak var tableView: UITableView!
+    
+    
+    var isFromProfilePager = false
     var isFollowingList = false
     var userList : [UserListDataModel] = []
     var userName:String?
@@ -18,14 +27,30 @@ class FollowListVC: BaseControllerVC {
     var tableSetup = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-        hideNavbar()
-        if isFollowingList{
-            addNavBar(headingText: "Following List", redText: "List")
-        }else{
-            addNavBar(headingText: "Followers List", redText: "List")
-            
+        
+        //Hide when open from visit profile
+        if isFromProfilePager{
+            searchCardHeightCOnst.constant = 0
+            searchTopConst.constant = 0
+            searchTf.isHidden = true
+            searchCardView.isHidden = true
         }
+        else{
+            setup()
+            hideNavbar()
+            if isFollowingList{
+                addNavBar(headingText: "Following List",
+                          redText: "List",
+                          color: UIColor(named: "bgColor")
+                )
+            }else{
+                addNavBar(headingText: "Followers List",
+                          redText: "List",
+                          color: UIColor(named: "bgColor"))
+                
+            }
+        }
+        
         getData(needLoader: true){
             DispatchQueue.main.async {
                 self.noResultLbl.isHidden = !self.userList.isEmpty

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NotoSans-Medium.ttf">
+            <string>NotoSans-Medium</string>
+        </array>
+        <array key="NotoSans-Regular.ttf">
+            <string>NotoSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InterestViewController" customModule="Raaise_App" customModuleProvider="target">
+            <connections>
+                <outlet property="continueBtnOtl" destination="XLB-rL-iLt" id="Kby-XY-kae"/>
+                <outlet property="interestCollectionView" destination="Dta-tj-6Vy" id="rX5-dy-OAg"/>
+                <outlet property="lblChooseInterests" destination="Nh1-rP-ZWQ" id="60o-Wb-vWR"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nh1-rP-ZWQ">
+                    <rect key="frame" x="20" y="68" width="200" height="65.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="xoY-HX-got"/>
+                    </constraints>
+                    <string key="text">Choose your
+interests</string>
+                    <fontDescription key="fontDescription" name="NotoSans-Medium" family="Noto Sans" pointSize="24"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="LSn-Z0-3pe">
+                    <rect key="frame" x="20" y="787" width="374" height="55"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7kn-eH-A9O">
+                            <rect key="frame" x="0.0" y="0.0" width="177" height="55"/>
+                            <color key="backgroundColor" red="0.99607843137254903" green="1" blue="1" alpha="0.30188327963581146" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Skip"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <integer key="value" value="15"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="skipBtnAction:" destination="-1" eventType="touchUpInside" id="FWf-s6-6oH"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crX-ig-Rv7" customClass="Gradient" customModule="Raaise_App" customModuleProvider="target">
+                            <rect key="frame" x="197" y="0.0" width="177" height="55"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLB-rL-iLt">
+                                    <rect key="frame" x="0.0" y="0.0" width="177" height="55"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Continue"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <integer key="value" value="15"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="continueBtnAction:" destination="-1" eventType="touchUpInside" id="iBl-GT-7SD"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="XLB-rL-iLt" firstAttribute="top" secondItem="crX-ig-Rv7" secondAttribute="top" id="OE0-CI-QrS"/>
+                                <constraint firstAttribute="trailing" secondItem="XLB-rL-iLt" secondAttribute="trailing" id="dR5-ok-87V"/>
+                                <constraint firstItem="XLB-rL-iLt" firstAttribute="leading" secondItem="crX-ig-Rv7" secondAttribute="leading" id="mxF-bK-oZG"/>
+                                <constraint firstAttribute="bottom" secondItem="XLB-rL-iLt" secondAttribute="bottom" id="zBO-zw-2US"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                    <color key="value" name="Gradient1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                    <color key="value" name="Gradient2"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="15"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
+                                    <real key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="55" id="HA2-pg-uE2"/>
+                    </constraints>
+                </stackView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Dta-tj-6Vy">
+                    <rect key="frame" x="20" y="185.5" width="374" height="591.5"/>
+                    <color key="backgroundColor" name="bgColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jDS-cZ-KvQ">
+                        <size key="itemSize" width="187" height="48"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get better video recommendations" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ese-YB-INL">
+                    <rect key="frame" x="20" y="143.5" width="374" height="22"/>
+                    <fontDescription key="fontDescription" name="NotoSans-Regular" family="Noto Sans" pointSize="16"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" name="bgColor"/>
+            <constraints>
+                <constraint firstItem="LSn-Z0-3pe" firstAttribute="top" secondItem="Dta-tj-6Vy" secondAttribute="bottom" constant="10" id="1HQ-v1-qZc"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Dta-tj-6Vy" secondAttribute="trailing" constant="20" id="6ra-YX-KnJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Ese-YB-INL" secondAttribute="trailing" constant="20" id="7Qv-iX-y7p"/>
+                <constraint firstItem="Dta-tj-6Vy" firstAttribute="top" secondItem="Ese-YB-INL" secondAttribute="bottom" constant="20" id="8iP-uw-vbF"/>
+                <constraint firstItem="Dta-tj-6Vy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Fgm-66-IWV"/>
+                <constraint firstItem="Nh1-rP-ZWQ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="H6i-yl-5Cc"/>
+                <constraint firstItem="LSn-Z0-3pe" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="JJe-68-zhL"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LSn-Z0-3pe" secondAttribute="trailing" constant="20" id="JTm-cY-3RQ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="LSn-Z0-3pe" secondAttribute="bottom" constant="20" id="TRX-NN-q1v"/>
+                <constraint firstItem="Ese-YB-INL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="ZiG-fR-f97"/>
+                <constraint firstItem="Ese-YB-INL" firstAttribute="top" secondItem="Nh1-rP-ZWQ" secondAttribute="bottom" constant="10" id="sVf-y9-8im"/>
+                <constraint firstItem="Nh1-rP-ZWQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="zey-Eo-9t3"/>
+            </constraints>
+            <point key="canvasLocation" x="-481" y="81"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="Gradient1">
+            <color red="0.93333333333333335" green="0.13333333333333333" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Gradient2">
+            <color red="0.68627450980392157" green="0.0" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="bgColor">
+            <color red="0.13333333333333333" green="0.0039215686274509803" blue="0.19215686274509805" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

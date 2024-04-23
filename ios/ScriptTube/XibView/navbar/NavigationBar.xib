@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,10 +16,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyy-ir-xSq">
-                    <rect key="frame" x="0.0" y="0.0" width="280" height="89"/>
+                    <rect key="frame" x="0.0" y="20" width="280" height="69"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zaT-ag-4QI">
-                            <rect key="frame" x="0.0" y="10" width="280" height="79"/>
+                            <rect key="frame" x="0.0" y="10" width="280" height="59"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ICC-pg-Fqn">
                                     <rect key="frame" x="0.0" y="0.0" width="280" height="30"/>
@@ -29,10 +29,11 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_menu" translatesAutoresizingMaskIntoConstraints="NO" id="rYR-Nh-ovD">
                                                     <rect key="frame" x="0.0" y="0.0" width="44" height="30"/>
+                                                    <color key="backgroundColor" name="bgColor"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" name="BackgroundColor"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="rYR-Nh-ovD" secondAttribute="trailing" id="T9J-K7-1WH"/>
                                                 <constraint firstAttribute="bottom" secondItem="rYR-Nh-ovD" secondAttribute="bottom" id="UW5-NW-OV2"/>
@@ -46,12 +47,13 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HEADING" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tVy-RP-oQD" customClass="ActiveLabel" customModule="Raaise_App" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="192" height="30"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" name="BackgroundColor"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="tVy-RP-oQD" secondAttribute="trailing" id="PSh-WS-wPJ"/>
                                                 <constraint firstItem="tVy-RP-oQD" firstAttribute="top" secondItem="b5l-mQ-oET" secondAttribute="top" id="WoI-ZP-RKb"/>
@@ -64,9 +66,10 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_menu" translatesAutoresizingMaskIntoConstraints="NO" id="WLt-Tk-0Km">
                                                     <rect key="frame" x="0.0" y="0.0" width="44" height="30"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" name="BackgroundColor"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="WLt-Tk-0Km" secondAttribute="bottom" id="9rq-hJ-UDs"/>
                                                 <constraint firstItem="WLt-Tk-0Km" firstAttribute="top" secondItem="b7W-Ae-7Zb" secondAttribute="top" id="Ue2-Yz-nnD"/>
@@ -81,13 +84,14 @@
                                     </constraints>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HEADING" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfQ-Zf-yNG" customClass="ActiveLabel" customModule="Raaise_App" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="30" width="280" height="49"/>
-                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <rect key="frame" x="0.0" y="30" width="280" height="29"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4u-fh-BX1">
                             <rect key="frame" x="240" y="0.0" width="30" height="30"/>
@@ -96,24 +100,25 @@
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQk-YG-eVA">
-                            <rect key="frame" x="188" y="52" width="82" height="20"/>
+                            <rect key="frame" x="150" y="39" width="120" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="XAi-rC-NVb"/>
+                                <constraint firstAttribute="width" constant="120" id="yVB-RW-DoY"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="tintColor" name="theme"/>
                             <inset key="titleEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Add New Card">
-                                <color key="titleColor" name="theme"/>
+                            <state key="normal" title="Mark All as read">
+                                <color key="titleColor" name="Gradient2"/>
                             </state>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" name="BackgroundColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="zaT-ag-4QI" secondAttribute="bottom" id="Js9-8g-k6f"/>
                         <constraint firstAttribute="trailing" secondItem="RQk-YG-eVA" secondAttribute="trailing" constant="10" id="ViH-eK-x0Q"/>
-                        <constraint firstAttribute="bottom" secondItem="RQk-YG-eVA" secondAttribute="bottom" constant="17" id="cFl-OG-loy"/>
+                        <constraint firstAttribute="bottom" secondItem="RQk-YG-eVA" secondAttribute="bottom" constant="10" id="cFl-OG-loy"/>
                         <constraint firstAttribute="trailing" secondItem="G4u-fh-BX1" secondAttribute="trailing" constant="10" id="eWT-3N-Nda"/>
                         <constraint firstAttribute="trailing" secondItem="zaT-ag-4QI" secondAttribute="trailing" id="elt-yg-Uqe"/>
                         <constraint firstAttribute="bottom" secondItem="zaT-ag-4QI" secondAttribute="bottom" id="kMB-q5-lJJ"/>
@@ -139,21 +144,24 @@
                 <outlet property="rigthBtn" destination="G4u-fh-BX1" id="GiM-yx-tI6"/>
                 <outlet property="title" destination="tVy-RP-oQD" id="0QW-8T-JMh"/>
             </connections>
-            <point key="canvasLocation" x="30" y="286.7957746478873"/>
+            <point key="canvasLocation" x="-309" y="320"/>
         </view>
     </objects>
     <designables>
         <designable name="tVy-RP-oQD">
-            <size key="intrinsicContentSize" width="73.5" height="20.5"/>
+            <size key="intrinsicContentSize" width="74" height="21"/>
         </designable>
         <designable name="wfQ-Zf-yNG">
-            <size key="intrinsicContentSize" width="73.5" height="20.5"/>
+            <size key="intrinsicContentSize" width="74" height="21"/>
         </designable>
     </designables>
     <resources>
         <image name="ic_menu" width="512" height="512"/>
-        <namedColor name="BackgroundColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Gradient2">
+            <color red="0.68627450980392157" green="0.0" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="bgColor">
+            <color red="0.13333333333333333" green="0.0039215686274509803" blue="0.19215686274509805" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="theme">
             <color red="0.29803921568627451" green="0.45882352941176469" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

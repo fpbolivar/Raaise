@@ -7,6 +7,12 @@
 
 import UIKit
 import PhotosUI
+enum ImageType:String {
+    case profile = "profile"
+    case coverImg = "cover"
+    
+}
+
 class PersonalInfoFormVC: BaseControllerVC {
     @IBOutlet weak var updateLbl: UILabel!
     @IBOutlet weak var cameraImage: UIImageView!
@@ -16,12 +22,34 @@ class PersonalInfoFormVC: BaseControllerVC {
     @IBOutlet weak var  emailTF:UITextField!
     @IBOutlet weak var  mobileTF:UITextField!
     @IBOutlet weak var  nameTF:UITextField!
+    @IBOutlet weak var coverCameraImg: UIImageView!
+    @IBOutlet weak var userCoverImg: UIImageView!
+    //@IBOutlet weak var cameraIconView: UIView!
+    
+    
     var imageChanged = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setfonts()
+        
         cameraImage.layer.cornerRadius = cameraImage.frame.height / 2
-        addNavBar(headingText:"Personal Information",redText:"Information")
+        cameraImage.layer.borderWidth = 1
+        cameraImage.layer.borderColor = UIColor(named: "Gradient2")?.cgColor
+        
+        coverCameraImg.layer.cornerRadius = coverCameraImg.frame.height / 2
+        coverCameraImg.layer.borderWidth = 1
+        coverCameraImg.layer.borderColor = UIColor(named: "Gradient2")?.cgColor
+        
+        
+        profileImage.layer.borderWidth = 3
+        profileImage.layer.borderColor = UIColor(named: "bgColor")?.cgColor
+        profileImage.layer.cornerRadius = profileImage.frame.height / 2
+        profileImage.layer.masksToBounds = true
+
+        addNavBar(headingText:"Personal Information",
+                  redText:"Information",
+                  color: UIColor(named: "bgColor"))
         if AuthManager.currentUser.email == ""{
             emailTF.isEnabled = true
             emailTF.textColor = .white
@@ -34,8 +62,14 @@ class PersonalInfoFormVC: BaseControllerVC {
     }
     //MARK: -Setup
     func setfonts(){
-        cameraImage.image = UIImage(systemName: "camera")
-        cameraImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(photoOptions)))
+        //cameraImage.image = UIImage(systemName: "camera")
+        cameraImage.tag = 1
+        cameraImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(photoOptions(_: ))))
+        
+        coverCameraImg.tag = 2
+        //coverCameraImg.image = UIImage(systemName: "camera")
+        coverCameraImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(photoOptions(_: ))))
+        
         emailTF.overrideUserInterfaceStyle = .light
         mobileTF.overrideUserInterfaceStyle = .light
         nameTF.overrideUserInterfaceStyle = .light
@@ -51,10 +85,20 @@ class PersonalInfoFormVC: BaseControllerVC {
         setPlaceholder()
     }
     //MARK: -Actions
-    @objc func photoOptions(){
+    @objc func photoOptions(_ sender:UITapGestureRecognizer){
         print("jhfhsjhdb")
+//        print(sender.view?.tag)
+        
+        //self.imgType = .profile
+        if sender.view?.tag == 2 {
+            self.imgType = .coverImg
+        } else {
+            self.imgType = .profile
+        }
+        
         AlertView().alertCameraGallery(msg: "Select Option", delegate: self) { action in
             if action == .camera{
+                
                 self.openCamera()
                 self.imagePickerDelegate = self
             }else if action == .photo{
@@ -104,7 +148,11 @@ class PersonalInfoFormVC: BaseControllerVC {
     //MARK: -Api method
     func updateProfileApi(){
         let param = ["name":nameTF.text ?? "","phoneNumber":mobileTF.text ?? ""]
-        AuthManager.updateUserProfileApi(delegate: self, param: param,imageChanged:self.imageChanged,image: ["image":self.profileImage.image ?? UIImage()]) {
+        AuthManager.updateUserProfileApi(delegate: self,
+                                         param: param,
+                                         imageChanged:self.imageChanged,
+                                         image: ["image":self.profileImage.image ?? UIImage()],
+                                         coverImage: ["coverImage":self.userCoverImg.image ?? UIImage()]) {
             DispatchQueue.main.async {
                 ToastManager.successToast(delegate: self, msg: "Profile Updated Successfully")
             }
@@ -124,6 +172,8 @@ class PersonalInfoFormVC: BaseControllerVC {
         emailTF.text = AuthManager.currentUser.email
         profileImage.layer.cornerRadius = profileImage.frame.height / 2
         profileImage.loadImgForProfile(url: AuthManager.currentUser.profileImage)
+        
+        userCoverImg.loadImgForCover(url: AuthManager.currentUser.coverImage)
     }
     //MARK: -Validations
     func checkValidations(){
@@ -183,8 +233,19 @@ static func getURL(ofPhotoWith mPhasset: PHAsset, completionHandler : @escaping 
         }
 }
 extension PersonalInfoFormVC:ImagePickerDelegate{
-    func didSelectImage(image: UIImage) {
-        self.imageChanged = true
-        self.profileImage.image = image
+    func didSelectImage(image: UIImage, imgType: ImageType) {
+        if imgType == .profile {
+            self.imageChanged = true
+            self.profileImage.image = image
+        } else {
+            self.userCoverImg.image = image
+            self.imageChanged = true
+        }
+        
     }
+    
+//    func didSelectImage(image: UIImage) {
+//        self.imageChanged = true
+//        self.profileImage.image = image
+//    }
 }

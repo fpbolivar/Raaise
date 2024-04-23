@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoAnalyticsVC" customModule="ScriptTube" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoAnalyticsVC" customModule="Raaise_App" customModuleProvider="target">
             <connections>
                 <outlet property="amountClaimedLbl" destination="3KA-1g-P3z" id="IZd-HQ-C7N"/>
                 <outlet property="claimBtnView" destination="izQ-iG-C8x" id="n9w-Ya-6uA"/>
@@ -45,7 +45,7 @@
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zQU-Gq-2uA">
                                     <rect key="frame" x="0.0" y="0.0" width="353" height="70"/>
-                                    <color key="backgroundColor" name="BackgroundColor"/>
+                                    <color key="backgroundColor" name="bgColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="70" id="HNe-YZ-mzs"/>
                                     </constraints>
@@ -134,7 +134,7 @@
                                             </subviews>
                                         </stackView>
                                     </subviews>
-                                    <color key="backgroundColor" name="BackgroundColor"/>
+                                    <color key="backgroundColor" name="bgColor"/>
                                     <constraints>
                                         <constraint firstItem="Oyl-j2-hsq" firstAttribute="top" secondItem="iWg-Mz-pvp" secondAttribute="bottom" constant="5" id="1AO-3j-p1r"/>
                                         <constraint firstItem="CNo-gk-0DD" firstAttribute="leading" secondItem="Wfx-ks-T4O" secondAttribute="leading" id="1Q0-fg-GJL"/>
@@ -154,7 +154,7 @@
                                         <constraint firstItem="iWg-Mz-pvp" firstAttribute="top" secondItem="KEd-r3-QQh" secondAttribute="bottom" constant="5" id="yQ6-8Q-Uuz"/>
                                     </constraints>
                                 </view>
-                                <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rm9-Ae-MDK" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                                <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rm9-Ae-MDK" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="248.33333333333331" width="353" height="80"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9fI-gG-ytL">
@@ -337,7 +337,7 @@
                                             </constraints>
                                         </stackView>
                                     </subviews>
-                                    <color key="backgroundColor" name="BackgroundColor"/>
+                                    <color key="backgroundColor" name="bgColor"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="uEa-Cu-LuH" secondAttribute="bottom" id="7Sm-az-9WP"/>
                                         <constraint firstAttribute="height" constant="25" id="Ggm-lw-bDf"/>
@@ -346,13 +346,13 @@
                                         <constraint firstAttribute="trailing" secondItem="uEa-Cu-LuH" secondAttribute="trailing" id="rre-WQ-dAB"/>
                                     </constraints>
                                 </view>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="lcJ-PL-8ff" customClass="ContentSizedTableView" customModule="ScriptTube" customModuleProvider="target">
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="lcJ-PL-8ff" customClass="ContentSizedTableView" customModule="Raaise_App" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="311.66666666666669" width="353" height="128"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JNx-hG-dML">
                                     <rect key="frame" x="0.0" y="454.66666666666663" width="353" height="100"/>
-                                    <color key="backgroundColor" name="BackgroundColor"/>
+                                    <color key="backgroundColor" name="bgColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="pH5-bY-iGh"/>
                                     </constraints>
@@ -371,7 +371,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="got-RO-FXb">
                     <rect key="frame" x="20" y="798" width="353" height="0.0"/>
                     <subviews>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzG-8z-WC5" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzG-8z-WC5" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="538.66666666666663" height="0.0"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have already sent claim request for this week, check in next week to make another request." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S30-kX-6kY">
@@ -394,7 +394,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="izQ-iG-C8x" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="izQ-iG-C8x" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="538.66666666666663" height="45"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jm5-Y7-uQ7">
@@ -433,7 +433,7 @@
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="BackgroundColor"/>
+            <color key="backgroundColor" name="bgColor"/>
             <constraints>
                 <constraint firstItem="I0I-Oh-zOf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="E0u-o7-BEb"/>
                 <constraint firstItem="got-RO-FXb" firstAttribute="top" secondItem="I0I-Oh-zOf" secondAttribute="bottom" constant="10" id="JrT-ie-zzL"/>
@@ -450,9 +450,6 @@
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="BackgroundColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="CardCellBorder">
             <color red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -461,6 +458,9 @@
         </namedColor>
         <namedColor name="SearchText">
             <color red="0.094117647058823528" green="0.46666666666666667" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="bgColor">
+            <color red="0.13333333333333333" green="0.0039215686274509803" blue="0.19215686274509805" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="claimBtnColor">
             <color red="0.78823529411764703" green="0.0078431372549019607" blue="0.0078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -472,7 +472,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterPopUpVC" customModule="ScriptTube" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterPopUpVC" customModule="Raaise_App" customModuleProvider="target">
             <connections>
                 <outlet property="fromTf" destination="0x6-Xm-Y9a" id="KIc-kJ-gHq"/>
                 <outlet property="toTf" destination="eHG-IF-bhY" id="F4l-ft-08c"/>
@@ -50,18 +50,18 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YN3-eB-4Bl" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                            <rect key="frame" x="25" y="171" width="343" height="45"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YN3-eB-4Bl" customClass="Gradient" customModule="Raaise_App" customModuleProvider="target">
+                            <rect key="frame" x="25" y="171" width="343" height="55"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvw-hW-dbl">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="45"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="55"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <connections>
                                         <action selector="applyBtnClicked:" destination="-1" eventType="touchUpInside" id="Hax-fa-7XW"/>
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apply" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KsI-up-5vu">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="45"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="55"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -70,7 +70,7 @@
                             <color key="backgroundColor" name="theme"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="hvw-hW-dbl" secondAttribute="trailing" id="J88-cz-GB2"/>
-                                <constraint firstAttribute="height" constant="45" id="Jrp-a2-mQh"/>
+                                <constraint firstAttribute="height" constant="55" id="Jrp-a2-mQh"/>
                                 <constraint firstItem="hvw-hW-dbl" firstAttribute="leading" secondItem="YN3-eB-4Bl" secondAttribute="leading" id="SSF-c4-DQ0"/>
                                 <constraint firstAttribute="trailing" secondItem="KsI-up-5vu" secondAttribute="trailing" id="fnI-zt-VFQ"/>
                                 <constraint firstItem="KsI-up-5vu" firstAttribute="leading" secondItem="YN3-eB-4Bl" secondAttribute="leading" id="mh3-5f-mMa"/>
@@ -81,7 +81,20 @@
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="10"/>
+                                    <real key="value" value="15"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                    <color key="value" name="Gradient1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                    <color key="value" name="Gradient2"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
+                                    <real key="value" value="1"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
@@ -147,6 +160,12 @@
         <image name="ic_calender" width="12" height="13"/>
         <namedColor name="DonationFieldColor">
             <color red="0.91764705882352937" green="0.91764705882352937" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Gradient1">
+            <color red="0.93333333333333335" green="0.13333333333333333" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Gradient2">
+            <color red="0.68627450980392157" green="0.0" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SearchBarColor">
             <color red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

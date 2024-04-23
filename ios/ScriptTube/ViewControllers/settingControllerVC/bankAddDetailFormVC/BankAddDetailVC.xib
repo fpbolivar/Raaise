@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BankAddDetailVC" customModule="ScriptTube" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BankAddDetailVC" customModule="Raaise_App" customModuleProvider="target">
             <connections>
                 <outlet property="accountHolderLastName" destination="upV-Ps-xaR" id="gE7-w1-zUS"/>
                 <outlet property="accountNameTF" destination="R3E-Sk-n2l" id="YSm-dc-CtE"/>
@@ -39,160 +39,414 @@
                     <rect key="frame" x="0.0" y="48" width="414" height="848"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="z2f-By-eQV">
-                            <rect key="frame" x="20" y="0.0" width="374" height="770"/>
+                            <rect key="frame" x="20" y="0.0" width="374" height="880"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="prP-Kx-Hwf">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
-                                    <color key="backgroundColor" name="BackgroundColor"/>
+                                    <color key="backgroundColor" name="bgColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="70" id="sT3-de-8nH"/>
                                     </constraints>
                                 </view>
-                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sL0-Iy-CHp" customClass="ActiveLabel" customModule="ScriptTube" customModuleProvider="target">
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut varius justo. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sL0-Iy-CHp" customClass="ActiveLabel" customModule="Raaise_App" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="77.5" width="374" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account holder first name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R3E-Sk-n2l">
-                                    <rect key="frame" x="0.0" y="85" width="374" height="44"/>
-                                    <color key="backgroundColor" name="TFcolor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="ebp-CL-Osw"/>
-                                    </constraints>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account holder last name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="upV-Ps-xaR">
-                                    <rect key="frame" x="0.0" y="144" width="374" height="44"/>
-                                    <color key="backgroundColor" name="TFcolor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="7EJ-hB-Cl8"/>
-                                    </constraints>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sqd-gY-bwH">
-                                    <rect key="frame" x="0.0" y="203" width="374" height="44"/>
-                                    <color key="backgroundColor" name="TFcolor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="Wmn-QS-TQO"/>
-                                    </constraints>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Account number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BdN-Jm-DE3">
-                                    <rect key="frame" x="0.0" y="262" width="374" height="44"/>
-                                    <color key="backgroundColor" name="TFcolor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="FuK-cW-jZ8"/>
-                                    </constraints>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Routing Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vIq-B8-bIt">
-                                    <rect key="frame" x="0.0" y="321" width="374" height="44"/>
-                                    <color key="backgroundColor" name="TFcolor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="k2j-UG-1ZB"/>
-                                    </constraints>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                </textField>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="9sp-Og-hpH">
-                                    <rect key="frame" x="0.0" y="380" width="374" height="44"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PL2-uB-8ai" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="85" width="374" height="55"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WTJ-mj-IUt">
-                                            <rect key="frame" x="0.0" y="0.0" width="179.5" height="44"/>
-                                            <color key="backgroundColor" name="TFcolor"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account holder first name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R3E-Sk-n2l">
+                                            <rect key="frame" x="0.0" y="5.5" width="374" height="44"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="xI3-cS-bCC"/>
-                                            </constraints>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0ty-eV-4yU">
-                                            <rect key="frame" x="194.5" y="0.0" width="179.5" height="44"/>
-                                            <color key="backgroundColor" name="TFcolor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="KFG-so-hdj"/>
+                                                <constraint firstAttribute="height" constant="44" id="ebp-CL-Osw"/>
                                             </constraints>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                     </subviews>
-                                </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Dc9-Q3-zKM">
-                                    <rect key="frame" x="0.0" y="439" width="374" height="44"/>
+                                    <color key="backgroundColor" name="newBgColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="R3E-Sk-n2l" secondAttribute="trailing" id="2Ij-qo-mAe"/>
+                                        <constraint firstItem="R3E-Sk-n2l" firstAttribute="centerY" secondItem="PL2-uB-8ai" secondAttribute="centerY" id="Skx-7f-CDD"/>
+                                        <constraint firstItem="R3E-Sk-n2l" firstAttribute="leading" secondItem="PL2-uB-8ai" secondAttribute="leading" id="XmE-cS-nL6"/>
+                                        <constraint firstAttribute="height" constant="55" id="aui-Wd-8id"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="Gradient2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="15"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2l9-qS-Qvv" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="155" width="374" height="55"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="D.O.B" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gat-No-8wU">
-                                            <rect key="frame" x="0.0" y="0.0" width="179.5" height="44"/>
-                                            <color key="backgroundColor" name="TFcolor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="Bso-tB-MhN"/>
-                                            </constraints>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account holder last name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="upV-Ps-xaR">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
-                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSN(Last 4 digit)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2X5-vC-c3Z">
-                                            <rect key="frame" x="194.5" y="0.0" width="179.5" height="44"/>
-                                            <color key="backgroundColor" name="TFcolor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="44" id="K5Z-z7-kkh"/>
-                                            </constraints>
+                                    </subviews>
+                                    <color key="backgroundColor" name="newBgColor"/>
+                                    <constraints>
+                                        <constraint firstItem="upV-Ps-xaR" firstAttribute="leading" secondItem="2l9-qS-Qvv" secondAttribute="leading" id="AEb-97-uNO"/>
+                                        <constraint firstItem="upV-Ps-xaR" firstAttribute="top" secondItem="2l9-qS-Qvv" secondAttribute="top" id="RjW-pn-hdD"/>
+                                        <constraint firstAttribute="height" constant="55" id="fxb-Sp-RTD"/>
+                                        <constraint firstAttribute="trailing" secondItem="upV-Ps-xaR" secondAttribute="trailing" id="pUO-ZT-3LA"/>
+                                        <constraint firstAttribute="bottom" secondItem="upV-Ps-xaR" secondAttribute="bottom" id="vzZ-Ma-hVT"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="Gradient2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="15"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yAX-2J-2E4" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="225" width="374" height="55"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Account number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sqd-gY-bwH">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         </textField>
                                     </subviews>
+                                    <color key="backgroundColor" name="newBgColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="Sqd-gY-bwH" secondAttribute="bottom" id="aLN-jR-yVm"/>
+                                        <constraint firstItem="Sqd-gY-bwH" firstAttribute="top" secondItem="yAX-2J-2E4" secondAttribute="top" id="bL1-rS-Aay"/>
+                                        <constraint firstAttribute="trailing" secondItem="Sqd-gY-bwH" secondAttribute="trailing" id="cSe-OK-2Db"/>
+                                        <constraint firstAttribute="height" constant="55" id="n5y-iw-xSZ"/>
+                                        <constraint firstItem="Sqd-gY-bwH" firstAttribute="leading" secondItem="yAX-2J-2E4" secondAttribute="leading" id="te9-cn-p1x"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="Gradient2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="15"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d3t-Ld-vaY" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="295" width="374" height="55"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Account number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BdN-Jm-DE3">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" name="newBgColor"/>
+                                    <constraints>
+                                        <constraint firstItem="BdN-Jm-DE3" firstAttribute="top" secondItem="d3t-Ld-vaY" secondAttribute="top" id="22P-7O-lMV"/>
+                                        <constraint firstAttribute="bottom" secondItem="BdN-Jm-DE3" secondAttribute="bottom" id="T97-f8-Fbl"/>
+                                        <constraint firstAttribute="trailing" secondItem="BdN-Jm-DE3" secondAttribute="trailing" id="WqL-7P-Ypq"/>
+                                        <constraint firstItem="BdN-Jm-DE3" firstAttribute="leading" secondItem="d3t-Ld-vaY" secondAttribute="leading" id="YeU-Tv-wbU"/>
+                                        <constraint firstAttribute="height" constant="55" id="tRN-VO-IUH"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="Gradient2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="15"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mB3-vk-7LX" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="365" width="374" height="55"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Routing Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vIq-B8-bIt">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" name="newBgColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="55" id="bU7-3D-oRk"/>
+                                        <constraint firstAttribute="trailing" secondItem="vIq-B8-bIt" secondAttribute="trailing" id="rvD-lq-Db8"/>
+                                        <constraint firstItem="vIq-B8-bIt" firstAttribute="leading" secondItem="mB3-vk-7LX" secondAttribute="leading" id="uDh-di-dze"/>
+                                        <constraint firstAttribute="bottom" secondItem="vIq-B8-bIt" secondAttribute="bottom" id="wyh-Ig-jnA"/>
+                                        <constraint firstItem="vIq-B8-bIt" firstAttribute="top" secondItem="mB3-vk-7LX" secondAttribute="top" id="zbe-Cj-4iM"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="Gradient2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="15"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="9sp-Og-hpH">
+                                    <rect key="frame" x="0.0" y="435" width="374" height="55"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="88V-aq-TLf" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="179.5" height="55"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="City" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WTJ-mj-IUt">
+                                                    <rect key="frame" x="0.0" y="0.0" width="179.5" height="55"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" name="newBgColor"/>
+                                            <constraints>
+                                                <constraint firstItem="WTJ-mj-IUt" firstAttribute="leading" secondItem="88V-aq-TLf" secondAttribute="leading" id="5oZ-GL-3dI"/>
+                                                <constraint firstAttribute="height" constant="55" id="PUl-HV-o4P"/>
+                                                <constraint firstAttribute="trailing" secondItem="WTJ-mj-IUt" secondAttribute="trailing" id="YVq-KS-uiF"/>
+                                                <constraint firstAttribute="bottom" secondItem="WTJ-mj-IUt" secondAttribute="bottom" id="wH7-Yb-qGH"/>
+                                                <constraint firstItem="WTJ-mj-IUt" firstAttribute="top" secondItem="88V-aq-TLf" secondAttribute="top" id="wcZ-7V-r3m"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" name="Gradient2"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="1"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="15"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2T-E7-A7Y" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                            <rect key="frame" x="194.5" y="0.0" width="179.5" height="55"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="State" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0ty-eV-4yU">
+                                                    <rect key="frame" x="0.0" y="0.0" width="179.5" height="55"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" name="newBgColor"/>
+                                            <constraints>
+                                                <constraint firstItem="0ty-eV-4yU" firstAttribute="leading" secondItem="c2T-E7-A7Y" secondAttribute="leading" id="6bo-nD-saU"/>
+                                                <constraint firstAttribute="trailing" secondItem="0ty-eV-4yU" secondAttribute="trailing" id="EQx-d7-Gcd"/>
+                                                <constraint firstAttribute="bottom" secondItem="0ty-eV-4yU" secondAttribute="bottom" id="ZaP-i2-4VN"/>
+                                                <constraint firstItem="0ty-eV-4yU" firstAttribute="top" secondItem="c2T-E7-A7Y" secondAttribute="top" id="lOy-L3-XQl"/>
+                                                <constraint firstAttribute="height" constant="55" id="qgq-3f-qm9"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" name="Gradient2"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="1"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="15"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
                                 </stackView>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ofs-QR-tcj">
-                                    <rect key="frame" x="0.0" y="498" width="374" height="44"/>
-                                    <color key="backgroundColor" name="TFcolor"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Dc9-Q3-zKM">
+                                    <rect key="frame" x="0.0" y="505" width="374" height="55"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pTc-wq-zwI" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="179.5" height="55"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="D.O.B" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gat-No-8wU">
+                                                    <rect key="frame" x="0.0" y="0.0" width="179.5" height="55"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" name="newBgColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="55" id="8Gw-ZW-eD8"/>
+                                                <constraint firstItem="Gat-No-8wU" firstAttribute="top" secondItem="pTc-wq-zwI" secondAttribute="top" id="OSu-wA-xmT"/>
+                                                <constraint firstAttribute="bottom" secondItem="Gat-No-8wU" secondAttribute="bottom" id="fXe-oc-bNw"/>
+                                                <constraint firstAttribute="trailing" secondItem="Gat-No-8wU" secondAttribute="trailing" id="zIC-g3-Ip6"/>
+                                                <constraint firstItem="Gat-No-8wU" firstAttribute="leading" secondItem="pTc-wq-zwI" secondAttribute="leading" id="zkt-be-eE8"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" name="Gradient2"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="1"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="15"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDh-O1-CH9" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                            <rect key="frame" x="194.5" y="0.0" width="179.5" height="55"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSN(Last 4 digit)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2X5-vC-c3Z">
+                                                    <rect key="frame" x="0.0" y="0.0" width="179.5" height="55"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" name="newBgColor"/>
+                                            <constraints>
+                                                <constraint firstItem="2X5-vC-c3Z" firstAttribute="leading" secondItem="uDh-O1-CH9" secondAttribute="leading" id="L6i-UF-vvE"/>
+                                                <constraint firstAttribute="trailing" secondItem="2X5-vC-c3Z" secondAttribute="trailing" id="LKF-VZ-6tW"/>
+                                                <constraint firstAttribute="height" constant="55" id="Xk1-Ms-IGd"/>
+                                                <constraint firstAttribute="bottom" secondItem="2X5-vC-c3Z" secondAttribute="bottom" id="bLR-XL-eYn"/>
+                                                <constraint firstItem="2X5-vC-c3Z" firstAttribute="top" secondItem="uDh-O1-CH9" secondAttribute="top" id="fw8-1a-sx2"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" name="Gradient2"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="1"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="15"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                </stackView>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ibk-VV-Mbq" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="575" width="374" height="55"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ofs-QR-tcj">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" name="newBgColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="W4Z-eb-LN3"/>
+                                        <constraint firstAttribute="bottom" secondItem="Ofs-QR-tcj" secondAttribute="bottom" id="0y6-3f-06s"/>
+                                        <constraint firstItem="Ofs-QR-tcj" firstAttribute="top" secondItem="Ibk-VV-Mbq" secondAttribute="top" id="2ed-dV-gbh"/>
+                                        <constraint firstAttribute="trailing" secondItem="Ofs-QR-tcj" secondAttribute="trailing" id="Fad-Bc-HmT"/>
+                                        <constraint firstAttribute="height" constant="55" id="bei-2b-zfA"/>
+                                        <constraint firstItem="Ofs-QR-tcj" firstAttribute="leading" secondItem="Ibk-VV-Mbq" secondAttribute="leading" id="v7p-si-IuR"/>
                                     </constraints>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Postal Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IOL-Ot-KKz">
-                                    <rect key="frame" x="0.0" y="557" width="374" height="44"/>
-                                    <color key="backgroundColor" name="TFcolor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="Gradient2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="15"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0B3-oi-PdU" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="645" width="374" height="55"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Postal Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IOL-Ot-KKz">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" name="newBgColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="YQK-th-iyq"/>
+                                        <constraint firstItem="IOL-Ot-KKz" firstAttribute="leading" secondItem="0B3-oi-PdU" secondAttribute="leading" id="Bwp-h5-enN"/>
+                                        <constraint firstItem="IOL-Ot-KKz" firstAttribute="top" secondItem="0B3-oi-PdU" secondAttribute="top" id="MDR-56-kbd"/>
+                                        <constraint firstAttribute="height" constant="55" id="Xn3-Sk-gR1"/>
+                                        <constraint firstAttribute="trailing" secondItem="IOL-Ot-KKz" secondAttribute="trailing" id="nVW-se-Efk"/>
+                                        <constraint firstAttribute="bottom" secondItem="IOL-Ot-KKz" secondAttribute="bottom" id="ubY-y9-aRR"/>
                                     </constraints>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8CC-q4-VWa">
-                                    <rect key="frame" x="0.0" y="616" width="374" height="44"/>
-                                    <color key="backgroundColor" name="TFcolor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="Gradient2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="15"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gFW-pm-foG" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="715" width="374" height="55"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8CC-q4-VWa">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="55"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" name="newBgColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="mOZ-Oa-Aea"/>
+                                        <constraint firstAttribute="height" constant="55" id="410-PF-bhh"/>
+                                        <constraint firstItem="8CC-q4-VWa" firstAttribute="top" secondItem="gFW-pm-foG" secondAttribute="top" id="I8R-K6-f7U"/>
+                                        <constraint firstAttribute="trailing" secondItem="8CC-q4-VWa" secondAttribute="trailing" id="NRk-p3-hzj"/>
+                                        <constraint firstItem="8CC-q4-VWa" firstAttribute="leading" secondItem="gFW-pm-foG" secondAttribute="leading" id="tP7-Un-60n"/>
+                                        <constraint firstAttribute="bottom" secondItem="8CC-q4-VWa" secondAttribute="bottom" id="vQL-4g-lga"/>
                                     </constraints>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                </textField>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="Gradient2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="15"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ML0-v6-7mI">
-                                    <rect key="frame" x="0.0" y="675" width="374" height="20"/>
-                                    <color key="backgroundColor" name="BackgroundColor"/>
+                                    <rect key="frame" x="0.0" y="785" width="374" height="20"/>
+                                    <color key="backgroundColor" name="bgColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="Ahc-sT-dIZ"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygZ-WC-VqP" customClass="CardView" customModule="ScriptTube" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="710" width="374" height="44"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygZ-WC-VqP" customClass="Gradient" customModule="Raaise_App" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="820" width="374" height="44"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zuu-Pn-Bgx">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
@@ -222,12 +476,25 @@
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                            <real key="value" value="10"/>
+                                            <real key="value" value="15"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                            <color key="value" name="Gradient1"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                            <color key="value" name="Gradient2"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
+                                            <real key="value" value="1"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ds-It-Yse">
-                                    <rect key="frame" x="0.0" y="769" width="374" height="1"/>
+                                    <rect key="frame" x="0.0" y="879" width="374" height="1"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="hq9-gM-7hQ"/>
@@ -246,7 +513,7 @@
                 </scrollView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="BackgroundColor"/>
+            <color key="backgroundColor" name="bgColor"/>
             <constraints>
                 <constraint firstItem="S7G-O5-C5t" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9E6-Wg-CgW"/>
                 <constraint firstItem="S7G-O5-C5t" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="9Lr-gp-m0L"/>
@@ -262,14 +529,20 @@
         </designable>
     </designables>
     <resources>
-        <namedColor name="BackgroundColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="ButtonColor">
             <color red="0.29803921568627451" green="0.45882352941176469" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="TFcolor">
-            <color red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Gradient1">
+            <color red="0.93333333333333335" green="0.13333333333333333" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Gradient2">
+            <color red="0.68627450980392157" green="0.0" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="bgColor">
+            <color red="0.13333333333333333" green="0.0039215686274509803" blue="0.19215686274509805" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="newBgColor">
+            <color red="0.99607843137254903" green="1" blue="1" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

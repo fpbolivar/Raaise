@@ -24,6 +24,12 @@ extension UIColor{
     static var light_Gray:UIColor{
         return UIColor(named: "lightGray")!
     }
+    static var new_theme: UIColor {
+        return UIColor(named: "Gradient2")!
+    }
+    static var switchoff_color: UIColor {
+        return UIColor(named: "Gradient2")!
+    }
 
 
 }

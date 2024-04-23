@@ -163,9 +163,9 @@ class LoginVC: BaseControllerVC {
         eyeImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showPassword)))
         orSignInWithLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         orSignInWithLbl.textColor = .white
-        googleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
-        appleSignInLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
-        fbLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        //googleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        //appleSignInLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+        //fbLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         forgotBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX12)
         signInBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX14)
         passTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX16)
@@ -176,7 +176,7 @@ class LoginVC: BaseControllerVC {
         emailTF.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         emailTF.paddingLeftRightTextField(left: 20, right: 20)
         passTF.paddingLeftRightTextField(left: 20, right: 20)
-        loginLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
+        loginLbl.font = AppFont.FontName.semiBold.getFont(size: AppFont.pX18)
        
     }
     @objc func showPassword(){
@@ -193,12 +193,25 @@ class LoginVC: BaseControllerVC {
     }
     func redColorUnderline(){
 
-        let customType = ActiveType.custom(pattern:  "SignUp")
+        donthaveAccountLbl.textColor = .white
+        let customType = ActiveType.custom(pattern:  "Create New")
         donthaveAccountLbl.enabledTypes.append(customType)
-        donthaveAccountLbl.textColor = UIColor.white
+        
+        let gradOne : UIColor = UIColor(named: "Gradient1") ?? .black
+        let gradTwo : UIColor = UIColor(named: "Gradient2") ?? .white
+
+        let labelText = "You don’t have an account ? Create New"
+        let gradientColor:UIColor = self.drawGradientColor(in: donthaveAccountLbl.frame, colors: [gradOne.cgColor, gradTwo.cgColor]) ?? .gray
+            
+        let myMutableString = NSMutableAttributedString(string: labelText, attributes: [NSAttributedString.Key.font:AppFont.FontName.bold.getFont(size: AppFont.pX14)])
+        myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: gradientColor, range: NSRange(location:5,length:10))
+            // set label Attribute
+            
+        //donthaveAccountLbl.textColor = gradientColor//UIColor.white
         donthaveAccountLbl.underLineEnable = false
-        donthaveAccountLbl.text = "You don’t have an account ?SignUp"
-        donthaveAccountLbl.customColor[customType] = UIColor.theme
+        //donthaveAccountLbl.gradientColors
+        donthaveAccountLbl.attributedText = myMutableString
+        donthaveAccountLbl.customColor[customType] = gradientColor//UIColor.new_theme
         donthaveAccountLbl.customSelectedColor[customType] = UIColor.gray
         donthaveAccountLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         donthaveAccountLbl.handleCustomTap(for: customType) { element in
@@ -208,6 +221,28 @@ class LoginVC: BaseControllerVC {
         }
 
     }
+    
+    func drawGradientColor(in rect: CGRect, colors: [CGColor]) -> UIColor? {
+           let currentContext = UIGraphicsGetCurrentContext()
+           currentContext?.saveGState()
+           defer { currentContext?.restoreGState() }
+
+           let size = rect.size
+           UIGraphicsBeginImageContextWithOptions(size, false, 0)
+           guard let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(),
+                                           colors: colors as CFArray,
+                                           locations: nil) else { return nil }
+
+           let context = UIGraphicsGetCurrentContext()
+           context?.drawLinearGradient(gradient,
+                                       start: CGPoint.zero,
+                                       end: CGPoint(x: size.width, y: 0),
+                                       options: [])
+           let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
+           UIGraphicsEndImageContext()
+           guard let image = gradientImage else { return nil }
+           return UIColor(patternImage: image)
+       }
     @IBAction func forgotAction(_ sender: AnyObject) {
         let vc = ForgotVC()
         self.navigationController?.pushViewController(vc, animated: true)

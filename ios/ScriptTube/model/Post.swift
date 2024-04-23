@@ -26,6 +26,7 @@ class Post{
     var videoViewCount = ""
     var isReported = false
     var createdAt = ""
+    var homeDonationAmount = ""
     init(){
         
     }
@@ -57,6 +58,7 @@ class Post{
         data[PostKeys.donationUsers.rawValue].forEach { (_,json) in
             self.topSupportersList.append(DonationUserModel(data: json))
         }
+        self.homeDonationAmount = data[PostKeys.homeDonationAmount.rawValue].stringValue
         print("LISTTTTSb", self.topSupportersList.count)
     }
     init(data2:JSON){
@@ -86,6 +88,7 @@ class Post{
             self.topSupportersList.append(DonationUserModel(data: json))
         }
         print("LISTTTTSb", self.topSupportersList.count)
+        self.homeDonationAmount = data2[PostKeys.homeDonationAmount.rawValue].stringValue
     }
     func getDictOfObject(){
         
@@ -112,4 +115,5 @@ enum PostKeys:String{
     case donationUsers = "donationUsers"
     case getVideo = "getVideo"
     case createdAt = "createdAt"
+    case homeDonationAmount = "donationAmount"
 }

@@ -15,7 +15,10 @@ class SettingVC: BaseControllerVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         listData = manager.getList()
-        addNavBar(headingText:"Settings",redText:"")
+        //addNavBar(headingText:"Settings",redText:"")
+        addNavBar(headingText:"Settings",
+                  redText:"",type: .smallNavBarOnlyBack,
+                  color: UIColor(named: "bgColor"))
         tableView.register(UINib(nibName: SettingCell.identifier, bundle: nil), forCellReuseIdentifier: SettingCell.identifier)
         
         executeTblDelegate()
@@ -59,12 +62,15 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
         let label = UILabel()
         label.frame = CGRect.init(x: 10, y: 15, width: headerView.frame.width-10, height: headerView.frame.height-5)
         label.text = listData[section].title.uppercased()
-        label.textColor = UIColor(named: "some")//UIColor.white//UIColor(named: "borderColor2")
-        label.font = AppFont.FontName.bold.getFont(size: AppFont.pX14)
+        //label.textColor = UIColor(named: "Gradient1")//UIColor.white//UIColor(named: "borderColor2")
+        label.font = AppFont.FontName.medium.getFont(size: AppFont.pX14)
+        label.applyGradientColorToLabelText(colors: [UIColor(named: "Gradient1") ?? .black, UIColor(named: "Gradient2") ?? .white])
+        
         headerView.addSubview(label)
         
         return headerView
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         40
     }
@@ -74,8 +80,10 @@ extension SettingVC:UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:  SettingCell.identifier, for: indexPath) as!  SettingCell
+        //cell.contentView.backgroundColor = UIColor(named: "newBgColor")
         let item = listData[indexPath.section].items[indexPath.row]
         let type = listData[indexPath.section].type
+        
         if type == .switchBtn{
             switch item.title.lowercased(){
             case "Push Notifications".lowercased():

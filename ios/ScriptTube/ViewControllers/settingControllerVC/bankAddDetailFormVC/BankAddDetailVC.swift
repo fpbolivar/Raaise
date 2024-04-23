@@ -28,7 +28,9 @@ class BankAddDetailVC: BaseControllerVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         setfonts()
-        addNavBar(headingText:"Bank Details",redText:"Details")
+        addNavBar(headingText:"Bank Details",
+                  redText:"Details", 
+                  color: UIColor(named: "bgColor"))
         setData()
         datePicker.maximumDate = Date()
         datePicker.datePickerMode = .date

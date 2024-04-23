@@ -16,12 +16,18 @@ class InboxVC: BaseControllerVC,UIScrollViewDelegate {
     @IBOutlet weak var searchTf: UITextField!
     @IBOutlet weak var notificationTable: UITableView!
     @IBOutlet weak var noResultLbl:UILabel!
+    
+    
+    @IBOutlet weak var bannerImgView: UIImageView!
+    @IBOutlet weak var bannerHeightConst: NSLayoutConstraint!
+    
     var customView: CustomRefreshControl!
     var refreshControl = UIRefreshControl()
     var page = 1
     var roomPage = 1
     var chatListData:[ChatChannelModel] = []
     var liveRoomListData:[LiveRoomDataModel] = []
+    var getBannerData = UserBannerModel()
     var tableSetup = false
     
 //    self.yourRoomsLbl.isHidden = true
@@ -29,6 +35,7 @@ class InboxVC: BaseControllerVC,UIScrollViewDelegate {
 //    self.roomsView.isHidden = true
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         hideNavbar()
         print("CURRENTTIMEIN UNIX",Date().millisecondsSince1970)
@@ -39,11 +46,37 @@ class InboxVC: BaseControllerVC,UIScrollViewDelegate {
         searchTf.overrideUserInterfaceStyle = .light
         searchTf.delegate = self
 //        addNavBar(headingText: "Chat", redText: "",type: .addRoom,addNewCardSelector: #selector(addRooms))
-        addNavBar(headingText: "Chat", redText: "",type: .smallNavBarOnlyBack)
+        addNavBar(headingText: "Chat", 
+                  redText: "",
+                  type: .onlyTopTitle,
+                  color: UIColor(named: "bgColor"))
         searchTf.attributedPlaceholder = NSAttributedString(string: "Search Users",attributes: [.foregroundColor: UIColor.lightGray])
         setupCollectionView()
         noResultLbl.text = "No Chats Found"
+        
+        //Set banner image tap gesture
+        setUI()
     }
+    
+    func setUI(){
+        bannerImgView.isUserInteractionEnabled = true
+        bannerImgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openCoverImageLink)))
+    }
+    
+    @objc func openCoverImageLink(){
+        if let urlLink = self.getBannerData.link as? String
+        {
+            if urlLink != ""
+            {
+                if UIApplication.shared.canOpenURL(URL(string: urlLink)!)
+                {
+                    UIApplication.shared.open(URL(string: urlLink)!)
+                }
+            }
+        }
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         page = 1
@@ -52,6 +85,8 @@ class InboxVC: BaseControllerVC,UIScrollViewDelegate {
         inboxData()
         scrollView.delegate = self
         self.tabBarController?.tabBar.isHidden = false
+        
+        getBannerApi(needloader: true){}
     }
     //MARK: - Setup
     func setTableView(){
@@ -107,7 +142,7 @@ class InboxVC: BaseControllerVC,UIScrollViewDelegate {
         DataManager.getUnreadChatCount(delegate: self) { json in
             if json["unreadMessageCount"].intValue > 0{
                 self.tabBarController?.tabBar.items?[3].badgeValue = "\(json["unreadMessageCount"].intValue)"
-                self.tabBarController?.tabBar.items?[3].badgeColor = .theme
+                self.tabBarController?.tabBar.items?[3].badgeColor = .new_theme//.theme
             }else{
                 self.tabBarController?.tabBar.items?[3].badgeValue =  nil
             }
@@ -172,6 +207,30 @@ class InboxVC: BaseControllerVC,UIScrollViewDelegate {
             }
             
             completion()
+        }
+    }
+    func getBannerApi(needloader:Bool,completion:@escaping()->Void){
+        needloader ? self.pleaseWait() : print("NOLOADER")
+        DataManager.getBannerApi(delegate: self) { [self] jsonData in
+            self.getBannerData = UserBannerModel()
+            self.getBannerData = UserBannerModel(data: jsonData["data"])
+//            jsonData["data"].forEach { (message,data) in
+//                
+//            }
+            
+            debugPrint("getBannerData\(getBannerData.image)")
+            if getBannerData.image != ""{
+                bannerImgView.loadImgForCover(url: getBannerData.image)
+            }else{
+                bannerImgView.isHidden = true
+                bannerHeightConst.constant = 0
+            }
+            needloader ? self.clearAllNotice() : print("NOLOADER")
+            completion()
+            guard let _ = self.customView else{return}
+            
+            self.customView.spinner.stopAnimating()
+            
         }
     }
     func addRefreshControl() {

@@ -46,7 +46,8 @@ class OnboardingBaseController: UIViewController,UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         //setNavBarColor()
-        progressBar.forgroundColor = UIColor.theme
+        //progressBar.forgroundColor = UIColor.theme
+        progressBar.forgroundColor = UIColor.new_theme
         updateProgress(index:0);
         arrayOnboarding = [
             OnboardingDataModal(title: "Get Inspration",
@@ -86,7 +87,8 @@ class OnboardingBaseController: UIViewController,UIScrollViewDelegate {
         holderScrollView.frame = CGRect(x: 0, y: 50, width: holderScrollView.frame.width, height: holderScrollView.frame.height-50)
         pageControlHolder.isHidden = true
         pageControl.numberOfPage = arrayOnboarding.count
-        pageControl.set_view(arrayOnboarding.count, current: 0, current_color: UIColor.theme)
+        //pageControl.set_view(arrayOnboarding.count, current: 0, current_color: UIColor.theme)
+        pageControl.set_view(arrayOnboarding.count, current: 0, current_color: UIColor.new_theme)
         holderScrollView.isPagingEnabled =  true
         holderScrollView.contentSize = CGSize(width:holderScrollView.frame.width*CGFloat(arrayOnboarding.count) , height: holderScrollView.frame.height)
         for  index in arrayOnboarding.indices {

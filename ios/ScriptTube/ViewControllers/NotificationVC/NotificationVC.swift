@@ -18,7 +18,12 @@ class NotificationVC: BaseControllerVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideNavbar()
-        addNavBar(headingText: "Notifications", redText: "",type: .addNewCard,addNewCardSelector: #selector(markAllRead),addNewCardSelectorTitle: "Mark All As Read")
+        addNavBar(headingText: "Notifications", 
+                  redText: "",
+                  type: .addNewCard,
+                  addNewCardSelector: #selector(markAllRead),
+                  addNewCardSelectorTitle: "Mark All As Read", 
+                  color: UIColor(named: "bgColor"))
         self.pleaseWait()
         tableView.register(UINib(nibName: NotificationCell.identifier, bundle: nil), forCellReuseIdentifier: NotificationCell.identifier)
         let param = ["limit":"10","page":"\(page)"]

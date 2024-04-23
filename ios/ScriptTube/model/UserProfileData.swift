@@ -37,7 +37,11 @@ class UserProfileData{
     var follow = false
     var isDeleted = true
     var userPosts = [Post]()
+    var interestCategoryData = [InterestCategoryData]()
     var userPostsImages = [String]()
+    var donationUsers = [DonationUserModel]()
+    
+    var coverImage = ""
     
     init(){
         
@@ -71,6 +75,8 @@ class UserProfileData{
         self.dob = data[ApiKeys.dob.rawValue].stringValue
         self.accountHolderLastName = data[ApiKeys.accountHolderlastName.rawValue].stringValue
         self.ssnNumber = data[ApiKeys.ssnNumber.rawValue].stringValue
+        self.coverImage = data[ApiKeys.coverImage.rawValue].stringValue
+        
         
     }
 }
@@ -104,4 +110,6 @@ enum ApiKeys:String{
     case accountHolderName = "accountHolderName"
     case follow = "follow"
     case unReadNotificationCount = "unReadNotificationCount"
+    case coverImage = "coverImage"
+    
 }

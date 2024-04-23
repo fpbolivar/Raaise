@@ -35,6 +35,7 @@ class SettingCell: UITableViewCell {
         switchItemContainer.isHidden = true
         arrowImage.isHidden = false
 
+        
         titleLbl.text = item.title
         titleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX15)
         if item.type == .redLbl{
@@ -50,8 +51,10 @@ class SettingCell: UITableViewCell {
         arrowImage.isHidden = true
         titleLbl.text = item.title
         titleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX15)
+        
+        switchItem.applyGradientColorToUISwitch(gradientColors: [UIColor(named: "Gradient1") ?? .black, UIColor(named: "Gradient2") ?? .white])
         if item.type == .redLbl{
-            titleLbl.textColor = UIColor.theme
+            titleLbl.textColor = .new_theme//UIColor.theme
         }else{
             titleLbl.textColor = UIColor.white
         }

@@ -8,6 +8,9 @@
 import UIKit
 
 class AddPostVC: BaseControllerVC {
+    
+    @IBOutlet weak var lblChooseTagsForPost: UILabel!
+    @IBOutlet weak var categoryCollectionView: UICollectionView!
     @IBOutlet weak var submitLbl: UILabel!
     @IBOutlet weak var switchStack: UIStackView!
     @IBOutlet weak var categoryStack: UIStackView!
@@ -43,6 +46,8 @@ class AddPostVC: BaseControllerVC {
     }
     //MARK: - Setup
     func setup(){
+        
+        optionsSwitch.applyGradientColorToUISwitch(gradientColors: [UIColor(named: "Gradient1") ?? .black, UIColor(named: "Gradient2") ?? .white])
         otherAmtLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
         donationLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
         submitLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX18)
@@ -56,7 +61,9 @@ class AddPostVC: BaseControllerVC {
         }
         categoryTf.layer.cornerRadius = 10
         categoryTf.paddingLeftRightTextField(left: 25, right: 0)
-        addNavBar(headingText: "New Post", redText: "Post")
+        addNavBar(headingText: "New Post", 
+                  redText: "Post",
+                  color: UIColor(named: "bgColor"))
         donationTf.paddingLeftRightTextField(left: 25, right: 0)
         
         donationTf.layer.cornerRadius = 10
@@ -74,6 +81,14 @@ class AddPostVC: BaseControllerVC {
                 self.setupChooseArticleDropDown()
             }
         }
+        
+        let nibName = UINib(nibName: "ChooseInterestCell", bundle: nil)
+        self.categoryCollectionView.register(nibName, forCellWithReuseIdentifier: ChooseInterestCell.identifier)
+        self.categoryCollectionView.delegate = self
+        self.categoryCollectionView.dataSource = self
+        
+        categoryStack.isHidden = true
+        lblChooseTagsForPost.applyGradientColorToLabelText(colors: [UIColor(named: "Gradient1") ?? .black, UIColor(named: "Gradient2") ?? .white])
     }
     func setupChooseArticleDropDown() {
         chooseArticleDropDown.align = .left
@@ -113,6 +128,7 @@ class AddPostVC: BaseControllerVC {
             json["data"].forEach { (message,data) in
                 self.category.append(VideoCategoryModel(data: data))
             }
+            self.categoryCollectionView.reloadData()
             completion()
         }
     }
@@ -163,7 +179,11 @@ class AddPostVC: BaseControllerVC {
             AlertView().showAlert(message: error.localizedDescription, delegate: self, pop: false)
         }
         
-        let param = ["videoCaption":captionTv.text!.trimmingCharacters(in: .whitespaces),"isDonation":optionsSwitch.isOn,"donationAmount":donationTf.text ?? "0","audioId":selectedAudioId,"categoryId":selectedCategory] as [String : Any]
+        let param = ["videoCaption":captionTv.text!.trimmingCharacters(in: .whitespaces),
+                     "isDonation":optionsSwitch.isOn,
+                     "donationAmount":donationTf.text ?? "0",
+                     "audioId":selectedAudioId,
+                     "categoryId":selectedCategory] as [String : Any]
         self.navigationController?.popToRootViewController(animated: true)
         self.delegate?.postAdded(status: .start)
         VideoUploadStatus.isUploading?(true)
@@ -187,23 +207,63 @@ class AddPostVC: BaseControllerVC {
 //MARK: - Collection View Delegate
 extension AddPostVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == categoryCollectionView {
+            return category.count
+        }
         return amounts.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AmountCell.identifier, for: indexPath) as! AmountCell
-        cell.updateCell(withAmt: amounts[indexPath.row])
-        return cell
+         
+        if collectionView == categoryCollectionView {
+            let interestCell = collectionView.dequeueReusableCell(withReuseIdentifier: ChooseInterestCell.identifier, for: indexPath) as! ChooseInterestCell
+            interestCell.chooseInterestLabel.text = category[indexPath.row].name
+            interestCell.chooseInterestImg.loadImg(url:category[indexPath.row].image)
+            
+            if self.selectedCategory == category[indexPath.row].id{
+                interestCell.chooseInterestView.backgroundColor = .white
+                interestCell.chooseInterestLabel.textColor = .black
+            }
+            else{
+                interestCell.chooseInterestView.backgroundColor = .clear
+                interestCell.chooseInterestLabel.textColor = .white
+            }
+            return interestCell
+            
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AmountCell.identifier, for: indexPath) as! AmountCell
+            cell.updateCell(withAmt: amounts[indexPath.row])
+            return cell
+        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == categoryCollectionView {
+            return CGSize(width: (self.categoryCollectionView.bounds.width / 2) - 20,height: (50))
+        }
         return CGSize(width: (self.collectionView.bounds.width / 5) - 5, height: (self.collectionView.bounds.height - 15))
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! AmountCell
-        cell.selectedCell()
+        if collectionView == categoryCollectionView {
+            let obj = self.category[indexPath.row]
+            
+            self.selectedCategory = category[indexPath.row].id
+            
+            self.categoryCollectionView.reloadData()
+        } else {
+            let cell = collectionView.cellForItem(at: indexPath) as! AmountCell
+            cell.selectedCell()
+        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! AmountCell
-        cell.unselectedCell()
+        if collectionView == categoryCollectionView {
+            
+            
+        } else {
+            let cell = collectionView.cellForItem(at: indexPath) as! AmountCell
+            cell.unselectedCell()
+        }
+        
     }
 }
 //MARK: - Table View Delegate
@@ -233,3 +293,5 @@ class VideoUploadStatus{
     static var isUploadingVar = false
     static var progress:((Int)->Void)?
 }
+
+

@@ -60,6 +60,13 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var nameBtn: UIButton!
     @IBOutlet weak var captionLbl: UILabel!
     @IBOutlet weak var musicLbl: MarqueeLabel!
+    
+    @IBOutlet weak var commentTblView: UITableView!
+    @IBOutlet weak var commentTf: UITextField!
+    @IBOutlet weak var ibSentBtn: UIButton!
+
+    
+    @IBOutlet weak var viewDonation: UIView!
     @IBOutlet weak var profileImgView: UIImageView!{
         didSet{
             profileImgView.isUserInteractionEnabled = true
@@ -75,6 +82,11 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var shareBtn: UIButton!
     @IBOutlet weak var musicBtn: UIButton!
     @IBOutlet weak var shareCountLbl: UILabel!
+    
+    @IBOutlet weak var verifiedImg: UIImageView!
+    @IBOutlet weak var followBtnWidthConst: NSLayoutConstraint!
+    @IBOutlet weak var commentView: CardView!
+    
     @IBOutlet weak var pauseImgView: UIImageView!{
         didSet{
             pauseImgView.alpha = 0
@@ -89,6 +101,8 @@ class HomeTableViewCell: UITableViewCell {
     var videoPlayer:AVPlayerLayer?=nil
     var playedOnce:Bool = false
     weak var delegate: HomeCellNavigationDelegate?
+    //Date:: 01, Apr 2024 - Comment Data
+    var commentData : [CommentDataModel] = []
     private var url: URL!
     
     // MARK: LIfecycles
@@ -100,7 +114,6 @@ class HomeTableViewCell: UITableViewCell {
     // MARK: - Setup
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         followBtn.makeRounded(color: .clear, borderWidth: 0)
         musicBtn.makeRounded(color: .clear, borderWidth: 0)
         if let avLayer = videoPlayer{
@@ -118,24 +131,34 @@ class HomeTableViewCell: UITableViewCell {
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        topRewardPic1.layer.cornerRadius = 15
-        topRewardPic2.layer.cornerRadius = 12.5
-        topRewardPic3.layer.cornerRadius = 10
+//        topRewardPic1.layer.cornerRadius = 15
+//        topRewardPic2.layer.cornerRadius = 12.5
+//        topRewardPic3.layer.cornerRadius = 10
+        topRewardPic1.layer.cornerRadius = topRewardPic1.frame.height / 2
+        topRewardPic2.layer.cornerRadius = topRewardPic2.frame.height / 2
+        topRewardPic3.layer.cornerRadius = topRewardPic3.frame.height / 2
+        
+        //Date:: 01, Apr 2024 - register the comment Cell
+        self.commentTblView.register(UINib(nibName: CommentTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: CommentTableViewCell.identifier)
+        self.commentTblView.delegate = self
+        self.commentTblView.dataSource = self
+        
         seeMoreBtn.titleLabel?.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
         playerView.contentMode = .scaleAspectFit
         profileImg.layer.cornerRadius = profileImg.frame.height / 2
         profileImg.contentMode = .scaleAspectFill
+       
         profileImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openProfile)))
         nameLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openProfile)))
         nameBtn.addTarget(self, action: #selector(openProfile), for: .touchUpInside)
         reportBtn.layer.cornerRadius = reportBtn.frame.height / 2
         musicBtn.layer.cornerRadius = 20
         selectionStyle = .none
-        likeCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
-        viewCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
-        commentCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
-        shareCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
-        donationLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
+        likeCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX12)
+        viewCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX12)
+        commentCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX12)
+        //shareCountLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
+        donationLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX12)
         followLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX12)
         musicLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX12)
         totalRaisedLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX10)
@@ -158,12 +181,18 @@ class HomeTableViewCell: UITableViewCell {
         songIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(navigatetotryaudio)))
         musicLbl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(navigatetotryaudio)))
         musicNoteImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(navigatetotryaudio)))
+        //commentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openCommentView)))
     }
     // MARK: - Update Data
     func viewProfileVideo(){
+        
+        viewDonation.isHidden = true
         profileImgView.isHidden = true
         donationLbl.isHidden = true
         followBtnView.isHidden = true
+        //Date:: 06, Mar 2024
+        followBtnWidthConst.constant = 0
+        
         musicBtn.isHidden = true
         reportBtn.isHidden = true
         
@@ -176,15 +205,36 @@ class HomeTableViewCell: UITableViewCell {
             self.followLbl.text = "Follow"
         }
     }
+    
+    
     func configure(post: Post){
         self.post = post
         self.liked = post.isLiked
+        
+        self.commentTf.text = ""
+        self.getCommentsApiFromCell(post: post, rowID: 0){
+            //let cell = self.tableView.cellForRow(at: indexPath) as! HomeTableViewCell
+            self.commentData = self.commentData.reversed()
+            self.commentData = self.commentData
+            self.commentTblView.reloadData()
+            if self.commentData.count > 0{
+                self.updateTableContentInset()
+                self.scrollToBottom(tblComments:self.commentTblView)
+            }
+            //self.isGetCommentApiCalled = false
+        }
         print("checkLIke",post.isLiked,post.videoCaption)
         if post.isLiked{
-            self.likeBtn.tintColor = .red
+            //self.likeBtn.tintColor = .red
+            //self.likeBtn.setImage(UIImage(named: "ic_fill_new_like"), for: .normal)
+            self.likeBtn.setBackgroundImage(UIImage(named: "image1"), for: .normal)
         }else{
-            self.likeBtn.tintColor = .white
+            //self.likeBtn.tintColor = .white
+            self.likeBtn.setBackgroundImage(UIImage(named: "image2"), for: .normal)
+            
+            
         }
+        
         self.isFollowing = post.isFollow
         if self.isFollowing{
             self.followLbl.text = "Following"
@@ -192,11 +242,18 @@ class HomeTableViewCell: UITableViewCell {
             self.followLbl.text = "Follow"
         }
         if !self.post!.isDonation{
-            donationLbl.isHidden = true
+            //Date:: 02, Mar 2024
+            donationLbl.text = "$0"
+            //donationLbl.isHidden = true
+            // ---
+            viewDonation.isHidden = true
             profileImgView.isHidden = true
             totalRaisedLbl.isHidden = true
-            topRewardedLbl.isHidden = true
+           // topRewardedLbl.isHidden = true
             topRewardStack.isHidden = true
+        }
+        else{
+            donationLbl.text = "$\(post.homeDonationAmount)"
         }
         if AuthManager.currentUser.id == self.post?.userDetails?.id{
             self.viewProfileVideo()
@@ -216,13 +273,18 @@ class HomeTableViewCell: UITableViewCell {
         likeCountLbl.text = Int(post.videoLikeCount)?.shorten()
         commentCountLbl.text = Int(post.videoCommentCount)?.shorten()
         print("LIKES",post.videoLikeCount,Int(post.videoLikeCount)?.shorten() ?? "0")
-        shareCountLbl.text = Int(post.videoShareCount)?.shorten()
+        //shareCountLbl.text = Int(post.videoShareCount)?.shorten()
         profileImg.loadImgForProfile(url: post.userDetails?.profileImage ?? "")
         //loadImg(url: post.userDetails?.profileImage ?? "")
         if post.donationAmount != ""{
             totalRaisedLbl.text = "Total Raised: $\(post.donationAmount)"
         }else{
             totalRaisedLbl.text = "Total Raised: $0"
+        }
+        if post.userDetails?.isVerified == true {
+            verifiedImg.isHidden = false
+        } else {
+            verifiedImg.isHidden = true
         }
         print("CUTKLABEL",captionLbl.isTruncated)
         if captionLbl.isTruncated{
@@ -236,6 +298,93 @@ class HomeTableViewCell: UITableViewCell {
         viewCountLbl.text = Int(post.videoViewCount)?.shorten()
         
     }
+    
+    //Date:: 04, Apr 2024 - get Comments Api call
+    func getCommentsApiFromCell(post: Post, rowID: Int, completion:@escaping()->Void){
+        debugPrint("Api getCommentsApi called for row: \(rowID)")
+        self.commentData = []
+        let param = ["videoId":post.id,"limit":"1000","page":"\(1)"]
+        
+        debugPrint("Input: \(param)")
+        DataManager.getVideoComments(param: param) { errorMessage in
+            //AlertView().showAlert(message: errorMessage, delegate: self, pop: false)
+            debugPrint(errorMessage)
+        } completion: { json in
+            json["data"].forEach { (message,data) in
+                //print("EACHRES",data)
+                self.commentData.append(CommentDataModel(data: data))
+            }
+            //print("CommentCount",self.commentData.count)
+            debugPrint("Comment array count with api called for row", self.commentData.count, rowID)
+            completion()
+        }
+    }
+    
+    func scrollToBottom(tblComments:UITableView){
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.commentData.count-1, section: 0)
+            debugPrint("Sel index path row", indexPath.row)
+            debugPrint("Selected Comment array count", self.commentData.count)
+            if indexPath.row < self.commentData.count
+            {
+                tblComments.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            }
+            
+        }
+    }
+    
+    
+    
+    //Date:: 01, Apr 2024 - here we updateTableContent for start the table from bottom
+    func updateTableContentInset() {
+        let numRows = self.commentTblView.numberOfRows(inSection: 0)
+        var contentInsetTop = self.commentTblView.bounds.size.height
+        
+        debugPrint("numRows \(numRows)")
+        debugPrint("contentInsetTop\(contentInsetTop)")
+        
+        if numRows<4
+        {
+            for i in 0..<4 {
+                let rowRect = self.commentTblView.rectForRow(at: IndexPath(item: i, section: 0))
+                contentInsetTop -= rowRect.size.height
+                if contentInsetTop <= 0 {
+                    contentInsetTop = 0
+                    break
+                }
+            }
+        }else{
+            contentInsetTop = 0
+        }
+
+        debugPrint("contentInsetTop After\(contentInsetTop)")
+        self.commentTblView.contentInset = UIEdgeInsets(top: contentInsetTop,left: 0,bottom: 0,right: 0)
+    }
+    //Date:: 01, Apr 2024 - here we updateTableContent for start the table from bottom
+//    func updateTableContentInset() {
+//        print("commentData \(commentData.count)")
+//        let numRows = self.commentTblView.numberOfRows(inSection: 0)
+//        var contentInsetTop = self.commentTblView.bounds.size.height
+//        debugPrint("numRows \(numRows)")
+//        debugPrint("contentInsetTop\(contentInsetTop)")
+//        
+//        for i in 0..<numRows {
+//            let indexPath = IndexPath(row: i, section: 0)
+//            
+//            let rowRect = commentTblView.rectForRow(at: indexPath)
+//            if contentInsetTop <= 0 || rowRect.size.height >= contentInsetTop {
+//                contentInsetTop = 0
+//                break
+//            }
+//            contentInsetTop -= rowRect.size.height
+//        }
+//        
+//        debugPrint("contentInsetTop After\(contentInsetTop)")
+//        self.commentTblView.contentInset = UIEdgeInsets(top: contentInsetTop,left: 0,bottom: 0,right: 0)
+//       
+//    }
+  
+    
     func setDate(post:Post){
         let string = post.createdAt
 
@@ -257,7 +406,7 @@ class HomeTableViewCell: UITableViewCell {
         case 0:
             print("asd")
             topRewardStack.isHidden = true
-            topRewardedLbl.isHidden = true
+            //topRewardedLbl.isHidden = true
             break
         case 1:
             print("asd1")
@@ -370,6 +519,7 @@ class HomeTableViewCell: UITableViewCell {
     
     func resetViewsForReuse(){
         donationLbl.isHidden = false
+        viewDonation.isHidden = false
         profileImgView.isHidden = false
         pauseImgView.alpha = 0
         musicStack.isHidden = false
@@ -383,7 +533,7 @@ class HomeTableViewCell: UITableViewCell {
         topRewardView1.isHidden = false
         topRewardView2.isHidden = false
         topRewardView3.isHidden = false
-        topRewardedLbl.isHidden = false
+       // topRewardedLbl.isHidden = false
         topRewardStack.isHidden = false
     }
     func hideMusic(){
@@ -475,11 +625,16 @@ class HomeTableViewCell: UITableViewCell {
         if !self.post!.isLiked {
             liked = true
             self.post?.isLiked = true
-            likeBtn.tintColor = .red
+            //likeBtn.tintColor = .red
+            //likeBtn.setImage(UIImage(named: "ic_fill_new_like"), for: .normal)
+            likeBtn.setBackgroundImage(UIImage(named: "image1"), for: .normal)
+            
         }else{
             liked = false
             self.post?.isLiked = false
-            likeBtn.tintColor = .white
+            //likeBtn.tintColor = .white
+            //likeBtn.setImage(UIImage(named: "ic_unfill_like"), for: .normal)
+            likeBtn.setBackgroundImage(UIImage(named: "image2"), for: .normal)
         }
     }
     
@@ -505,9 +660,12 @@ class HomeTableViewCell: UITableViewCell {
         })
         likeVideo()
     }
+    @objc func openCommentView(){
+        delegate?.showComments(id: post?.id ?? "", numberOfComments: post?.videoCommentCount ?? "0")
+    }
     
     @IBAction func comment(_ sender: Any) {
-        delegate?.showComments(id: post?.id ?? "", numberOfComments: post?.videoCommentCount ?? "0")
+       // delegate?.showComments(id: post?.id ?? "", numberOfComments: post?.videoCommentCount ?? "0")
     }
     
     @IBAction func share(_ sender: Any) {
@@ -538,4 +696,27 @@ extension UILabel {
 
         return labelTextSize.height > bounds.size.height
     }
+}
+
+//Date:: 01, Apr 2024 - this table is use for to show comment
+extension HomeTableViewCell: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return commentData.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CommentTableViewCell.identifier, for: indexPath) as! CommentTableViewCell
+        cell.ibReplyBtn.isHidden = true
+        cell.optionsBtn.isHidden = true
+        cell.viewReplyView.isHidden = true
+        cell.timeLbl.isHidden = true
+        //cell.setup(data: commentData[indexPath.section])
+        cell.commentLbl.text = commentData[indexPath.row].comment
+        cell.nameLbl.text = commentData[indexPath.row].username
+        cell.profileImg.loadImgForProfile(url: commentData[indexPath.row].commentprofileImage)
+        //cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        
+        return cell
+    }
+    
 }

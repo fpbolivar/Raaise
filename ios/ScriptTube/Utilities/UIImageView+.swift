@@ -28,7 +28,10 @@ extension UIImageView{
             self.image =  UIImage(named:"profile_placeholder")!
             return
         }
-        self.sd_setImage(with: imageUrL, placeholderImage: UIImage(named:"profile_placeholder")!, options: [.highPriority], progress: nil) { image, error, s, sf in
+        self.sd_setImage(with: imageUrL,
+                         placeholderImage: UIImage(named:"profile_placeholder")!,
+                         options: [.highPriority],
+                         progress: nil) { image, error, s, sf in
         }
     }
     func downloadloadImg(url:String,imageCompletion:@escaping(UIImage?)->Void){
@@ -45,6 +48,20 @@ extension UIImageView{
             }else{
                 imageCompletion(nil)
             }
+        }
+    }
+    //Date:: 06, Mar 2024 -
+    
+    func loadImgForCover(url:String){
+        let  url1 = UserDefaultHelper.getBaseUrl() + url
+        guard let imageUrL = URL(string: url1) else {
+            self.image =  UIImage(named:"placeholder-image")!
+            return
+        }
+        self.sd_setImage(with: imageUrL,
+                         placeholderImage: UIImage(named:"placeholder-image")!,
+                         options: [.highPriority],
+                         progress: nil) { image, error, s, sf in
         }
     }
 }

@@ -113,10 +113,17 @@ class AuthManager{
             }
         }
     }
-    class func updateUserProfileApi(delegate:UIViewController, param:[String:String], imageChanged:Bool = false,image:[String:UIImage]? = nil,completion: @escaping()->Void){
+    class func updateUserProfileApi(delegate:UIViewController, 
+                                    param:[String:String],
+                                    imageChanged:Bool = false,
+                                    image:[String:UIImage]? = nil,
+                                    coverImage:[String:UIImage]? = nil,
+                                    completion: @escaping()->Void){
         delegate.pleaseWait()
+        print(param)
         if imageChanged{
-            APIManager.MultipartService(url: URLHelper.GET_UPDATE_URL, parameters: param, image_is_Selected: true,images: image) { progress in
+            debugPrint(URLHelper.GET_UPDATE_URL)
+            APIManager.MultipartService(url: URLHelper.GET_UPDATE_URL, parameters: param, image_is_Selected: true,images: image, coverImages: coverImage) { progress in
                 print("IMAGEUPLOADPROG",progress)
             } completionHandler: { json, error, status in
                 delegate.clearAllNotice()
@@ -127,6 +134,7 @@ class AuthManager{
                 }else{
                     if let jsonData = json{
                         print("UPDATEPROFILE",jsonData,status)
+                        print(jsonData)
                         if jsonData["statusCode"].intValue == 200{
                             completion()
                         }else{
@@ -866,6 +874,30 @@ class AuthManager{
                             AuthManager.invalidToken()
                         }
                         AlertView().showAlert(message: jsonData["message"].stringValue, delegate: delegate, pop: false)
+                    }
+                }
+            }
+        }
+    }
+    
+    //Date:: 05, Mar 2024
+    class func addInterest(delegate:UIViewController,param:[String:String],completion:@escaping()->Void){
+        delegate.pleaseWait()
+        print("ADD INTEREST",param)
+        APIManager.postService(url: URLHelper.ADD_INTEREST, parameters: param) { json, error, status in
+            delegate.clearAllNotice()
+            if let error = error{
+                print("ADD INTEREST",error)
+                AlertView().showAlert(message: error.localizedDescription, delegate:delegate, pop: false)
+                return
+            }else{
+                if let jsonData = json{
+                    print("ADD INTEREST",jsonData,status)
+                    if jsonData["status"].intValue == 200{
+                        
+                        completion()
+                    }else{
+                        AlertView().showAlert(message: jsonData["message"].stringValue, delegate:delegate, pop: false)
                     }
                 }
             }

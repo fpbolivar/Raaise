@@ -26,10 +26,10 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
         AuthManager.getProfileApi(delegate: self, needLoader: false) {
             print("REPLYTOCOMMENT",AuthManager.currentUser.profileImage,AuthManager.currentUser.userName)
         }
-        tabBar.tintColor = UIColor.theme
+        tabBar.tintColor = .new_theme//UIColor.theme
         tabBar.unselectedItemTintColor = .white
         tabBar.barTintColor = .black
-        tabBar.backgroundColor = .black
+        tabBar.backgroundColor = UIColor(named: "bgColor")
         delegate = self
         homeViewController = HomeVC2()
         homeNavigationController = UINavigationController(rootViewController: homeViewController)
@@ -39,19 +39,29 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
         profileViewController = UINavigationController(rootViewController:ProfileVC())// 
      
         
-        homeViewController.tabBarItem.image = UIImage(named: "ic_un_home")
-        homeViewController.tabBarItem.selectedImage = UIImage(named: "ic_selected_home")
+        //homeViewController.tabBarItem.image = UIImage(named: "ic_un_home")//old image
+        homeViewController.tabBarItem.image = UIImage(named: "ic_new_home")
         
-        discoverViewController.tabBarItem.image = UIImage(named: "ic_un_search")
-        discoverViewController.tabBarItem.selectedImage = UIImage(named: "ic_selected_search")
+        //homeViewController.tabBarItem.selectedImage = UIImage(named: "ic_selected_home")
         
-        mediaViewController.tabBarItem.image = UIImage(named: "addMedia")
+        //discoverViewController.tabBarItem.image = UIImage(named: "ic_un_search")//old image
+        discoverViewController.tabBarItem.image = UIImage(named: "ic_new_search")
         
-        inboxViewController.tabBarItem.image = UIImage(named: "ic_un_inbox")
-        inboxViewController.tabBarItem.selectedImage = UIImage(named: "ic_selected_inbox")
+        //discoverViewController.tabBarItem.selectedImage = UIImage(named: "ic_selected_search")
         
-        profileViewController.tabBarItem.image = UIImage(named: "ic_un_profile")
-        profileViewController.tabBarItem.selectedImage = UIImage(named: "ic_selected_profile")
+        //mediaViewController.tabBarItem.image = UIImage(named: "addMedia")//old image
+        mediaViewController.tabBarItem.image = UIImage(named: "addNewMedia")
+        
+        
+        //inboxViewController.tabBarItem.image = UIImage(named: "ic_un_inbox")//old image
+        inboxViewController.tabBarItem.image = UIImage(named: "ic_new_notification")
+        
+        //inboxViewController.tabBarItem.selectedImage = UIImage(named: "ic_selected_inbox")
+        
+        //profileViewController.tabBarItem.image = UIImage(named: "ic_un_profile")
+        profileViewController.tabBarItem.image = UIImage(named: "ic_new_userprofile")
+        
+        //profileViewController.tabBarItem.selectedImage = UIImage(named: "ic_selected_profile")
         
         viewControllers = [homeNavigationController, discoverViewController, mediaViewController, inboxViewController, profileViewController]
         
@@ -61,7 +71,7 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
             if index == 3{
                 DataManager.getUnreadChatCount(delegate: self) { json in
                     if json["unreadMessageCount"].intValue > 0{
-                        tabBarItem.badgeColor = .theme
+                        tabBarItem.badgeColor = .new_theme//.theme
                         tabBarItem.badgeValue =  "\(json["unreadMessageCount"].intValue)"
                     }else{
                         tabBarItem.badgeValue =  nil

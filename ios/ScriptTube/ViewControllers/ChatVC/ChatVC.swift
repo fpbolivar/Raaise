@@ -54,7 +54,10 @@ class ChatVC: BaseControllerVC {
         }
         ch.register(user: AuthManager.currentUser.id)
         ch.connect()
-        addNavBar(headingText:otherUser.name.localizedCapitalized,redText:"",type: .smallNavBarOnlyBack)
+        addNavBar(headingText:otherUser.name.localizedCapitalized,
+                  redText:"",
+                  type: .smallNavBarOnlyBack,
+                  color: UIColor(named: "bgColor"))
         setup()
         // Do any additional setup after loading the view.
     }

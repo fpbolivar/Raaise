@@ -14,7 +14,7 @@ class PrivacyControlVC: BaseControllerVC {
     var selectedPrivacy = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        addNavBar(headingText:"Privacy Control",redText:"Control")
+        addNavBar(headingText:"Privacy Control",redText:"Control",color: UIColor(named: "bgColor"))
         tableView.register(UINib(nibName: PrivacyControlCell.identifier, bundle: nil), forCellReuseIdentifier: PrivacyControlCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self

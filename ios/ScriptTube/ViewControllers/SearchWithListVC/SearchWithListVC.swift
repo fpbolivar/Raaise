@@ -43,7 +43,7 @@ class SearchWithListVC: BaseControllerVC {
                 }
             }
         }
-        addNavBar(headingText:"Select Audio",redText:"Audio")
+        addNavBar(headingText:"Select Audio",redText:"Audio",color: UIColor(named: "bgColor") )
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

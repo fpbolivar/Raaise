@@ -43,7 +43,8 @@ class DonationRaisedCell: UITableViewCell {
             statusView.backgroundColor = UIColor(named: "reviewBtnColor")
             statusLbl.text = "In Review"
         case .view:
-            statusView.backgroundColor = UIColor(named: "theme")
+            //statusView.backgroundColor = UIColor(named: "theme")
+            statusView.backgroundColor = .new_theme
             statusLbl.text = "View"
         case .claim:
             statusView.backgroundColor = UIColor(named: "claimBtnColor")

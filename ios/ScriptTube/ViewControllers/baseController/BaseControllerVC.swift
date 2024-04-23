@@ -10,13 +10,16 @@ import UIKit
 import PhotosUI
 import Photos
 
+
 protocol ImagePickerDelegate{
-    func didSelectImage(image:UIImage)
+    func didSelectImage(image:UIImage,imgType:ImageType)
 }
+    
 class BaseControllerVC:UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     var navView:NavigationBar!
     var imagePickerDelegate:ImagePickerDelegate!
     var  type:NavBarType = .largeNavBarOnlyBack
+    var imgType: ImageType = .profile
     
     var headingText: String? {
         
@@ -36,22 +39,36 @@ class BaseControllerVC:UIViewController,UIImagePickerControllerDelegate, UINavig
         navView =  NavigationBar.instanceFromNib() as? NavigationBar
         
     }
-    func addNavBar(headingText:String,leftAction:Selector?=nil,redText:String,type:NavBarType = .largeNavBarOnlyBack,addNewCardSelector:Selector? = nil,addNewCardSelectorTitle:String = "Add New Card"){
-        
+    func addNavBar(
+        headingText:String,
+        leftAction:Selector?=nil,
+        redText:String,
+        type:NavBarType = .largeNavBarOnlyBack,
+        addNewCardSelector:Selector? = nil,
+        addNewCardSelectorTitle:String = "Add New Card",
+        color:UIColor? = UIColor(
+            named: "BackgroundColor"
+        )){
+        print(addNewCardSelectorTitle)
         self.type = type
-        
+        //self.
         self.headingText = headingText
         self.redText = redText
-        addNavBar(type:type,leftAction: leftAction,addNewCardSelector: addNewCardSelector,addNewCardSelectorTitle:addNewCardSelectorTitle)
+        addNavBar(type:type,leftAction: leftAction,addNewCardSelector: addNewCardSelector,addNewCardSelectorTitle:addNewCardSelectorTitle, color: color)
     }
-    private func addNavBar(style:NavBarStyle?=nil,title:String="",type:NavBarType = .largeNavBarOnlyBack,leftAction:Selector?=nil,deleteSelector: Selector? = nil,addNewCardSelector:Selector? = nil,addNewCardSelectorTitle:String){
+    private func addNavBar(style:NavBarStyle?=nil,title:String="",type:NavBarType = .largeNavBarOnlyBack,leftAction:Selector?=nil,deleteSelector: Selector? = nil,addNewCardSelector:Selector? = nil,addNewCardSelectorTitle:String, color:UIColor? = UIColor(named: "BackgroundColor")){
+        
+        
         navView.leftIcon.isUserInteractionEnabled = true
+        navView.backgroundColor = color//UIColor(named: "bgColor")
+        
         titleSet()
         if let cardAction = addNewCardSelector{
             navView.addNewCardBtn.addTarget(self, action: cardAction, for: .touchUpInside)
         }
         navView.translatesAutoresizingMaskIntoConstraints = false
-        navView.leftIcon.image = UIImage(named: "ic_back")!.addPadding(0, 0, 20, 0)
+        //navView.leftIcon.image = UIImage(named: "ic_back")!.addPadding(0, 0, 20, 0)
+        navView.leftIcon.image = UIImage(named: "ic_new_back")!.addPadding(0, 0, 20, 0)
         navView.rigthBtn.isHidden = true
         if let leftAction = leftAction{
             navView.leftIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: leftAction))
@@ -102,7 +119,10 @@ class BaseControllerVC:UIViewController,UIImagePickerControllerDelegate, UINavig
         if type == .addNewCard{
             navView.heightAnchor.constraint(equalToConstant: 80).isActive = true
             navView.addNewCardBtn.isHidden = false
-            navView.addNewCardBtn.setTitle(addNewCardSelectorTitle, for: .normal)
+            //navView.addNewCardBtn.setTitle(addNewCardSelectorTitle, for: .normal)
+            navView.addNewCardBtn.setBtnGradientText(colors: [UIColor(named: "Gradient1") ?? .black, UIColor(named: "Gradient2") ?? .white], labelText: addNewCardSelectorTitle)
+            navView.addNewCardBtn.setTitle("", for: .normal)
+
         }
         if type == .addRoom{
             navView.heightAnchor.constraint(equalToConstant: 80).isActive = true
@@ -129,18 +149,20 @@ class BaseControllerVC:UIViewController,UIImagePickerControllerDelegate, UINavig
     }
     private  func headingtitleSet(){
         navView.title.text =  ""
+        //navView.title.text =  "Setting"
         navView.headingLbl.text =  ""
         if .largeNavBarOnlyBack == type || .largeNavBarOnlyBackWithRightBtn == type || .addNewCard == type   || .filter == type || .addRoom == type{
             
             navView.headingLbl.adjustsFontSizeToFitWidth = true
             navView.headingLbl.font =  AppFont.FontName.regular.getFont(size: AppFont.pX20)
+            navView.title.font =  AppFont.FontName.regular.getFont(size: AppFont.pX20)
             let customType = ActiveType.custom(pattern:   redText ?? "")
             navView.headingLbl.enabledTypes.append(customType)
             navView.headingLbl.textColor = UIColor.white
             navView.headingLbl.underLineEnable = false
             navView.headingLbl.text =  "    " + (headingText ?? "")
             
-            navView.headingLbl.customColor[customType] = UIColor.theme
+            navView.headingLbl.customColor[customType] = UIColor.new_theme
             navView.headingLbl.customSelectedColor[customType] = UIColor.gray
         }
         if .onlyTopTitle == type{
@@ -179,28 +201,35 @@ class BaseControllerVC:UIViewController,UIImagePickerControllerDelegate, UINavig
     }
     
     @objc func openGallery(){
+        debugPrint(imgType)
         
-        if #available(iOS 14, *) {
-            // using PHPickerViewController
-            var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
-            config.selectionLimit = 1
-            config.filter = .images
-            config.preferredAssetRepresentationMode = .current
-            let picker = PHPickerViewController(configuration: config)
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            let picker = UIImagePickerController()
+            picker.sourceType = .photoLibrary
             picker.delegate = self
-            DispatchQueue.main.async {
-                self.present(picker, animated: true, completion: nil)
-            }
-        } else {
-            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
-                let picker = UIImagePickerController()
-                picker.sourceType = .photoLibrary
-                picker.delegate = self
-                self.present(picker,animated: true)
-            }else{
-                
-            }
-        }
+            self.present(picker,animated: true)}
+            
+//        if #available(iOS 14, *) {
+//            // using PHPickerViewController
+//            var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
+//            config.selectionLimit = 1
+//            config.filter = .images
+//            config.preferredAssetRepresentationMode = .current
+//            let picker = PHPickerViewController(configuration: config)
+//            picker.delegate = self
+//            DispatchQueue.main.async {
+//                self.present(picker, animated: true, completion: nil)
+//            }
+//        } else {
+//            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+//                let picker = UIImagePickerController()
+//                picker.sourceType = .photoLibrary
+//                picker.delegate = self
+//                self.present(picker,animated: true)
+//            }else{
+//                
+//            }
+//        }
     }
     @objc func openCamera(){
         if UIImagePickerController.isSourceTypeAvailable(.camera){
@@ -224,7 +253,8 @@ class BaseControllerVC:UIViewController,UIImagePickerControllerDelegate, UINavig
             UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
         }
         picker.dismiss(animated: true)
-        imagePickerDelegate.didSelectImage(image: image)
+        
+        imagePickerDelegate.didSelectImage(image: image,imgType: imgType)
         
         //  let data =  image.jpegData(compressionQuality: 0.8)
         // self.imageUpload(data: data!)
@@ -254,7 +284,7 @@ extension BaseControllerVC:PHPickerViewControllerDelegate{
                     // got image url
                     do {
                         let imageData = try Data(contentsOf: url)
-                        self.imagePickerDelegate.didSelectImage(image: UIImage(data: imageData) ?? UIImage())
+                        self.imagePickerDelegate.didSelectImage(image: UIImage(data: imageData) ?? UIImage(), imgType: self.imgType)
                         
                     } catch {
                         print("\(#function) Error loading image : \(error)")

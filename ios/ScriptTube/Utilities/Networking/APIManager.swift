@@ -504,7 +504,17 @@ class APIManager{
         }
         
     }
-    class func MultipartService(url:String,parameters:[String:Any],image_is_Selected:Bool,images:[String:UIImage]?=nil,Uploading_Status: @escaping (Int) -> (),completionHandler: @escaping (JSON?, Error?, statusCode) -> ()){
+    class func MultipartService(
+        url:String,
+        parameters:[String:Any],
+        image_is_Selected:Bool,
+        images:[String:UIImage]?=nil,
+        coverImages:[String:UIImage]?=nil,
+        Uploading_Status: @escaping (
+            Int
+        ) -> (),
+        completionHandler: @escaping (JSON?, Error?, statusCode) -> ()
+    ){
       let headers:HTTPHeaders=[
           "Authorization": UserDefaultHelper.getAccessToken(),
           "X-Installation-Token":UserDefaultHelper.installationID()
@@ -515,27 +525,37 @@ class APIManager{
     
         manager.upload(multipartFormData: { (multipartFormData) in
             print(image_is_Selected)
-                       
             
             
-                        if(image_is_Selected){
             
-                            for (key, value) in images! {
-                                print(key)
-                                print(value)
+            if(image_is_Selected){
+                
+                for (key, value) in images! {
+                    print(key)
+                    print(value)
+                    
+                    let imageData = value.jpegData(compressionQuality: 0.5)
+                    multipartFormData.append(imageData!, withName:key , fileName: "\(Date().timeIntervalSince1970).jpeg", mimeType: "image/jpg")
+                    
+                }
+                
+                for (key, value) in coverImages! {
+                                    print(key)
+                                    print(value)
+                                    
+                                    let imageData = value.jpegData(compressionQuality: 0.5)
+                                    multipartFormData.append(imageData!, withName:key , fileName: "\(Date().timeIntervalSince1970).jpeg", mimeType: "image/jpg")
+                                    
+                                }
+                
+            }
             
-                                let imageData = value.jpegData(compressionQuality: 0.5)
-                                multipartFormData.append(imageData!, withName:key , fileName: "\(Date().timeIntervalSince1970).jpeg", mimeType: "image/jpg")
+            for (key, value) in parameters {
+                print("MULTIPARTPARAM","\(value)".data(using:.utf8),"\(value)",key)
+                multipartFormData.append("\(value)".data(using:.utf8)!, withName: key)
+            }
             
-                            }
-            
-                        }
-                        for (key, value) in parameters {
-                            print("MULTIPARTPARAM","\(value)".data(using:.utf8),"\(value)",key)
-                          multipartFormData.append("\(value)".data(using:.utf8)!, withName: key)
-                        }
-            
-            }, to: url,method:.post,headers:headers)
+        }, to: url,method:.post,headers:headers)
             
             
             .uploadProgress { progress in

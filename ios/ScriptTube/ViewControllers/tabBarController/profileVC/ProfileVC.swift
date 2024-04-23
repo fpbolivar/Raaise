@@ -11,6 +11,9 @@ class ProfileVC: UIViewController {
     @IBOutlet weak var progress: CircleProgress!
     @IBOutlet weak var uploadView: CardView!
     @IBOutlet weak var  collectionView:UICollectionView!
+    @IBOutlet weak var applyForView: UIView!
+    
+
     var refreshControl = UIRefreshControl()
     var customView: CustomRefreshControl!
     var userVideoData: [String] = []
@@ -21,7 +24,7 @@ class ProfileVC: UIViewController {
         hideNavbar()
         progress.layer.cornerRadius = progress.frame.height / 2
         progress.forgroundColor = .white
-        
+        setupUI()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -42,6 +45,8 @@ class ProfileVC: UIViewController {
         getProfileApi(needLoader: needLoader)
         needLoader = false
         self.tabBarController?.tabBar.isHidden = false
+        
+        
     }
     func addRefreshControl() {
 
@@ -68,6 +73,36 @@ class ProfileVC: UIViewController {
             collectionView.addSubview(refreshControl)
         }
     }
+    func setupUI() {
+        applyForView.isUserInteractionEnabled = true
+        applyForView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(blockUser)))
+        
+        if AuthManager.currentUser.isVerified == true {
+            applyForView.isHidden = true
+        } else {
+            applyForView.isHidden = false
+        }
+    }
+    
+    @objc func blockUser(){
+        applyForVerificationApi() { }
+    }
+    func applyForVerificationApi(completion:@escaping()->Void){
+        let param = ["isUserVerified":"true"]
+        DataManager.applyForVerification(delegate: self, param: param) { json in
+           
+            if json["statusCode"].intValue == 400{
+                
+            }
+            if json["status"].intValue == 200{
+                print("Status is 200")
+                ToastManager.successToast(delegate: self, msg: json["message"].stringValue)
+            }
+            
+            completion()
+        }
+    }
+    
     @objc func refresh(){
         refreshControl.beginRefreshing()
         self.customView.spinner.startAnimating()
@@ -131,6 +166,11 @@ extension ProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UIColle
                 let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserHeaderReusableView.identifier, for: indexPath) as! UserHeaderReusableView
                 headerView.setData(data: AuthManager.currentUser)
                 headerView.delegate = self
+//                headerView.profileImgView.layer.cornerRadius = headerView.profileImgView.frame.height / 2
+//                headerView.profileImgView.layer.borderWidth = 3
+//                headerView.profileImgView.layer.borderColor = UIColor(named: "bgColor")?.cgColor
+//                headerView.profileImgView.clipsToBounds = true
+//                headerView.profileImgView.layer.masksToBounds = true
                 headerView.backgroundColor = UIColor.blue
                 return headerView
 
@@ -143,7 +183,7 @@ extension ProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         switch section {
         case 0:
-            return CGSize.init(width: ScreenSize.Width, height: 260)
+            return CGSize.init(width: ScreenSize.Width, height: 320)
         case 1:
             return CGSize.init(width: ScreenSize.Width, height: 30)
         default:
@@ -159,7 +199,7 @@ extension ProfileVC:UICollectionViewDelegate,UICollectionViewDataSource, UIColle
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileVideoItemCell.identifier, for: indexPath) as!  ProfileVideoItemCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileVideoItemCell.identifier, for: indexPath) as! ProfileVideoItemCell
         cell.updateCellData(data: userVideos[indexPath.row])
         return cell
     }

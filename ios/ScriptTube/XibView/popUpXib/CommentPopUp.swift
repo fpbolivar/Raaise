@@ -27,9 +27,9 @@ class CommentPopUp: UIViewController {
     var isEdit = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        commentTf.layer.borderWidth = 0.5
-        commentTf.layer.cornerRadius = 10
-        commentTf.layer.borderColor = UIColor.lightGray.cgColor
+//        commentTf.layer.borderWidth = 0.5
+//        commentTf.layer.cornerRadius = 10
+//        commentTf.layer.borderColor = UIColor.lightGray.cgColor
         commentTf.paddingLeftRightTextField(left: 25, right: 0)
         commentTf.attributedPlaceholder = NSAttributedString(string: "Add Comment...",attributes: [.foregroundColor:UIColor.darkGray])
         commentTf.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)

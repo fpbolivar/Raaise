@@ -12,7 +12,7 @@ import AuthenticationServices
 class SignUpVC: BaseControllerVC {
     @IBOutlet weak var checkBox: UIButton!
     @IBOutlet weak var  termsandConditionsLbl:ActiveLabel!
-    @IBOutlet weak var appleSignInLbl: UILabel!
+   // @IBOutlet weak var appleSignInLbl: UILabel!
     @IBOutlet weak var signUpLbl: UILabel!
     @IBOutlet weak var cnfPassTfEyeImg: UIImageView!
     @IBOutlet weak var passTfEyeImg: UIImageView!
@@ -25,8 +25,12 @@ class SignUpVC: BaseControllerVC {
     @IBOutlet weak var  mobileTF:UITextField!
     @IBOutlet weak var  nameTF:UITextField!
     @IBOutlet weak var  usernameTF:UITextField!
-    @IBOutlet weak var  googleLbl:UILabel!
-    @IBOutlet weak var  fbLbl:UILabel!
+    @IBOutlet weak var showandHideLbl: UILabel!
+    @IBOutlet weak var passShowAndHideLbl: UILabel!
+    @IBOutlet weak var cnfPassShowHideLbl: UILabel!
+    
+//    @IBOutlet weak var  googleLbl:UILabel!
+//    @IBOutlet weak var  fbLbl:UILabel!
     var checkBoxSelected:Bool = false
     var passTap : UITapGestureRecognizer!
     var cnfPassTap : UITapGestureRecognizer!
@@ -37,7 +41,7 @@ class SignUpVC: BaseControllerVC {
         setfonts()
         redColorUnderline()
         setPlaceholder()
-        addNavBar(headingText:"Sign Up for Raaise",redText:"Raaise")
+       // addNavBar(headingText:"Sign Up for Raaise",redText:"Raaise")
         // Do any additional setup after loading the view.
     }
     //MARK: - Actions
@@ -156,7 +160,11 @@ class SignUpVC: BaseControllerVC {
         let param = ["name":nameTF.text ?? "","userName":usernameTF.text ?? "","email":emailTF.text ?? "","password":passTF.text ?? "","phoneNumber":mobileTF.text ?? "","deviceType":"ios","deviceToken":UserDefaultHelper.getDevice_Token()]
         AuthManager.signInApi(delegate: self, param: param) {
             DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
+                let vc = InterestViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+                        
+                //self.navigationController?.popViewController(animated: true)
+            
             }
         }
     }
@@ -169,6 +177,7 @@ class SignUpVC: BaseControllerVC {
             }else{
                 passTfEyeImg.image = UIImage(systemName: "eye.slash")
             }
+//
         }else{
             cnfPassTF.isSecureTextEntry = !cnfPassTF.isSecureTextEntry
             if passTF.isSecureTextEntry{
@@ -176,6 +185,7 @@ class SignUpVC: BaseControllerVC {
             }else{
                 cnfPassTfEyeImg.image = UIImage(systemName: "eye.slash")
             }
+            
         }
     }
     func setfonts(){
@@ -183,12 +193,14 @@ class SignUpVC: BaseControllerVC {
         passTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
         cnfPassTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
         passTfEyeImg.addGestureRecognizer(passTap)
+        //passShowAndHideLbl.addGestureRecognizer(passTap)
         cnfPassTfEyeImg.addGestureRecognizer(cnfPassTap)
+        //cnfPassShowHideLbl.addGestureRecognizer(cnfPassTap)
         orSignInWithLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX10)
 
-        googleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
-        appleSignInLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
-        fbLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+//        googleLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+//        appleSignInLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
+//        fbLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
 
         signUpBtn.titleLabel?.font = AppFont.FontName.medium.getFont(size: AppFont.pX18)
         signUpLbl.font = AppFont.FontName.medium.getFont(size: AppFont.pX18)
@@ -238,12 +250,12 @@ class SignUpVC: BaseControllerVC {
     }
     func redColorUnderline(){
 
-        let customType = ActiveType.custom(pattern:  "SignIn")
+        let customType = ActiveType.custom(pattern:  "Login")
         alreadyhaveLbl.enabledTypes.append(customType)
         alreadyhaveLbl.textColor = UIColor.white
         alreadyhaveLbl.underLineEnable = false
-        alreadyhaveLbl.text = "Already have an account? SignIn"
-        alreadyhaveLbl.customColor[customType] = UIColor.theme
+        alreadyhaveLbl.text = "Already have an account? Login"
+        alreadyhaveLbl.customColor[customType] = UIColor.new_theme
         alreadyhaveLbl.customSelectedColor[customType] = UIColor.gray
         alreadyhaveLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)
         alreadyhaveLbl.handleCustomTap(for: customType) { element in
@@ -257,8 +269,8 @@ class SignUpVC: BaseControllerVC {
         termsandConditionsLbl.textColor = UIColor.white
         termsandConditionsLbl.underLineEnable = true
         termsandConditionsLbl.text = "I have read and agree with Terms of Service & Privacy Policy"
-        termsandConditionsLbl.customColor[customType2] = UIColor.theme
-        termsandConditionsLbl.customColor[customType3] = UIColor.theme
+        termsandConditionsLbl.customColor[customType2] = UIColor.new_theme//theme
+        termsandConditionsLbl.customColor[customType3] = UIColor.new_theme//theme
         termsandConditionsLbl.customSelectedColor[customType2] = UIColor.gray
         termsandConditionsLbl.customSelectedColor[customType3] = UIColor.gray
         termsandConditionsLbl.font = AppFont.FontName.regular.getFont(size: AppFont.pX14)

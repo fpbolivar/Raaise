@@ -14,7 +14,7 @@ class UserNameFormVC: BaseControllerVC {
     @IBOutlet weak var  nameTF:UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        addNavBar(headingText:"Username",redText:"")
+        addNavBar(headingText:"Username",redText:"",color: UIColor(named: "bgColor"))
         setfonts()
     }
     //MARK: -Setup

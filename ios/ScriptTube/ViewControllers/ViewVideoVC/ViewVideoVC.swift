@@ -30,8 +30,22 @@ class ViewVideoVC: BaseControllerVC {
     var slug: String? = nil
     var changeDelegate:ViewVideoChangeDelegate?
     var delegate:ViewVideoFromProfile?
+    
+    //Date:: 09, Apr 2024 - variable for the comment table view
+    var selTableViewRowIndexForComment : Int = -1
+    var isGetCommentApiCalled : Bool = false
+    var post: Post?
+    var commentData : [CommentDataModel] = []
+    var commentPage = 1
+    //---
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Date:: 09, Apr 2024 - Notification Center add Observer
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         backImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(popBack)))
         menuImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openMenu)))
         hideNavbar()
@@ -113,6 +127,82 @@ class ViewVideoVC: BaseControllerVC {
         
         
     }
+    //Date:: 09, Apr 2024 - when user tap on the comment send Button
+    @objc func commentButtonTapped(_ sender: UIButton) {
+
+        self.view.endEditing(true)
+        selTableViewRowIndexForComment = sender.tag
+        
+        debugPrint("Sel index \(selTableViewRowIndexForComment)")
+        var indexPath = IndexPath(row: sender.tag, section: 0)
+        
+        debugPrint("index path Inner \(indexPath)")
+        debugPrint("index path row Inner \(indexPath.row)")
+        
+        if let homeTableViewCell = tableView.cellForRow(at: indexPath) as? HomeTableViewCell {
+            print("CommentTf text \(homeTableViewCell.commentTf.text ?? "")")
+            
+            if homeTableViewCell.commentTf.text != ""
+            {
+                post = data[indexPath.row]
+                print(post?.id ?? "")
+                postComment(videoId: post?.id ?? "",
+                            comment: homeTableViewCell.commentTf.text ?? "")
+                homeTableViewCell.commentTf.text = ""
+                homeTableViewCell.commentData = self.commentData
+                homeTableViewCell.commentTblView.reloadData()
+            }
+        }
+        
+    }
+    //Date:: 09, Apr 2024 - post api call
+    func postComment(videoId: String, comment: String){
+        isGetCommentApiCalled = true
+        let param = ["videoId":videoId,"comment":comment]
+        print("EMOJEEE",comment, param)
+        AuthManager.postCommentApi(delegate: self, param: param) { retData in
+            let indexPath = IndexPath(row: self.selTableViewRowIndexForComment , section: 0)
+            
+            //self.tableView.reloadRows(at: [indexPath], with: .top)
+            
+            //let indexPath = IndexPath(row: self.selTableViewRowIndexForComment , section: 0)
+            self.post = self.data[indexPath.row]
+            
+            DispatchQueue.main.async {
+                print("api Call in postComment ")
+                self.getCommentsApi(post: self.post!, rowID: indexPath.row) {
+                    let cell = self.tableView.cellForRow(at: indexPath) as! HomeTableViewCell
+                    self.commentData = self.commentData.reversed()
+                    cell.commentData = self.commentData
+                    cell.commentTblView.reloadData()
+                    if self.commentData.count > 0{
+                        cell.updateTableContentInset()
+                        self.scrollToBottom(tblComments:cell.commentTblView)
+                    }
+                    self.isGetCommentApiCalled = false
+                }
+            }
+        }
+    }
+    func getCommentsApi(post: Post, rowID: Int, completion:@escaping()->Void){
+        debugPrint("Api getCommentsApi called for row: \(rowID)")
+        self.commentData = []
+        let param = ["videoId":post.id,"limit":"1000","page":"\(commentPage)"]
+        
+        debugPrint("Input: \(param)")
+        DataManager.getVideoComments(param: param) { errorMessage in
+            AlertView().showAlert(message: errorMessage, delegate: self, pop: false)
+        } completion: { json in
+            json["data"].forEach { (message,data) in
+                //print("EACHRES",data)
+                self.commentData.append(CommentDataModel(data: data))
+            }
+            //print("CommentCount",self.commentData.count)
+            debugPrint("Comment array count with api called for row", self.commentData.count, rowID)
+            completion()
+        }
+    }
+
 }
 //MARK: - Table View Delegate
 extension ViewVideoVC:UITableViewDelegate,UITableViewDataSource,UITableViewDataSourcePrefetching{
@@ -128,13 +218,34 @@ extension ViewVideoVC:UITableViewDelegate,UITableViewDataSource,UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: indexPath) as! HomeTableViewCell
         cell.delegate = self
         cell.configure(post: data[indexPath.row])
+        //Date:: 09, Apr 2024 - here we set the index path and tags
+        post = data[indexPath.row]
+        cell.ibSentBtn.tag = indexPath.row
+        cell.ibSentBtn.addTarget(self, action:#selector(commentButtonTapped(_:)), for: .touchUpInside)
+        cell.commentTf.tag = indexPath.row
+        cell.commentTf.delegate = self
+        //--
+        
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.frame.height
     }
-
+    //Date:: 09, Apr 2024 - table view content scroll to bottom
+    func scrollToBottom(tblComments:UITableView){
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.commentData.count-1, section: 0)
+            debugPrint("Sel index path row", indexPath.row)
+            debugPrint("Selected Comment array count", self.commentData.count)
+            if indexPath.row < self.commentData.count
+            {
+                tblComments.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            }
+            
+        }
+    }
+    //----
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? HomeTableViewCell{
@@ -351,7 +462,7 @@ extension ViewVideoVC:SharePopUpDelegate{
             return
         }
         cell.post?.videoShareCount = count
-        cell.shareCountLbl.text = Int(count)?.shorten()
+        //cell.shareCountLbl.text = Int(count)?.shorten()
         let vc = ChatVC()
         vc.chatSlug = slug
         vc.otherUser = otherUser
@@ -409,4 +520,36 @@ extension ViewVideoVC:ReportBtnDelegate{
 }
 protocol ViewVideoFromProfile{
     func followedFromProfileVideo(isFollowing:Bool)
+}
+//Date:: 09, Apr 2024
+extension ViewVideoVC {
+    @objc func keyboardWillShow(_ notification: Notification) {
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+
+        //tableView.setBottomInset(to: 0.0)
+//        let edgeInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//
+//        tableView.contentInset = edgeInset
+//        tableView.scrollIndicatorInsets = edgeInset
+    }
+    
+    @objc func closeKeyboardView(){
+        self.view.endEditing(true)
+    }
+}
+//Date:: 09, Apr 2024 - set the table view scroll after user end editing.
+extension ViewVideoVC:UITextFieldDelegate{
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+
+        let indexPath = IndexPath(row: textField.tag , section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+        
+    }
 }

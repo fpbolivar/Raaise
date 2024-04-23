@@ -32,8 +32,12 @@ class DonationRaisedListVC: BaseControllerVC {
     var videoDetails = [DonationRaisedVideoList]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        addNavBar(headingText: "Support Raised", redText: "Raised")
+        addNavBar(headingText: "Support Raised", 
+                  redText: "Raised",
+                  color: UIColor(named: "bgColor"))
         setfonts()
+        setupGradientLbl()
+            
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: DonationRaisedCell.identifier, bundle: nil), forCellReuseIdentifier: DonationRaisedCell.identifier)
         self.pleaseWait()
@@ -65,6 +69,10 @@ class DonationRaisedListVC: BaseControllerVC {
             self.withdrawAmtLbl.text = "$\(self.totalWithdraw)"
             self.donatedAmtLbl.text = "$\(self.totalDonated)"
         }
+    }
+    func setupGradientLbl() {
+        overViewLbl.applyGradientColorToLabelText(colors: [UIColor(named: "Gradient1") ?? .black, UIColor(named: "Gradient2") ?? .white])
+        videosLbl.applyGradientColorToLabelText(colors: [UIColor(named: "Gradient1") ?? .black, UIColor(named: "Gradient2") ?? .white])
     }
     func setfonts(){
         overViewLbl.font = AppFont.FontName.bold.getFont(size: AppFont.pX12)

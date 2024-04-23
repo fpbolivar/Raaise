@@ -10,6 +10,7 @@ class DonationUserModel{
     var id = ""
     var name = ""
     var profileImage = ""
+    var credit = ""
     init(){
         
     }
@@ -17,5 +18,6 @@ class DonationUserModel{
         self.id = data["id"].stringValue
         self.name = data["name"].stringValue
         self.profileImage = data["profileImage"].stringValue
+        self.credit = data["credit"].stringValue
     }
 }

@@ -31,10 +31,17 @@ class SearchResultVC: BaseControllerVC {
     var selectedCell:SelectionCell!
     override func viewDidLoad() {
         super.viewDidLoad()
-        hideNavbar()
+        //Date:: 07, Mar 2024 - hide the nav bar
+        //hideNavbar()
+        //setNoResultFoundLbl()
         collectionView.register(UINib(nibName: ProfileVideoItemCell.identifier, bundle: nil), forCellWithReuseIdentifier: ProfileVideoItemCell.identifier)
         tableView.register(UINib(nibName: SelectionCell.identifier, bundle: nil), forCellReuseIdentifier: SelectionCell.identifier)
-        addNavBar(headingText: "", redText: "",type: .smallNavBarOnlyBack)
+        //Date:: 07, Mar 2024 - here we add the nav bar with smallNavBar with OnlyBack btn
+        addNavBar(headingText: "Search",
+                  redText: "",
+                  type: .smallNavBarOnlyBack,
+                  color: UIColor(named: "bgColor"))
+        //
         seachTf.paddingLeftRightTextField(left: 35, right: 0)
         seachTf.layer.cornerRadius = 10
         seachTf.text = searchText
@@ -163,6 +170,18 @@ class SearchResultVC: BaseControllerVC {
                     }
                 }
             }
+        }
+    }
+    func setNoResultFoundLbl() {
+        if userList.isEmpty {
+            let noDataLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            noDataLabel.text = "No Result found"
+            noDataLabel.textAlignment = .center
+            tableView.backgroundView = noDataLabel
+            tableView.separatorStyle = .none
+        } else {
+            tableView.backgroundView = nil
+            tableView.separatorStyle = .singleLine
         }
     }
 }

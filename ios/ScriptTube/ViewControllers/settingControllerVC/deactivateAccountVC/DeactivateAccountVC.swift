@@ -18,7 +18,9 @@ class DeactivateAccountVC: BaseControllerVC {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        addNavBar(headingText:"Deactivate Account",redText:"Account")
+        addNavBar(headingText:"Deactivate Account",
+                  redText:"Account",
+                  color: UIColor(named: "bgColor"))
         setfonts()
         // Do any additional setup after loading the view.
     }

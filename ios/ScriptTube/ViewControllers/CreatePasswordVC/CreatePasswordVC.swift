@@ -21,7 +21,9 @@ class CreatePasswordVC: BaseControllerVC {
         super.viewDidLoad()
         hideNavbar()
         setup()
-        addNavBar(headingText: "Create Password", redText: "Password")
+        addNavBar(headingText: "Create Password", 
+                  redText: "Password",
+                  color: UIColor(named: "bgColor")) //Date:: 02, Mar 2024
         // Do any additional setup after loading the view.
     }
     @IBAction func updateBtnClicked(_ sender: Any) {

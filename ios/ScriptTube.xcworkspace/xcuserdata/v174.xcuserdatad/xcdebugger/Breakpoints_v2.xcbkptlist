@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "F5A26AE1-B873-40E4-99D8-D4EF0ABF922F"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5E18C3CC-DC1F-4A03-9281-A7EBAEFB9A26"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
+            landmarkName = "checkPlay(table2:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5E18C3CC-DC1F-4A03-9281-A7EBAEFB9A26 - 7a662e801ebd302f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Raaise_App.HomeVC2.checkPlay(table2: Swift.Bool) -&gt; ()"
+                  moduleName = "Raaise App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Ashwani/Workspace/Ashwani/Raaise%20App/Script_tube/codeoptimalsolutions-script-tube-ios-6ff54ee097c6/ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "448"
+                  endingLineNumber = "448"
+                  offsetFromSymbolStart = "2200">
+               </Location>
+               <Location
+                  uuid = "5E18C3CC-DC1F-4A03-9281-A7EBAEFB9A26 - 7a662e801ebd302f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Raaise_App.HomeVC2.checkPlay(table2: Swift.Bool) -&gt; ()"
+                  moduleName = "Raaise App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Ashwani/Workspace/Ashwani/Raaise%20App/Script_tube/codeoptimalsolutions-script-tube-ios-6ff54ee097c6/ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "448"
+                  endingLineNumber = "448"
+                  offsetFromSymbolStart = "2148">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E74C5EA4-F58A-40DC-81C7-0E3F6EAB0B38"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScriptTube/ViewControllers/VisitProfileVC/VisitProfileVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
+            landmarkName = "followingBtn(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7311D1F8-56BC-4A32-B184-D53261E143FC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScriptTube/ViewControllers/VisitProfileVC/VisitProfileVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "VisitProfileVC"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "557177D8-0C4D-4B25-82C9-B4390AF48FAB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
+            landmarkName = "checkPause(table2:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "98F14FB9-4384-45C3-A679-AC5B2DAFA8AC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
+            landmarkName = "check(table2:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C6CAC6BE-BDA5-4E09-BEFB-07653B2B0F2D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
+            landmarkName = "checkPreload(table2:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E86750B9-86C5-484A-A1B4-A5B2A215BD5B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "454"
+            endingLineNumber = "454"
+            landmarkName = "checkPlay(table2:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8BF7CD9B-6184-4982-84BD-8934FC6AA7E4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "416"
+            endingLineNumber = "416"
+            landmarkName = "checkPreload(table2:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "74BB78C9-5AE1-4201-9223-2905E9378A9A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "526"
+            endingLineNumber = "526"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "74BB78C9-5AE1-4201-9223-2905E9378A9A - 18b19a4acd6a0675"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Raaise_App.HomeVC2.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "Raaise App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Ashwani/Workspace/Ashwani/Raaise%20App/Script_tube/codeoptimalsolutions-script-tube-ios-6ff54ee097c6/ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "522"
+                  endingLineNumber = "522"
+                  offsetFromSymbolStart = "4232">
+               </Location>
+               <Location
+                  uuid = "74BB78C9-5AE1-4201-9223-2905E9378A9A - 18b19a4acd6a0675"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Raaise_App.HomeVC2.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "Raaise App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Ashwani/Workspace/Ashwani/Raaise%20App/Script_tube/codeoptimalsolutions-script-tube-ios-6ff54ee097c6/ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "522"
+                  endingLineNumber = "522"
+                  offsetFromSymbolStart = "3672">
+               </Location>
+               <Location
+                  uuid = "74BB78C9-5AE1-4201-9223-2905E9378A9A - 18b19a4acd6a0675"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Raaise_App.HomeVC2.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "Raaise App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Ashwani/Workspace/Ashwani/Raaise%20App/Script_tube/codeoptimalsolutions-script-tube-ios-6ff54ee097c6/ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "522"
+                  endingLineNumber = "522"
+                  offsetFromSymbolStart = "3172">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "93AC1C49-D5A7-4F25-920A-24F8AEA33C2C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScriptTube/ViewControllers/HomeVC2/HomeVC2.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "517"
+            endingLineNumber = "517"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

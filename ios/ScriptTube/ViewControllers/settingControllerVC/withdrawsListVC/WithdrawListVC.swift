@@ -15,7 +15,10 @@ class WithdrawListVC: BaseControllerVC {
     @IBOutlet weak var  tableView:ContentSizedTableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        addNavBar(headingText:"Withdrawals",redText:"",type: .largeNavBarOnlyBackWithRightBtn)
+        addNavBar(headingText:"Withdrawals",
+                  redText:"",
+                  type: .largeNavBarOnlyBackWithRightBtn,
+                  color: UIColor(named: "bgColor"))
         setup()
         // Do any additional setup after loading the view.
     }
@@ -38,6 +41,7 @@ class WithdrawListVC: BaseControllerVC {
         tableView.separatorColor = .white
         navView.rigthBtn.setTitle("Bank Details", for: .normal)
         navView.rigthBtn.addTarget(self, action: #selector(rightAction), for: .touchUpInside)
+        navView.rigthBtn.setTitleColor(.new_theme, for: .normal)
         setfonts()
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: WithdrawalsCell.identifier, bundle: nil), forCellReuseIdentifier: WithdrawalsCell.identifier)

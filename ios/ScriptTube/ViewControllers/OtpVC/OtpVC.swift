@@ -17,7 +17,9 @@ class OtpVC: BaseControllerVC {
         super.viewDidLoad()
         hideNavbar()
         setup()
-        addNavBar(headingText: "OTP", redText: "")
+        addNavBar(headingText: "OTP", 
+                  redText: "", 
+                  color: UIColor(named: "bgColor"))
         // Do any additional setup after loading the view.
     }
     //MARK: - Setup

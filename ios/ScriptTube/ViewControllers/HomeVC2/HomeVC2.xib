@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -46,7 +46,7 @@
                                     <subviews>
                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LM0-Rc-btV">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="814"/>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <color key="backgroundColor" red="0.1333333333" green="0.0039215686269999999" blue="0.19215686269999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </tableView>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="edX-Ic-Iqh">
                                             <rect key="frame" x="197" y="397" width="20" height="20"/>
@@ -116,23 +116,23 @@
                     </constraints>
                 </scrollView>
                 <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bell.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Fx3-Y0-1Qr">
-                    <rect key="frame" x="369" y="88.5" width="20" height="19.5"/>
+                    <rect key="frame" x="294" y="83.5" width="20" height="19.5"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="9je-hS-Gjx"/>
                         <constraint firstAttribute="height" constant="20" id="nV3-hZ-o2S"/>
                     </constraints>
                 </imageView>
-                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="XSq-X9-ZI1">
-                    <rect key="frame" x="339" y="88.5" width="20" height="18.5"/>
+                <imageView hidden="YES" clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="XSq-X9-ZI1">
+                    <rect key="frame" x="264" y="88.5" width="20" height="18.5"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="M9Q-t3-ir4"/>
                         <constraint firstAttribute="width" constant="20" id="O8s-gL-SRf"/>
                     </constraints>
                 </imageView>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnB-uV-Eyd" customClass="CardView" customModule="Raaise_App" customModuleProvider="target">
-                    <rect key="frame" x="348.5" y="80.5" width="45.5" height="15"/>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnB-uV-Eyd" customClass="Gradient" customModule="Raaise_App" customModuleProvider="target">
+                    <rect key="frame" x="278.5" y="75.5" width="45.5" height="15"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ytE-qj-xeK">
                             <rect key="frame" x="3" y="3" width="39.5" height="9"/>
@@ -153,6 +153,19 @@
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                             <real key="value" value="7.5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                            <color key="value" name="Gradient1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                            <color key="value" name="Gradient2"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                            <real key="value" value="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="horizontalMode" value="YES"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
+                            <real key="value" value="1"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
@@ -191,10 +204,10 @@
                 <constraint firstItem="8gE-08-3DM" firstAttribute="centerX" secondItem="zxe-og-3jJ" secondAttribute="centerX" constant="-30" id="69a-mp-oof"/>
                 <constraint firstItem="gEU-lU-rSu" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="GpE-B2-2rM"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="gEU-lU-rSu" secondAttribute="bottom" id="LHb-Jr-8oQ"/>
-                <constraint firstAttribute="trailing" secondItem="qnB-uV-Eyd" secondAttribute="trailing" constant="20" id="NxQ-J4-xjF"/>
+                <constraint firstAttribute="trailing" secondItem="qnB-uV-Eyd" secondAttribute="trailing" constant="90" id="NxQ-J4-xjF"/>
                 <constraint firstItem="8gE-08-3DM" firstAttribute="top" secondItem="zxe-og-3jJ" secondAttribute="bottom" constant="1" id="Pgz-Yc-kCu"/>
                 <constraint firstItem="gEU-lU-rSu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="S79-JM-36E"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Fx3-Y0-1Qr" secondAttribute="trailing" constant="25" id="UwF-9j-9bF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Fx3-Y0-1Qr" secondAttribute="trailing" constant="100" id="UwF-9j-9bF"/>
                 <constraint firstItem="XSq-X9-ZI1" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="Wyd-eG-UG0"/>
                 <constraint firstItem="qnB-uV-Eyd" firstAttribute="centerY" secondItem="Fx3-Y0-1Qr" secondAttribute="centerY" constant="-10" id="XhJ-2y-KsA"/>
                 <constraint firstItem="n8t-G0-Z0p" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="Yk0-Oc-IeY"/>
@@ -205,7 +218,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="gEU-lU-rSu" secondAttribute="trailing" id="kOe-VS-xb2"/>
                 <constraint firstItem="gEU-lU-rSu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="mPj-di-pQD"/>
                 <constraint firstItem="zxe-og-3jJ" firstAttribute="leading" secondItem="n8t-G0-Z0p" secondAttribute="trailing" constant="15" id="pnM-v8-0az"/>
-                <constraint firstItem="Fx3-Y0-1Qr" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="s8M-w5-s7H"/>
+                <constraint firstItem="Fx3-Y0-1Qr" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="35" id="s8M-w5-s7H"/>
                 <constraint firstItem="zxe-og-3jJ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="z7m-Fr-Cfa"/>
             </constraints>
             <point key="canvasLocation" x="102" y="20"/>
@@ -216,6 +229,12 @@
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="BackgroundColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Gradient1">
+            <color red="0.93333333333333335" green="0.13333333333333333" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Gradient2">
+            <color red="0.68627450980392157" green="0.0" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="theme">
             <color red="0.29803921568627451" green="0.45882352941176469" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

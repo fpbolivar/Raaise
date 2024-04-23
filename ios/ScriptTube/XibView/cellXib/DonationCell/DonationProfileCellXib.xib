@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NotoSans-Regular.ttf">
+            <string>NotoSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="193" id="KGk-i7-Jjw" customClass="DonationProfileCellXib" customModule="Raaise_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="193"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="193"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@vijay_tdv" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tdg-FQ-hJ3">
+                        <rect key="frame" x="80" y="87" width="166" height="19.333333333333329"/>
+                        <fontDescription key="fontDescription" name="NotoSans-Regular" family="Noto Sans" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="$23.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xe4-gN-x8o">
+                        <rect key="frame" x="256" y="87" width="44" height="19.333333333333329"/>
+                        <fontDescription key="fontDescription" name="NotoSans-Regular" family="Noto Sans" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ie2-rI-EsI">
+                        <rect key="frame" x="20" y="71.666666666666671" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="1Xh-le-l7r"/>
+                            <constraint firstAttribute="width" constant="50" id="JMD-zv-7Wo"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="xe4-gN-x8o" firstAttribute="leading" secondItem="tdg-FQ-hJ3" secondAttribute="trailing" constant="10" id="0yG-ew-ryr"/>
+                    <constraint firstItem="xe4-gN-x8o" firstAttribute="centerY" secondItem="tdg-FQ-hJ3" secondAttribute="centerY" id="EGc-TN-T0M"/>
+                    <constraint firstItem="tdg-FQ-hJ3" firstAttribute="leading" secondItem="ie2-rI-EsI" secondAttribute="trailing" constant="10" id="Kt9-nm-Bju"/>
+                    <constraint firstItem="ie2-rI-EsI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Xcr-q7-FCs"/>
+                    <constraint firstItem="tdg-FQ-hJ3" firstAttribute="centerY" secondItem="ie2-rI-EsI" secondAttribute="centerY" id="f58-XX-eiM"/>
+                    <constraint firstItem="ie2-rI-EsI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="owv-A0-hWn"/>
+                    <constraint firstAttribute="trailing" secondItem="xe4-gN-x8o" secondAttribute="trailing" constant="20" id="ura-fP-8cQ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="donorImg" destination="ie2-rI-EsI" id="6kE-f8-4rc"/>
+                <outlet property="lblDonationAmt" destination="xe4-gN-x8o" id="wAa-5V-mrL"/>
+                <outlet property="lblDonorName" destination="tdg-FQ-hJ3" id="s0K-O4-w2g"/>
+            </connections>
+            <point key="canvasLocation" x="-134.35114503816794" y="29.929577464788736"/>
+        </tableViewCell>
+    </objects>
+</document>

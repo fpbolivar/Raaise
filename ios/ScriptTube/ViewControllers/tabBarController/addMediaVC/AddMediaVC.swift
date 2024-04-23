@@ -118,7 +118,7 @@ class AddMediaVC: UIViewController {
         cameraManager.removeAllTempFiles()
         openCustomCamera()
         fetchVideos()
-        progress.buttonColor = UIColor.theme
+        progress.buttonColor = .new_theme//UIColor.theme
         progress.progressColor = .red
         progress.closeWhenFinished = false
         progress.setProgress(0)

@@ -17,7 +17,9 @@ class DeleteAccountVC: BaseControllerVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addNavBar(headingText:"Delete Account",redText:"Account")
+        addNavBar(headingText:"Delete Account",
+                  redText:"Account",
+                  color: UIColor(named: "bgColor"))
         setfonts()
         // Do any additional setup after loading the view.
     }

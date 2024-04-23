@@ -37,7 +37,11 @@ class PaymemtSavedCardListVC: BaseControllerVC {
     //MARK: -Setup
     func setup(){
         payBtn.addTarget(self, action: #selector(pay), for: .touchUpInside)
-        addNavBar(headingText:"Payment Methods",redText:"Methods",type: .addNewCard,addNewCardSelector: #selector(addNewCard))
+        addNavBar(headingText:"Payment Methods",
+                  redText:"Methods",
+                  type: .addNewCard,
+                  addNewCardSelector: #selector(addNewCard),
+                  color: UIColor(named: "bgColor"))
         setfonts()
         tableView.separatorStyle = .none
         tableView.register(UINib(nibName: CardCell.identifier, bundle: nil), forCellReuseIdentifier: CardCell.identifier)

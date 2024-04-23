@@ -34,7 +34,7 @@ class OnboardingView: UIView {
         headingLbl2.textColor = UIColor.white
 
         headingLbl2.text = data.title2
-        headingLbl2.customColor[customType] = UIColor.theme
+        headingLbl2.customColor[customType] = .new_theme//UIColor.theme
         headingLbl2.customSelectedColor[customType] = UIColor.gray
         headingLbl2.font = AppFont.FontName.regular.getFont(size: AppFont.pX25)
         headingLbl2.handleCustomTap(for: customType) { element in

@@ -33,7 +33,8 @@ class ReportVideoVC: UIViewController {
         let text = "Report Video"
         let underlineAttriString = NSMutableAttributedString(string: text)
         let range1 = (text as NSString).range(of: "Video")
-        underlineAttriString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.theme, range: range1)
+       // underlineAttriString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.theme, range: range1)
+        underlineAttriString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.new_theme, range: range1)
         reportLbl.attributedText = underlineAttriString
     }
     @objc func closepopup(){

@@ -17,6 +17,9 @@ protocol CommentCellDelegate{
 
 class CommentTableViewCell: UITableViewCell {
    
+    //Date:: 01, Apr 2024 - ibReplybutton to hide the button
+    @IBOutlet weak var ibReplyBtn: UIButton!
+    
     @IBOutlet weak var optionsBtn: UIButton!
     @IBOutlet weak var viewReplyView: UIView!
     @IBOutlet weak var viewReplyIcon: UIImageView!

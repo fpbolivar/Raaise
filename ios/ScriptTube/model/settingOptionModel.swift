@@ -42,16 +42,16 @@ class SettingOptionManager{
 
     func getList()->[SettingOptionModal]{
 
-        let myprofileSection = SettingOptionModal(title: "MY ACCOUNT", items: [SettingOptionItems(title: "Personal Information", subtitle: ""),SettingOptionItems(title: "Username", subtitle: ""),SettingOptionItems(title: "Short Bio", subtitle: ""),SettingOptionItems(title: "Change Password", subtitle: ""),SettingOptionItems(title: "Privacy Control", subtitle: "")], type: .profile)
+        let myprofileSection = SettingOptionModal(title: "My Account", items: [SettingOptionItems(title: "Personal Information", subtitle: ""),SettingOptionItems(title: "Username", subtitle: ""),SettingOptionItems(title: "Short Bio", subtitle: ""),SettingOptionItems(title: "Change Password", subtitle: ""),SettingOptionItems(title: "Privacy Control", subtitle: "")], type: .profile)
 
 
-        let notificationSection = SettingOptionModal(title: "NOTIFICATIONS", items: [SettingOptionItems(title: "Push Notifications", subtitle: "",type: .switchBtn),SettingOptionItems(title: "Email Notifications", subtitle: "")], type: .switchBtn)
+        let notificationSection = SettingOptionModal(title: "Notifications", items: [SettingOptionItems(title: "Push Notifications", subtitle: "",type: .switchBtn),SettingOptionItems(title: "Email Notifications", subtitle: "")], type: .switchBtn)
 
-        let paymentSection = SettingOptionModal(title: "PAYMENTS", items: [SettingOptionItems(title: "Payment Methods", subtitle: ""),SettingOptionItems(title: "Support Raised", subtitle: ""),SettingOptionItems(title: "Withdrawals", subtitle: ""),SettingOptionItems(title: "Bank Details", subtitle: "")], type: .profile)
+        let paymentSection = SettingOptionModal(title: "Payments", items: [SettingOptionItems(title: "Payment Methods", subtitle: ""),SettingOptionItems(title: "Support Raised", subtitle: ""),SettingOptionItems(title: "Withdrawals", subtitle: ""),SettingOptionItems(title: "Bank Details", subtitle: "")], type: .profile)
 
-        let aboutSection = SettingOptionModal(title: "ABOUT", items: [SettingOptionItems(title: "Terms of Service", subtitle: ""),SettingOptionItems(title: "Privacy Policy", subtitle: ""),SettingOptionItems(title: "Copyright Policy", subtitle: "")], type: .profile)
+        let aboutSection = SettingOptionModal(title: "About", items: [SettingOptionItems(title: "Terms of Service", subtitle: ""),SettingOptionItems(title: "Privacy Policy", subtitle: ""),SettingOptionItems(title: "Copyright Policy", subtitle: "")], type: .profile)
 
-        let logoutSection = SettingOptionModal(title: "LOGINS", items: [SettingOptionItems(title: "Deactivate Account", subtitle: ""),SettingOptionItems(title: "Delete Account", subtitle: "",type: .redLbl),SettingOptionItems(title: "Logout", subtitle: "",type: .logout)], type: .profile)
+        let logoutSection = SettingOptionModal(title: "Logins", items: [SettingOptionItems(title: "Deactivate Account", subtitle: ""),SettingOptionItems(title: "Delete Account", subtitle: "",type: .redLbl),SettingOptionItems(title: "Logout", subtitle: "",type: .logout)], type: .profile)
 
         return [myprofileSection,notificationSection,paymentSection,aboutSection,logoutSection];
     }
